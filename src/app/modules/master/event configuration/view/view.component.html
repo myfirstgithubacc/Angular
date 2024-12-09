@@ -1,0 +1,99 @@
+<div class="app-content__body floating-layout floating-layout__view-layout">
+    <div class="card">
+        <div class="card__header">
+            <h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+            <div class="card__header-icon">
+            </div>
+        </div>
+        <div class="card__body">
+            <div class="row">
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'Sector'" [value]="eventConfigData.SectorName"></app-kendo-label>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'EventName'" [value]="eventConfigData.EventName"></app-kendo-label>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12">
+                    <h4 class="card__body--subheading subheading__no-border">{{'ConfigurationDetails' | translate}}</h4>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'DateType'" [value]="eventConfigData.DateType"></app-kendo-label>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'RequiresEventReason'" [value]="eventConfigData.RequiresEventReason ? 'Yes' : 'No'"></app-kendo-label>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'RequiresComment'" [value]="eventConfigData.RequiresComment ? 'Yes' : 'No'"></app-kendo-label>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'RequiresBackfill'" [value]="eventConfigData.RequiresBackfill ? 'Yes' : 'No'"></app-kendo-label>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6" *ngIf="eventConfigData.RequiresBackfill">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'BackfillDefaultValue'" [value]="eventConfigData.BackfillDefaultValue ? 'Yes' : 'No'"></app-kendo-label>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'EffectOnDailySchedule'" [value]="eventConfigData.EffectOnDailySchedule"></app-kendo-label>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'EventEnteredBy'" [value]="enteredByText"></app-kendo-label>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'NotifyTo'" [value]="notifyToText"></app-kendo-label>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'DelayNotificationBeforeEvent'" [value]="eventConfigData.DelayNotificationBeforeEvent ? 'Yes' : 'No'"></app-kendo-label>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'ValidateEventDateWithTimesheet'" [value]="eventConfigData.ValidateEventDateWithTimesheet ? 'Yes' : 'No'"></app-kendo-label>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12">
+                    <h4 class="card__body--subheading subheading__no-border">{{'ApplicableIn' | translate}}</h4>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'IsProfessionalContractor'" [value]="eventConfigData.IsProfessionalContractor ? 'Yes' : 'No'"></app-kendo-label>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'IsLightIndustrialContractor'" [value]="eventConfigData.IsLightIndustrialContractor ? 'Yes' : 'No'"></app-kendo-label>
+                    </div>
+                </div> 
+
+            </div>
+        </div>
+
+    </div>
+    <div class="page-footer">
+        <div class="btn-box btn-box--center">
+            <button type="button" kendoButton themeColor="primary" [routerLink]="navigationPaths.list">
+               {{'Back' | translate}}</button>
+         </div>
+    </div>
+</div>
+

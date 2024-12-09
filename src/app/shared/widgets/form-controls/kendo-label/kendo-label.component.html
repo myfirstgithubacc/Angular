@@ -1,0 +1,94 @@
+<div *ngIf="isRendered" class="new-view">
+  <kendo-label [text]="getLabelText()" kendoTooltip [position]="tooltipPosition!">
+
+    <ng-container *ngIf="tooltipVisible">
+      <xrm-icon [title]="tooltipTitle | translate : getObject(tooltipTitleLocalizeParam)" name="info" 
+         class="input-info"></xrm-icon>
+    </ng-container>
+
+    <ng-container *ngIf="isTooltiplableValueVisible">
+      <xrm-icon [title]="tooltipLabelValue | translate : getObject(tooltipTitleLocalizeParam)" name="info" 
+         class="input-info"></xrm-icon>
+    </ng-container>
+</kendo-label>
+
+    <p class="label-answere" *ngIf="valueItems.length==0">
+      <ng-container *ngIf="isCurrency">
+        {{ getFormatedNumber() }}
+      </ng-container>
+
+      <ng-container *ngIf="!isCurrency">
+
+        <ng-container *ngIf="!isPhone && value">
+          <ng-container *ngIf="hideIfCount && value.length > hideIfCount">
+            <span *ngIf="!showFullText" [innerHTML]="truncatedValue | translate : getObject(tooltipTitleLocalizeParam) | safe:'html'"></span>
+            <span *ngIf="showFullText" [innerHTML]="value | translate : getObject(tooltipTitleLocalizeParam) | safe:'html'"></span>
+            <a (click)="toggleFullText()" class="show-more-link">
+              {{ showFullText ? 'Show Less' : 'Show More' }}
+            </a>
+          </ng-container>
+          <ng-container *ngIf="!hideIfCount || value.length <= hideIfCount">
+            <span [innerHTML]="value | translate : getObject(tooltipTitleLocalizeParam) | safe:'html'"></span>
+          </ng-container>
+        </ng-container>
+
+        <ng-container *ngIf="isPhone">
+
+          <ng-container *ngIf="isExtension">
+            {{ (value | maskFormat:phoneMask) +' '+ ('PhoneExt' | translate) +' '+ (extValue | maskFormat:phoneExtMask)
+            }}
+          </ng-container>
+
+          <ng-container *ngIf="!isExtension">
+            {{ (value | maskFormat:phoneMask) }}
+          </ng-container>
+
+        </ng-container>
+
+
+      </ng-container>
+      <ng-container *ngIf="additionallabel">
+        <br>
+        <span class="achor__text">
+          {{ getLocalizedadditionallabel()}}
+        </span>
+       </ng-container>
+    </p>
+
+    <p class="label-answere" *ngIf="valueItems.length!=0">
+      <ng-container *ngIf="hideIfCount && getValueItemsLength() > hideIfCount">
+        <ng-container *ngIf="!showFullText">
+          <ng-container *ngFor="let item of valueItems.slice(0, hideIfCount); let i = index; let last = last">
+            {{ (item.text | translate : getObject(item.dynamicParam)) + " : " + item.value }}
+            <ng-container *ngIf="!last"> | </ng-container>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="showFullText">
+          <ng-container *ngFor="let item of valueItems; let i = index; let last = last">
+            {{ (item.text | translate : getObject(item.dynamicParam)) + " : " + item.value }}
+            <ng-container *ngIf="!last"> | </ng-container>
+          </ng-container>
+        </ng-container>
+        <a (click)="toggleFullText()" class="show-more-link">
+          {{ showFullText ? 'Show Less' : 'Show More' }}
+        </a>
+      </ng-container>
+  
+      <ng-container *ngIf="!hideIfCount || getValueItemsLength() <= hideIfCount">
+        <ng-container *ngFor="let item of valueItems; let i = index; let last = last">
+          {{ (item.text | translate : getObject(item.dynamicParam)) + " : " + item.value }}
+          <ng-container *ngIf="!last"> | </ng-container>
+        </ng-container>
+      </ng-container>
+  
+      <ng-container *ngIf="additionallabel">
+        <br>
+        <span class="achor__text">
+          {{ getLocalizedadditionallabel() }}
+        </span>
+      </ng-container>
+    </p>
+
+    
+
+</div>

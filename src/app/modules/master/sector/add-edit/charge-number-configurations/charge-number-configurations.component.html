@@ -1,0 +1,99 @@
+<form [formGroup]="chargeNumberConfigForm">
+    <div class="card">
+        <!-- Card Header Section-->
+        <div class="card__header">
+            <h4 class="card__heading">{{ 'CostAccountingCodeConfigurations' | translate}}</h4>
+            <div class="card__header-icon">
+            </div>
+        </div>
+        <!-- End Card Header Section-->
+
+        <!-- Card Body Section-->
+        <div class="card__body">
+            <div class="row">
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch *ngIf="isEditMode" [isDisable]="!isDraft" [onLabel]="'Yes'" [offLabel]="'No'"
+                        [controlName]="'IsMultipleTimeApprovalNeeded'"
+                        [label]="'IsMultipleTimeApprovalNeeded' | translate" [tooltipVisible]="true"
+                        [tooltipTitle]="'Multiple_Time_Approval_Needed_Tooltip'" 
+                        (onChangeSwitch)="switchIsMultipleTimeApprovalNeeded($event)">
+                        </app-kendo-switch>
+                        
+                        <app-kendo-switch *ngIf="!isEditMode" [controlName]="'IsMultipleTimeApprovalNeeded'"
+                            [onLabel]="'Yes'" [tooltipVisible]="true"
+                            [tooltipTitle]="'Multiple_Time_Approval_Needed_Tooltip'" [offLabel]="'No'"
+                            [label]="'IsMultipleTimeApprovalNeeded'" 
+                            (onChangeSwitch)="switchIsMultipleTimeApprovalNeeded($event)">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                                <!-- input box start -->
+                                <div class="col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'"
+                                            [controlName]="'IsChargeEnteredManually'" [label]="'IsChargeEnteredManually'"
+                                            [tooltipVisible] = "true" 
+                                            [isDisable]="isDisableIsChargeEnteredManually ? (isEditMode && !isDraft):false"
+                                            [tooltipTitle] = "'Will_Charge_Be_Entered_Manually_Tooltip'"
+                                            (onChangeSwitch)="switchChargeEnteredManully($event)">
+                                        </app-kendo-switch>
+                                    </div>
+                                </div>
+                <!-- input box start -->
+                <div class="clearfix"></div>
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group" *ngIf="isSwitchChargeEnteredManully">
+                        <app-kendo-switch [controlName]="'HasChargeEffectiveDate'"
+                        [tooltipVisible] = "true" 
+                                [tooltipTitle] = "'Does_Charge_Has_Effective_Date_Tooltip'"
+                            [label]="'HasChargeEffectiveDate'"
+                            [onLabel]="'Yes'" [offLabel]="'No'">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group" *ngIf="isSwitchChargeEnteredManully">
+                        <app-kendo-switch [controlName]="'IsChargeInReqPsr'" [onLabel]="'Yes'" [offLabel]="'No'"
+                        [tooltipVisible] = "true" 
+                                [tooltipTitle] = "'Is_Charge_Required__In_Requisition_PSR_Tooltip'"
+                            [label]="'IsChargeInReqPsr'">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                  
+                    <div class="form-group">
+                        <app-kendo-dropdown [list]="segmentslist" [label]="'NoOfSegments'"
+                            [controlName]="'NoOfSegment'" [placeholder]="'DdlSelect'" [isRequired]="true"
+                            (onChange)="onChangeSegments($event)">
+                        </app-kendo-dropdown>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+
+                <div class="col-sm-12 col-md-12 list-view list-view__border">
+                    <div class="k-grid">
+                   <app-list-view 
+                    #listChargeNumber
+                    (formData)="getFormStatus($event)"
+                    [columnConfigure]="columnConfigure" 
+                    [populatedData]="prefilledData"
+                    [columnData]="costCenterConfigCenterColumns"
+                    (onChangeNumeric)="OnChangeNum($event)">
+                   </app-list-view>
+                </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Card Body Section-->
+    </div>
+</form>

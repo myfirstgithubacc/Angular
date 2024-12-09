@@ -1,0 +1,215 @@
+xrm-icon>svg>path {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.xrm-icons>svg {
+  vertical-align: sub;
+}
+
+/* Start XRM Icon Stroke Width */
+.sw-bold>svg>path {
+  stroke-width: 1.7px;
+}
+
+.sw-bolder>svg>path {
+  stroke-width: 2px;
+}
+
+/* End XRM Icon Stroke Width */
+
+/* Start XRM Icon Colors */
+xrm-icon .dark-blue-color,
+xrm-icon .navy-blue-color {
+  stroke: var(--dark-blue-color);
+}
+
+xrm-icon .orange-color {
+  stroke: var(--orange-color);
+}
+
+xrm-icon .red-color {
+  stroke: var(--red-color);
+}
+
+xrm-icon .white-color {
+  stroke: var(--color-white);
+}
+
+xrm-icon .black-color {
+  stroke: var(--color-black);
+}
+
+xrm-icon .primary-color {
+  stroke: var(--color-primary);
+}
+
+xrm-icon .green-color {
+  stroke: var(--green-color);
+}
+
+xrm-icon .light-blue-color {
+  stroke: var(--light-blue-color);
+}
+
+xrm-icon .gray-color {
+  stroke: #424242;
+}
+
+/* End XRM Icon Colors */
+
+/* Start Dialogue Popup Service CSS */
+.popup-xrm-icon {
+  width: 35px;
+  display: inline !important;
+}
+
+/* End Dialogue Popup Service CSS */
+
+
+/* Start XRM Icon Css*/
+button.k-button-solid-primary:hover xrm-icon>svg>path,
+button.k-button-solid-primary:focus xrm-icon>svg>path,
+button.k-button-outline-primary:hover xrm-icon>svg>path,
+button.k-button-outline-primary:focus xrm-icon>svg>path {
+  stroke: var(--color-white);
+}
+
+.div-table-main .list-view.delete xrm-icon>svg,
+.div-table-main .addMore a xrm-icon>svg,
+.grid_total_ammount .add-more__link xrm-icon>svg,
+.notification-view xrm-icon>svg,
+.k-grid .k-header .k-link xrm-icon>svg {
+  width: 14px !important;
+  height: 14px !important;
+  position: relative;
+  top: -1px;
+}
+
+.list-view .k-table-tbody .action-item xrm-icon>svg,
+.div-table-main .addMore .list-view xrm-icon>svg,
+.card-status .basic__status-colright .show-status xrm-icon>svg {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.alert__toast .alert__toast__icon xrm-icon>svg {
+  width: 19px !important;
+  height: 19px !important;
+  margin-right: 5px;
+}
+
+.k-popup .offcanvas-header xrm-icon>svg {
+  width: 19px !important;
+  height: 19px !important;
+  position: relative;
+  top: -2px;
+}
+
+.list-view .icon-group .copy_button xrm-icon>svg {
+  width: 15px !important;
+  height: 15px !important;
+  position: relative;
+  bottom: -1px;
+}
+
+
+
+
+
+.div-table-main .addMore .list-view xrm-icon,
+.page-heading__breadcrumb .breadcrumb-item xrm-icon,
+.list-view .add-more__link xrm-icon>svg,
+.card-status .show-status xrm-icon>svg,
+.link-color xrm-icon>svg,
+.subapproval__section .button__icon xrm-icon>svg,
+.show-actions .deactivateLabel xrm-icon>svg,
+.show-actions .activateLabel xrm-icon>svg,
+.revision-workflow-two xrm-icon,
+.err4-btn2 xrm-icon {
+  position: relative;
+  bottom: 1px;
+}
+
+.mb-1,
+.subapproval__section .button__icon xrm-icon>svg,
+.addmore__approval-lvl .button__icon xrm-icon>svg,
+.remove__approvalLevel-btn .button__icon xrm-icon>svg,
+.stepper-button__prev xrm-icon,
+.stepper-button__next xrm-icon {
+  position: relative;
+  bottom: 1px;
+}
+
+/* Start Users XRM Icon Css */
+.side-menu-tabs .card__body li a.disable-link .menu-list-icon {
+  display: inline-block;
+  background: #f5f5f5 !important;
+}
+
+.side-menu-tabs .card__body li a.disable-link xrm-icon>svg>path,
+.side-menu-tabs .card__body li a.disable-link xrm-icon>svg {
+  stroke: #a3a3a3 !important;
+  height: 16px !important;
+  width: 16px !important;
+  stroke-width: 1.7px;
+}
+
+.side-menu-tabs .card__body li a.active .menu-list-icon {
+  background: #434cb3;
+  padding: 4px 5px;
+  line-height: 25px !important;
+  display: inline-block;
+}
+
+.side-menu-tabs .card__body li a .menu-list-icon {
+  padding: 4px 5px;
+  background: #dfdfdf;
+  line-height: 25px !important;
+  display: inline-block;
+}
+
+.side-menu-tabs .card__body li a xrm-icon>svg>path,
+.side-menu-tabs .card__body li a xrm-icon>svg {
+  stroke: var(--color-black);
+  height: 16px !important;
+  width: 16px !important;
+  stroke-width: 1.7px;
+}
+
+.side-menu-tabs .card__body li a.active xrm-icon>svg>path,
+.side-menu-tabs .card__body li a.active xrm-icon>svg {
+  stroke: var(--color-white);
+  height: 16px !important;
+  width: 16px !important;
+  stroke-width: 1.7px;
+}
+
+/* End Users XRM Icon Css */
+
+/* Filter in Grid */
+.app-content .k-i-filter::before,
+.fill-requestv2-dialog .k-i-filter::before {
+  background: url('../icon/xrm-icons/filter.svg');
+  background-size: 18px;
+  background-repeat: no-repeat;
+  background-position: center;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 2px;
+}
+
+/* Filter in Grid */
+
+/* Tooltip CSS */
+.input-info>svg,
+.input-info>svg>path {
+  stroke: var(--color-primary);
+  height: 15px !important;
+  width: 15px !important;
+  stroke-width: 2px;
+  position: relative;
+  bottom: 1px;
+}
+
+/* Tooltip CSS */

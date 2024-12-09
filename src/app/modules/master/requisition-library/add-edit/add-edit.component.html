@@ -1,0 +1,244 @@
+<div class="app-content__body">
+
+  <form [formGroup]="AddEditRequisitionLibrary">
+    <!-- Card Section-->
+    <div class="card">
+      <!-- Card Header Section-->
+      <div class="card__header">
+        <h4 class="card__heading">{{ "BasicDetails" | translate }}</h4>
+        <div class="card__header-icon">
+        </div>
+      </div>
+      <!-- End Card Header Section-->
+
+      <!-- Card Body Section-->
+      <div class="card__body">
+        <div class="row">
+          <div *ngIf="isEditMode"></div>
+
+          <!-- Dropdown box start -->
+          <div class="col-sm-6 col-md-6">
+            <div class="form-group">
+              <app-kendo-dropdown [list]="sectorData" [label]="'Sector'" [controlName]="'sectorName'"
+                [placeholder]="'DdlSelect'" [isRequired]="true" [isEditMode]="isEditMode"
+                (onChange)="onSectorChange($event)">
+              </app-kendo-dropdown>
+            </div>
+          </div>
+          <!-- Dropdown box end -->
+
+
+          <!-- Dropdown box start -->
+          <div class="col-sm-6 col-md-6">
+            <div class="form-group">
+              <app-kendo-dropdown [list]="laborCategoryData" [label]="'LaborCategory'"
+                [controlName]="'laborCategoryName'" [placeholder]="'DdlSelect'" [isRequired]="true"
+                (onChange)="onLaborChange($event)" [isEditMode]="isEditMode">
+              </app-kendo-dropdown>
+            </div>
+          </div>
+          <!-- Dropdown box end -->
+
+          <!-- Dropdown box start -->
+          <div class="col-sm-6 col-md-6">
+            <div class="form-group">
+              <app-kendo-dropdown [list]="jobCategoryData" [label]="'JobCategory'" [controlName]="'jobCategoryName'"
+                [placeholder]="'DdlSelect'" [isRequired]="true" (onChange)="onJobCategoryChange($event)"
+                [isEditMode]="isEditMode">
+              </app-kendo-dropdown>
+            </div>
+          </div>
+          <!-- Dropdown box end -->
+
+          <!-- Dropdown box start -->
+          <div class="col-sm-6 col-md-6">
+            <div class="form-group">
+              <app-kendo-dropdown [list]="workLocationData" [label]="'WorkLocation'" [controlName]="'workLocation'"
+                [placeholder]="'DdlSelect'" [isRequired]="true" (onChange)="onWorkLocationChange($event)"
+                [isEditMode]="isEditMode">
+              </app-kendo-dropdown>
+            </div>
+          </div>
+          <!-- Dropdown box end -->
+
+        </div>
+      </div>
+      <!-- Card Body Section End-->
+    </div>
+    <!-- Card Section End-->
+
+    <!-- Card Section-->
+    <div class="card">
+      <!-- Card Header Section-->
+      <div class="card__header">
+        <h4 class="card__heading">{{ "RateDetails" | translate }}</h4>
+        <div class="card__header-icon">
+        </div>
+      </div>
+      <!-- End Card Header Section-->
+
+      <!-- Card Body Section-->
+      <div class="card__body">
+        <div class="row">
+          <!-- Dropdown box start -->
+          <div class="col-sm-6 col-md-6" *ngIf="!hideNtePreLaunchRate">
+            <div class="form-group">
+              <app-numeric-box [label]="billRateLabel" [controlName]="'nte'" [isRequired]="true" format="n2" [min]="0" [isCurrency]="true" [countryId]="countryVal"
+                [maxlength]="7" [decimals]="2" [tooltipVisible]="true" [tooltipTitle]="'NteTargetTooltipMessage'" (onNumericChange)="nteGreaterThanEqualToWageRate()">
+              </app-numeric-box>
+            </div>
+          </div>
+          <!-- Dropdown box end -->
+
+          <!-- Dropdown box start -->
+          <div class="col-sm-6 col-md-6" *ngIf="!hideNtePreLaunchRate">
+            <div class="form-group">
+              <app-numeric-box [label]="'PreLaunchRate'" [controlName]="'preLaunchRate'" format="n2" [min]="0"[isCurrency]="true"  [countryId]="countryVal"
+                [maxlength]="7" [decimals]="2" [tooltipVisible]="true" [tooltipTitle]="'PreLaunchRateTooltipMessage'">
+              </app-numeric-box>
+            </div>
+          </div>
+          <!-- Dropdown box end -->
+
+          <!-- Dropdown box start -->
+          <div class="col-sm-6 col-md-6">
+            <div class="form-group">
+              <app-numeric-box [label]="'WageRate'" [controlName]="'wageRate'" format="n2" [min]="0" [maxlength]="7" [isCurrency]="true" [countryId]="countryVal"
+                [decimals]="2" [tooltipVisible]="true" [tooltipTitle]="'WageRateTooltipMessage'"
+                [isRequired]="wagerate">
+              </app-numeric-box>
+            </div>
+          </div>
+          <!-- Dropdown box end -->
+
+          <!-- Dropdown box start -->
+          <div class="col-sm-6 col-md-6">
+            <div class="form-group">
+              <app-kendo-dropdown  *ngIf="RateUnitList.length != 1" [list]="RateUnitList" [label]="'RateUnit'" [controlName]="'rateUnit'"
+                [placeholder]="'DdlSelect'" [isRequired]="true" [tooltipVisible]="true"
+                [tooltipTitle]="'RateUnitTooltipMessage'">
+              </app-kendo-dropdown>
+              <app-kendo-label *ngIf="RateUnitList.length == 1" [label]="'RateUnit'"  [value]="RateUnitList[0].Text"  [tooltipTitle]="'RateUnitTooltipMessage'"></app-kendo-label>
+            </div>
+          </div>
+          <!-- Dropdown box end -->
+        </div>
+      </div>
+      <!-- Card Body Section End-->
+    </div>
+    <!-- Card Section End-->
+
+    <!-- Card Section-->
+    <div class="card">
+      <!-- Card Header Section-->
+      <div class="card__header">
+        <h4 class="card__heading">{{ "PositionDetails" | translate }}</h4>
+        <div class="card__header-icon">
+        </div>
+      </div>
+      <!-- End Card Header Section-->
+
+      <!-- Card Body Section-->
+      <div class="card__body">
+        <div class="row">
+          <!-- Dropdown box start -->
+          <div class="col-sm-6 col-md-12">
+            <div class="form-group">
+              <app-kendo-textarea [controlName]="'positionDesc'" [label]="'PositionDescription'" [maxCharacters]="8000"
+                [isSpecialCharacterAllowed]="true">
+              </app-kendo-textarea>
+            </div>
+          </div>
+          <!-- Dropdown box end -->
+
+          <!-- Dropdown box start -->
+          <div class="col-sm-6 col-md-12">
+            <div class="form-group">
+              <app-kendo-textarea [controlName]="'skillReq'" [label]="'SkillRequired'" [maxCharacters]="8000"
+                [isSpecialCharacterAllowed]="true">
+              </app-kendo-textarea>
+            </div>
+          </div>
+          <!-- Dropdown box end -->
+
+          <!-- Dropdown box start -->
+          <div class="col-sm-6 col-md-12">
+            <div class="form-group">
+              <app-kendo-textarea [controlName]="'EducationReq'" [label]="'EducationRequired'" [maxCharacters]="8000"
+                [isSpecialCharacterAllowed]="true">
+              </app-kendo-textarea>
+            </div>
+          </div>
+          <!-- Dropdown box end -->
+
+          <!-- Dropdown box start -->
+          <div class="col-sm-6 col-md-12">
+            <div class="form-group">
+              <app-kendo-textarea [controlName]="'ExperienceReq'" [label]="'ExperienceRequired'" [maxCharacters]="8000"
+                [isSpecialCharacterAllowed]="true">
+              </app-kendo-textarea>
+            </div>
+          </div>
+          <!-- Dropdown box end -->
+        </div>
+      </div>
+      <!-- Card Body Section End-->
+    </div>
+    <!-- Card Section End-->
+
+    <!-- Card Section-->
+    <div class="card" *ngIf="benefitAdderData.length > 0 ? true : false">
+      <!-- Card Header Section-->
+      <div class="card__header">
+        <h4 class="card__heading">
+          {{ "BenefitAdderConfiguration" | translate }}
+          <tooltip-content class="heading_tooltip" [tooltipTitle]="'BenefitAdderTooltipMessage'" [tooltipVisible]="true"
+            [tooltipPosition]="'right'"></tooltip-content>
+        </h4>
+        <div class="card__header-icon">
+        </div>
+      </div>
+      <!-- End Card Header Section-->
+
+      <!-- Card Body Section-->
+      <div class="card__body">
+        <div class="row">
+          <!-- Dropdown box start -->
+          <span formArrayName="benefitAdders"> </span>
+          <div class="col-sm-6 col-md-6" *ngFor="let adder of benefitAdderData">
+            <div class="form-group">
+              <app-numeric-box [controlName]="adder.LabelLocalizedKey" [label]="adder.LabelLocalizedKey" format="n2"
+                [min]="0" [maxlength]="7" [decimals]="2" (focusout)="onFocusOut(adder.LabelLocalizedKey)" >
+              </app-numeric-box>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Card Body Section End-->
+    </div>
+    <!-- Card Section End-->
+
+    <ng-container *ngIf="sectorId > 0">
+      <app-udf-implementation [entityId]="entityId"  [sectorId]="sectorId" [recordUKey]="recordUKey"
+        [recordId]="udfRecordId" [parentsInfos]="udfCommonMethods.getParentsInfo()" [actionTypeId]="actionTypeId"
+        (onDataPicked)="getUdfData($event)">
+      </app-udf-implementation>
+    </ng-container>
+
+    <!--  Page Footer Section-->
+    <div class="page-footer">
+      <div class="btn-box btn-box--center">
+        <button type="button" kendoButton fillMode="outline" themeColor="primary" (click)="navigate()">
+          {{ "Cancel" | translate }}
+        </button>
+        <button type="button" kendoButton (click)="submitForm()" themeColor="primary"
+          [disabled]="isEditMode ? AddEditRequisitionLibrary.pristine : false" appFocusOnError
+          [formName]="AddEditRequisitionLibrary">
+          {{ isEditMode ? ("Save" | translate) : ("Save" | translate) }}
+        </button>
+        
+      </div>
+    </div>
+    <!-- End Footer Section-->
+  </form>
+</div>

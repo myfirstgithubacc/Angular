@@ -1,0 +1,15 @@
+<form [formGroup]="statusForm" *ngIf="isShowHeader">
+    <app-common-header
+    [entityId]="entityId"
+    [recordStatus]="getUserStatus()"
+    [statusData]="statusData"
+    [buttonSet]="buttonSet"
+    [isStatusEditable]="false"
+    ></app-common-header>
+</form>
+
+<router-outlet></router-outlet>
+
+<ng-container *ngIf="isShowHeader">
+    <event-log [entityId]="entityId" [recordId]="recordId"> </event-log>
+</ng-container>

@@ -1,0 +1,447 @@
+<form #listView [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <div class="div-table-main">
+    <div class="table__div">
+      <div class="row border-bottom py-2 custom-listgrid-header table__div__thead">
+        <!-- input box start -->
+        <div class="tr">
+          <div
+            class="col-sm-{{columnConfigure.firstColumnColSpan?columnConfigure.firstColumnColSpan:'1'}} custom-border th"
+            *ngIf="columnConfigure?.isShowfirstColumn" kendoTooltip>
+
+            <span class="text-dark" title="{{ columnConfigure.firstColumnName | translate }}">{{
+              columnConfigure.firstColumnName | translate }}</span>
+          </div>
+          <ng-container *ngFor="let c of columnData; let in = index;">
+            <div [ngClass]="c.childColumn ? 'th-gropping' : ''" class="custom-border th col-{{ c.colSpan }}"
+              kendoTooltip [style.min-width]="c.columnWidth">
+              <div class="row gropping-row" [ngClass]="c.childColumn ? 'row gropping-row' : ''">
+                <div class="col gropping-cell" [ngClass]="c.childColumn ? 'col gropping-cell' : ''"> <span
+                    title="{{dynamicParamLocalizaion(c.columnName, c.dynamicParam)}}">{{dynamicParamLocalizaion(c.columnName,
+                    c.dynamicParam)}}</span>
+                  <!-- {{columnConfigure|json}} -->
+                  <ng-container *ngIf="c.tooltipVisible">
+                    <tooltip-content [tooltipTitle]="c.tooltipTitile" [isRequired]="c.asterik ?? false"
+                      [tooltipVisible]="true" [tooltipPosition]="'top'"></tooltip-content>
+                  </ng-container>
+                  <xrm-icon name="star" class="required" *ngIf="c.asterik && !c.tooltipVisible"></xrm-icon>
+                </div>
+              </div>
+              <div class="row gropping-row" [ngClass]="c.childColumn ? 'row gropping-row' : ''">
+                <div class="col" [ngClass]="c.childColumn ? 'gropping-cell' : ''" *ngFor="let child of c.childColumn">
+                  <span title="{{child.name}}">{{child.name}}</span>
+                  <xrm-icon name="star" class="required" *ngIf="child.isAstrik"></xrm-icon>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+          <div
+            class="custom-border col-sm-{{columnConfigure.lastColumnColSpan?columnConfigure.lastColumnColSpan:'1'}} addMore th"
+            *ngIf="columnConfigure?.isShowLastColumn">
+            <a *ngIf="!columnConfigure.isAddMoreEnabled" class="text-primary fw-bold text-decoration-none"
+              (click)="onClickAddMore()">
+              <xrm-icon [name]="'plus'" [color]="'dark-blue-color'" [size]="17" class="sw-bolder"></xrm-icon>{{
+              columnConfigure.secondColumnName | translate }}</a>
+            <a *ngIf="columnConfigure.isAddMoreEnabled" class="text-primary fw-bold text-decoration-none">
+              <xrm-icon [name]="'plus'" [color]="'dark-blue-color'" [size]="17"
+                class="sw-bolder"></xrm-icon>{{columnConfigure.secondColumnName | translate}}</a>
+          </div>
+        </div>
+      </div>
+
+      <div formArrayName="fields" class="scroll row custom-body py-2 table__div__tbody" #addMore>
+
+        <ng-container *ngFor="let time of fa.controls; let i = index; trackBy: trackByFn">
+          <div class="tr" [formGroupName]="i" *ngIf="!myForm.value.fields[i].isDisabled">
+            <div
+              class="col-{{columnConfigure.firstColumnColSpan?columnConfigure.firstColumnColSpan:'1'}} custom-body-border td"
+              *ngIf="columnConfigure?.isShowfirstColumn">
+              <div class="div-grid__title">{{ columnConfigure.firstColumnName | translate }}
+                <xrm-icon name="star" class="required"
+                  *ngIf="columnConfigure.asterik && !columnConfigure.tooltipVisible "></xrm-icon>
+              </div>
+              <p>{{ localizePlaceholder(columnConfigure.itemLabelName!=''?columnConfigure.itemLabelName:' ') |
+                translate }} {{ columnConfigure.itemSr? i + 1 : ''}}
+                <xrm-icon *ngIf="(i==0 && columnConfigure.isVisibleAsterick) || myForm.value.fields[i].IsMandatorySign "
+                  name="star" class="required"></xrm-icon>
+              </p>
+            </div>
+
+            <!-- Vertically -->
+            <ng-container *ngFor="let control of columnData; let index = index;">
+              <div class="custom-body-border columnSection{{index}} col-{{ control.colSpan }} td td-gropping"
+                [style.min-width]="control.columnWidth">
+                <div class="div-grid__title">{{control.columnName | translate}}
+                  <!-- {{control | json}} -->
+                  <ng-container *ngIf="control.tooltipVisible">
+                    <tooltip-content [tooltipTitle]="control.tooltipTitile" [isRequired]="control.asterik ?? false"
+                      [tooltipVisible]="true" [tooltipPosition]="'top'"></tooltip-content>
+                  </ng-container>
+                  <xrm-icon name="star" class="required" *ngIf="control.asterik && !control.tooltipVisible"></xrm-icon>
+                </div>
+                <div class="inline-table-cell row gropping-row"
+                  [ngClass]="control.childColumn ? 'row gropping-row' : ''">
+                  <ng-container *ngFor="let c of control.controls; let columnIndex = index">
+                    <ng-container *ngIf="c.controlType == 'label'">
+                      <ng-container *ngIf="!isLabelTextItemArray()">
+                        <div class="col gropping-cell" *ngIf="!c.isNotTranslated">
+                          <app-kendo-label *ngIf="labelText.length != 0"
+                            [label]="isLabelTextItemInArry(labelText[i])"></app-kendo-label>
+                        </div>
+                        <div class="col gropping-cell" *ngIf="c.isNotTranslated">
+                          <p class="label-answere" *ngIf="labelText.length != 0">{{labelText[i]}}</p>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngIf="isLabelTextItemArray()">
+                        <div class="col gropping-cell">
+                          <ng-container *ngIf="labelText.length != 0 && labelText.length > i">
+                            <app-kendo-label [tooltipVisible]="isLabelTextItem(labelText[i], 'tooltipVisible')??false"
+                              [tooltipTitle]="isLabelTextItem(labelText[i], 'tooltipTitle')??''"
+                              [label]="isLabelTextItem(labelText[i], 'label')??''"
+                              [tooltipTitleLocalizeParam]="isLabelTextItem(labelText[i], 'tooltipTitleLocalizeParam')"></app-kendo-label>
+                            <xrm-icon *ngIf="isLabelTextItem(labelText[i], 'asterik')" name="star"
+                              class="required"></xrm-icon>
+                          </ng-container>
+                        </div>
+                      </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="c.controlType == 'listLabel'">
+                      <div class="col gropping-cell">
+
+                        <app-kendo-label [value]="myForm.value.fields[i][''+c.controlId]" [isNumber]="c.isNumeric"
+                          [labelLocalizeParam]="labelLocalizeParam" [decimalPlaces]="c?.decimal??0">
+                        </app-kendo-label>
+                      </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="
+                    c.controlType == 'text' ||
+                    c.controlType == 'email' ||
+                    c.controlType == 'password'
+                  ">
+                      <div class="col gropping-cell">
+                        <div *ngIf="!c.isEditMode; then thenTemplateName; else elseTemplateName"></div>
+                        <ng-template #thenTemplateName>
+                          <app-kendo-label [value]="myForm.value.fields[i][''+c.controlId]"
+                            [labelLocalizeParam]="labelLocalizeParam"></app-kendo-label>
+                        </ng-template>
+                        <ng-template #elseTemplateName>
+
+                          <kendo-formfield>
+                            <kendo-textbox *ngIf="fa.value[i].controlId != 3" appRestrictInput [allowLetter]="true"
+                              [allowNumber]="true" [isSpecialCharacterAllowed]="c.isSpecialCharacterAllowed"
+                              [specialCharactersAllowed]="c.specialCharactersAllowed"
+                              [specialCharactersNotAllowed]="c.specialCharactersNotAllowed"
+                              class="input_textbox addmore-textbox" [disabled]="c.isDisable"
+                              [placeholder]="c?.placeholder | translate" formControlName="{{ c.controlId }}"
+                              (keypress)="onText(i,time,c.controlId)" [maxlength]="c.maxlength"></kendo-textbox>
+                            <app-print-error-message [control]="time.get(c.controlId)"></app-print-error-message>
+                          </kendo-formfield>
+                        </ng-template>
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf="c.controlType == 'maskTextBox'">
+                      <div class="col gropping-cell">
+                        <div *ngIf="!c.isEditMode; then thenTemplateName; else elseTemplateName"></div>
+                        <ng-template #thenTemplateName>
+
+                          <app-kendo-label
+                            [value]="myForm.value.fields[i][''+c.controlId] | maskFormat : c.isZipCode ? maskedTextFormat(i,{'countryId':c.contryId,'zipLength':c.zipLengthSeries,'zipFormat':c.zipFormat}) : c.format "
+                            [tooltipPosition]="" [labelLocalizeParam]="labelLocalizeParam"></app-kendo-label>
+                        </ng-template>
+                        <ng-template #elseTemplateName>
+
+                          <kendo-formfield>
+                            <kendo-maskedtextbox formControlName="{{ c.controlId }}" [attr.id]="'kendoMaskInputList'+ i"
+                              [mask]="!c.isZipCode ? c.format : maskedTextFormat(i,{'countryId':c.contryId,'zipLength':c.zipLengthSeries,'zipFormat':c.zipFormat}) ? maskTypeArray[i].maskType : ''"
+                              [includeLiterals]="false" (blur)="onBlur(c.isZipCode,c.controlId,i)"
+                              (focus)="onFocus(c.isZipCode,c.controlId,i)"
+                              (valueChange)="onMaskedTextBoxChange(i,time,{'controlId': c.controlId,'isZipCode':c.isZipCode,'zipFormat':c.zipFormat,'zipLength':c.zipLengthSeries,'label':c.label})">
+                            </kendo-maskedtextbox>
+                            <app-print-error-message [control]="time.get(c.controlId)"></app-print-error-message>
+                          </kendo-formfield>
+                        </ng-template>
+                      </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="c.controlType == 'maskTypeWithExtension'">
+                      <div class="col gropping-cell">
+                        <div *ngIf="!c.isEditMode; then thenTemplateName; else elseTemplateName"></div>
+                        <ng-template #thenTemplateName>
+                          <app-kendo-label [label]="c.label"
+                            [value]="myForm.value.fields[i][''+c.controlId+0] ? (myForm.value.fields[i][''+c.controlId+0] | maskFormat : phoneMask ) + ' ' + (c.isExtension ? this.localizationService.GetLocalizeMessage('PhoneExt') + ' ' + (myForm.value.fields[i][''+c.controlId+1] | maskFormat : phoneExtMask) : '') : ''"
+                            [tooltipPosition]="" [labelLocalizeParam]="labelLocalizeParam"></app-kendo-label>
+                        </ng-template>
+                        <ng-template #elseTemplateName>
+                          <kendo-formfield>
+                            <span style="display:flex; column-gap: 5px;">
+                              <kendo-maskedtextbox [style.width.px]="170" formControlName="{{ c.controlId+0 }}"
+                                [attr.id]="'kendoPhoneInputList'+i" [mask]="phoneMask"
+                                (valueChange)="onPhoneTextBoxChange(i,time,c.controlId+0)">
+                              </kendo-maskedtextbox>
+                              <kendo-maskedtextbox *ngIf="c.isExtension" [style.width.px]="70"
+                                [attr.id]="'kendoExtInputList'+i" formControlName="{{ c.controlId+1 }}"
+                                [mask]="phoneExtMask"
+                                (valueChange)="onPhoneTextBoxWithExtensionChange(i,time,c.controlId+1)">
+                              </kendo-maskedtextbox>
+                            </span>
+                            <app-print-error-message
+                              [control]="fa.controls[i].get(c.controlId+0)?.invalid ? time.get(c.controlId+0) :  time.get(c.controlId+1)"></app-print-error-message>
+
+                          </kendo-formfield>
+                        </ng-template>
+                      </div>
+                    </ng-container>
+
+
+                    <ng-container *ngIf="c.controlType == 'number'">
+                      <div class="col gropping-cell">
+                        <div *ngIf="!c.isEditMode; then thenTemplateName; else elseTemplateName"></div>
+                        <ng-template #thenTemplateName>
+                          <app-kendo-label [value]="myForm.value.fields[i][''+c.controlId]" [label]="c.label"
+                            [isCurrency]="c.isCurrency" [labelLocalizeParam]="labelLocalizeParam"></app-kendo-label>
+                        </ng-template>
+                        <ng-template #elseTemplateName>
+                          <kendo-formfield>
+                            <kendo-numerictextbox [decimals]=" c.decimals ? c.decimals : appliedDecimal() "
+                              [autoCorrect]="true" [spinners]="false"
+                              [format]="c.format ? c.format : applyFormat(c.decimals)" [min]="c.min" [max]="c.max"
+                              (valueChange)="onNumericChange(i,time,c.controlId)" [maxlength]="c.maxlength"
+                              [disabled]="c.isDisable" formControlName="{{ c.controlId }}" [value]="c.defaultValue"
+                              class="addmore-numericTextbox"></kendo-numerictextbox>
+                            <app-print-error-message [control]="time.get(c.controlId)"></app-print-error-message>
+                          </kendo-formfield>
+                        </ng-template>
+                      </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="c.controlType == 'action'">
+                      <div class="col gropping-cell">
+                        <div class="action-item" kendoTooltip>
+                          <a href="javascript:;" *ngFor="let icon of myForm.value.fields[i][''+c.controlId]"
+                            [title]="icon.title ? icon.title : ''" (click)="actionItem(i,time,icon)">
+                            <xrm-icon [name]="icon.icon" [color]="icon.color" [size]="17" class="sw-bold"></xrm-icon>
+                          </a>
+                        </div>
+                      </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="c.controlType == 'radio'">
+                      <div class="col gropping-cell">
+                        <div *ngIf="!c.isEditMode; then thenTemplateName; else elseTemplateName"></div>
+                        <ng-template #thenTemplateName>
+                          <app-kendo-label [value]="myForm.value.fields[i][''+c.controlId]"
+                            [labelLocalizeParam]="labelLocalizeParam"></app-kendo-label>
+                        </ng-template>
+                        <ng-template #elseTemplateName>
+
+                          <input #radio type="radio" (change)="onRadio(i,time,c.controlId)"
+                            [attr.disabled]="c.isDisable?true:null" [value]="radio.value == 'on'?true:false"
+                            formControlName="{{ c.controlId }}" class="addmore-radio" kendoRadioButton />
+                          <app-print-error-message [control]="time.get(c.controlId)"></app-print-error-message>
+                        </ng-template>
+                      </div>
+                    </ng-container>
+
+
+                    <ng-container *ngIf="c.controlType == 'checkbox'">
+                      <div class="col gropping-cell">
+                        <div *ngIf="!c.isEditMode; then thenTemplateName; else elseTemplateName"></div>
+                        <ng-template #thenTemplateName>
+                          <app-kendo-label [value]="myForm.value.fields[i][''+c.controlId]"
+                            [labelLocalizeParam]="labelLocalizeParam"></app-kendo-label>
+                        </ng-template>
+                        <ng-template #elseTemplateName>
+                          <input #checkbox type="checkbox" (change)="onCheckbox(i,time,c.controlId)"
+                            [value]="c.defaultValue" [attr.disabled]="c.isDisable?true:null"
+                            formControlName="{{ c.controlId }}" class="addmore-checkbox" kendoCheckBox />
+                          <app-print-error-message [control]="time.get(c.controlId)"></app-print-error-message>
+
+                        </ng-template>
+                      </div>
+                    </ng-container>
+
+
+
+                    <ng-container *ngIf="c.controlType == 'time'">
+                      <div class="col gropping-cell">
+                        <div *ngIf="!c.isEditMode; then thenTemplateName; else elseTemplateName"></div>
+                        <ng-template #thenTemplateName>
+                          <app-kendo-label [value]="myForm.value.fields[i][''+c.controlId]"
+                            [labelLocalizeParam]="labelLocalizeParam" [isTime]="true"></app-kendo-label>
+                        </ng-template>
+                        <ng-template #elseTemplateName>
+
+                          <kendo-formfield>
+                            <kendo-timepicker (valueChange)="onTimePicker(i,time,c.controlId)" [format]="timeFormat"
+                              [attr.id]="'timePickerList'+i" [disabled]="c?.isDisabled"
+                              formatPlaceholder="formatPattern" (open)="timePicker(i)" (close)="timePicker(i)"
+                              formControlName="{{ c.controlId }}"></kendo-timepicker>
+                            <app-print-error-message [control]="time.get(c.controlId)"></app-print-error-message>
+                          </kendo-formfield>
+                        </ng-template>
+                      </div>
+                    </ng-container>
+
+
+                    <ng-container *ngIf="c.controlType == 'date'">
+                      <div class="col gropping-cell">
+                        <div *ngIf="!c.isEditMode; then thenTemplateName; else elseTemplateName"></div>
+                        <ng-template #thenTemplateName>
+                          <app-kendo-label [label]="c.label" [value]="myForm.value.fields[i][''+c.controlId]"
+                            [labelLocalizeParam]="labelLocalizeParam" [isDate]="true"></app-kendo-label>
+                        </ng-template>
+                        <ng-template #elseTemplateName>
+                          <kendo-formfield>
+                            <kendo-datepicker calendarType="classic" [format]="dateFormat"
+                              [attr.id]="'datePickerList'+i"
+                              [formatPlaceholder]="{ year: placeholderFormat.year, millisecond: 'S', month: placeholderFormat.month, day: placeholderFormat.day, hour:'h',minute:'m', second:'s' }"
+                              [min]="c.minDate1" [max]="c.maxDate1" formControlName="{{ c.controlId }}"
+                              (open)="datePicker(i)" (close)="datePicker(i)" (blur)="onDatePicker(i,time,c.controlId)">
+                            </kendo-datepicker>
+                            <app-print-error-message [control]="time.get(c.controlId)"></app-print-error-message>
+                          </kendo-formfield>
+                        </ng-template>
+                      </div>
+                    </ng-container>
+
+
+                    <ng-container *ngIf="c.controlType == 'daterange'">
+                      <div class="col gropping-cell">
+                        <div *ngIf="!c.isEditMode; then thenTemplateName; else elseTemplateName"></div>
+                        <ng-template #thenTemplateName>
+                          <app-kendo-label [label]="c.fromLabel" [value]="myForm.value.fields[i][''+c.controlId+0]"
+                            [labelLocalizeParam]="labelLocalizeParam" [isDate]="true"></app-kendo-label>
+                          <app-kendo-label [label]="c.toLabel" [value]="myForm.value.fields[i][''+c.controlId+1]"
+                            [labelLocalizeParam]="labelLocalizeParam" [isDate]="true"></app-kendo-label>
+                        </ng-template>
+                        <ng-template #elseTemplateName>
+
+                          <kendo-formfield>
+                            <kendo-daterange #daterange>
+                              <kendo-floatinglabel text="{{ c.fromLabel | translate }}">
+                                <kendo-dateinput formControlName="{{c.controlId+0}}" [min]="c.minDate" [max]="c.maxDate"
+                                  [rangeValidation]="true" [disabled]="c.isDisabled" [format]="dateTimeformat"
+                                  [formatPlaceholder]="{ year: placeholderFormat.year, millisecond: 'S', month: placeholderFormat.month, day: placeholderFormat.day, hour:'h',minute:'m', second:'s' }"
+                                  kendoDateRangeStartInput>
+                                </kendo-dateinput>
+                              </kendo-floatinglabel>
+                              <kendo-floatinglabel text="{{ c.toLabel | translate }}">
+                                <kendo-dateinput kendoDateRangeEndInput formControlName="{{c.controlId+1}}"
+                                  [min]="c.minDate" [max]="c.maxDate" [rangeValidation]="true" [disabled]="c.isDisabled"
+                                  [format]="dateTimeformat"
+                                  [formatPlaceholder]="{ year: placeholderFormat.year, millisecond: 'S', month: placeholderFormat.month, day: placeholderFormat.day, hour:'h',minute:'m', second:'s' }"
+                                  (valueChange)="onDateRangePicker(i,time,c.controlId+1)">
+                                </kendo-dateinput>
+
+                              </kendo-floatinglabel>
+                            </kendo-daterange>
+                            <app-print-error-message
+                              [control]="fa.controls[i].get(c.controlId+0)?.invalid ? time.get(c.controlId+0) :  time.get(c.controlId+1)"></app-print-error-message>
+
+                          </kendo-formfield>
+                        </ng-template>
+                      </div>
+                    </ng-container>
+
+
+                    <ng-container *ngIf="c.controlType == 'dropdown'">
+                      <div class="col gropping-cell">
+
+                        <div *ngIf="!c.isEditMode; then thenTemplateName; else elseTemplateName"></div>
+                        <ng-template #thenTemplateName>
+                          <app-kendo-label [value]="myForm.value.fields[i][''+c.controlId]"
+                            [labelLocalizeParam]="labelLocalizeParam"></app-kendo-label>
+                        </ng-template>
+                        <ng-template #elseTemplateName>
+
+                          <kendo-formfield>
+                            <kendo-combobox [data]="c.defaultValue == undefined ? listItems :  c.defaultValue"
+                              appRestrictInput [allowLetter]="true" [allowNumber]="true"
+                              [isSpecialCharacterAllowed]="c.isSpecialCharacterAllowed"
+                              [specialCharactersAllowed]="c.specialCharactersAllowed"
+                              [kendoDropDownFilter]="filterSettings"
+                              [specialCharactersNotAllowed]="c.specialCharactersNotAllowed" [filterable]="true"
+                              textField="Text" valueField="Value" [disabled]="c.isDisable" #combobox
+                              (valueChange)="onDropDown(i,time,c.controlId)"
+                              [valuePrimitive]="c.isValuePrimitiveAllowed"
+                              placeholder="{{ c?.placeholder | translate }}" formControlName="{{ c.controlId }}"
+                              class="addmore-comboBox">
+                            </kendo-combobox>
+                            <app-print-error-message [control]="time.get(c.controlId)"></app-print-error-message>
+                          </kendo-formfield>
+                        </ng-template>
+                      </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="c.controlType == 'textarea'">
+                      <div class="col gropping-cell">
+                        <div *ngIf="!c.isEditMode; then thenTemplateName; else elseTemplateName"></div>
+                        <ng-template #thenTemplateName>
+                          <app-kendo-label [value]="myForm.value.fields[i][''+c.controlId]"
+                            [labelLocalizeParam]="labelLocalizeParam"></app-kendo-label>
+                        </ng-template>
+                        <ng-template #elseTemplateName>
+
+                          <kendo-formfield>
+                            <kendo-textarea appRestrictInput resizable="vertical" [allowLetter]="true"
+                              [allowNumber]="true" [isSpecialCharacterAllowed]="c.isSpecialCharacterAllowed"
+                              [specialCharactersAllowed]="c.specialCharactersAllowed"
+                              [specialCharactersNotAllowed]="c.specialCharactersNotAllowed" [maxlength]="c.maxlength"
+                              (valueChange)="onTextArea(i,time,c.controlId)" [disabled]="c.isDisable"
+                              [value]="c.defaultValue" [placeholder]="c?.placeholder | translate"
+                              formControlName="{{ c.controlId }}" class="addmore-textarea"></kendo-textarea>
+                            <app-print-error-message [control]="time.get(c.controlId)"></app-print-error-message>
+                          </kendo-formfield>
+                        </ng-template>
+                      </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="c.controlType == 'switch'">
+                      <div class="col gropping-cell">
+                        <kendo-switch
+                          *ngIf="(myForm.value.fields[i].IsShowHide == null || myForm.value.fields[i].IsShowHide == undefined) ? true : c.dependableVisibility ? myForm.value.fields[i].IsShowHide: true"
+                          [disabled]="c.isDisable" formControlName="{{ c.controlId }}" [onLabel]="c.onLabel"
+                          [offLabel]="c.offLabel" (valueChange)="onSwitchChange(i,time,c.controlId)"></kendo-switch>
+                        <app-print-error-message [control]="time.get(c.controlId)"></app-print-error-message>
+                      </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="c.controlType == 'multi_select_dropdown'">
+                      <div class="col gropping-cell">
+                        <kendo-formfield>
+                          <kendo-multiselect [data]="c.defaultValue == undefined ? listItems :  c.defaultValue"
+                            textField="Text" appRestrictInput [allowLetter]="true" [allowNumber]="true"
+                            [isSpecialCharacterAllowed]="c.isSpecialCharacterAllowed"
+                            [specialCharactersAllowed]="c.specialCharactersAllowed"
+                            [specialCharactersNotAllowed]="c.specialCharactersNotAllowed"
+                            [popupSettings]="{ popupClass: 'font-reduced' }" valueField="Value" [disabled]="c.isDisable"
+                            [valuePrimitive]="true" formControlName="{{ c.controlId }}"
+                            [placeholder]="c?.placeholder | translate"
+                            (valueChange)="onMultiDropDown(i,time,c.controlId)" [kendoDropDownFilter]="filterSettings"
+                            class="addmore-multiselect">
+                          </kendo-multiselect>
+                          <app-print-error-message [control]="time.get(c.controlId)"></app-print-error-message>
+                        </kendo-formfield>
+                      </div>
+                    </ng-container>
+
+                  </ng-container>
+                </div>
+              </div>
+            </ng-container>
+            <div
+              class="custom-body-border col-{{columnConfigure.lastColumnColSpan?columnConfigure.lastColumnColSpan:'1'}} addMore td"
+              *ngIf="columnConfigure?.isShowLastColumn">
+              <div *ngIf="i != 0" class="list-view list-view__border delete">
+                <a (click)="removeGroup(i)">
+                  <xrm-icon [name]="'trash-2'" [color]="'red-color'" [size]="17" class="sw-bold"></xrm-icon>
+                  {{ columnConfigure.deleteButtonName | translate }}</a>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</form>

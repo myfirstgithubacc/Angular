@@ -1,0 +1,193 @@
+<!-- Main Body Section-->
+<div class="app-content__body floating-layout floating-layout__view-layout ">
+
+    <!-- Card Section-->
+    <div class="card">
+        <!-- Card Header Section-->
+        <div class="card__header">
+            <h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+            <div class="card__header-icon">
+            </div>
+        </div>
+        <!-- End Card Header Section-->
+        <!-- Card Body Section-->
+        <div class="card__body">
+            <!--start row Section-->
+            <div class="row">
+                <!-- input box start -->
+                <div class="row">
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [value]="laborCategory.SectorName" [label]="'Sector'">
+                        </app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+
+                        <app-kendo-label [value]="laborCategory.LaborCategoryName" [label]="'LaborCategory'">
+                        </app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box end -->
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [value]="laborCategory.MspUserName" [label]="'MSPProgramManager'">
+                        </app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box end -->
+            </div>
+        
+                <!-- input box start -->
+
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [value]="laborCategory.LaborCategoryTypeLocalizedKey"
+                            [label]="'LaborCategoryType'">
+                        </app-kendo-label>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+                <!-- input box start -->
+                <div class="row">
+                <div class="col-sm-6 col-md-6" *ngIf="laborCategory.LaborCatType == 85">
+                    <div class="form-group">
+                        <app-kendo-label [value]="laborCategory.MaxProfilesPerStaffing"
+                            [label]="'MaximumProfilesPerStaffingAgency'">
+                        </app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6" *ngIf="laborCategory.LaborCatType == 85">
+                    <div class="form-group">
+
+                        <app-kendo-label [value]="laborCategory.MaxProfileTotal"
+                            [label]="'MaximumProfilesTotalPerPosition'">
+                        </app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box end -->
+                 <!-- input box start -->
+                 <div class="col-sm-6 col-md-6" *ngIf="laborCategory.LaborCatType == 85">
+                    <div class="form-group">
+                        <app-kendo-label [value]="laborCategory.PayrollMarkUp" [label]="'PayrollMarkUpPercentage'">
+                        </app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box end -->
+            </div>
+                <!-- input box start -->
+                <div class="row">
+                    <div class="col-sm-6 col-md-6" *ngIf="laborCategory.LaborCatType == 85">
+                        <div class="form-group">
+
+                            <app-kendo-label [value]="laborCategory.IsExpressLaborCategory ? 'Yes' : 'No'"
+                                [label]="'ExpressLaborCategory'" [tooltipTitle]="'ExpressLaborCategoryTooltipMessage'"
+                                [tooltipVisible]="true">
+                            </app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box end -->
+                    <!-- input box start -->
+
+                    <div class="col-sm-6 col-md-6" *ngIf="laborCategory.IsExpressLaborCategory">
+                        <div class="form-group">
+                            <app-kendo-label [value]="laborCategory.CandidateHiredBy"
+                                [label]="'CandidateToBeSelectedBy'"
+                                [tooltipTitle]="'CandidateToBeSelectedByTooltipMessage'" [tooltipVisible]="true">
+                            </app-kendo-label>
+                        </div>
+                    </div>
+                </div>
+                <!-- input box end -->
+            </div>
+            <!--End row Section-->
+        </div>
+        <!--End Card Body Section-->
+
+    </div>
+
+
+    <div class="card" *ngIf="laborCategory.IsAlternatePricingModel">
+        <!-- Card Header Section-->
+        <div class="card__header">
+            <h4 class="card__heading">{{'PricingModelConfiguration' | translate}}</h4>
+            <div class="card__header-icon">
+            </div>
+        </div>
+        <!-- End Card Header Section-->
+        <!-- Card Body Section-->
+        <div class="card__body">
+            <div class="row">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [value]="laborCategory.IsAlternatePricingModel ? 'Yes' : 'No'"
+                                [label]="'AlternatePricingModelConfiguration'"
+                                [tooltipTitle]="'AlternatePricingModelConfigurationTooltipMessage'"
+                                [tooltipVisible]="true">
+                            </app-kendo-label>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <tooltip-content [tooltipVisible]="true" [label]="'PricingModel'" [value]="pricingModelLabel" 
+                            [isHtmlContent]="true" [tooltipTitle]="'Pricing_Model_Tooltip'">          
+                           </tooltip-content>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <tooltip-content [tooltipVisible]="true" [label]="'BillRateValidation'" [value]="laborCategory.BillRateValidationLocalizedKey" 
+                            [isHtmlContent]="true" [tooltipTitle]="'Bill_Rate_Validation_Tooltip'">          
+                           </tooltip-content>
+                        </div>
+                    </div>
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <tooltip-content [tooltipVisible]="true" [label]="'CostEstimatingType'" [value]="laborCategory.CostEstimationTypeLocalizedKey" 
+                             [isHtmlContent]="true" [tooltipTitle]="'Cost_Estimation_Type_Tooltip'">          
+                            </tooltip-content>
+                        </div>
+                    </div>
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <tooltip-content [tooltipVisible]="true" [label]="'DefineOTRateType'" [value]="laborCategory.OtRateTypeLocalizedKey"  [isHtmlContent]="true" [tooltipTitle]="'OverTimeHoursBilledAtTooltipMessage'">          
+                            </tooltip-content>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Card Section-->
+    <ng-container *ngIf="sectorId > 0">
+        <app-udf-implementation [entityId]="entityID" [sectorId]="sectorId" [recordUKey]="recordUKey"
+            [parentsInfos]="udfCommonMethods.getParentsInfo()" [actionTypeId]="actionTypeId">
+        </app-udf-implementation>
+    </ng-container>
+
+    <div class="page-footer">
+        <div class="btn-box btn-box--center">
+            <button type="button" kendoButton themeColor="primary" routerLink="/xrm/master/labor-category/list">{{'Back'
+                | translate}}</button>
+        </div>
+    </div>
+
+</div>
+
+<!-- Main Body Section-->

@@ -1,0 +1,38 @@
+<div class="master-search">
+    <div class="row">
+        <div class="col-md-12 master-search__wapper">
+            <div class="master-search__search-box">
+                <div class="custom-search">
+                    <div class="custom-search__input-box">
+                        <app-search
+                                [isServerSidePagingEnable]="isServerSidePagingEnable"
+                                [placeholder]="'SearchFor'" [EntityId]="entityId"
+                                [columnOptions]="columnOptions"
+                                (onSearch)="OnSearch($event)"
+                        ></app-search>
+                    </div>
+                    <app-advance-search  #advanceSearch [apiAddress]="advApiAddress"  
+                                         [EntityId]="entityId"
+                                         [isServerSidePagingEnable]="isServerSidePagingEnable"                                                                     
+                                         (selectedFilter)="OnFilter($event)"
+                                         [isApiGateway]="true"
+                                         >
+                    </app-advance-search>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <grid-view  [isServerSidePagingEnable]="isServerSidePagingEnable"
+    [apiAddress]="apiAddress"
+    [searchText]="searchText" [advFilterData]="advFilterData"
+    [columnOptions]="columnOptions" [actionSet]="actionSet"
+    [kendoGridSelectedBy]="'EmailLogUkey'"
+    [fileName]="generateExportFileName()" [entityId]="entityId"
+    [multiSelect]="false" 
+    [showTabs]="false"
+    [pageSize]="pageSize" [isApiGateway]="true"></grid-view>
+</div>
+

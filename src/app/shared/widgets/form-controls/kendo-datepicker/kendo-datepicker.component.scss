@@ -1,0 +1,45 @@
+.k-datepicker {
+	.k-icon-button {
+		border: none;
+	width: calc(1.4285714286em + 22px);
+	background: transparent;
+}
+}
+.k-input-solid.k-dateinput:focus,
+.k-timepicker.k-focus .k-input-solid.k-dateinput {
+	border: none !important;
+}
+.k-calendar .k-calendar-td.k-selected .k-calendar-cell-inner,
+.k-calendar .k-calendar-td.k-selected .k-link {
+	border-color: rgba(0, 0, 0, 0.08);
+	color: white;
+	background-color: var(--color-primary);
+}
+.k-calendar .k-calendar-td.k-selected:hover .k-calendar-cell-inner,
+.k-calendar .k-calendar-td.k-selected:hover .k-link,
+.k-calendar .k-calendar-td.k-selected.k-hover .k-calendar-cell-inner,
+.k-calendar .k-calendar-td.k-selected.k-hover .k-link {
+	color: white;
+	background-color: var(--color-primary);
+}
+.k-calendar {
+	.k-calendar-view {
+		.k-today {
+			color: var(--color-primary);
+		}
+	}
+}
+.k-calendar .k-nav-today,
+.k-calendar .k-calendar-nav-today {
+	color: var(--color-primary);
+}
+.inner-wrapper .k-calendar,
+.inner-wrapper .k-calendar table thead,
+.inner-wrapper .k-calendar,
+.inner-wrapper .k-calendar table td {
+	color: var(--color-primary);
+}
+.inner-wrapper .k-calendar,
+.inner-wrapper .k-calendar table {
+	background-color: var(--color-primary);
+}

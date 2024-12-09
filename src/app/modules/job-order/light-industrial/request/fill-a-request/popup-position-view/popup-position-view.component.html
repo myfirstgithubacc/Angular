@@ -1,0 +1,107 @@
+<kendo-dialog *ngIf="isVisible"
+    class="fill-requestv2-dialog fill-requestv2-dialog-popup dialog floating-layout floating-layout__view-layout">
+    <a href="javascript:;" class="close-dailog" (click)="closePopup()"><xrm-icon name="x" color="black-color"
+            [size]="18" [strokeWidth]="2.5"></xrm-icon></a>
+    <h3 class="dailog__title">{{'ViewaCandidate' | translate}}</h3>
+    <div class="body view-layout">
+        <div class="right3-card">
+            <div class="card__header pl-0">
+                <h4 class="card__heading">{{candidateDetails?.FullName}} ({{candidateDetails?.CandidatePoolCode}})</h4>
+            </div>
+            <div class="card">
+                <div class="card__header">
+                    <h4 class="card__heading">{{'RequestDetails' | translate}}</h4>
+                    <div class="card__header-icon">
+                    </div>
+                </div>
+                <div class="card__body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'ScheduleStartDate'"
+                                    [value]="scheduleStartDate"></app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'BaseWageRate'" [value]="candidateDetails?.BaseWageRate"
+                                    [decimalPlaces]="2" [isNumber]="true" [labelLocalizeParam]="localizeCurrency"
+                                    [tooltipVisible]="true"
+                                    [tooltipTitle]="'FillARequestBaseWageRateTooptip'"></app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'SubmittedMarkupPer'"
+                                    [value]="candidateDetails?.SubmittedMarkup" [decimalPlaces]="3"
+                                    [isNumber]="true"></app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'StaffingAgencySTBill'"
+                                    [labelLocalizeParam]="localizeCurrency" [value]="candidateDetails?.VendorStRate"
+                                    [decimalPlaces]="2" [isNumber]="true"></app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-sm-4 col-md-4">
+                            <app-benefit-adder *ngIf="recordId" [requestId]="requestId" [reqLibraryId]="reqLibraryId"
+                                [entityId]="requestEntityId" [sectorId]="sectorId" [locationId]="locationId"
+                                (onDataPicked)="getBenefitAdderData($event)"></app-benefit-adder>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <ng-container *ngIf="recordId > 0">
+                <app-onboarding-requirements #onboarding [entityId]="entityId" [sectorId]="sectorId"
+                    [locationId]="locationId" [recordId]="recordId" [isPendingResultSection]="true"
+                    [actionTypeId]="actionTypeId" [isDrugScreen]="isDrugScreen" [isBackgroundCheck]="isBackgroundCheck">
+                </app-onboarding-requirements>
+            </ng-container>
+
+            <div class="card" [hidden]="!hasUdfData">
+                <div class="card__header">
+                    <h4 class="card__heading">{{'OtherDetailsUDFs' | translate}}</h4>
+                    <div class="card__header-icon">
+                    </div>
+                </div>
+                <div class="card__body">
+                    <div class="row">
+                        <app-udf-implementation [entityId]="entityId" [sectorId]="sectorId" [recordUKey]="recordUKey"
+                            [recordId]="recordId" [showTitle]="false" [actionTypeId]="actionTypeId"
+                            [parentsInfos]="udfCommonMethods.getParentsInfo()" (hasUDFLength)="getUdfLength($event)"
+                            [isMasterScreen]="false">
+                        </app-udf-implementation>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" [hidden]="!hasDmsData">
+                <div class="card__header">
+                    <h4 class="card__heading">{{'Documents' | translate}}</h4>
+                    <div class="card__header-icon">
+                    </div>
+                </div>
+                <div class="card__body">
+                    <div class="row">
+                        <ng-container>
+                            <app-dms-implementation #dms [workFlowId]="entityId" [userGroupId]="userGroupId"
+                                [sectorId]="sectorId" [uploadStageId]="uploadStageId" [actionTypeId]="actionTypeId"
+                                [recordId]="recordId" [showTitle]="false" (hasDMSLength)="getDmsLength($event)">
+                            </app-dms-implementation>
+                        </ng-container>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <button type="button" kendoButton themeColor="primary" (click)="closePopup()">{{'Back' |
+                    translate}}</button>
+            </div>
+        </div>
+    </div>
+
+</kendo-dialog>

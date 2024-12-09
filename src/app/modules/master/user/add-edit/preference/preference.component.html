@@ -1,0 +1,253 @@
+<div class="">
+    <form [formGroup]="preferenceForm">
+        <div class="card">
+            <div class="card__header">
+                <h4 class="card__heading">{{'GeneralPreferences'|translate}}</h4>
+                <div class="card__header-icon">
+                </div>
+            </div>
+            <div class="card__body">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-dropdown [label]="'LandingPageUponLogin'" [placeholder]="'-Select-'"
+                                [isAppend]="true" [isRequired]="true" [controlName]="'LandingPageId'"
+                                [list]="inputProperties.landingPageList">
+                            </app-kendo-dropdown>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-dropdown [list]="inputProperties.languageList" [isRequired]="true"
+                                [isAppend]="false" [label]="'Language1'" [controlName]="'UserLanguageIdPreference'"
+                                [placeholder]="'-Select-'" [isRequired]="true">
+                            </app-kendo-dropdown>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-dropdown [list]="inputProperties.timezonelist" [label]="'TimeZone'"
+                                [isAppend]="true" [isRequired]="true" [controlName]="'UserTimezoneIdPreference'"
+                                [placeholder]="'-Select-'" [isRequired]="true">
+                            </app-kendo-dropdown>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-dropdown [list]="inputProperties.dateFormatList" [label]="'DateFormat'"
+                                [controlName]="'DateFormat'" [isRequired]="true" [placeholder]="'-Select-'">
+                            </app-kendo-dropdown>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ng-container *ngIf="preferenceForm.get('IsSelfRecord')?.value">
+            <div class="card">
+                <div class="card__header">
+                    <h4 class="card__heading">{{'LoginDetails'| translate}}</h4>
+                </div>
+                <div class="card__body">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'LoginID'"
+                                    [value]="inputProperties.userDetails.UserName"></app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-switch [label]="'ChangeLoginId'" [controlName]="'IsUserNameChange'"
+                                    [onLabel]="'Yes'" [offLabel]="'No'"
+                                    (onChangeSwitch)="onChangeUserIDSwitch($event)"></app-kendo-switch>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6" *ngIf="preferenceForm?.get('IsUserNameChange')?.value">
+                            <div class="form-group">
+                                <app-textbox [controlName]="'UserNameNew'" [label]="'NewLoginID'" [isRequired]="true"
+                                    [isSpecialCharacterAllowed]="true" [specialCharactersAllowed]="['@','.','_','-']"
+                                    [maxCharacters]="50">
+                                </app-textbox>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <span class="data-answere"><a href="javascript:;" (click)="changePassword()">Change
+                                        Password</a></span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card__header">
+                    <h4 class="card__heading">{{'SecurityQuestions'|translate}}</h4>
+                </div>
+                <div class="card__body">
+
+                    <div class="col-sm-12 col-md-12 list-view ">
+                        <div class="form-group">
+                            <kendo-grid [data]="preferenceForm.get('userSecQuestionsUpdateDtos')?.value" class="grid security-question__grid">
+                                <kendo-grid-column media="(max-width: 450px)" title="">
+                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                        <dl>
+                                            <dt>#</dt>
+                                        </dl>
+                                        <dl>
+                                            <dt>{{'SecurityQuestion' | translate}}</dt>
+                                            <dd>
+                                                <kendo-combobox></kendo-combobox>
+                                            </dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>{{'Answer' | translate}}</dt>
+                                            <dd>
+                                                <kendo-textbox></kendo-textbox>
+                                            </dd>
+                                        </dl>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column field="No" [width]="35" title="#" media="(min-width: 300px)">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        {{rowIndex+1}}
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column [width]="200" field="question"
+                                    [title]="'SecurityQuestion' | translate" [headerClass]="'required'">
+                                    <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">
+                                        <ng-container formArrayName="userSecQuestionsUpdateDtos"
+                                            *ngFor="let item of userSecQuestionsUpdateDtos.controls; let i = index;">
+                                            <div [formGroup]="formGroup(item)">
+                                                <div *ngIf="rowIndex == i">
+                                                    <app-kendo-dropdown [controlName]="'secQuestionId'"
+                                                        [isAppend]="true"
+                                                        [list]="getSecurityQuestionUnique(item.get('secQuestionId')?.value?.Value)"
+                                                        [placeholder]="'-Select-'"
+                                                        (onChange)="onChangeSecurityQuestion(i)">
+                                                    </app-kendo-dropdown>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column class="close-icon-default" [width]="200" field="answer"
+                                    [title]="'Answer'" [headerClass]="'required'">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <ng-container formArrayName="userSecQuestionsUpdateDtos"
+                                            *ngFor="let item of userSecQuestionsUpdateDtos.controls; let i = index;">
+                                            <div [formGroup]="formGroup(item)">
+                                                <div *ngIf="rowIndex == i">
+                                                    <app-textbox [label]="''" [type]="'password'" [placeholder]="''"
+                                                        [controlName]="'answer'"></app-textbox>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column [width]="70" media="(min-width: 450px)">
+                                    <ng-template kendoGridHeaderTemplate let-rowIndex="rowIndex">
+                                        <a href="javascript:;" (click)="addmoreSecurityQuestion(true,0)"
+                                            *ngIf="(userSecQuestionsUpdateDtos?.controls || []).length <7"
+                                            class="add-more__link">
+                                            <xrm-icon [name]="'plus'" [color]="'dark-blue-color'" [size]="14" class="sw-bolder"></xrm-icon>
+                                            {{'AddMore' | translate}}</a>
+                                    </ng-template>
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <a href="javascript:;" class="red-color" *ngIf="rowIndex > 1"
+                                            (click)="addmoreSecurityQuestion(false,rowIndex)">
+                                            <xrm-icon [name]="'trash-2'" [color]="'red-color'" [size]="16" class="sw-bold"></xrm-icon>
+                                            {{'Delete' | translate}}
+                                        </a>
+                                    </ng-template>
+                                </kendo-grid-column>
+                            </kendo-grid>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </ng-container>
+    </form>
+
+    <div class="page-footer">
+      <div class="btn-box d-flex justify-content-end">
+          <button kendoButton fillMode="outline" themeColor="primary" (click)="Cancel()">{{'Cancel' | translate}}</button>
+          <button kendoButton appScrollOnTop themeColor="primary" appFocusOnError [listformName]="[preferenceForm]"
+              (click)="updatePreference()" [disabled]="ShowButtonEnableDisable()">{{'Save' | translate}}</button>
+      </div>
+  </div>
+
+    <ng-container *ngIf="isAccessibleForMSPOrClient()">
+        <div class="card my-3">
+            <div class="card__header">
+                <h4 class="card__heading">{{'ProxyUser'|translate}}</h4>
+            </div>
+            <div class="card__body">
+                <form [formGroup]="proxyUserForm">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-dropdown [label]="'ProxyUser'" [controlName]="'ProxyUserNo'"
+                                    [list]="inputProperties.proxyuserList" [isRequired]="true"
+                                    >
+                                </app-kendo-dropdown>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-multiselect-dropdown [list]="inputProperties.proxyAuthorizationTypesList"
+                                    [label]="'AuthorizedFor'" [controlName]="'ProxyAuthorizationTypeIds'"
+                                    [isRequired]="true" (onChange)="onchangeAuthorizationTypes($event)">
+                                </app-kendo-multiselect-dropdown>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <kendo-label text="{{'EffectiveDateRange' | translate}}">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <app-kendo-datepicker [controlName]="'StartDate'" [label]="'From'"
+                                                [isRequired]="true" [minDate]="minStartDate"
+                                                (onChange)="addValidationStartEndDate('StartDate')"></app-kendo-datepicker>
+                                        </div>
+                                        <div class="col-6">
+                                            <app-kendo-datepicker [controlName]="'EndDate'" [label]="'To'"
+                                                [isRequired]="true" [minDate]="minEndDate"
+                                                (onChange)="addValidationStartEndDate('EndDate')"></app-kendo-datepicker>
+                                        </div>
+                                    </div>
+                                </kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="page-footer p-0 mb-0">
+                                <div class="btn-box d-flex justify-content-end">
+                                    <button type="button" kendoButton themeColor="primary" [disabled]="proxyUserForm.untouched"
+                                        (click)="addProxy()">{{ 'Save' | translate}}</button>
+                                    <button *ngIf="isProxyEditMode" kendoButton fillMode="outline" class="ml-5"
+                                        themeColor="primary" (click)="Reset()">{{'Reset' | translate}}</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="list-view card__card-remove">
+                                <grid-view [height]="300" [showTabs]="false" [gridData]="userProxyGrid"
+                                    [columnOptions]="columnOptions" [actionSet]="actionSet" [tabOptions]="tabOptions"
+                                    [kendoGridSelectedBy]="'Id'" [fileName]="'User Proxy List'" [actionItemCategoryField]="'StatusId'"
+                                    [pageSize]="pageSize"></grid-view>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </ng-container>
+</div>
+

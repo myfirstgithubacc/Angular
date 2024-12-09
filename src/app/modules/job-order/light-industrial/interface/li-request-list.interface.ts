@@ -1,0 +1,31 @@
+export interface IRequestDetailsListData {
+    RequestId: number;
+    Ukey: string;
+    RequestCode: string;
+    SectorName: string;
+    RequestingManagerName: string;
+    RequestingManagerId: number;
+    Orglevel1Name: string;
+    Orglevel2Name: string | null;
+    Orglevel3Name: string | null;
+    Orglevel4Name: string | null;
+    WorkLocationName: string;
+    JobCategoryName: string;
+    ReasonForRequestName: string;
+    ShiftName: string;
+    FilledRequested: string;
+    OpenSlots: number;
+    CostAccountingCode: string;
+    Status: string;
+    StatusId: number;
+    Disabled: boolean;
+    RequestDate: string;
+    CreatedBy: number;
+    IsManualBroadcast: boolean;
+    IsManualBroadcastRequired: boolean;
+    IsReviewActionRequired: boolean;
+    IsAllowedToEdit: boolean;
+    IsAllowedToBroadcast: boolean;
+    IsAllowedToFill: boolean;
+    ModifiedOn: string | null;
+  }

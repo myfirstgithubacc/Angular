@@ -1,0 +1,405 @@
+<div class="app-content__body timesheet__page">
+    <form [formGroup]="AddEditTimeEntryForm">
+        <form [formGroup]="AddEditTimeEntryForm">
+            <div class="row arrow-row">
+                <div class="col-sm-12 arrow-btn-div">
+                    <app-weekending-dropdown [WeekendingList]="weekendList"
+                        (OnWeekendingDropdownChange)="onWeekendingDropdownChange($event)"
+                        [entityId]="entityId"
+                        [AssignmentId]="currAssignmentId"
+                        [ScreenId]="2">
+                    </app-weekending-dropdown>
+                </div>
+            </div>
+        </form>
+
+        <div class="card">
+            <!-- Card Header Section-->
+            <div class="card__header pb-0">
+                <h4 class="card__heading">{{ periodHeading }} <br> <span *ngIf="isInOutEnable" class="card__heading-timeinfo">( <xrm-icon [name]="'clock-in-out'" class="sw-bold"
+                    [color]="'dark-blue-color'" [size]="16"></xrm-icon> {{'ClickIconAdjustBillableHoursForDay' | translate}} )</span></h4>
+                <div class="card__header-icon">
+                    <a href="javascript:;" kendobutton title="{{'TimeConversionGuide' | translate}}"
+                        data-bs-toggle="offcanvas" data-bs-target="#hourlyInputDetails" class="color-primary">
+                        {{'ViewTimeConversionGuide' | translate}}
+                    </a>
+                </div>
+            </div>
+
+            <!-- End Card Header Section-->
+            <!-- Card Body Section-->
+            <div class="card__body">
+                <div class="row">
+                    <div class="list-view time-adjustment">
+                        <div class="row">
+                            <div  #scrollTo class=" col-sm-12 col-md-12">
+                                <form [formArrayName]="'TimeEntryDetails'">
+                                    <ng-template #template let-anchor>
+                                        <span>{{ anchor.nativeElement.innerText }}</span>
+                                    </ng-template>
+                                    <div kendoTooltip [tooltipTemplate]="template" filter=".k-grid td"
+                                    (mouseover)="showTooltip($event)">
+                                <kendo-grid [data]="formArray.controls" [resizable]="true"  [rowClass]="rowCallback">
+                                    <kendo-grid-column media="(max-width: 920px)" title="Items">
+                                        <ng-template kendoGridHeaderTemplate>
+                                            <div class="grid_total_ammount" kendoTooltip>
+                                                <a href="javascript:;" class="add-more__link"
+                                                (click)="dialogPopupOperations().openDialog()"
+                                                title="{{ 'AddRow' | translate }}">
+                                                <xrm-icon [name]="'plus'" [color]="'dark-blue-color'" [size]="14" class="sw-bolder"></xrm-icon>
+                                                {{ 'AddRow' | translate
+                                                }}</a>
+                                                <span>|</span>
+                                               
+                                                <a *ngIf="formArray.controls.length && (this.columnWiseTotal.Total > 0)" href="javascript:;"
+                                                    kendobutton
+                                                    title="{{'ExpandedTimesheetDetails' | translate}}"            
+                                                    (click)="openExpandedTimesheet()">
+                                                    <xrm-icon [name]="'clipboard-clock'" [color]="'dark-blue-color'" [size]="16" class="sw-bold"></xrm-icon>
+                                                </a>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                            <!-- template for mobile -->
+                                            <dl>
+                                                <dt>{{ 'CostAccountingCode' | translate }}</dt>
+                                                <dd>
+                                                    {{dataItem.get('CostAccountingCodeName').value}}
+                                                </dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>{{ 'Shift' | translate}}</dt>
+                                                <dd>
+                                                    {{dataItem.get('ShiftName').value}}
+                                                </dd>
+                                            </dl>
+                                            <dl>
+                                           <dt>{{ 'HoursType' | translate }}</dt>
+                                                <dd>
+                                                    <div *ngIf="isInOutEnable &&  rowIndex === 0">
+                                                        <strong class="merged-cell">
+                                                           {{'WorkedHours' | translate}}  <span>(ST+OT+DT)</span>
+                                                        </strong>
+                                                    </div>
+                                                    {{dataItem.get('HoursTypeName').value}}
+                                                </dd>
+                                            </dl>
+
+                                            <dl *ngFor="let headerdata of dayOrder;">
+                                                <dt>{{headerValue[headerdata] | date: 'EEE, MMM d'}}</dt>
+                                                <dd>
+
+                                                     <strong *ngIf="isInOutEnable  && rowIndex == 0" class="billableHours-value billable-hour-icon">
+                                        <app-numeric-box [listControlName]="getFormControl(headerdata, rowIndex)" [decimals]="2"  [max]="99.99"  [min]="0"  [isEditMode]="true"></app-numeric-box>
+                                         <a class="ms-1" href="javascript:;" kendobutton *ngIf="getFormControl(headerdata, 0).value > 0" (click)="clickForAdjustIcon(getFormControl(headerdata, 0).value, headerValue[headerdata])"  kendoTooltip
+                                        class="dayDetails_popup">
+                                        <xrm-icon [name]="'clock-in-out'" class="sw-bold"
+                                            [color]="'dark-blue-color'" [size]="16"  
+                                            title="{{'InOutDetails' | translate}}"></xrm-icon>
+                                    </a>
+                                </strong>
+                                <app-numeric-box
+                                *ngIf="dataItem.get('HoursTypeName').value != 'PT' && (isInOutEnable ? rowIndex > 0 : true)"
+                                [listControlName]="getFormControl(headerdata, rowIndex)"
+                                [decimals]="2"
+                                [isReadOnly]="getFormControl(headerdata, 0).value == 0 && isInOutEnable"
+                                [maxlength]="5"
+                                (click)="isInOutEnable ? clickOnBox($event,getFormControl(headerdata, 0).value, headerValue[headerdata]) : null"
+                                [ngClass]="{'k-disabled': checkReadOnlyValidation(dataItem.value.CostAccountingCodeId, headerdata, rowIndex)}"
+                                [isDisable]="checkReadOnlyValidation(dataItem.value.CostAccountingCodeId, headerdata, rowIndex)"
+                                [max]="99.99"
+                                [min]="0">
+                              </app-numeric-box>
+                              <div *ngIf="dataItem.get('HoursTypeName').value == 'PT' && !dataItem.get('ShiftName').value && (mealBreakData.MealBreakPenalty ||
+                              mealBreakData.RestBreakPenalty)">
+                                   <app-numeric-box [listControlName]="getFormControl(headerdata, formArray.controls.length-1)" [isEditMode]="true" ></app-numeric-box>
+                               </div>
+                                                </dd>
+                                                <app-print-error-message
+                                                    [control]="getFormControl(headerdata, rowIndex)">
+                                                </app-print-error-message>
+                                            </dl>
+                                           
+                                            <dl>
+                                                <dt>{{'Total' | translate}} : <span *ngIf="(rowIndex !== 0 || !isInOutEnable)">{{this.gridOperations().rowWiseTotal(rowIndex).toFixed(2)}}</span> | <a *ngIf="(rowIndex !== 0 || !isInOutEnable) && (rowIndex !== formArray.controls.length - 1 || (!mealBreakData.MealBreakPenalty && !mealBreakData.RestBreakPenalty))"
+                                                    href="javascript:;" class="red-color" title="{{ 'Delete' | translate }}" (click)="deleteLineItem(rowIndex)">
+                                                     <xrm-icon [name]="'trash-2'" [color]="'red-color'" [size]="16" class="sw-bold"></xrm-icon>
+                                                     {{ 'Delete' | translate }}
+                                                 </a>
+
+                                            </dt>
+                                            </dl>
+                                        </ng-template>
+                                        </kendo-grid-column>
+
+                                    <kendo-grid-column title="{{ 'CostAccountingCode' | translate }}"    field="CostAccountingCodeName" [width]="240" media="(min-width: 921px)">
+                                        <ng-template kendoGridCellTemplate let-dataItem>
+                                            {{dataItem.get('CostAccountingCodeName').value}}
+                                        </ng-template>
+                                        <ng-template kendoGridFooterTemplate>
+                                            <div class="grid_total_ammount" kendoTooltip>
+                                                <a href="javascript:;" class="add-more__link"
+                                                    (click)="dialogPopupOperations().openDialog()"
+                                                    title="{{ 'AddRow' | translate }}">
+                                                    <xrm-icon [name]="'plus'" [color]="'dark-blue-color'" [size]="14" class="sw-bolder"></xrm-icon>
+                                                    {{ 'AddRow' | translate
+                                                    }}</a>
+                                              
+                                            </div>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                    <kendo-grid-column field="ShiftName" title="Shift" [width]="100"
+                                    media="(min-width: 921px)">
+                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                        {{dataItem.get('ShiftName').value}}
+                                    </ng-template>
+                                    <ng-template [ngIf]="false" kendoGridFooterTemplate>
+                                        <div *ngIf="false" class="text-end total-amount">
+                                            <strong> {{ 'Total' | translate }} </strong>
+                                        </div>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column  field="HoursTypeName"
+                                title="{{'HoursType' | translate}}" [width]="140"
+                                media="(min-width: 921px)">
+
+                                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                    <div *ngIf="isInOutEnable &&  rowIndex === 0">
+                                        <strong class="merged-cell">
+                                           {{'WorkedHours' | translate}}  <span>(ST+OT+DT)</span>
+                                        </strong>
+                                    </div>
+                                    <div>
+                                        {{dataItem.get('HoursTypeName').value}}
+                                    </div>
+                                </ng-template>
+                                <ng-template [ngIf]="formArray.length" kendoGridFooterTemplate>
+                                    <div *ngIf="formArray.length" class="text-end total-amount">
+                                        <strong> {{ 'Total' | translate }} </strong>
+                                    </div>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column *ngFor="let headerdata of dayOrder" [field]="headerdata"
+                            media="(min-width: 923px)">
+                            <ng-template kendoGridHeaderTemplate>
+                                
+                                <div class="day-header">
+                                    <div class="grid__header-th">
+                                        {{ headerValue[headerdata] | date:"EEE" }}
+                                        <p>{{ headerValue[headerdata] | date:"MMM d" }}</p>
+                                    </div>
+                                </div>
+                            </ng-template>
+
+                            <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                        
+                                <div >
+                                
+                                    <strong *ngIf="isInOutEnable  && rowIndex == 0" class="billableHours-value billable-hour-icon">
+                                        <app-numeric-box [listControlName]="getFormControl(headerdata, rowIndex)" [isEditMode]="true" [decimals]="2"  [max]="99.99"  [min]="0"></app-numeric-box>
+                                         <a class="ms-1" href="javascript:;" kendobutton *ngIf="getFormControl(headerdata, 0).value > 0" (click)="clickForAdjustIcon(getFormControl(headerdata, 0).value,headerValue[headerdata])"  kendoTooltip
+                                        class="dayDetails_popup">
+                                        <xrm-icon [name]="'clock-in-out'" class="sw-bold"
+                                            [color]="'dark-blue-color'" [size]="16"  
+                                            title="{{'InOutDetails' | translate}}"></xrm-icon>
+                                    </a>
+                                </strong>
+                                    <app-numeric-box
+                                    *ngIf="dataItem.get('HoursTypeName').value != 'PT' && (isInOutEnable ? rowIndex > 0 : true)"
+                                    [listControlName]="getFormControl(headerdata, rowIndex)"
+                                    [decimals]="2"
+                                    [isReadOnly]="getFormControl(headerdata, 0).value == 0 && isInOutEnable"
+                                    [maxlength]="5"
+                                    (click)="isInOutEnable ? clickOnBox($event,getFormControl(headerdata, 0).value, headerValue[headerdata]) : null"
+                                    [ngClass]="{'k-disabled': checkReadOnlyValidation(dataItem.value.CostAccountingCodeId, headerdata, rowIndex)}"
+                                    [isDisable]="checkReadOnlyValidation(dataItem.value.CostAccountingCodeId, headerdata, rowIndex)"
+                                    [max]="99.99"
+                                    [min]="0">
+                                  </app-numeric-box>
+                                    <app-print-error-message
+                                        [control]="getFormControl(headerdata, rowIndex)"></app-print-error-message>
+                                </div>
+                                <div *ngIf="dataItem.get('HoursTypeName').value == 'PT'  && !dataItem.get('ShiftName').value && (mealBreakData.MealBreakPenalty ||
+                               mealBreakData.RestBreakPenalty)">
+                                    <app-numeric-box [listControlName]="getFormControl(headerdata, formArray.controls.length-1)"a [isEditMode]="true" ></app-numeric-box>
+                                </div>
+                            </ng-template>
+                            <div *ngIf="formArray.length">
+                                <ng-template kendoGridFooterTemplate let-dataItem>
+                                    <div class="total-time"><strong>
+                                            {{this.gridOperations().columnWiseTotal(headerdata).toFixed(2)}}
+                                        </strong></div>
+                                </ng-template>
+                            </div>
+                        </kendo-grid-column>
+                        <kendo-grid-column title="{{ 'Total' | translate }}"
+                        media="(min-width: 921px)" [width]="60">
+                        <div *ngIf="formArray.length">
+                            <ng-template kendoGridFooterTemplate>
+                                <div class="grid_total_ammount">
+                                    <strong>{{calculateTotalHours().toFixed(2)}} </strong>
+                                </div>
+                            </ng-template>
+                        </div>
+                        <div *ngIf="formArray.length">
+                            <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">
+                                <div class="grid_total_ammount"  *ngIf="(rowIndex !== 0 || !isInOutEnable)" >
+                                {{this.gridOperations().rowWiseTotal(rowIndex).toFixed(2)}}
+                                </div>
+                            </ng-template>
+                        </div>
+                    </kendo-grid-column>
+                    <kendo-grid-column media="(min-width: 921px)" [width]="50">
+                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                            <a href="javascript:;" class="red-color"   *ngIf="(rowIndex !== 0 || !isInOutEnable) && (rowIndex !== formArray.controls.length - 1 || (!mealBreakData.MealBreakPenalty && !mealBreakData.RestBreakPenalty))" kendoTooltip
+                                (click)="deleteLineItem(rowIndex)">
+                                    <xrm-icon [name]="'trash-2'" [color]="'red-color'" [size]="16" title="{{ 'Delete' | translate }}" class="sw-bold"></xrm-icon>
+                            </a>
+                        </ng-template>
+                        <ng-template kendoGridFooterTemplate>
+                            <div *ngIf="formArray.controls.length && (this.columnWiseTotal.Total > 0)">
+                                <a href="javascript:;" kendobutton kendoTooltip
+                                   (click)="openExpandedTimesheet()"
+                                    >
+                                    <xrm-icon [name]="'clipboard-clock'" [color]="'dark-blue-color'" [size]="16" title="{{ 'ExpandedTimesheetDetails' | translate }}" class="sw-bold"></xrm-icon>
+                                </a>
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <ng-template kendoGridNoRecordsTemplate>
+                        <p #container (click)="handleClick($event)"  [innerHTML]="'TimesheetGridFooterMsg' | translate: { placeholder1: timesheetGridFooterMsg } | safe: 'html'"></p>
+                    </ng-template>
+                                </kendo-grid>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="row mt-3">
+                    <div class=" col-sm-4 col-md-4">
+                        <div class="form-group">
+                            <app-kendo-dropdown [list]="adjustmentType" [label]="'AdjustmentType'"
+                                [placeholder]="'Select'" [isRequired]="true" [controlName]="'AdjustmentType'">
+                            </app-kendo-dropdown>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <!-- Card Header Section-->
+            <div class="card__header">
+                <h4 class="card__heading">{{'Comments' | translate}}</h4>
+            </div>
+            <!-- End Card Header Section-->
+
+            <!-- Card Body Section-->
+            <div class="card__body pt-0">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12"  *ngIf="isEditMode">
+                        <app-comment [CommentArray]="AddEditTimeEntryForm.get('ReviewerComment')?.value"></app-comment>
+                    </div>
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <app-kendo-textarea [maxCharacters]="2000" [controlName]="'ContractorComments'"
+                                [label]="'Comment'">
+                            </app-kendo-textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!--  Page Footer Section-->
+        <div class="page-footer">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="ms-2 first-button-set">
+
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="btn-box btn-box--center">
+                        <button type="button" kendoButton fillMode="outline" themeColor="primary"
+                            routerLink="/xrm/time-and-expense/timesheet/list">
+                            {{ "Cancel" | translate }}
+                        </button>
+                        <button type="button" kendoButton themeColor="primary" fillMode="outline"
+                            [innerText]="'Reset'" (click)="resetForm()">
+                           {{'Reset' | translate}}
+                        </button>
+                        <button type="button" kendoButton themeColor="primary" (click)="onSubmitClick()"
+                            appFocusOnError [formName]="AddEditTimeEntryForm"
+                            [disabled]="AddEditTimeEntryForm.pristine || formArray.length == 0">
+                            {{ 'SubmitForApproval' | translate }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Footer Section-->
+
+        <!--- Add to Satffing Agency dialog -->
+          <form [formGroup]="AddNewLineForm">
+            <!--- Add to Satffing Agency dialog -->
+            <kendo-dialog class="dailog" (close)="onDecline()" *ngIf="isAddNewPopupOpen" [width]="420">
+                <a href="javascript:;" class="close-dailog" (click)="dialogPopupOperations().closeDialog()">
+                    <xrm-icon name="x" color="black-color" [size]="18" [strokeWidth]="2.5"></xrm-icon>
+                </a>
+                <xrm-icon name="circle-plus" color="dark-blue-color" [size]="40" class="text-primary dailog__icon sw-bolder"></xrm-icon>
+                <h3 class="dailog__title d-flex justify-content-center"> {{ 'AddNewLineItem' | translate }} </h3>
+                <div class="form-scroll">
+                    <div class=" col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <app-kendo-dropdown [list]="CostAccountingCodeList" [label]="'CostAccountingCode'"
+                                [placeholder]="'DdlSelect'" [isRequired]="true" [controlName]="'CostAccountingCodeId'">
+                            </app-kendo-dropdown>
+                        </div>
+                    </div>
+                    <div class=" col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <app-kendo-dropdown [list]="ShiftList" [label]="'Shift'" [placeholder]="'DdlSelect'"
+                                [isRequired]="true" [controlName]="'ShiftId'">
+                            </app-kendo-dropdown>
+                        </div>
+                    </div>
+                    <div  class=" col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <app-kendo-dropdown [list]="HoursTypeList" [label]="'HoursType'" [placeholder]="'DdlSelect'"
+                                [isRequired]="true" [controlName]="'HoursTypeId'">
+                            </app-kendo-dropdown>
+                        </div>
+                    </div>
+                </div>
+                <div class="dailog__button text-center">
+                    <button type="button" kendoButton fillMode="solid" themeColor="primary"
+                        (click)="onClickAddNewLineItem()"> {{ 'Ok' | translate }} </button>
+                    <button type="button" kendoButton fillMode="outline" themeColor="primary"
+                        (click)="dialogPopupOperations().closeDialog()">
+                        {{ "Cancel" | translate }} </button>
+                </div>
+            </kendo-dialog>
+        </form>
+        <ng-container>
+        </ng-container>
+    </form>
+    <app-assignment-more-details  [assignmentId]="currAssignmentId.toString()" [recordId]="recordId"
+    [isAssignDetailsNeedFromApi]="true"
+    [isTimeAdjustment]="true" (assignmentMoreDataEmitter)="bindingTimeSheetDetails($event)" [entityId]="entityId"
+     (currencyCode)="setCurrencyCode($event)"
+    [hourDistributionRuleName]="hourDistributionRuleName" [OtEligibility]="OtEligibility" [weekendingDate]="currWeekendingDate"></app-assignment-more-details>
+    
+
+    <app-time-conversion-guide></app-time-conversion-guide>
+    <!-- <app-time-in-out [isShow]="isClickBox" [Ukey]="mealBreakData.Ukey" [day]="weekday"  (apply)="onApply($event)" *ngIf="isClickBox" [selectedDate]="selectedDate" [weekEndingDate]="inOutWeekendingDate"></app-time-in-out> -->
+    <app-time-in-out [isShow]="isClickBox" (onClose)="onClose($event)" [Ukey]="mealBreakData.Ukey" [data]="daysData" [day]="weekday"  (apply)="onApply($event)" [timeId]="initialData.Id" *ngIf="isClickBox" [selectedDate]="selectedDate" [weekEndingDate]="inOutWeekendingDate" [mealBreakConfigurationData]="mealBreakData"
+    [isManual]="true"></app-time-in-out>
+    <app-expanded-timeadjustment [isExpandedDetails]="isExpandedDetails" [isInOut]="isInOutEnable"  (onClose)="closeDialogBox()" *ngIf="isExpandedDetails" [ukey]="uKey" [isAdjustmentManual]="true" [adjusmentPayload]="formPayload" [penaltyHoursObject]="penaltyObject"
+    [currencyCode]="currencyCode" [isPenaltyEnable]="penaltyEnabled" [TimesheetPeriodRange]="periodHeading"></app-expanded-timeadjustment>
+    
+</div>

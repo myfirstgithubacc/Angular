@@ -1,0 +1,141 @@
+<div class="login-page overflow-hidden">
+
+  <div class="row">
+    <div class="col-sm-8 noPadding">
+      <div class="login-text login-message-section">
+
+        <kendo-scrollview #myCarousel [data]="items" [width]="width" [height]="height"
+          [pageable]="!containsSingleMessage || items.length === 0" (mouseenter)="setPauseAndPlay()"
+          (mouseleave)="setPauseAndPlay()" [arrows]="false" [endless]="false" [animate]="true">
+          <ng-template let-item="item">
+            <div *ngIf="item.MessageBoardContentTypeId === 185" class="carousel-caption"
+              [innerHTML]="(item.TextContent) | safe:'html'"></div>
+            <div *ngIf="item.MessageBoardContentTypeId === 186" class="carousel-caption">
+              <img alt="{{item.MessageAltTextLocalizedKey | translate}}" src="{{item.Base64String}}">
+            </div>
+          </ng-template>
+        </kendo-scrollview>
+
+        <div class="login-footer">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-6">
+                <span id="lblCopyright" class="transbg">Copyright © XRM Solutions Inc. All Rights
+                  Reserved</span>
+              </div>
+              <div class="col-sm-6 text-end">
+                <div class="social-media">
+                  <ul class="social-media-footer">
+                    <li>
+                      <a href="javascript:;">
+                        <xrm-icon name="twitter" color="white-color" [size]="19" class="sw-bolder"></xrm-icon>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="javascript:;">
+                        <xrm-icon name="linkedin" color="white-color" [size]="20" class="sw-bolder"></xrm-icon>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="javascript:;">
+                        <xrm-icon name="facebook" color="white-color" [size]="20" class="sw-bolder"></xrm-icon>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-4 noPadding">
+      <div class="login-form">
+
+        <div class="d-flex justify-content-center">
+          <!-- Toast Start -->
+          <app-toaster [isOnComponent]="true"></app-toaster>
+          <!-- Toast End -->
+        </div>
+
+        <div class="right-logo text-center">
+          <img class="logo-xrm" src="assets/images/XRM-logo.webp" alt="XRM Logo">
+        </div>
+        <form [formGroup]="loginForm">
+          <h4> Login </h4>
+          <ng-container *ngIf="!showPassword">
+            <div class="form-group">
+              <app-textbox [label]="'User ID'" [isRequired]="true" [placeholder]="'Please Enter Your User ID'"
+                [controlName]="'loginId'" [ngClass]="{ 'is-invalid': !isLoginIdValid }"
+                (onChangeTextBox)="removeError()"></app-textbox>
+
+            </div>
+            <div class="button-box mt-3">
+              <button class="w-100" [disabled]="isLoginIdEmpty()" kendoButton themeColor="primary"
+                (click)="verifyUserId()">Next</button>
+            </div>
+            <div class="row  mt-3">
+              <div class="col-sm-5">
+                <div class="k-checkbox-wrap">
+                  <app-kendo-checkbox [controlName]="'rememberMe'"> </app-kendo-checkbox>
+                  <kendo-label class="k-checkbox-label" text="Remember Me"></kendo-label>
+                </div>
+              </div>
+              <div class="col-sm-7 text-end">
+                <a routerLink="/auth/forget-user-id">Forgot User ID?</a>
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="showPassword">
+            <div class="mb-3">
+              <a class="link-color" href="javascript:;" (click)="backButton()"><xrm-icon name="arrow-left" [size]="15"
+                  color="dark-blue-color" class="sw-bold"></xrm-icon> Back</a>
+            </div>
+            <div class="form-group">
+              <p>
+                User ID : <strong>{{getUserId()}}</strong>
+              </p>
+            </div>
+            <div class="form-group">
+              <app-textbox [label]="'Password'" [type]="'password'" [isRequired]="true"
+                [placeholder]="'Please Enter Your Password'" [controlName]="'password'" (onChangeTextBox)="passwordError()"></app-textbox>
+              <div class="col-sm-12 mt-2">
+                <span class="text-muted">Please note passwords are case-sensitive.</span>
+              </div>
+            </div>
+            <div class="button-box mt-3">
+              <button class="w-100" [disabled]="!isPasswordValid()" kendoButton themeColor="primary"
+                (click)="onSubmit()">Login</button>
+            </div>
+            <div class="row mt-3">
+              <div class="col-sm-12 text-end">
+                <a href="#" routerLink="" (click)="forgotPassword()">Forgot Password?</a>
+              </div>
+            </div>
+          </ng-container>
+        </form>
+        <div class="support-footer">
+          <div class="d-flex align-items-center w-100 mt-3 mb-2">
+            <div class="line"></div>
+            <p class="text-small text-secondary px-3">Support</p>
+            <div class="line"></div>
+          </div>
+          <div class="support" *ngIf="support?.contactNumber">
+            <ul>
+              <li>
+                <a href="tel:{{support.contactNumber}}"><xrm-icon name="phone" color="dark-blue-color" [size]="14"
+                    class="sw-bold"></xrm-icon> {{support.contactNumber}}</a>
+              </li>
+              <li>
+                <a href="mailto:{{support.email}}"><xrm-icon name="mail" color="dark-blue-color" [size]="14"
+                    class="sw-bold"></xrm-icon> {{support.email}}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

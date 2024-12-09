@@ -1,0 +1,111 @@
+<!-- Main Body Section-->
+<br>
+<div class="app-content__body ">
+  <form [formGroup]="AddEditEventReasonForm">
+    <!-- card start -->
+    <div class="card floating-layout floating-layout__view-layout">
+      <!-- Card Header Section-->
+
+      <div class="card__header">
+        <h4 class="card__heading">{{'BasicDetails'| translate}}</h4>
+        <div class="card__header-icon">
+        </div>
+      </div>
+
+      <!-- End Card Header Section-->
+
+      <!-- Card Body Section-->
+
+      <div class="card__body">
+        <!-- row start -->
+
+        <div class="row">
+
+          <!-- input box end -->
+
+          <div class="clearfix"></div>
+
+          <!-- input box start -->
+
+          <div class="col-sm-6 col-md-6">
+            <div class="form-group">
+              <!-- this.role?.RoleGroupName -->
+              <app-kendo-label [label]="'HdrUserGroup'" [value]="this.role==null?'':this.role.RoleGroupName">
+              </app-kendo-label>
+            </div>
+          </div>
+
+          <!-- input box start -->
+
+          <!-- input box start -->
+
+          <div class="col-sm-6 col-md-6">
+            <div class="form-group">
+              <app-kendo-label [label]="'Role'" [value]="this.role==null?'':this.role.RoleName">
+              </app-kendo-label>
+            </div>
+          </div>
+
+          <!-- input box end -->
+
+          <!-- input box start -->
+
+          <!-- input box end -->
+        </div>
+
+        <!-- row end -->
+      </div>
+
+      <!-- Card Body Section End-->
+    </div>
+
+    <!-- card end -->
+
+    <!-- Start Card Section-->
+
+    <div class="card">
+      <!-- Card Header Section-->
+
+      <div class="card__header">
+        <h4 class="card__heading">{{'ConfigureActionPermissions'| translate}}</h4>
+      </div>
+
+      <!-- End Card Header Section-->
+
+      <!-- Card Body Section-->
+
+      <div class="card__body">
+        <div class="row">
+          <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+              <kendo-tabstrip class="list-view__tab-item">
+                <kendo-tabstrip-tab class="list-view__tab-item" title="{{'Permissions'| translate}}" [selected]="true">
+                  <ng-template kendoTabContent>
+                    <div class="col-sm-12 col-md-12 halfGrid">
+                      <kendo-treeview [nodes]="permissionList" kendoTreeViewExpandable kendoTreeViewHierarchyBinding
+                        textField="text" childrenField="items">
+                      </kendo-treeview>
+                    </div>
+                  </ng-template>
+                </kendo-tabstrip-tab>
+              </kendo-tabstrip>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page Footer Section-->
+
+    <div class="page-footer">
+      <div class="btn-box btn-box--center">
+        <button type="button" kendoButton themeColor="primary" routerLink="/xrm/master/role/list">
+          {{ "Back"| translate }}
+        </button>
+      </div>
+    </div>
+
+    <!-- End Footer Section-->
+
+  </form>
+</div>

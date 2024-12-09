@@ -1,0 +1,34 @@
+<div class="master-search widget-filter__search">
+  <div class="row">
+    <div class="col-md-12 master-search__wapper">
+      <div class="master-search__search-box">
+        <div class="custom-search">
+          <div class="custom-search__input-box">
+            <app-search [placeholder]="'SearchFor'" [buttonNameSearch]="''" [EntityId]="entityId"
+              [isServerSidePagingEnable]="true" (onSearch)="onSearch($event)"
+              [isSpecialCharacterAllowed]="true" [columnOptions]="columnOptions"></app-search>
+          </div>
+          <app-advance-search [EntityId]="entityId" [apiAddress]="advApiAddress"
+            [isServerSidePagingEnable]="true" (selectedFilter)="onFilter($event)"
+            [isApiGateway]="true"></app-advance-search>
+        </div>
+      </div>
+
+      <div class="master-search__button-box master-search__button-box--right">
+        <app-kendo-button [xrmEntityId]="entityId" [buttonName]="'NewMinimumClearancetoStart'" [buttonIcon]="'plus'"
+          (Click)="navigateToAdd()"></app-kendo-button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <grid-view [isServerSidePagingEnable]="true" [apiAddress]="apiAddress" [searchText]="searchText"
+    [advFilterData]="appliedAdvFilters" [columnOptions]="columnOptions" [actionSet]="actionSet" [isApiGateway]="true"
+    [extraButtonSet]="!isActionIdFound ? extraButton : []" [tabOptions]="tabOptions" [kendoGridSelectedBy]="'UKey'"
+    [actionItemCategoryField]="'Disabled'" (gridHeaderBtnType)="copySectorBtnEvent()" [entityId]="entityId"
+    [pageSize]="pageSize" [isSortingAllowed]="true" [isFilteringAllowed]="true" [isActionColumnVisible]="true"
+    [fileName]="'MinimumClearanceToStart'"
+    (onGroupedAction)="onAllActivateDeactivateAction($event)"></grid-view>
+</div>

@@ -1,0 +1,335 @@
+<!-- Main Body Section-->
+<div class="app-content__body">
+        <!-- Contractor Tab Strip Start -->
+        <div class="contractor-tabs-main">
+            <kendo-tabstrip>
+                <!-- Contractor Information section start -->
+                <kendo-tabstrip-tab [title]="'ContractorInformation'| translate" [selected]="isContractorInformationTabSelected" class="tabstrip-items">
+                    <ng-template kendoTabContent>
+                        <div class="content">
+                            <form [formGroup]="AddContractorForm">
+                                <div class="card">
+                                    <!-- Card Header Section-->
+                                    <div class="card__header">
+                                        <h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+                                    </div>
+                                    <!-- End Card Header Section-->
+    
+                                    <!-- Card Body Section-->
+                                    <div class="card__body">
+                                        <div class="row">
+    
+                                            <!-- Input Box Start -->
+                                            <div class="col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <kendo-label [text]="'ContractorName' | translate" >
+                                                        <xrm-icon name="star" class="required"></xrm-icon>
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <app-textbox
+                                                                [controlName]="'LastName'"
+                                                                [placeholder]="'LastName'"
+                                                                [maxCharacters]="30" 
+                                                                [isSpecialCharacterAllowed]="true" 
+                                                                [specialCharactersAllowed]="['.', '\'']">
+                                                            </app-textbox>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <app-textbox
+                                                                [controlName]="'FirstName'"
+                                                                [placeholder]="'FirstName'"
+                                                                [maxCharacters]="30" 
+                                                                [isSpecialCharacterAllowed]="true" 
+                                                                [specialCharactersAllowed]="['.', '\'']">
+                                                            </app-textbox>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <app-textbox
+                                                                [controlName]="'MiddleName'"
+                                                                [placeholder]="'MiddleInitial'"
+                                                                [maxCharacters]="30" 
+                                                                [isSpecialCharacterAllowed]="true" 
+                                                                [specialCharactersAllowed]="['.', '\'']">
+                                                            </app-textbox>
+                                                            </div>
+                                                        </div>
+                                                    </kendo-label>
+                                                </div>
+                                            </div>
+                                            <!-- Input Box End -->
+    
+                                            <!-- Input Box Start -->
+                                            <div class="col-sm-6 col-md-6">
+                                              <div class="form-group">
+                                                <app-kendo-phone [label]="'ContactPhone'"  [countryId]="contractordata.CountryId" [phoneControlName]="'ContactPhone'"
+                                                [phoneExtControlName]="'PhoneNoExtension'"  [isRequired]="false"
+                                                [isEditMode]="isEdit" [isExtension]="true" ></app-kendo-phone>                         
+                                              </div>
+                                          </div>
+                                          <!-- Input Box End -->
+    
+                                            <!-- input box start -->
+                                            <div class="col-sm-6 col-md-6">
+                                              <div class="form-group">
+                                                <app-kendo-switch
+                                                    [controlName]="'RequireLoginforTE'"
+                                                    [label]="'RequireLoginForTimeAndExpense'"
+                                                    [onLabel]="'Yes'"
+                                                    [offLabel]="'No'"
+                                                    (onChangeSwitch)="onReqSwitchChange($event)"
+                                                    [isDisable]="disableSwitch"
+                                                    >
+                                                </app-kendo-switch>
+                                                  
+                                              </div>
+                                          </div>
+                                          <!-- input box start -->
+    
+                                            <!-- input box start -->
+                                            <div class="col-sm-6 col-md-6">
+                                              <div class="form-group">
+                                              
+                                                    <app-kendo-label
+                                                        [label]="'ContractorUId'"
+                                                        [value]="this.AddContractorForm.get('ContractorUId')?.value">
+                                                    </app-kendo-label>
+    
+                                                </div>
+                                            </div>
+                                          <!-- input box start -->
+    
+                                            <!-- input box start -->
+                                            <div class="col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <app-textbox
+                                                  [label]="'EmailAddress'"
+                                                  [controlName]="'EmailAddress'"
+                                                  [isSpecialCharacterAllowed]="true"
+                                                  [isRequired]="isEmailRequird"
+                                                  [maxCharacters]="50">
+                                                </app-textbox>
+                                                </div>
+                                            </div>
+                                            <!-- input box end -->
+    
+                                            <!-- input box start -->
+                                            <div class="col-sm-6 col-md-6" >
+                                                <div class="form-group" *ngIf='!userIdEnabled'>
+                                                    <app-kendo-label [label]="'UserLoginId'"
+                                                       [value]="AddContractorForm.get('UserName')?.value"></app-kendo-label>       
+                                                </div>
+                                                <div class="form-group" *ngIf='userIdEnabled'>
+                                                    <app-textbox
+                                                    [label]="'UserLoginId'"
+                                                    [controlName]="'UserName'"
+                                                    [isSpecialCharacterAllowed]="true"
+                                                    [specialCharactersAllowed]="['.', '_', '@','-']"
+                                                    [isRequired]="userIdEnabled"
+                                                    [maxCharacters]="50"
+                                                    >
+                                                  </app-textbox>
+                                                </div>
+                                            </div>
+                                            <!-- input box start -->
+
+                                            <!-- input box start -->
+                                            <div class="col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                <app-kendo-label
+                                                    [label]="'WeekedningDateofMostRecentTimeRec'"
+                                                    [value]="AddContractorForm.get('RecentWeekEnding')?.value">
+                                                </app-kendo-label>
+    
+                                                </div>
+                                            </div>
+
+                                              <!-- input box start -->
+                                        <div class="col-sm-6 col-md-6">
+                                            <div class="form-group">
+                                                  <span class="data-answere"><a href="javascript:;" data-bs-toggle="offcanvas" (click)="openPOCard()"
+                                                  data-bs-target="#hourBreakdownSidebar" >{{'ContractorHoursBreakdown' | translate}}</a></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-6">
+                                            <div class="form-group" *ngIf="isWorkerAUser">
+                                                <div class="form-group mt-3">
+                                                    <button type="button" kendoButton fillMode="outline"
+                                                      [disabled]="disableReActivation" themeColor="primary"
+                                                      (click)="reSendActivationLink()">{{'ResendAccountActivationEmail' | translate}}</button>
+                                                  </div>
+                                            </div>
+                                        </div>
+                                        <!-- End input box start -->
+                                        </div>
+                                    </div>
+                                </div>
+                                  
+                                <div class="card" *ngIf="this.AddContractorForm.get('TenureDetails')?.value.length>0">
+                                    <!-- Card Header Section-->
+                                    <div class="card__header">
+                                        <h4 class="card__heading">{{'TenureInformation' | translate}}</h4>
+                                        <div class="card__header-icon">
+    
+                                        </div>
+                                    </div>
+                                    <!-- End Card Header Section-->
+    
+                                    <!-- Card Body Section-->
+                                    <div class="card__body">
+                                        <div class="row">
+                                            <!-- Grid Box Start -->
+                                            <div class="col-sm-12 col-md-12 list-view ">
+                                                <app-list-view #tenureLimit (formData)="getTenureInfoFormStatus($event)"
+                                                [columnData]="tenureInfoColumn" [columnConfigure]="tenureLimitColumnConfiguration"
+                                                [populatedData]="tenureInforPrefilledData" (onChangeNumeric)="tenureLimitChange($event)">
+                                             </app-list-view>                                    
+                                            </div>
+                                            <!-- Grid Box End -->
+                                        </div>
+                                    </div>
+    
+                                </div>
+    
+                                <app-udf-implementation [entityId]="entityId" [sectorId]="sectorId" [recordUKey]="recordUKey" [recordId]="recordId"
+                                [parentsInfos]="udfCommonMethods.getParentsInfo()" [actionTypeId]="actionTypeId"
+                                (onDataPicked)="getUdfData($event)">
+                             </app-udf-implementation>
+
+                 
+                             <div class="card">
+                                <!-- Card Header Section-->
+                                <div class="card__header">
+                                   <h4 class="card__heading">{{'Comments'|translate}}</h4>
+                                </div>
+                                <!-- End Card Header Section-->
+                                <!-- Card Body Section-->
+                                <div class="card__body">
+                                   <div class="row">
+                                      <!-- Input Box Start -->
+                                      <div class="col-sm-12 col-md-12">
+                                         <div class="form-group">
+                                            <app-kendo-textarea [controlName]="'Comments'" [label]="'Comment'" [maxCharacters]="2000"
+                                               [isSpecialCharacterAllowed]="true"></app-kendo-textarea>
+                                         </div>
+                                      </div>
+                                      <!-- Input Box End -->
+                                   </div>
+                                </div>
+                             </div>
+              
+            
+                            </form>
+                        </div>
+
+                        <!-- Footer Section-->
+                        <div class="page-footer">
+                            <div class="btn-box btn-box--center">
+                                <button type="button" kendoButton fillMode="outline" themeColor="primary"
+                                (click)="cancel()">{{'Cancel' | translate}} </button>
+                                <button type="button" kendoButton (click)="submitForm()" appFocusOnError
+                                [formName]="AddContractorForm"
+                                [disabled]="isEdit ? ((AddUdFForm.pristine) && AddContractorForm.pristine && isTenureChange ) : false"
+                                    themeColor="primary">{{'Save' | translate}}</button>
+                            </div>
+                        </div>
+                        <!-- End Footer Section-->
+
+                        <!--Aduit log section start -->
+                      <ng-container>
+                        <event-log></event-log>
+                    </ng-container>
+                    <!--End Aduit log section end -->
+
+                </ng-template>
+                </kendo-tabstrip-tab>
+                <!-- Contractor Information section end -->
+
+                <!-- Assignment Detail section start -->
+                <kendo-tabstrip-tab [title]="'AssignmentDetail'| translate" [selected]="!isContractorInformationTabSelected" class="tabstrip-items">
+                    <ng-template kendoTabContent>
+                        <div class="content">
+                            <app-contractor-assignment-list [navigationUrl]="'/xrm/contractor/contractor-details/add-edit/'+ukey" [isAssignDetailsTabSelected]="true" [contractorId]="contractordata.Id"></app-contractor-assignment-list>
+                        </div>
+                        <!-- Main Body Section-->
+                    </ng-template>
+                </kendo-tabstrip-tab>
+                <!-- Assignment Detail section end -->
+
+                <!-- Events section start -->
+                <kendo-tabstrip-tab [title]="'Events' | translate" class="tabstrip-items">
+                    <ng-template kendoTabContent>
+                        <div class="content">
+                            <app-contractor-event-list [contractorId]="recordId" [contractorUkey]="ukey" [isTab] = "true"></app-contractor-event-list>
+                            </div>
+                    </ng-template>
+                </kendo-tabstrip-tab>
+                <!-- Events section end -->
+
+            </kendo-tabstrip>
+
+            <!-- Contractor Hours Breakdown sidebar -->
+<div class="offcanvas offcanvas-end floating-layout floating-layout__quickview-layout" tabindex="-1" id="hourBreakdownSidebar" aria-labelledby="hourBreakdownSidebar">
+    <div class="offcanvas-header">
+        <h5>{{'ContractorHoursBreakdown' | translate}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+        </button>
+    </div>
+   
+    <div class="offcanvas-body">
+        <div class="card mt-4">
+            <div class="card__body pt-0">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'OverallTotalHours'"
+                            [tooltipTitle]="'OverallTotalHoursTooltip'"
+                            [tooltipVisible]="true" [value]="poBreakdownData?.OverallTotalHours" [isNumber]="true"></app-kendo-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                          <app-kendo-label [label]="'YearTillDateHours'"
+                          [tooltipTitle]="'YearTillDateHoursTooltip'"
+                          [tooltipVisible]="true" [value]="poBreakdownData?.YearTillTotalHours" [isNumber]="true"></app-kendo-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+   
+        <div class="card">
+          <div class="card__header">
+              <h4 class="card__heading card__heading--primary">
+                <app-kendo-label [label]="'HoursBreakdownbyPO'"
+                [tooltipTitle]="'HoursBreakdownbyPOTooltip'"
+                [tooltipVisible]="true"></app-kendo-label>
+               </h4>
+          </div>
+   
+          <div class="card__body pt-0">
+              <div class="view__screen view__screen--sidebar">
+                  <ul class="list__data">
+                      <li class="list__data--item"> <strong class="kendo-label">{{'PO' | translate}}</strong>
+                        <strong class="kendo-label">{{'Hours' | translate}}</strong>
+                      </li>
+                      <ng-container *ngFor="let item of poBreakdownData?.HoursBreakdownByPO">
+                        <li class="list__data--item"> <span class="data-answere kendo-label">{{item?.PO}}</span>
+                            <span class="data-answere kendo-label">{{item?.TotalHours}}</span>
+                        </li>
+                        </ng-container>
+                  </ul>
+              </div>
+          </div>
+      </div>
+   
+      </div>
+  </div>
+  <!-- End Contractor Hours Breakdown sidebar -->
+        </div>
+        <!-- Contractor Tab Strip End -->
+</div>
+
+
+
+

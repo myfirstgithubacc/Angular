@@ -1,0 +1,53 @@
+{
+    "Client":{
+        "Client":"PB"
+    },
+    "CultureInfo":{
+        "Ukey":"aaaaaaaaaaaaa",
+        "Code":"fr-FR"
+    },
+    "Language":{
+        "Code":"fr",
+        "Name":"French"
+    },
+    "Country":{
+        "Name":"France",
+        "CountryCode":"FR",
+        "ZipFormat":"AN",
+        "PhoneFormat":"(###) ####-####",
+        "DateFormat":"MM/dd/YYYY HH:mm:ss tt",
+        "CurrencySymbol":"€",
+        "CurrencyCode":"EUR"
+    },
+    "Content":[
+        {
+            "Ukey":"gggggggggggg",
+            "FieldKey":"LC",
+            "FieldValue":"Catégorie de travail",
+            "Category":"Dynamic"
+        },
+        {
+            "Ukey":"ggggggggggga",
+            "FieldKey":"JC",
+            "FieldValue":"catégorie d'emploi",
+            "Category":"Dynamic"
+        },
+        {
+            "Ukey":"gggggggggggb",
+            "FieldKey":"BU",
+            "FieldValue":"Unité commerciale",
+            "Category":"Static"
+        },
+        {
+
+            "Ukey": "gggggggggggc",
+      
+            "FieldKey": "ReqFieldValidationMessage",
+      
+            "FieldValue": "This is required field",
+      
+            "Category": "Static"
+      
+          }
+    ]
+}

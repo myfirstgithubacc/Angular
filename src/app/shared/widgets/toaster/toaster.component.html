@@ -1,0 +1,22 @@
+<ng-container *ngIf="toasterArray!=null">
+  <div *ngFor="let item of toasterArray;" [class]="'alert alert__toast '+ item.cssClass" [ngClass]="isOnComponent ? '' : 'alert__toast--fixed'"  role="alert">
+    <div class="alert__toast__items">
+      <div class="alert__toast__wrapper">
+        <div class="alert__toast__icon">
+          <xrm-icon name ="{{item.iconCssClass}}" [strokeWidth]="1.8"></xrm-icon>
+        </div>
+        <div class="alert__toast__text" *ngIf="item.isHtml" [innerHTML]="item.text | safe :'html'">
+        </div>
+        <div class="alert__toast__text" *ngIf="!item.isHtml">
+          {{ item.text | translate: getObject(item.dynamicParam)}}
+        </div>
+        <div *ngIf="item?.isOpenLeftPannel === true" class="alert__toast__text cursorpointer" (click)="openRightPannel(item.toasterId)">
+          <span><a href="javascript:void(0)">{{item.moduleName}}</a> .</span>
+        </div>
+        <div class="alert__toast__close" (click)="closeToast(item.toasterId)">
+          <xrm-icon name ="x" [size]="12" [strokeWidth]="3"></xrm-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

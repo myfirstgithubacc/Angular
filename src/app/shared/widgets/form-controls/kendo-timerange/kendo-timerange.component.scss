@@ -1,0 +1,47 @@
+.inputDaterangePicker {
+	display: flex;
+	gap: 5px;
+
+	.shift-range__time-popup--form {
+		display: flex;
+		gap: 5px;
+	}
+
+	.inlineDaterangePicker {
+		margin-top: 0px;
+	}
+}
+
+.inlineDaterangePicker {
+	margin-top: 15px;
+}
+
+.editDaysBtn {
+	border: none;
+	padding: 0 2px !important;
+	margin-left: 5px;
+	margin-top: -3px;
+	box-shadow: none;
+	background: transparent;
+}
+
+.form-group .editDaysBtn {
+	border: none;
+	padding: 0 2px !important;
+	margin-left: 5px;
+	margin-top: 4px;
+}
+
+.editDaysBtn:focus {
+	outline: none !important;
+	box-shadow: none !important;
+}
+
+.editDaysBtn.k-focus:hover {
+	border: none !important;
+}
+
+.DaysPopup .k-popup {
+	position: relative !important;
+	border-radius: 10px;
+}

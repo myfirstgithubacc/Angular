@@ -1,0 +1,156 @@
+<!-- Main Body Section-->
+<div class="app-content__body floating-layout floating-layout__view-layout">
+    <!-- Start Card Section-->
+    <div class="card">
+        <!-- Card Header Section-->
+        <div class="card__header">
+            <h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+        </div>
+        <!-- End Card Header Section-->
+
+        <!-- Card Body Section-->
+        <div class="card__body">
+            <div class="row">
+
+                <!-- Text Box Start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'DocumentType'" [value]="documentConfigurationDetails.DocumentTitle"
+                            [tooltipVisible]="true" [tooltipTitle]="'DocumentTitleTooltip'"></app-kendo-label>
+                    </div>
+                </div>
+                
+                <!-- Text Box End -->
+
+                <!-- Text Box Start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'UploadedStage'" [value]="documentConfigurationDetails.UploadedStage"
+                            [tooltipVisible]="true" [tooltipTitle]="'UploadStageTooltip'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- Text Box End -->
+
+                <!-- Text Box Start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                      
+                           <tooltip-content [label]="'VisibleTo'" [tooltipTitle]="'VisibleToTooltip'" [isHtmlContent]="true"
+                            [tooltipVisible]="true" [tooltipPosition]="">
+                       </tooltip-content>
+                       <p>{{documentConfigurationDetails.DocumentConfigurationVisibleTo[0].Text}}</p>
+
+                    </div>
+                </div>
+                <!-- Text Box End -->
+            </div>
+        </div>
+        <!--End Card Body Section-->
+    </div>
+    <!-- End Card Section-->
+
+    <!-- Start Card Section-->
+    <div class="card">
+        <!-- Card Header Section-->
+        <div class="card__header">
+            <h4 class="card__heading">{{'ConfigurationOption' | translate}}</h4>
+        </div>
+        <!-- End Card Header Section-->
+
+        <!-- Card Body Section-->
+        <div class="card__body">
+            <div class="row">
+
+                <!-- Dropdown Box Start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'Workflow'" [value]="documentConfigurationDetails.WorkflowId"
+                            [tooltipVisible]="true" [tooltipTitle]="'WorkflowTooltip'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- Dropdown Box End -->
+
+                <!-- Switch Start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'AllowedExtensions'"
+                            [value]="documentConfigurationDetails.AllowedExtensions"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- Switch End -->
+
+                <div class="clearfix"></div>
+
+                <!-- Numericbox Start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'Mandatory'"
+                            [value]="documentConfigurationDetails.Mandatory ? 'Yes' : 'No'" [tooltipVisible]="true"
+                            [tooltipTitle]="'MandatoryTooltip'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- Numericbox End -->
+
+                <!-- Textbox Start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'MultipleDocumentAllowed'"
+                                [value]="documentConfigurationDetails.MultipleDocumentAllowed ? 'Yes' : 'No'"
+                                [tooltipVisible]="true"
+                                [tooltipTitle]="'MultipleDocumentsAllowedTooltip'"></app-kendo-label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Textbox End -->
+
+                <!-- Textbox Start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'Resume'"
+                            [value]="documentConfigurationDetails.Resume ? 'Yes' : 'No'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- Textbox End -->
+            </div>
+        </div>
+        <!-- End Card Section-->
+    </div>
+
+    <!-- Start Card Section-->
+    <div class="card">
+        <div class="card__header">
+            <h4 class="card__heading">{{'ConfigurationBySector' | translate}}</h4>
+        </div>
+
+        <div class="card__body">
+            <div class="row">
+
+                <!-- Dropdown Start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'ConfigurationBySector'"
+                            [value]="documentConfigurationDetails.ConfigurationBySector ? 'Yes' : 'No'"
+                            [tooltipVisible]="true" [tooltipTitle]="'ConfigurationBySectorTooltip'"></app-kendo-label>
+                    </div>
+                </div>
+
+                <!-- Dropdown End -->
+                <div class="col-sm-12 col-md-12 list-view list-view__border"
+                    *ngIf="documentConfigurationDetails?.ConfigurationBySector">
+                    <app-list-view #configureBySectorListView [columnData]="documentConfigurationColumns"
+                        [columnConfigure]="documentConfigurationColumnConfiguration"
+                        [populatedData]="documentConfigurationPrefieldData" [countryId]="countryId">
+                    </app-list-view>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Card Section -->
+    <div class="page-footer">
+        <div class="btn-box btn-box--center">
+            <button type="button" kendoButton themeColor="primary" [routerLink]="'/xrm/master/document-configuration/list'">{{'Back' | translate}}</button>
+        </div>
+    </div>
+</div>
+<!-- End Card Section-->

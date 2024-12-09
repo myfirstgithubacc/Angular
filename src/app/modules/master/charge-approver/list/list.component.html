@@ -1,0 +1,61 @@
+<div class="master-search">
+    <div class="row">
+      <div class="col-md-12 master-search__wapper">
+        <div class="master-search__search-box">
+          <div class="custom-search">
+            <div class="custom-search__input-box">
+              <app-search [buttonNameSearch]="''"
+                ></app-search>
+            </div>
+            <app-advance-search [JsonData]="advanceSearchFields"></app-advance-search>
+          </div>
+          <div class="custom-search__applied--Filters mx-2">
+            <div class="custom-search__applied--Filters"><label class="k-label"></label></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="row">
+  <!--   <kendo-tabstrip>
+      <kendo-tabstrip-tab title="Active"></kendo-tabstrip-tab>
+      <kendo-tabstrip-tab title="InActive"></kendo-tabstrip-tab>
+      <kendo-tabstrip-tab title="All"></kendo-tabstrip-tab>
+    </kendo-tabstrip>
+    <kendo-grid
+    [data]="list"
+    >
+      <kendo-grid-column
+      field="SectorName"
+      title="Sector"
+      ></kendo-grid-column>
+      <kendo-grid-column
+      field="Charge"
+      title="Charge #"
+      ></kendo-grid-column>
+      <kendo-grid-column
+      field="Shift"
+      title="Shift"
+      ></kendo-grid-column>
+      <kendo-grid-column
+      field="PrimaryApprover"
+      title="Primary Approver "
+      ></kendo-grid-column>
+      <kendo-grid-column
+      field="AlternateApprover"
+      title="Alternate Approver"
+      ></kendo-grid-column>
+      <kendo-grid-column title="Actions">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <ng-container>
+            <span *ngFor="let icon of actionSet[0].Items">
+            <i class={{icon.icon}}></i>
+            </span>
+          </ng-container>
+        </ng-template>
+      </kendo-grid-column>
+    </kendo-grid> -->
+    <grid-view [gridData]="list" [actionItemCategoryField]="'Disabled'"  [columnOptions]="columnOptions" [actionSet]="actionSet" [tabOptions]="tabOptions">
+    </grid-view>
+  </div>

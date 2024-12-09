@@ -1,0 +1,211 @@
+.scheduler--calendar {
+	.k-scheduler-monthview {
+		.k-event {
+			.k-event-title {
+				display: flex;
+				align-items: center;
+			}
+			.k-icon {
+				margin-right: 5px;
+			}
+		}
+		.k-scheduler-table {
+			td {
+				height: 102px;
+				font-weight: 300;
+				&:hover {
+					background-color: rgb(27 30 158 / 3%);
+				}
+				&.hightlightDate {
+					&:hover {
+						background-color: #3538cd1a !important;
+					}
+				}
+			}
+		}
+	}
+	.k-scheduler {
+		font-size: var(--base-font-size);
+		.disableDate {
+			opacity: 1;
+		}
+		.hightlightDate {
+			background-color: #ebebeb !important;
+		}
+	}
+	.k-scheduler-toolbar {
+		.k-toolbar-button-group {
+			display: none;
+		}
+	}
+	kendo-scheduler {
+		.current-date {
+			border: 1px solid #4158d0 !important;
+			.k-nav-day {
+				color: #4158d0;
+				font-weight: 600;
+			}
+		}
+	}
+	.k-loading-image {
+		display: none !important;
+	}
+	.k-event {
+		&.k-selected {
+			background: #4158d0 !important;
+		}
+	}
+	.k-selected {
+		background-color: #3538cd1a !important;
+	}
+	.event-scheduled {
+		background-color: #ebebeb !important;
+		opacity: 1;
+		&:hover {
+			background-color: #3538cd1a !important;
+		}
+	}
+	td {
+		&.hightlightDate {
+			&.disableDate {
+				&.k-selected {
+					background-color: #3538cd1a!important;
+				}
+			}
+		}
+	}
+	&.event-scheduled {
+		&.disabled-slot {
+			background-color: #3538cd1a!important;
+		}
+	}
+}
+kendo-scheduler {
+	&.k-scheduler {
+		&.k-focus {
+			&:hover {
+				border-color: #00000014 !important;
+			}
+		}
+	}
+}
+.scheduler--calendar kendo-scheduler .k-event, .k-event {
+	cursor: pointer;
+	margin: 0 1px;
+	width: 14% !important;
+	line-height: 25px;
+	padding: 0;
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	line-clamp: 1;
+	-webkit-box-orient: vertical;
+}
+.schedular-card {
+	h4 {
+		&.card__heading {
+			display: flex;
+			gap: 8px;
+			p {
+				&.label-answere {
+					font-weight: 500;
+					color: var(--color-black);
+					font-size: var(--card-heading-font-size) !important;
+				}
+			}
+		}
+	}
+	.card__body {
+		padding-top: 24px;
+		.new-view {
+			kendo-label {
+				.k-label {
+					font-weight: 500;
+					color: var(--color-black);
+				}
+			}
+		}
+	}
+	.no-event-found {
+		padding: 12px 0 8px 0px;
+	}
+	.card__header {
+		display: block;
+	}
+}
+.scheduler--indicator {
+	margin-top: 8px;
+	ul {
+		text-align: center;
+		margin-bottom: 0;
+		li {
+			display: inline-block;
+			padding: 0 16px;
+			span {
+				width: 12px;
+				height: 12px;
+				display: inline-block;
+				margin-right: 4px;
+				vertical-align: text-top;
+				&.orange {
+					background-color: var(--orange-color);
+				}
+				&.green {
+					background-color: var(--green-color);
+				}
+				&.primary {
+					background-color: var(--color-primary);
+				}
+			}
+		}
+	}
+}
+.disabled-slot {
+	background-color: white;
+	color: red;
+	cursor: not-allowed;
+}
+.k-calendar .k-calendar-td.k-selected .k-calendar-cell-inner,
+.k-calendar .k-calendar-td.k-selected .k-link,
+.k-calendar .k-range-start .k-calendar-cell-inner,
+.k-calendar .k-range-start .k-link,
+.k-calendar .k-range-end .k-calendar-cell-inner,
+.k-calendar .k-range-end .k-link,
+.k-calendar .k-calendar-td.k-selected:hover .k-calendar-cell-inner,
+.k-calendar .k-calendar-td.k-selected:hover .k-link,
+.k-calendar .k-calendar-td.k-selected.k-hover .k-calendar-cell-inner,
+.k-calendar .k-calendar-td.k-selected.k-hover .k-link {
+	background-color: var(--color-primary);
+}
+.k-calendar .k-range-start,
+.k-calendar .k-range-end,
+.k-calendar .k-range-mid {
+	background-color: #aec4ff40;
+}
+.editscheduler .k-scheduler-table tr td.current-date {
+	border: 1px solid #4158d0 !important;
+}
+
+.editscheduler .k-scheduler-layout td.k-selected,
+.editscheduler .k-scheduler-layout .k-scheduler-cell.k-selected,
+.editscheduler .k-scheduler-layout td.k-selected:hover,
+.editscheduler .k-scheduler-layout .k-scheduler-cell.k-selected:hover {
+	background-color: rgb(65 88 208 / 30%) !important;
+}
+.k-calendar {
+	.k-calendar-view {
+		.k-today {
+			color: var(--color-primary);
+		}
+	}
+	.k-range-split-start {
+		&:after {
+			background-image: linear-gradient(to left, rgb(88 89 255 / 25%), transparent 100%);
+		}
+	}
+	.k-range-split-end {
+		&:after {
+			background-image: linear-gradient(to right, rgba(88 89 255 / 25%), transparent 100%);
+		}
+	}
+}

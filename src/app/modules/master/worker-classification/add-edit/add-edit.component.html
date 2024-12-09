@@ -1,0 +1,85 @@
+<div class="app-content__body">
+    <form [formGroup]="AddEditWorkerClassification">
+
+        <div class="card">
+            <div class="card__header">
+                <h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+            </div>
+
+            <div class="card__body">
+                <div class="row">
+
+                    <div class="col-sm-6 col-md-6">
+                        <app-kendo-dropdown [list]="sectorDropDownList"
+                                [label]="'Sector'" [controlName]="'Sector'"
+                                [isValuePrimitiveAllowed]="true"
+                                [placeholder]="'DdlSelect'" [isRequired]="true" [isEditMode]="isEditMode"
+                                >
+                            </app-kendo-dropdown>
+
+                    </div>
+
+
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <app-textbox [controlName]="'WorkerClassificationName'" [isRequired]="true"
+                                [label]="'WorkerClassification'">
+                            </app-textbox>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-switch [controlName]="'IsAdditionalDetailsRequired'" [label]="'AdditionalDetailsRequired'"
+                                [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true" (onChangeSwitch)="changeSwitch($event)"
+                                [tooltipTitle]="'SubCategoryRequiredToolTip'">
+                            </app-kendo-switch>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6 col-sm-6"
+                        *ngIf="this.isAdditionalDetailsRequired">
+                        <div class="form-group">
+                            <app-textbox [controlName]="'AdditionalDetailsLabel'" [isRequired]="true"
+                                [label]="'AdditionalDetailsLabel'">
+                            </app-textbox>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="page-footer">
+            <div class="btn-box btn-box--center">
+
+                <button 
+                    type="button" 
+                    kendoButton 
+                    fillMode="outline" 
+                    themeColor="primary"
+                    (click)="navigateToList()"> 
+                    {{ "Cancel" }}
+                </button>
+
+                <button 
+                    appFocusOnError
+                    [formName]="AddEditWorkerClassification"
+                    type="button" 
+                    kendoButton  
+                    [disabled]="isEditMode ? AddEditWorkerClassification.pristine : false "
+                    themeColor="primary" 
+                    [innerText]="'Save'"
+                    (click)="save()"> 
+                    {{"save" | translate}}
+                </button>
+            </div>
+        </div>
+
+    </form>
+</div>

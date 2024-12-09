@@ -1,0 +1,317 @@
+.card {
+	&.card__Noborder {
+		border-left: 0px !important;
+	}
+
+	.k-grid {
+		font-size: var(--base-font-size);
+		height: unset !important;
+		max-height: 400px;
+		border: none;
+		color: var(--color-default);
+		background-color: var(--color-white);
+	}
+}
+
+.event-log {
+	margin: 0;
+	padding: 0;
+	max-height: 100px;
+	overflow-y: auto;
+	list-style-type: none;
+	border: 1px solid rgba(0, 0, 0, 0.08);
+	background-color: #fff;
+
+	li {
+		margin: 0;
+		padding: 0.3em;
+		line-height: 1.2em;
+		border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+
+		&:last-child {
+			margin-bottom: -1px;
+		}
+	}
+}
+
+event-log .card:before,
+app-audit-log .card:before {
+	display: block !important;
+	top: 14px;
+}
+
+.audit-log {
+	.k-expander.k-focus {
+		border: none !important;
+		box-shadow: none !important;
+	}
+
+	.k-icon {
+		padding: 0;
+	}
+
+	.k-expander-content {
+		padding: 0 16px 16px !important;
+	}
+
+	kendo-grid-toolbar {
+		background-color: transparent;
+		border-bottom: none;
+
+		.k-input {
+			&.k-focus {
+				border: 1px solid var(--color-primary) !important;
+				box-shadow: 0 0 0 1px #00000014 !important;
+			}
+		}
+	}
+
+	.list-view {
+		.k-grid {
+			th {
+				font-size: var(--base-font-size);
+				color: var(--color-black);
+				padding: 12px 8px;
+			}
+		}
+	}
+
+	td {
+		&.k-hierarchy-cell {
+			&.k-table-td {
+				padding: 0 !important;
+			}
+		}
+	}
+
+	.k-i-plus {
+		&:before {
+			content: "";
+			background-image: url(../../../../assets/icon/xrm-icons/chevron-down.svg);
+			background-size: 14px;
+			background-repeat: no-repeat;
+			width: 14px;
+			height: 14px;
+			transform: rotate(270deg);
+		}
+	}
+
+	.k-i-minus {
+		&:before {
+			content: "";
+			background-image: url(../../../../assets/icon/xrm-icons/chevron-down.svg);
+			background-size: 14px;
+			background-repeat: no-repeat;
+			width: 14px;
+			height: 14px;
+			transform: rotate(360deg);
+		}
+	}
+
+	.k-pager {
+		kendo-label {
+			&>.k-label {
+				font-weight: 400;
+				color: var(--color-default);
+			}
+		}
+	}
+}
+
+.list-view {
+
+	.k-detail-row {
+		.k-detail-cell {
+			padding: 0 !important;
+		}
+	}
+
+}
+
+
+.list-view.list-screen-grid .k-grid .k-grid-pager:focus {
+	box-shadow: none;
+}
+
+.list-view .k-pager-info {
+	margin: 0;
+}
+
+.list-view .k-grid-pager {
+	border-width: 1px 0 0;
+	border-color: inherit;
+	font-size: inherit;
+	border: none;
+	display: flex;
+	justify-content: flex-end;
+	padding-bottom: 0;
+}
+
+.k-pager {
+	background: none;
+}
+
+.list-view .k-pager-info {
+	margin: 0;
+}
+
+.list-view .k-grid-pager .k-input-inner {
+	padding: 0 12px !important;
+}
+
+.k-button {
+	border-radius: 4px;
+}
+
+.k-expander {
+	border-radius: var(--bs-card-border-radius);
+}
+
+.k-expander-title {
+	font-size: var(--card-heading-font-size);
+	color: var(--color-black);
+	font-style: normal;
+	font-weight: 500;
+	line-height: 24px;
+	text-transform: inherit;
+}
+
+.k-i-caret-alt-down {
+	&::before {
+		background-image: url(../../../../assets/icon/xrm-icons/chevron-down.svg);
+		background-size: 16px;
+		background-repeat: no-repeat;
+		width: 16px;
+		height: 15px;
+		color: var(--color-black);
+		font-size: var(--base-font-size);
+		content: "";
+	}
+}
+
+.k-i-caret-alt-up {
+	&::before {
+		content: "";
+		background-image: url(../../../../assets/icon/xrm-icons/chevron-down.svg);
+		background-size: 18px;
+		background-repeat: no-repeat;
+		width: 16px;
+		height: 16px;
+		transform: rotate(180deg);
+	}
+}
+
+.k-expander-content-wrapper {
+	border-top: #e2e2e2 solid 1px;
+}
+
+kendo-grid {
+	kendo-grid-toolbar {
+		position: relative;
+	}
+}
+
+.audit-log .list-view .k-grid th,
+.audit-log .list-view .k-grid td {
+	white-space: normal;
+}
+
+.audit-log-section {
+	.k-table-tbody {
+		.k-detail-row {
+			.inline-item {
+				&.desktop-view {
+					overflow-y: auto;
+					overflow-x: hidden;
+					max-height: 160px;
+				}
+			}
+		}
+	}
+}
+
+.audit-sticky-header {
+	position: sticky;
+	background: #fff;
+	top: 0;
+}
+
+.inline-item {
+	section {
+		border-top: #e2e2e2 solid 1px;
+	}
+}
+
+.inline-item p strong,
+.grid_mobile-data p strong {
+	font-weight: 500;
+	font-size: var(--base-font-size);
+	color: var(--color-black);
+}
+
+.inline-item p,
+.grid_mobile-data p {
+	padding: 6px 12px;
+}
+
+.device-icon {
+	width: 44px;
+	text-align: left;
+	font-size: 14px;
+}
+
+.audit-export-icons {
+	position: absolute;
+	right: 70px;
+	top: 15px;
+
+	a {
+		color: var(--color-default);
+	}
+}
+
+.k-expander-header:hover,
+.k-expander-header.k-hover {
+	background-color: #fff;
+}
+
+kendo-pager {
+	kendo-pager-info {
+		display: none !important;
+	}
+}
+
+.k-pager-nav,
+.k-pager-numbers .k-link,
+.k-pager-refresh {
+	height: calc(1.4285714286em + 5px);
+	font-size: 11px;
+}
+
+.k-pager {
+	.k-pager-numbers-wrap {
+		select {
+			&.k-picker-md {
+				padding-block: 3px;
+			}
+		}
+	}
+}
+
+.k-pager-numbers-wrap {
+	select {
+		&.k-dropdown-list {
+			display: none;
+		}
+	}
+}
+
+.k-pager-wrap.k-grid-pager .k-input-md,
+.k-grid-pager .k-pager-sizes .k-picker-solid {
+	border-radius: 4px;
+	border-color: var(--light-border-color);
+}
+
+.audit-log .k-grid kendo-pager.k-pager.k-grid-pager:focus {
+	box-shadow: none;
+}

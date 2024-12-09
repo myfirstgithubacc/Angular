@@ -1,0 +1,54 @@
+<form [formGroup]="ConfiMSPProcessActivityForm">
+    <div class="card">
+        <div class="card__header">
+            <h4 class="card__heading">{{ 'ConfigureMSPProcessActivity' | translate }}</h4>
+            <div class="card__header-icon">
+            </div>
+        </div>
+        <div class="card__body">
+            <div class="row">
+                <!-- <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [isDisable]="isEditMode && !isDraft" [controlName]="'IsSkipProcessReqByMsp'"
+                            [label]="'IsSkipProcessReqByMsp'" [onLabel]="'Yes'" [offLabel]="'No'"
+                            [tooltipVisible]="true" [tooltipTitle]="'Skip_Process_Requisition_By_MSP_Tooltip'">
+                        </app-kendo-switch>
+                    </div>
+                </div> -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [isDisable]="isEditMode && !isDraft" [controlName]="'IsSkipProcessSubByMsp'"
+                            [label]="'IsSkipProcessSubByMsp'" [onLabel]="'Yes'" [offLabel]="'No'"
+                            [tooltipVisible]="true" [tooltipTitle]="'Skip_Process_Submittal_By_MSP_Tooltip'">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'HideNteRatefromCopyReqLib'" [onLabel]="'Yes'"
+                            [offLabel]="'No'" [label]="'HideNteRatefromCopyReqLib'" [tooltipVisible]="true"
+                            [tooltipTitle]="'Hide_NTE_From_Requisition_Library_Dropdown_In_Requisition_Tooltip'">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'"
+                            [controlName]="'IsSkipLIRequestProcessByMsp'" [label]="'IsSkipLIRequestProcessByMsp'"
+                            (onChangeSwitch)="switchSkipLIRequestMSP($event)" [tooltipVisible]="true"
+                            [tooltipTitle]="'Skip_LI_Request_Process_by_MSP_Tooltip'">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6" *ngIf="isSwitchSkipLIRequestMSP">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'IsAutoBroadcastForLiRequest'" [onLabel]="'Yes'"
+                            [offLabel]="'No'" [label]="'IsAutoBroadcastForLiRequest'" [tooltipVisible]="true"
+                            [tooltipTitle]="'Auto_Broadcast_for_LI_Request_Tooltip'">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,95 @@
+<!-- Main Body Section-->
+<div class="app-content__body app-content__kendoexpansion-main">
+    <form [formGroup]="AddEditSubmittalForm">
+        <div class="content">
+                <div class="submittal__detail-main">
+                    <h1>{{pageTitle | translate}}</h1>
+                    <app-kendo-button *ngIf="!isEditMode" class="pickFromCandidateBtn"
+                        [buttonName]="'PickFromCandidatePool'" [buttonIcon]="'plus'" (click)="openPopUp()">
+                    </app-kendo-button>
+                </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <!-- Start Kendo Expansion Panel -->
+                <app-candidate-details [candidateDetailsForm]="getCandidateDetailForm()" [workerClassificationList]="workerClassificationList" [CandidateCardData]="candidateCardData"
+                [isCardVisible]="cardsVisiblity.iscandidateDetailsVisible" (onExpandedChange)="onExpandChange($event)" [uidLength]="uidLength"></app-candidate-details>
+                <!-- End Kendo Expansion Panel -->
+
+                <!-- Start Card Section-->
+                <app-rate-details-markup *ngIf="isRateMarkupBasedVariant" [rateDetailsMarkupForm]="getRateDetailMarkup()" [markUpRateData]="markUpRateData"
+                [isCardVisible]="cardsVisiblity.israteDetailsMarkupVisible" (onExpandedChange)="onExpandChange($event)" [benefitAdderData] = "benefitAdderData"
+                ></app-rate-details-markup>
+                <!-- End Kendo Expansion Panel -->
+
+                <!-- Start Card Section-->
+                <app-rate-details-billrate *ngIf="!isRateMarkupBasedVariant" [rateDetailsBillrateForm]="getRateDetailBillRate()" [billRateData]="billRateData"
+                [isCardVisible]="cardsVisiblity.israteDetailsBillrateVisible" (onExpandedChange)="onExpandChange($event)" [benefitAdderData] = "benefitAdderData"></app-rate-details-billrate>
+                <!-- End Kendo Expansion Panel -->
+
+                <!-- Start Position Description-->
+                <app-position-description [positionDetailsForm]="getPositionDetailsForm()" [profReqData]="profReqData"
+                [isCardVisible]="cardsVisiblity.ispositionDescriptionVisible" (onExpandedChange)="onExpandChange($event)"></app-position-description>
+                <!-- End Position Description-->                
+
+                <!-- Start Card Section-->
+                <app-recruiter-details [recruiterDetailForm]="getRecruiterDetails()" [recruiterNameList]="recruiterNameList"
+                [isCardVisible]="cardsVisiblity.isrecruiterDetailVisible" (onExpandedChange)="onExpandChange($event)"></app-recruiter-details>
+
+                <!-- End Kendo Expansion Panel -->
+
+                <!-- Start Card Section-->
+                <kendo-expansionpanel [expanded]="cardsVisiblity.isudfVisible" (expandedChange)="onExpandedCollapseUdf($event)" class="card" [hidden]="!isShowUdfCard">
+                    <ng-template kendoExpansionPanelTitleDirective>
+                        <div (click)="$event.stopPropagation()">
+                            <h4 class="card__heading">{{'OtherDetailsUDF' | translate}}</h4>
+                        </div>
+                    </ng-template>
+                
+                    <app-udf-implementation [entityId]="pcEntityId" [sectorId]="sectorId" [recordUKey]="recordUKey"
+                        [recordId]="udfRecordId" [parentsInfos]="udfCommonMethods.getParentsInfo()" [actionTypeId]="actionTypeId"
+                        (onDataPicked)="getUdfData($event)" [showTitle]="false" (hasUDFLength)="isUdfHasData($event)">
+                    </app-udf-implementation>
+                
+                </kendo-expansionpanel>
+                <!-- End Kendo Expansion Panel -->
+
+                <!-- Start Card Section-->
+                <kendo-expansionpanel [expanded]="isDmsCardVisible" (expandedChange)="onExpandedCollapseDms($event)" class="card" >
+                    <ng-template kendoExpansionPanelTitleDirective>
+                        <div (click)="$event.stopPropagation()">
+                            <h4 class="card__heading">{{'DocumentsUpload'|translate}}</h4>
+                        </div>
+                    </ng-template>
+                    <div class="card__body">
+                        <div class="card__body--inner-wrapper">
+                            <div class="row">
+                                <app-dms-implementation #dms [workFlowId]="pcEntityId" [sectorId]="sectorId"
+                                [uploadStageId]="uploadStageId" [actionTypeId]="actionTypeId" [recordId]="recordId"
+                                [showTitle]="false" [processingId]="processingId" (gridChange)="gridChange()" (hasDMSLength)="hasDMSLength($event)">
+                            </app-dms-implementation>
+                            </div>
+                        </div>
+                    </div>
+                </kendo-expansionpanel>
+                <!-- End Kendo Expansion Panel -->
+
+            </div>
+        </div>
+
+        <div class="page-footer">
+            <div class="btn-box btn-box--center">
+                <button kendoButton fillMode="outline" themeColor="primary"
+                    (click)="navigateBack()">{{'Cancel'|translate}}</button>
+
+                <button kendoButton href="javascript:;" appFocusOnError [listformName]="[SubmittalFormForDraft]" [disabled]="AddEditSubmittalForm.pristine || isButtonDisabled"
+                     fillMode="outline" themeColor="primary" (click)="draftForm()" *ngIf="isShowDraftButton">{{'SaveContinueLater'|translate}}</button>
+
+                <button kendoButton  appFocusOnError [listformName]="[AddEditSubmittalForm]" [disabled]="AddEditSubmittalForm.pristine || isButtonDisabled"
+                    href="javascript:;" themeColor="primary" (click)="submitForm()">{{'Submit'|translate}}</button>
+            </div>
+        </div>
+    </form>
+</div>

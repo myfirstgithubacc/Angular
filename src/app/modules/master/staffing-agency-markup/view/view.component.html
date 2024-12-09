@@ -1,0 +1,286 @@
+<div *ngIf="isMarkupLength" class="markup-page markup-page__view">
+    <form [formGroup]="AddEditMarkupConfiForm">
+        <div [formArrayName]="'baseMarkupConfigs'">
+
+            <div class="pb-3">
+                <div class="row list-view third-lavel-grid staf-list">
+                    <div class="col-sm-12">
+                        <div class="markup-table grid-form">
+                            <div  *ngFor="let dt of markupSearchData?.baseMarkupConfigs; let i =index" class="card card--info">
+                                <a href="javascript:;" class="card__header" (click)="toggleRow(dt)">
+                                    <h4 class="card__heading" >{{dt.SectorName}}</h4>
+                                    <div  class="card__header-icon">
+                                        <div class="card__header-icon--error">
+                                            <xrm-icon  name="alert-triangle" color="red-color" [size]="18" class="sw-bold"></xrm-icon>
+                                        </div>
+                                        <div class="card__header-icon--controls">
+                                            <a href="javascript:;"><xrm-icon [name]="isExpanded(dt)? 'chevron-up' : 'chevron-down'" [size]="18" color="black-color" class="sw-bold"
+                                                [svgPath]="isExpanded(dt) ? chevronUp : chevronDown"></xrm-icon></a>
+                                        </div>
+                                    </div>
+                                </a>
+                                        <div class="card__body" *ngIf="isExpanded(dt)">
+                                                    <ng-container [formGroupName]="i">
+                                                       
+                                                        <div class="p-0">
+                                                            <div class="col-sm-12">
+                                                                <div class="markup-table grid-form">
+                                                                    <table class="table table-border gridView2">
+                                                                        <caption></caption>
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th style="width: 30px;"></th>
+                                                                                <th style="width: 120px;">
+                                                                                    {{'LaborCategory' | translate}}
+                                                                                </th>
+                                                                                <th style="width: 114px;">
+                                                                                    {{'BroadcastAllowed'
+                                                                                    |translate}}
+                                                                                </th>
+                                                                                <th style="width: 130px;">
+                                                                                    {{'RecruitedLiMarkupPercent' |
+                                                                                    translate}}</th>
+                                                                                <th style="width: 130px;">
+                                                                                    {{'RecruitedLiMspFeePercent' |
+                                                                                    translate}}</th>
+                                                                                <th style="width: 126px;">
+                                                                                    {{'PayrollMarkupPercent' |
+                                                                                    translate}} 
+                                                                                </th>
+                                                                                <th style="width: 126px;">
+                                                                                    {{'PayrollMspFeePercent' |
+                                                                                    translate}} 
+                                                                                </th>
+                                                                                <th style="width: 126px;">{{'OtMultiplier' |
+                                                                                    translate}}
+                                                                                </th>
+                                                                                <th style="width: 126px;">{{'DtMultiplier' |
+                                                                                    translate}}
+                                                                                </th>
+                                                                                <th style="width: 160px;">
+                                                                                    {{'TierLevel' |
+                                                                                    translate}}</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <ng-container
+                                                                                [formArrayName]="'LaborCategoryMarkups'"
+                                                                                *ngFor="let tbLab of dt.laborCategoryMarkups; let labcatInd=index">
+                                                                                <ng-container
+                                                                                    [formGroupName]="labcatInd">
+                                                                                    <tr>
+                                                                                        <td style="width: 30px;">
+                                                                                            <a href="javascript:;" class="grid__expend"
+                                                                                                (click)="toggleRow2(tbLab)">
+                                                                                                    <xrm-icon [name]="isExpanded2(tbLab)? 'chevron-down' : 'chevron-right'" 
+                                                                                                        [svgPath]="isExpanded2(tbLab)? chevronDown : chevronRight" [size]="18" color="black-color" class="sw-bold"></xrm-icon>
+                                                                                            </a>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            {{tbLab.LaborCategoryName}}
+                                                                                        </td>
+                                                                                        <td class="BroadCastAllowed">
+                                                                                            <app-kendo-switch
+                                                                                                [listControlName]="getLaborCategoryControl(i,labcatInd).get('BroadCastAllowed')"
+                                                                                                [onLabel]="'Yes'"
+                                                                                                [offLabel]="'No'"
+                                                                                                [isEditMode]="isViewOnly"
+                                                                                               ></app-kendo-switch>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <app-numeric-box
+                                                                                                [placeholder]="'0.000'"
+                                                                                                [listControlName]="getLaborCategoryControl(i,labcatInd).get('RecruitedMarkup')"
+                                                                                                [decimals]="3" [min]="0"
+                                                                                                [isEditMode]="true"
+                                                                                          >
+                                                                                            </app-numeric-box>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <app-numeric-box
+                                                                                                [placeholder]="'0.000'"
+                                                                                                [min]="0"
+                                                                                                [listControlName]="getLaborCategoryControl(i,labcatInd).get('RecruitedMspFee')"
+                                                                                                [decimals]="3"
+                                                                                                [isEditMode]="true">
+                                                                                            </app-numeric-box>
+
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <app-numeric-box
+                                                                                                [placeholder]="'0.000'"
+                                                                                                [listControlName]="getLaborCategoryControl(i,labcatInd).get('PayrolledMarkup')"
+                                                                                                [decimals]="3" [min]="0"
+                                                                                                [isEditMode]="true"
+                                                                                               >
+                                                                                            </app-numeric-box>
+
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <app-numeric-box
+                                                                                                [placeholder]="'0.000'"
+                                                                                                [listControlName]="getLaborCategoryControl(i,labcatInd).get('PayrolledMspFee')"
+                                                                                                [decimals]="3" [min]="0"
+                                                                                                [isEditMode]="true">
+                                                                                            </app-numeric-box>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <app-numeric-box
+                                                                                                [placeholder]="'0.000'"
+                                                                                                [listControlName]="getLaborCategoryControl(i,labcatInd).get('OtMultiplier')"
+                                                                                                [decimals]="3" [min]="0"
+                                                                                                [isEditMode]="true">
+                                                                                            </app-numeric-box>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <app-numeric-box
+                                                                                                [placeholder]="'0.000'"
+                                                                                                [listControlName]="getLaborCategoryControl(i,labcatInd).get('DtMultiplier')"
+                                                                                                [decimals]="3" [min]="0"
+                                                                                                 [isEditMode]="true">
+                                                                                            </app-numeric-box>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                          
+                                                                                            <app-kendo-label
+                                                                                            
+                                                                                                [value]="getLaborCategoryControl(i,labcatInd).get('TierLevelName')?.value"></app-kendo-label>
+
+                                                                                         
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr *ngIf="isExpanded2(tbLab)">
+                                                                                        <td></td>
+                                                                                        <td colspan="9">
+                                                                                            <div
+                                                                                                class="markup-table grid-form mb-2">
+                                                                                                <table
+                                                                                                    class="table table-border gridView3 ">
+                                                                                                    <caption></caption>
+                                                                                                    <thead>
+                                                                                                        <tr>
+                                                                                                            <th style="width: 200px;">
+                                                                                                                {{'Location'
+                                                                                                                |
+                                                                                                                translate}}
+                                                                                                            </th>
+                                                                                                            <th style="width: 114px;">
+                                                                                                                {{'BroadcastAllowed'
+                                                                                                                |
+                                                                                                                translate}}
+                                                                                                            </th>
+                                                                                                            <th style="width: 130px;">
+                                                                                                                {{'RecruitedLiMarkupAdder'
+                                                                                                                |
+                                                                                                                translate}}
+                                                                                                            </th>
+                                                                                                            <th style="width: 130px;">	
+                                                                                                                {{'ActualRecruitedLiMarkupAdder' | translate}}
+                                                                                                            </th>
+
+                                                                                                            <th style="width: 126px;">
+                                                                                                                {{'PayrollMarkupAdder'
+                                                                                                                |
+                                                                                                                translate}}
+                                                                                                            </th>
+                                                                                                            <th style="width: 126px;">	
+                                                                                                                    {{'ActualPayrollMarkupPercent' | translate}}
+                                                                                                            </th>
+
+                                                                                                            <th
+                                                                                                            style="width: 160px;">
+                                                                                                                {{'TierLevel'|
+                                                                                                                translate}}
+                                                                                                            </th>
+                                                                                                        </tr>
+                                                                                                    </thead>
+                                                                                                    <tbody>
+                                                                                                        <tr [formArrayName]="'LocationMarkups'"
+                                                                                                            *ngFor="let tbLoc of tbLab.locationMarkups; let locationindex=index">
+                                                                                                            <ng-container
+                                                                                                                [formGroupName]="locationindex">
+                                                                                                                <td>{{tbLoc.LocationName}}
+                                                                                                                </td>
+                                                                                                                <td class="BroadCastAllowed">
+                                                                                                                    <app-kendo-switch
+                                                                                                                        [listControlName]="getLocationControl(i,labcatInd,locationindex).get('BroadCastAllowed')"
+                                                                                                                        [onLabel]="'Yes'"
+                                                                                                                        [offLabel]="'No'"
+                                                                                                                   
+                                                                                                                        [isEditMode]="isViewOnly">
+                                                                                                                    </app-kendo-switch>
+                                                                                                                </td>
+                                                                                                                <td>
+                                                                                                                    <app-numeric-box
+                                                                                                                        [listControlName]="getLocationControl(i,labcatInd,locationindex).get('RecruitedMarkupAdder')"
+                                                                                                                        [placeholder]="'0.000'"
+                                                                                                                        [isEditMode]="true"
+                                                                                                                        [decimals]="3"
+                                                                                                                      >
+                                                                                                                    </app-numeric-box>
+                                                                                                                </td>
+                                                                                                                <td>
+                                                                                                                  <app-numeric-box
+                                                                                                                        [listControlName]="getLocationControl(i,labcatInd,locationindex).get('ActualRecruitedMarkup')"
+                                                                                                                        [placeholder]="'0.000'"
+                                                                                                                        [isEditMode]="true"                                                                                                                        
+                                                                                                                        [decimals]="3" [min]="0">
+                                                                                                                    </app-numeric-box>
+                                                                                                                </td>
+                                                                                                                <td>
+                                                                                                                    <app-numeric-box
+                                                                                                                        [listControlName]="getLocationControl(i,labcatInd,locationindex).get('PayrolledMarkupAdder')"
+                                                                                                                        [placeholder]="'0.000'"
+                                                                                                                        [isEditMode]="true"
+                                                                                                                        [decimals]="3"
+                                                                                                                   >
+                                                                                                                    </app-numeric-box>
+
+                                                                                                                </td>
+                                                                                                                <td>
+                                                                                                                     <app-numeric-box
+                                                                                                                        [isEditMode]="true"
+                                                                                                                        [placeholder]="'0.000'"
+                                                                                                                        [decimals]="3" [min]="0"
+                                                                                                                        [listControlName]="getLocationControl(i,labcatInd,locationindex).get('ActualPayrolledMarkup')">
+                                                                                                                    </app-numeric-box> 
+                                                                                                                </td>
+                                                                                                             
+                                                                                                                <td>
+                                                                                                              
+                                                                                                                    <app-kendo-label
+                                                                                                                     
+                                                                                                                        [value]="getLocationControl(i,labcatInd,locationindex).get('TierLevelName')?.value"></app-kendo-label>
+
+                                                                                                           
+                                                                                                                </td>
+                                                                                                            </ng-container>
+
+                                                                                                        </tr>
+
+                                                                                                    </tbody>
+                                                                                                </table>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </ng-container>
+                                                                            </ng-container>
+
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </ng-container>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </form>
+            </div>
+
+<div kendoDialogContainer></div>

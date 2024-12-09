@@ -1,0 +1,100 @@
+<form [formGroup]="rateDetailsMarkupForm">
+    <kendo-expansionpanel [expanded]="isCardVisible" (expandedChange)="onExpandedCollapse($event)" class="card">
+        <ng-template kendoExpansionPanelTitleDirective>
+            <div (click)="$event.stopPropagation()">
+                <h4 class="card__heading">{{'RateDetails'|translate}}</h4>
+            </div>
+        </ng-template>
+        <div class="card__body">
+            <div class="row">
+      
+                <!-- Text Box Start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-numeric-box [isEditMode]="isBWRDisabled" [isRequired]="true" [label]="getLocaliseMessage('BaseWageRate', currencyCode)"
+                        [decimals]="2" [placeholder]="'0.00'" [controlName]="'baseWageRate'"></app-numeric-box>
+                    </div>
+                </div>
+                <!-- Text Box End -->
+      
+                <!-- Text Box Start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-numeric-box [isEditMode]="true" [label]="getLocaliseMessage('ShiftDifferential',shiftDifferential, currencyCode)"
+                        [decimals]="shiftDifferential == 'Adder' ? 3 : 4" [placeholder]="'0.0000'" [controlName]="'shiftDifferential'"></app-numeric-box>
+                    </div>
+                </div>
+                <!-- Text Box End -->
+      
+                <!-- Text Box Start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-numeric-box [isEditMode]="true" [label]="getLocaliseMessage('ActualWageRateWithShiftDiff', currencyCode)"
+                        [decimals]="2" [placeholder]="'0.00000'" [controlName]="'actualWageRate'"></app-numeric-box>
+                    </div>
+                </div>
+                <!-- Text Box End -->
+      
+                <div class="clearfix"></div>
+      
+                <!-- Text Box Start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-numeric-box [isRequired]="true" [label]="getLocaliseMessage('MarkUpPer')"
+                        [decimals]="3" [placeholder]="'0.000'" [controlName]="'markUp'"></app-numeric-box>
+                        <span class="achor__text">{{'MarkUpNTEPer'| translate}} : {{markUpNte.toFixed(3)}}</span>
+                    </div>
+                </div>
+                <!-- Text Box End -->
+      
+                <!-- Text Box Start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-numeric-box [isEditMode]="true" [label]="getLocaliseMessage('BillRateCurr', currencyCode)"
+                        [decimals]="2" [placeholder]="'0.00000'" [controlName]="'billRate'"></app-numeric-box>
+                        <span class="achor__text">{{nteLabel | translate}} : {{reqNte.toFixed(2)}}</span>
+                    </div>
+                </div>
+                <!-- Text Box End -->
+      
+                <!-- Input Box Start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-radio-button [controlName]="'otHoursBilledAt'" [RadioGroup]="RadioValues"
+                            [name]="'radiobtn'" [label]="getLocaliseMessage('OTHoursBilledAt')"></app-kendo-radio-button>
+                    </div>
+                </div>
+                <!-- Input Box End -->
+      
+                <div class="clearfix"></div>
+    
+                <div *ngIf="benefitAdderData && benefitAdderData.length > 0">
+                    <!-- Page Subheading -->
+                <div class="col-sm-12 col-md-12">
+                    <h4 class="card__body--subheading">{{'BenefitAdder'|translate}}</h4>
+                </div>
+                <!-- Page Subheading -->
+      
+                <!-- Grid Box Start -->
+                <div class="col-sm-6 col-md-6 list-view">
+                    <div>
+                        <kendo-grid [data]="benefitAdderData">
+                            <kendo-grid-column field="LocalizedLabelKey" title="{{'BenefitAdderType' | translate}}">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    {{dataItem.LocalizedLabelKey | translate}}
+                                </ng-template>
+                            </kendo-grid-column>
+      
+                            <kendo-grid-column field="Value" title="{{getLocaliseMessage('RateWithUnit', currencyCode, rateUnit)}}">
+
+                            </kendo-grid-column>
+                        </kendo-grid>
+                    </div>
+                </div>
+                <!-- Grid Box End -->
+                </div>
+      
+            </div>
+        </div>
+      </kendo-expansionpanel>
+</form>

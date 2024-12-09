@@ -1,0 +1,414 @@
+<!-- Main Body Section-->
+<div class="app-content__body">
+   <!-- Status Card -->
+   <form [formGroup]="statusForm">
+      <app-common-header [controlName]="'status'" [recordId]="candidateData.CandidateCode"
+         [recordStatus]="candidateData.Status" [entityId]="entityId" [isStatusEditable]="false"
+         [recordStatusTitle]="'Status'" [recordName]="candidateData.FullName">
+      </app-common-header>
+   </form>
+   <!-- Status Card -->
+   <br>
+
+   <form [formGroup]="ReviewCandidatesForm">
+      <!-- Start Card Section-->
+      <!-- Card Body Section-->
+      <div class="row LI-industrial__expansion">
+         <div class="col-md-12">
+            <kendo-expansionpanel [expanded]="false"
+               class="card card--inverse floating-layout floating-layout__view-layout">
+               <ng-template kendoExpansionPanelTitleDirective>
+                  <h4 class="card__heading">{{'RequestDetails' | translate}}</h4>
+               </ng-template>
+               <!-- End Card Header Section-->
+               <div class="card__body">
+                  <div class="card__body--inner-wrapper">
+                     <!-- Text Box Start -->
+                     <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                           <app-kendo-label [label]="'RequestId' |translate"
+                              [value]="liRequestDetails.RequestCode"></app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- Text Box End -->
+                     <div class="clearfix"></div>
+                     <!-- Text Box Start -->
+                     <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                           <app-kendo-label [label]="'Sector'" [value]="liRequestDetails.SectorName"></app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- Text Box End -->
+                     <!-- Text Box Start -->
+                     <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                           <div class="new-view">
+                              <kendo-label text="Location"> </kendo-label>
+                              <p class="label-answere"> {{liRequestDetails.WorkLocationName}}<br />
+                                 <span class="achor__text">{{liRequestDetails.LocationAddress}}</span>
+                              </p>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- Text Box End -->
+                     <!-- Text Box Start -->
+                     <div class="col-sm-12 col-md-12">
+                        <ng-container *ngIf="orgType1Data || orgType2Data || orgType3Data || orgType4Data">
+                           <ng-container *ngIf="orgType1Data && orgType1Data?.IsVisible">
+                              <div class="form-group">
+                                 <app-kendo-label [label]="orgType1Data.OrgName"
+                                    [value]="liRequestDetails.Orglevel1Name"></app-kendo-label>
+                              </div>
+                           </ng-container>
+                           <ng-container *ngIf="orgType2Data && orgType2Data?.IsVisible">
+                              <div class="form-group">
+                                 <app-kendo-label [label]="orgType2Data.OrgName"
+                                    [value]="liRequestDetails.Orglevel2Name"></app-kendo-label>
+                              </div>
+                           </ng-container>
+                           <ng-container *ngIf="orgType3Data && orgType3Data?.IsVisible">
+                              <div class="form-group">
+                                 <app-kendo-label [label]="orgType3Data.OrgName"
+                                    [value]="liRequestDetails.Orglevel3Name"></app-kendo-label>
+                              </div>
+                           </ng-container>
+                           <ng-container *ngIf="orgType4Data && orgType4Data?.IsVisible">
+                              <div class="form-group">
+                                 <app-kendo-label [label]="orgType4Data.OrgName"
+                                    [value]="liRequestDetails.Orglevel4Name"></app-kendo-label>
+                              </div>
+                           </ng-container>
+                        </ng-container>
+                     </div>
+                     <!-- Text Box End -->
+                     <!-- Text Box Start -->
+                     <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                           <app-kendo-label [label]="'RequestingPrimaryManagerName'"
+                              [value]="liRequestDetails.RequestingManagerName"></app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- Text Box End -->
+                     <!-- Text Box Start -->
+                     <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                           <app-kendo-label [label]="'LaborCategory'"
+                              [value]="liRequestDetails.LaborCategoryName"></app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- Text Box End -->
+                     <!-- Text Box Start -->
+                     <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                           <div class="new-view">
+                              <kendo-label text="{{'CostAccountingCode' | translate}}"> </kendo-label>
+                              <p class="label-answere">{{liRequestDetails.CostAccountingCode}} <br />
+                                 <span class="achor__text">{{liRequestDetails.DefaultCostCenterDescription}}</span>
+                              </p>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- Text Box End -->
+                     <!-- Text Box Start -->
+                     <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                           <app-kendo-label [label]="'ReasonForRequest'"
+                              [value]="liRequestDetails.ReasonForRequestName"></app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- Text Box End -->
+                     <!-- Text Box Start -->
+                     <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                           <app-kendo-label [label]="'StartDate'"
+                              [value]="liRequestDetails.StartDate"></app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- Text Box End -->
+                     <!-- Text Box Start -->
+                     <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                           <app-kendo-label [label]="'EndDate'" [value]="liRequestDetails.EndDate"></app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- Text Box End -->
+                     <!-- Text Box Start -->
+                     <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                           <app-kendo-label [label]="'PositionDescription'" [allowMultilineText]="true"
+                              [value]="liRequestDetails.PositionDescription"></app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- Text Box End -->
+                  </div>
+               </div>
+            </kendo-expansionpanel>
+            <kendo-expansionpanel [expanded]="true"
+               class="card card--inverse floating-layout floating-layout__view-layout">
+               <ng-template kendoExpansionPanelTitleDirective>
+                  <h4 class="card__heading">{{'SubmissionDetails' | translate}}</h4>
+               </ng-template>
+               <!-- End Card Header Section-->
+               <div class="card__body">
+                  <div class="card__body--inner-wrapper">
+                     <!-- Text Box Start -->
+                     <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                           <div class="new-view">
+                              <kendo-label text="{{'Shift' | translate}}"></kendo-label>
+                              <div class="label-answere">{{shiftDetails.ShiftName}}<br />
+                                 <div class="dropdown__shift-range">
+                                    <div class="mb-0">
+                                       <div class="dropdown__shift-range--input">
+                                          <app-weekday-picker [dayInfo]="daysInfo" [isWeekdayEditMode]="false"
+                                             [timeRangeProperties]="timeRange" [timeFormat]="'hh:mm a'"
+                                             [startTimeControlName]="'startTimeControlName'"
+                                             [endTimeControlName]="'endTimeControlName'" [isReadonly]="false">
+                                          </app-weekday-picker>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- Text Box End -->
+                     <!-- Text Box Start -->
+                     <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                           <app-kendo-label [label]="'JobCategory'"
+                              [value]="liRequestDetails.JobCategoryName"></app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- Text Box End -->
+                     <div class="clearfix"></div>
+                     <!-- Text Box Start -->
+                     <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                           <app-kendo-label [label]="getDayHourLocalizationValue('ActualShiftWageRateUnit')"
+                              [value]="actualShiftWageRate.toFixed(2)"></app-kendo-label>
+                           <div class="d-flex justify-content-end rate__detail-link">
+                              <div class="col-sm-3 col-md-3">
+                                 <div class="new-view">
+                                    <span class="label-answere"><a href="javascript:;" data-bs-toggle="offcanvas"
+                                          data-bs-target="#rateDetailsSidebar">{{'RateDetails' |
+                                          translate}}</a></span>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+
+                     </div>
+
+                     <!-- Text Box End -->
+                  </div>
+               </div>
+            </kendo-expansionpanel>
+            <kendo-expansionpanel [expanded]="true"
+               [hidden]="!liRequestDetails.IsBackgrounCheckRequired && !liRequestDetails.IsDrugTestRequired"
+               class="card card--inverse floating-layout floating-layout__view-layout">
+               <ng-template kendoExpansionPanelTitleDirective>
+                  <h4 class="card__heading">{{'OnboardingDetails' | translate}}</h4>
+               </ng-template>
+               <!-- End Card Header Section-->
+               <app-onboarding-summarized-view [entityId]="entityId" [recordId]="candidateData.CandidateId"
+                  [sectorId]="liRequestDetails.SectorId" [locationId]="liRequestDetails.WorkLocationId"
+                  [isDrugScreen]="liRequestDetails.IsDrugTestRequired"
+                  [isBackgroundCheck]="liRequestDetails.IsBackgrounCheckRequired"></app-onboarding-summarized-view>
+            </kendo-expansionpanel>
+
+            <kendo-expansionpanel [expanded]="true" [hidden]="!hasUdfData"
+               class="card card--inverse floating-layout floating-layout__view-layout">
+               <ng-template kendoExpansionPanelTitleDirective>
+                  <h4 class="card__heading">{{'OtherDetailsUDFs' | translate}}</h4>
+               </ng-template>
+               <!-- End Card Header Section-->
+               <div class="card__body">
+                  <div class="card__body--inner-wrapper">
+                     <!-- Text Box Start -->
+                     <div class="col-sm-12 col-md-12">
+                        <app-udf-implementation [entityId]="entityId" [sectorId]="liRequestDetails.SectorId"
+                           [recordUKey]="uKey" [parentsInfos]="udfCommonMethods.getParentsInfo()"
+                           [actionTypeId]="actionTypeId" [showTitle]="false" (hasUDFLength)="getUDFlength($event)">
+                        </app-udf-implementation>
+                     </div>
+                     <!-- Text Box End -->
+                  </div>
+               </div>
+            </kendo-expansionpanel>
+            <kendo-expansionpanel [expanded]="isPanelOpen" class="card" [ngClass]="getCardClassCommentSection()"
+               (expandedChange)="onCommentSectionExpand()">
+               <ng-template kendoExpansionPanelTitleDirective>
+                  <h4 class="card__heading">{{'Comments' | translate}}</h4>
+                  <div class="card__header-icon">
+                     <div class="card__header-icon--error">
+                        <xrm-icon name="alert-triangle" color="red-color" [size]="18" class="sw-bold"></xrm-icon>
+                     </div>
+                  </div>
+               </ng-template>
+               <!-- End Card Header Section-->
+               <div class="card__body" #commentSection>
+                  <div class="card__body--inner-wrapper">
+                     <app-multi-level-comments *ngIf="reviewComments.length" [label]="'PreviousApproverComments'"
+                        [allComments]="reviewComments" [dateKey]="'ReviewedOnDate'" [labelKey]="'ApproverLabel'"
+                        [commentsKey]="'ApproverComments'">
+                     </app-multi-level-comments>
+
+                     <!-- Text Box Start -->
+                     <div class="col-sm-12 col-md-12" *ngIf="!isViewMode">
+                        <div class="form-group">
+                           <div class="new-view">
+                              <app-kendo-textarea class="no__floating-label" [controlName]="'commentTextbox'"
+                                 placeholder="Text" [label]="'ReviewerComment'" [maxCharacters]="2000"
+                                 [allowBullets]="true">
+                              </app-kendo-textarea>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- Text Box End  -->
+
+                     <!-- Dropdown Box Start -->
+                     <div [ngClass]="columnWidth">
+                        <div class="form-group">
+                           <div class="new-view">
+                              <app-kendo-dropdown class="no__floating-label" [list]="declineReasonList"
+                                 [isRequired]="!isViewMode ? isRequiredDeclineSelection : true"
+                                 [label]="'DeclineReason'" [controlName]="'declineReason'" [placeholder]="'DdlSelect'"
+                                 [isEditMode]="isViewMode" [isDisabled]="disableDeclineReason">
+                              </app-kendo-dropdown>
+                              <p *ngIf="isViewMode" class="label-answere"><span>{{selectedReasonText}}</span></p>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- Dropdown Box End -->
+                  </div>
+               </div>
+            </kendo-expansionpanel>
+
+            <kendo-expansionpanel [expanded]="true" [hidden]="!hasDMSData"
+               class="card card--inverse floating-layout floating-layout__view-layout">
+               <ng-template kendoExpansionPanelTitleDirective>
+                  <h4 class="card__heading">{{'CandidateDocuments' | translate}}</h4>
+               </ng-template>
+               <!-- End Card Header Section-->
+               <div class="card__body">
+                  <div class="row">
+                     <div class="col-sm-12 col-md-12 list-view ">
+                        <app-dms-implementation #dms [workFlowId]="entityId" [userGroupId]="userGroupId"
+                           [sectorId]="liRequestDetails.SectorId" [uploadStageId]="uploadStageId"
+                           [actionTypeId]="actionTypeId" [recordId]="candidateData.CandidateId" [showTitle]="false"
+                           [processingId]="processingId" (hasDMSLength)="getDMSlength($event)">
+                        </app-dms-implementation>
+                     </div>
+                  </div>
+               </div>
+            </kendo-expansionpanel>
+         </div>
+      </div>
+      <!--  Page Footer Section-->
+      <div class="page-footer">
+         <div class="btn-box text-end">
+            <button type="button" kendoButton fillMode="outline" themeColor="primary" *ngIf="!isViewMode"
+               (click)="onCancel()">{{'Cancel' | translate}}</button>
+            <button type="button" kendoButton themeColor="primary" [routerLink]="navigationPaths.list"
+               *ngIf="isViewMode">{{'Back' | translate}}</button>
+            <ng-container *ngIf="candidateData?.IsAllowedToReview">
+               <button type="button" kendoButton fillMode="outline" (click)="declineForm()" themeColor="primary"
+                  *ngIf="!isViewMode">{{'Decline' | translate }}</button>
+               <button type="button" kendoButton themeColor="primary" (click)="selectForm()"
+                  *ngIf="!isViewMode">{{'Select'
+                  | translate}}</button>
+            </ng-container>
+         </div>
+      </div>
+      <!-- End Footer Section-->
+      <ng-container *ngIf="isViewMode">
+         <event-log></event-log>
+      </ng-container>
+   </form>
+</div>
+<!-- Add Filter sidebar -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="rateDetailsSidebar" aria-labelledby="rateDetailsSidebar">
+   <div class="offcanvas-header">
+      <h5>{{'RateDetails' | translate}}</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+      </button>
+   </div>
+   <div class="offcanvas-body">
+      <div class="card floating-layout floating-layout__quickview-layout">
+         <div class="card__body">
+            <div class="row">
+               <!-- Text Box Start -->
+               <div class="col-sm-12 col-md-12">
+                  <div class="form-group">
+                     <app-kendo-label [label]="getDayHourLocalizationValue('ActualPayRate')"
+                        [value]="candidateData.BaseWageRate" [decimalPlaces]="2" [isNumber]="true"></app-kendo-label>
+                  </div>
+               </div>
+               <!-- Text Box End -->
+               <!-- Text Box Start -->
+               <div class="col-sm-12 col-md-12">
+                  <div class="form-group">
+                     <app-kendo-label [label]="getDayHourLocalizationValue('ActualShiftWageRateUnit')"
+                        [value]="candidateData.ActualShiftWageRate" [decimalPlaces]="2"
+                        [isNumber]="true"></app-kendo-label>
+                  </div>
+               </div>
+               <!-- Text Box End -->
+               <!-- Text Box Start -->
+               <div class="col-sm-12 col-md-12">
+                  <div class="form-group">
+                     <app-kendo-label [label]="getDayHourLocalizationValue('OTWageRate')"
+                        [value]="candidateData.OtWageRate" [decimalPlaces]="2" [isNumber]="true"></app-kendo-label>
+                  </div>
+               </div>
+               <!-- Text Box End -->
+               <!-- Text Box Start -->
+               <div class="col-sm-12 col-md-12">
+                  <div class="form-group">
+                     <app-kendo-label [label]="getDayHourLocalizationValue('DTWageRate')"
+                        [value]="candidateData.DtWageRate" [decimalPlaces]="2" [isNumber]="true"></app-kendo-label>
+                  </div>
+               </div>
+               <!-- Text Box End -->
+               <!-- Text Box Start -->
+               <div class="col-sm-12 col-md-12">
+                  <div class="form-group">
+                     <app-kendo-label [label]="'SubmittedMarkupPer'" [value]="candidateData.SubmittedMarkup"
+                        [decimalPlaces]="2" [isNumber]="true"></app-kendo-label>
+                  </div>
+               </div>
+               <!-- Text Box End -->
+               <!-- Text Box Start -->
+               <div class="col-sm-12 col-md-12">
+                  <div class="form-group">
+                     <app-kendo-label [label]="getDayHourLocalizationValue('STBillRate')"
+                        [value]="isStaffingUser ? candidateData.VendorStRate : candidateData.MspStBillRate"
+                        [decimalPlaces]="2" [isNumber]="true"></app-kendo-label>
+                  </div>
+               </div>
+               <!-- Text Box End -->
+               <!-- Text Box Start -->
+               <div class="col-sm-12 col-md-12">
+                  <div class="form-group">
+                     <app-kendo-label [label]="getDayHourLocalizationValue('OTBillRate')"
+                        [value]="isStaffingUser ? candidateData.VendorOtRate : candidateData.MspOtBillRate"
+                        [decimalPlaces]="2" [isNumber]="true"></app-kendo-label>
+                  </div>
+               </div>
+               <!-- Text Box End -->
+               <!-- Text Box Start -->
+               <div class="col-sm-12 col-md-12">
+                  <div class="form-group">
+                     <app-kendo-label [label]="getDayHourLocalizationValue('DTBillRate')"
+                        [value]="isStaffingUser ? candidateData.VendorDtRate : candidateData.MspDtBillRate"
+                        [decimalPlaces]="2" [isNumber]="true"></app-kendo-label>
+                  </div>
+               </div>
+               <!-- Text Box End -->
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- End Add Filter sidebar -->

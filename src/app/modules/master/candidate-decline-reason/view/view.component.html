@@ -1,0 +1,79 @@
+<!-- Main Body Section-->
+<div class="app-content__body floating-layout floating-layout__view-layout">
+
+        <!-- Start Card Section-->
+        <div class="card">
+            <!-- Card Header Section-->
+            <div class="card__header">
+                <h4 class="card__heading">{{'BasicDetails'|translate}}</h4>
+            </div>
+            <!-- End Card Header Section-->
+
+            <!-- Card Body Section-->
+            <div class="card__body">
+                <div class="row">
+
+                    <!-- Text Box Start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'Sector'" [value]="canDecRsnData.SectorName"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- Text Box End -->
+
+                    <!-- Text Box Start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'DeclineReason'" [value]="canDecRsnData.CandidateDeclineReason"></app-kendo-label>
+
+                        </div>
+                    </div>
+                    <!-- Text Box End -->
+
+                    <!-- Page Subheading -->
+                    <div class="col-sm-12 col-md-12">
+                        <h4 class="card__body--subheading">{{'ApplicableIn'|translate}}</h4>
+                    </div>
+                    <!-- Page Subheading -->
+
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'ProfessionalPsrRequest'" [value]="canDecRsnData.ProfessionalRequest?'Yes':'No'" [tooltipVisible]="true"
+                            [tooltipTitle]="'ProfPsrRequestTooltipMsg'"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- Input Box End -->
+                   
+                    <!-- Input Box Start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'LiRequest'" [value]="canDecRsnData.LiRequest?'Yes':'No'" 
+                            [tooltipTitle]="'LiReqTooltipMsg'" [tooltipVisible]="true"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- Input Box End -->
+                     <!-- Input Box Start -->
+                     <div class="col-sm-6 col-md-6" *ngIf="Rfxswitchconfig">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'IcSowRequest'" [value]="canDecRsnData.RfxSowRequest?'Yes':'No'" [tooltipVisible]="true"
+                            [tooltipTitle]="'IcSowReqTooltipMsg'" ></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- Input Box End -->
+
+                </div>
+            </div>
+
+        </div>
+
+        <!--  Page Footer Section-->
+        <div class="page-footer">
+            <div class="btn-box btn-box--center">
+                <button type="button" kendoButton themeColor="primary"
+                [routerLink]="navigationPaths.list">
+                    {{'Back' | translate}}
+                </button>
+            </div>
+        </div>
+        <!-- End Footer Section-->
+</div>

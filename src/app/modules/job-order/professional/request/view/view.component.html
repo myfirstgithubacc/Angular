@@ -1,0 +1,717 @@
+<div class="app-content__body floating-layout floating-layout__view-layout">
+    <form [formGroup]="weekDayForm">
+        <div class="col-xs-12 col-md-12" *ngIf="ParentEntity == 'ProfessionalRequest'">
+            <app-status-bar-proff [statusId]="statusId" [isEditMode]="false"
+                [approverlength]="approverLength"></app-status-bar-proff>
+        </div>
+
+        <!-- Show All Button-->
+        <div class="row" *ngIf="ParentEntity == 'ProfessionalRequest'">
+            <div class="col-sm-12">
+                <div class="form-group text-end mb-1">
+                    <kendo-label class="kendo-label__change kendo-label__change--all"
+                        text="{{'ShowAllSections' | translate}}">
+                        <kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" (valueChange)="onSwitchChange($event)"
+                            [checked]="showAllSectionSwitch"></kendo-switch>
+                    </kendo-label>
+                </div>
+            </div>
+        </div>
+        <!-- Show All Button -->
+
+
+        <div class="row">
+            <div class="col-md-3 col-sm-3 mobile-none" *ngIf="ParentEntity == 'ProfessionalRequest'">
+                <div class="wizard">
+                    <kendo-stepper [steps]="steps" stepType="full" [(currentStep)]="currentStep" [linear]="false"
+                        orientation="vertical">
+                        <ng-template kendoStepperLabelTemplate let-step>
+                            <a (click)="scroollToTop()" id="{{step.id}}">
+                                <span class="{{ step.icon }}"></span>
+                                <span class="k-step-text">{{ step.label | translate}}</span>
+                            </a>
+                        </ng-template>
+                    </kendo-stepper>
+                </div>
+            </div>
+
+            <div [ngClass]="ParentEntity == 'ProfessionalRequest' ? 'col-md-9 col-sm-9' : 'col-sm-12'">
+            <ng-container *ngIf="profRequest?.RequestDetail"> 
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Step 1 -->
+                        <kendo-expansionpanel *ngIf="currentStep === 0 || resetStep" [attr.id]='steps' [expanded]="true"
+                            class="card">
+                            <ng-template kendoExpansionPanelTitleDirective>
+                                <div (click)="$event.stopPropagation()">
+                                    <h4 class="card__heading">{{'RequestDetails' | translate}}</h4>
+                                </div>
+                            </ng-template>
+                            <div class="card__body">
+                                <div class="row">
+                                    <!-- Input Box Start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'RequestId'"
+                                                [value]="profRequest.RequestDetail.RequestCode"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- Input Box Start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'IsPreIdentifiedRequest'"
+                                                [value]="profRequest.RequestDetail.IsPreIdentifiedRequest ? 'Yes' : 'No'"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- Input Box Start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'Sector'"
+                                                [value]="profRequest.RequestDetail.SectorName"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class="col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <div class="new-view">
+                                                <kendo-label text="{{'ContractorsWorkLocation' | translate}}">
+                                                </kendo-label>
+                                                <p class="label-answere">
+                                                    {{profRequest.RequestDetail.WorkLocationName}}<br />
+                                                    <span
+                                                        class="achor__text">{{profRequest.RequestDetail.WorkLocationAddress}}</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class="col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'RequestingPrimaryManagerName'"
+                                                [value]="profRequest.RequestDetail.RequestingMangerName"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- Input Box Start -->
+                                    <div class=" col-sm-12 col-md-12" *ngIf="orgType1Data && orgType1Data?.IsVisible">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="orgType1Data.OrgName"
+                                                [value]="profRequest.RequestDetail.OrgLevel1Name"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- Input Box Start -->
+                                    <div class=" col-sm-12 col-md-12" *ngIf="orgType2Data && orgType2Data?.IsVisible">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="orgType2Data.OrgName"
+                                                [value]="profRequest.RequestDetail.OrgLevel2Name"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- Input Box Start -->
+                                    <div class=" col-sm-12 col-md-12" *ngIf="orgType3Data && orgType3Data?.IsVisible">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="orgType3Data.OrgName"
+                                                [value]="profRequest.RequestDetail.OrgLevel3Name"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- Input Box Start -->
+                                    <div class="col-sm-12 col-md-12" *ngIf="orgType4Data && orgType4Data?.IsVisible">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="orgType4Data.OrgName"
+                                                [value]="profRequest.RequestDetail.OrgLevel4Name"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class="col-sm-12 col-md-12" *ngIf="sectorDetails.IsChargeInReqPsr">
+                                        <div class="form-group">
+                                            <div class="new-view">
+                                                <kendo-label text="{{'CostAccountingCode' | translate}}"> </kendo-label>
+                                                <p class="label-answere">
+                                                    {{profRequest.RequestDetail.CostAccountingName}}<br />
+                                                    <span
+                                                        class="achor__text">{{profRequest.RequestDetail.DefaultCostCenterDescription}}</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- Input Box Start -->
+                                    <div class="col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'ReasonForRequest'"
+                                                [value]="profRequest.RequestDetail.ReasonForRequestName"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'Submittals allowed per Staffing Agency'"
+                                                [value]="profRequest.RequestDetail.SubmittalAllowedPerStaffing"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'Submittals allowed for this Requisition'"
+                                                [value]="profRequest.RequestDetail.SubmittalAllowedForThisRequest"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12"
+                                        *ngIf="sectorDetails.DisplayCanSupplierContactQusInReq">
+                                        <div class="form-group">
+                                            <app-kendo-label
+                                                [label]="'Allow the Staffing Agency to Contact regarding this Request'"
+                                                [value]="profRequest.RequestDetail.IsAllowStaffingToContact ? 'Yes' : 'No'"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+                                </div>
+                            </div>
+                        </kendo-expansionpanel>
+
+                        <kendo-expansionpanel *ngIf="currentStep === 0 || resetStep" [attr.id]='steps' [expanded]="true"
+                            class="card">
+                            <ng-template kendoExpansionPanelTitleDirective>
+                                <div (click)="$event.stopPropagation()">
+                                    <h4 class="card__heading">{{'PositionDetails' | translate}}</h4>
+                                </div>
+                            </ng-template>
+                            <div class="card__body">
+                                <div class="row">
+                                    <!-- Input Box Start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'PositionTitle'"
+                                                [value]="profRequest.PositionDetail.PositionTitle"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class="col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'LaborCategory'"
+                                                [value]="profRequest.PositionDetail.LaborCategoryName"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class="col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'JobCategory'"
+                                                [value]="profRequest.PositionDetail.JobCategoryName"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'AssignmentType'"
+                                                [value]="profRequest.PositionDetail.AssignmentTypeName"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <div class="clearfix"></div>
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'SecurityClearance'"
+                                                [value]="profRequest.PositionDetail.SecurityClearanceName"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12" *ngIf="isSecurityClearanceRequired">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'Minimum Requirement to start'"
+                                                [value]="profRequest.PositionDetail.MinimumClearanceToStartName"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                </div>
+                            </div>
+                        </kendo-expansionpanel>
+
+                    <ng-container *ngIf="profRequest.RequestDetail.IsPreIdentifiedRequest">
+                        <kendo-expansionpanel *ngIf="currentStep === 0 || resetStep" [attr.id]='steps' [expanded]="true"
+                            class="card">
+                            <ng-template kendoExpansionPanelTitleDirective>
+                                <div (click)="$event.stopPropagation()">
+                                    <h4 class="card__heading">{{'CandidateDetails' | translate}}</h4>
+                                </div>
+                            </ng-template>
+                            <div class="card__body">
+                                <div class="row">
+                                   <!-- Input Box Start -->
+                                   <div class=" col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <app-kendo-label [label]="'CandidateName'"
+                                            [value]="profRequest.ProfPsrCandidateDetails.FullName"></app-kendo-label>
+                                    </div>
+                                </div>
+                                <!-- input box end -->
+    
+                                 <!-- Input Box Start -->
+                                 <div class=" col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <app-kendo-label [label]="'EmailAddress'"
+                                            [value]="profRequest.ProfPsrCandidateDetails.Email"></app-kendo-label>
+                                    </div>
+                                </div>
+                                <!-- input box end -->
+    
+                                 <!-- Input Box Start -->
+                                 <div class=" col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <form [formGroup]="showPhoneExt">
+                                            <app-kendo-phone [label]="'ContactNumber'" [isEditMode]="false" [phoneControlName]="'phoneControl'"
+                                                [phoneExtControlName]="'phoneExt'"
+                                                [isExtension]="profRequest.ProfPsrCandidateDetails.PhoneExt ? profRequest.ProfPsrCandidateDetails.PhoneExt.length > 0 : false"></app-kendo-phone>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- input box end -->
+                                </div>
+                            </div>
+                        </kendo-expansionpanel>
+                    </ng-container>
+                        
+                        <!-- Step 1 -->
+
+
+                        <!-- Step 2 -->
+                        <kendo-expansionpanel *ngIf="currentStep === 1 || resetStep" [expanded]="true" class="card">
+                            <ng-template kendoExpansionPanelTitleDirective>
+                                <div (click)="$event.stopPropagation()">
+                                    <h4 class="card__heading">Assignment Requirement</h4>
+                                </div>
+                            </ng-template>
+                            <div class="card__body">
+                                <div class="row">
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'TargetStartDate'"
+                                                [value]="profRequestAssignment.AssignmentRequirement.TargetStartDate"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'TargetEndDate'"
+                                                [value]="profRequestAssignment.AssignmentRequirement.TargetEndDate"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start-->
+                                    <div class="col-sm-12 col-md-12"
+                                        *ngIf="profRequestAssignment.ShiftRequirement.ShiftName">
+                                        <div class="form-group">
+                                            <div class="new-view">
+                                                <kendo-label text="{{'Shift' | translate}}"> </kendo-label>
+                                                <p class="label-answere">
+                                                    {{profRequestAssignment.ShiftRequirement.ShiftName}}<br />
+                                                    <app-weekday-picker [dayInfo]="daysInfo" [isWeekdayEditMode]="false"
+                                                        [timeRangeProperties]="timeRange" [timeFormat]="'hh:mm a'"
+                                                        [startTimeControlName]="'startTimeControlName'"
+                                                        [endTimeControlName]="'endTimeControlName'"
+                                                        [isReadonly]="false">
+                                                    </app-weekday-picker>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- input box end-->
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'Number of Positions Requested'"
+                                                [value]="profRequestAssignment.AssignmentRequirement.PositionNeeded"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <div class="clearfix"></div>
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12" *ngIf="showDrugField()">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'DrugScreenId'"
+                                                [value]="profRequestAssignment.AssignmentRequirement.IsDrugTestRequired ? 'Yes' : 'No'"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12" *ngIf="showaBackgroundField()">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'BackgroundChecksTitle'"
+                                                [value]="profRequestAssignment.AssignmentRequirement.IsBackgrounCheckRequired ? 'Yes' : 'No'"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'PositionDescription'" [allowMultilineText]="true"
+                                                [value]="profRequestAssignment.AssignmentRequirement.PositionDescription"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+                                    
+                                    <!-- input box start -->
+                                    <div class="col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'Skills Required'" [allowMultilineText]="true"
+                                                [value]="profRequestAssignment.AssignmentRequirement.SkillsRequired"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+                                    
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'Skills Preferred'" [allowMultilineText]="true"
+                                                [value]="profRequestAssignment.AssignmentRequirement.SkillsPreferred"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+                                    
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'ExperienceRequired'" [allowMultilineText]="true"
+                                                [value]="profRequestAssignment.AssignmentRequirement.ExperienceRequired"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+                                    
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'ExperiencePreferred'" [allowMultilineText]="true"
+                                                [value]="profRequestAssignment.AssignmentRequirement.ExperiencePreferred"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+                                    
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'EducationRequired'" [allowMultilineText]="true"
+                                                [value]="profRequestAssignment.AssignmentRequirement.EducationRequired"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+                                    
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'Education Preferred'" [allowMultilineText]="true"
+                                                [value]="profRequestAssignment.AssignmentRequirement.EducationPreferred"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+                                    
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'AdditionalInformation'" [allowMultilineText]="true"
+                                                [value]="profRequestAssignment.AssignmentRequirement.AdditionalInformation"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                </div>
+                            </div>
+                        </kendo-expansionpanel>
+                        <!-- Step 2 -->
+
+
+                        <!-- Step 3 -->
+                        <kendo-expansionpanel *ngIf="currentStep === 2 || resetStep" [expanded]="true" class="card">
+                            <ng-template kendoExpansionPanelTitleDirective>
+                                <div (click)="$event.stopPropagation()">
+                                    <h4 class="card__heading">{{'RateDetails' | translate}}</h4>
+                                </div>
+                            </ng-template>
+                            <div class="card__body">
+                                <div class="row">
+                                    <!-- Input Box Start -->
+                                    <div class=" col-sm-12 col-md-12" *ngIf="profRequestFinancial.BaseWageRate && profRequestFinancial.BaseWageRate > 0">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="getDayHourLocalizationValue('ActualPayRate')"
+                                                [value]="profRequestFinancial.BaseWageRate | number: '1.2-2'"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- Input Box Start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'RateUnit'"
+                                                [value]="profRequestFinancial.RateUniteName"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- Input Box Start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="getNteBillRateLabel()" [isCurrency]="true"
+                                                [value]="profRequestFinancial.NewNteBillRate"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- Input Box Start -->
+                                    <div class=" col-sm-12 col-md-12" *ngIf="profRequestFinancial.DeltaCost">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'Delta Cost of Exception'" [isCurrency]="true"
+                                                [value]="profRequestFinancial.DeltaCost"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- Input Box Start -->
+                                    <div class=" col-sm-12 col-md-12" *ngIf="profRequestFinancial.ReasonForException">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'Reason for Exception'"
+                                                [value]="profRequestFinancial.ReasonForException"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <div class="clearfix"></div>
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'HourDistribution'"
+                                                [value]="profRequestFinancial.HourDistributionRuleName"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'Estimated Regular Hours/Week'"
+                                                [value]="profRequestFinancial.EstimatedRegularHoursPerWeek | number: '1.2-2'"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <div class="clearfix"></div>
+
+                                    <!-- Input Box Start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'OT Hours Allowed'"
+                                                [value]="profRequestFinancial.IsOtExpected ? 'Yes' : 'No'"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class="col-sm-12 col-md-12" *ngIf="isOTHousBilledAtShow">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'OTHoursBilledAt'"
+                                                [value]="profRequestFinancial.OthersBilledAtName"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box start -->
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12" *ngIf="profRequestFinancial.IsOtExpected">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'Estimated OT Hours/Week'"
+                                                [value]="profRequestFinancial.EstimatedOtHoursPerWeek | number: '1.2-2'"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12" *ngIf="isBudgetedHour">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'BudgetedHours'"
+                                                [value]="profRequestFinancial.BudgetedHours"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <div class="clearfix"></div>
+
+                                    <!-- Input Box Start -->
+                                    <div class="col-sm-12 col-md-12" [hidden]="!hasBenefitAdderLength">
+                                        <div class="form-group">
+                                            <app-benefit-adder [requestId]="profRequest.RequestDetail.RequestId"
+                                                [entityId]="entityId"
+                                                [reqLibraryId]="profRequest.PositionDetail.ReqLibraryId"
+                                                [sectorId]="profRequest.RequestDetail.SectorId"
+                                                [locationId]="profRequest.RequestDetail.WorkLocationId"
+                                                (onDataPicked)="getBenefitAdderData($event)"></app-benefit-adder>
+                                        </div>
+                                    </div>
+                                    <!-- Input Box end -->
+
+                                    <!-- Input Box Start -->
+                                    <div class=" col-sm-12 col-md-12" *ngIf="roleGroupId != '3'">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'EstimatedCost'" [isCurrency]="true"
+                                                [value]="profRequestFinancial.EstimatedCost"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                </div>
+                            </div>
+                        </kendo-expansionpanel>
+                        <!-- Step 3 -->
+
+                        <!-- Step 4 -->
+                        <kendo-expansionpanel *ngIf="currentStep === 3 || resetStep" [hidden]="!hasUDFLength"
+                            [expanded]="true" class="card">
+                            <ng-template kendoExpansionPanelTitleDirective>
+                                <div (click)="$event.stopPropagation()">
+                                    <h4 class="card__heading">{{'OtherDetailsUDFs' | translate}}</h4>
+                                </div>
+                            </ng-template>
+                            <app-udf-implementation [entityId]="entityId" [isDraft]="isDraft"
+                                [sectorId]="profRequest.RequestDetail.SectorId"
+                                [recordUKey]="profRequest.RequestDetail.RequestUKey" [actionTypeId]="actionTypeId"
+                                [showTitle]="false" (hasUDFLength)="getUDFLength($event)">
+                            </app-udf-implementation>
+                        </kendo-expansionpanel>
+
+                        <kendo-expansionpanel [hidden]="roleGroupId == '3' || ((currentStep !== 3 && !resetStep) || hasApproverDataLength)"
+                            [expanded]="true" class="card">
+                            <ng-template kendoExpansionPanelTitleDirective>
+                                <div (click)="$event.stopPropagation()">
+                                    <h4 class="card__heading">Requisition Approvers</h4>
+                                </div>
+                            </ng-template>
+                            <app-approval-widget-v2 [entityId]="entityId" [isView]="true" [isDraft]="isDraft"
+                                [isRecordId]="profRequest.RequestDetail.RequestId" [isheading]="false"
+                                [heading]="'ApproverDetails'" (onApproverSubmitReq)="onApproverSubmit($event)"
+                                [sector]="profRequest.RequestDetail.SectorId"></app-approval-widget-v2>
+                        </kendo-expansionpanel>
+
+                        <kendo-expansionpanel *ngIf="currentStep === 3 || resetStep" [expanded]="true" class="card">
+                            <ng-template kendoExpansionPanelTitleDirective>
+                                <div (click)="$event.stopPropagation()">
+                                    <h4 class="card__heading">{{'Comments' | translate}}</h4>
+                                </div>
+                            </ng-template>
+                            <div class="card__body">
+                                <div class="row">
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'ManagerCommentstoStaffingAgency'"
+                                                [value]="profRequestOtherDetail.ClientCommentsToStaffingAgency"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <div class=" col-sm-12 col-md-12" *ngIf="roleGroupId != '3'">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'ManagerCommentsNotViewablebyStaffingAgency'"
+                                                [value]="profRequestOtherDetail.ClientComments"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </kendo-expansionpanel>
+
+                        <kendo-expansionpanel *ngIf="currentStep === 3 || resetStep" [hidden]="!hasDMSLength"
+                            [expanded]="true" class="card">
+                            <ng-template kendoExpansionPanelTitleDirective>
+                                <div (click)="$event.stopPropagation()">
+                                    <h4 class="card__heading">{{'DocumentUpload' | translate}}</h4>
+                                </div>
+                            </ng-template>
+                            <app-dms-implementation #dms [workFlowId]="entityId" [userGroupId]="userGroupId"
+                                [sectorId]="profRequest.RequestDetail.SectorId" [uploadStageId]="uploadStageId"
+                                [actionTypeId]="actionTypeId" [recordId]="profRequest.RequestDetail.RequestId"
+                                [showTitle]="false" [processingId]="processingId" [isDraft]="isDraft"
+                                (hasDMSLength)="getDMSLength($event)">
+                            </app-dms-implementation>
+                        </kendo-expansionpanel>
+                        <!-- Step 4 -->
+
+                    </div>
+                </div>
+            </ng-container>
+
+
+                <!--  Page Footer Section-->
+                <div class="page-footer stepper-button" *ngIf="!resetStep && ParentEntity == 'ProfessionalRequest'">
+                    <div class="stepper-button__prev">
+                        <button kendoButton href="javascript:;" fillMode="outline" themeColor="primary"
+                            *ngIf="currentStep !== 0" (click)="prev()"><i class="fa-solid fa-chevron-left"></i>
+                            {{'Previous' | translate}}</button>
+                    </div>
+                    <div class="stepper-button__next">
+                        <button *ngIf="currentStep !== 3" kendoButton href="javascript:;" fillMode="outline"
+                            themeColor="primary" routerLink="/xrm/job-order/professional/list">{{'Back' |
+                            translate}}</button>
+                        <button *ngIf="currentStep === 3" kendoButton href="javascript:;" fillMode="solid"
+                            themeColor="primary" routerLink="/xrm/job-order/professional/list">{{'Back' |
+                            translate}}</button>
+                        <button kendoButton href="javascript:;" themeColor="primary" *ngIf="currentStep !== 3"
+                            (click)="next()">{{'Next' | translate}} <i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                </div>
+
+                <div class="page-footer stepper-button" *ngIf="resetStep && ParentEntity == 'ProfessionalRequest'">
+                    <div class="stepper-button__prev">
+                    </div>
+                    <div class="stepper-button__next">
+                        <button kendoButton href="javascript:;" fillMode="solid" themeColor="primary"
+                            routerLink="/xrm/job-order/professional/list">{{'Back' | translate}}</button>
+                    </div>
+
+                </div>
+                <!-- End Footer Section-->
+            </div>
+        </div>
+
+
+        <ng-container *ngIf="ParentEntity == 'ProfessionalRequest'">
+            <event-log></event-log>
+        </ng-container>
+    </form>
+</div>

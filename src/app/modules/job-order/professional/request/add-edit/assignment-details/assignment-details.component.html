@@ -1,0 +1,166 @@
+<kendo-expansionpanel [expanded]="true" class="card">
+    <ng-template kendoExpansionPanelTitleDirective>
+        <div (click)="$event.stopPropagation()">
+            <h4 class="card__heading">{{'AssignmentRequirement' | translate}}</h4>
+        </div>
+    </ng-template>
+    <form [formGroup]="assignmentRequirementFrom">
+        <div class="card__body">
+            <div class="row">
+
+                <!-- input box start -->
+                <div class=" col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-datepicker [controlName]="'TargetStartDate'" [label]="'TargetStartDate'"
+                            [isRequired]="true" (onChange)="onStartDateChange($event)"></app-kendo-datepicker>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start -->
+                <div class=" col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-datepicker [controlName]="'TargetEndDate'" [label]="'TargetEndDate'"
+                            [isRequired]="true" (onChange)="onEndDateChange($event)"></app-kendo-datepicker>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start-->
+                <div class="col-sm-12 col-md-12">
+                    <div class="dropdown__shift-range">
+                        <div class="form-group">
+                            <app-kendo-dropdown [list]="shiftList" [label]="'Shift'" [controlName]="'ShiftId'"
+                                [placeholder]="'DdlSelect'" [isRequired]="true"
+                                (onChange)="onShiftChange($event)"></app-kendo-dropdown>
+                            <div class="mt-1">
+                                <app-weekday-picker *ngIf="assignmentRequirementFrom?.get('ShiftId')?.value"
+                                    [dayInfo]="daysInfo" [isWeekdayEditMode]="false" [timeRangeProperties]="timeRange"
+                                    [startTimeControlName]="'startTimeControlName'"
+                                    [endTimeControlName]="'endTimeControlName'" [timeFormat]="'hh:mm a'"
+                                    (getWeekDayInfo)="getWeekData($event)" (onCancel)="getStatus($event)">
+                                </app-weekday-picker>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- input box end-->
+
+                <!-- input box start -->
+                <div class=" col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-numeric-box [controlName]="'PositionNeeded'" [label]="'NumberOfPositionsRequested'"
+                            [isRequired]="true" [min]="1" [maxlength]="4" appRestrictInput
+                            [isSpecialCharacterAllowed]="false" [isEditMode]="isRestrictReqToOnePos"
+                            (onNumericBlur)="onPositionNeededChange($event)">
+                        </app-numeric-box>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <div class="clearfix"></div>
+
+                <!-- input box start -->
+                <div *ngIf="isShowDrugField" class=" col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [label]="'DrugScreenId'" [controlName]="'IsDrugTestRequired'"
+                            [onLabel]="'Yes'" [offLabel]="'No'" [isEditMode]="isEditableDrugField"></app-kendo-switch>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start -->
+                <div *ngIf="isShowBackgroundField" class=" col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [label]="'BackgroundChecksTitle'" [controlName]="'IsBackgrounCheckRequired'"
+                            [onLabel]="'Yes'" [offLabel]="'No'"
+                            [isEditMode]="isEditableBackgroundField"></app-kendo-switch>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start -->
+                <div class=" col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <!-- input box start -->
+                        <app-kendo-textarea [controlName]="'PositionDescription'" [label]="'PositionDescription'"
+                            [isRequired]="true" [maxCharacters]="8000" [isEditMode]="isPosDescNonEditable">
+                        </app-kendo-textarea>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start -->
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <app-kendo-textarea [controlName]="'SkillsRequired'" [label]="'SkillsRequired'"
+                            [isRequired]="true" [maxCharacters]="8000" [isEditMode]="isSkillReqNonEditable">
+                        </app-kendo-textarea>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start -->
+                <div class=" col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <app-kendo-textarea [controlName]="'SkillsPreferred'" [label]="'SkillsPreferred'"
+                            [maxCharacters]="8000">
+                        </app-kendo-textarea>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start -->
+                <div class=" col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <app-kendo-textarea [controlName]="'ExperienceRequired'" [label]="'ExperienceRequired'"
+                            [isRequired]="true" [maxCharacters]="8000" [isEditMode]="isExperReqNonEditable">
+                        </app-kendo-textarea>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start -->
+                <div class=" col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <app-kendo-textarea [controlName]="'ExperiencePreferred'" [label]="'ExperiencePreferred'"
+                            [maxCharacters]="8000">
+                        </app-kendo-textarea>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start -->
+                <div class=" col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <app-kendo-textarea [controlName]="'EducationRequired'" [label]="'EducationRequired'"
+                            [maxCharacters]="8000" [isRequired]="true" [isEditMode]="isEduReqNonEditable">
+                        </app-kendo-textarea>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start -->
+                <div class=" col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <app-kendo-textarea [controlName]="'EducationPreferred'" [label]="'EducationPreferred'"
+                            [maxCharacters]="8000">
+                        </app-kendo-textarea>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start -->
+                <div class=" col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <app-kendo-textarea [controlName]="'AdditionalInformation'"
+                            [label]="'Additional Position Information'" [maxCharacters]="2000">
+                        </app-kendo-textarea>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+            </div>
+        </div>
+    </form>
+</kendo-expansionpanel>

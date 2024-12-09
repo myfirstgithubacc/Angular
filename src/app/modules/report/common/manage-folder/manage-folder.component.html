@@ -1,0 +1,44 @@
+<form [formGroup]="addEditFolderForm">
+  <kendo-dialog class="dailog report_panelbar--dailog new-dailog-v2" *ngIf="handleDialogBox"
+    [width]="magicNumber.fourTwenty">
+    <div class="kendo-dialog-title">
+      <h3 class="dailog__title">
+        {{ (isEditMode ? 'EditFolder' : 'CreateNewFolder') | translate }}
+      </h3>
+      <a href="javascript:;" class="close-icon" (click)="closeDialog()">
+        <i class="fa-solid fa-xmark"></i>
+      </a>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-12">
+        <app-toaster [isOnComponent]="true"></app-toaster>
+        <div class="form-group" style="text-align: left;">
+          <app-textbox [label]="'FolderName'" [controlName]="'FolderName'" [isRequired]="true"
+            [maxCharacters]="magicNumber.thirty"></app-textbox>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-12">
+        <div class="form-group" style="text-align: left;">
+          <app-kendo-textarea [label]="'Description'" [controlName]="'Description'"
+            [maxCharacters]="magicNumber.fiveHundred"></app-kendo-textarea>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-12">
+        <div class="form-group" style="text-align: left;">
+          <app-kendo-multiselect-dropdown [list]="getActiveRolesList" [label]="'ShareWith'"
+            [controlName]="'SharedRoleIds'" [placeholder]="'DdlSelect'" [isRequired]="true">
+          </app-kendo-multiselect-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="dailog__button">
+      <div class="button-group">
+        <button type="button" kendoButton themeColor="primary" (click)="saveFolder()"
+          [disabled]="isEditMode?addEditFolderForm.pristine:false">
+          {{ 'Save' | translate }}</button>
+        <button type="button" kendoButton themeColor="primary" fillMode="outline" (click)="closeDialog()">{{'Cancel' |
+          translate}}</button>
+      </div>
+    </div>
+  </kendo-dialog>
+</form>

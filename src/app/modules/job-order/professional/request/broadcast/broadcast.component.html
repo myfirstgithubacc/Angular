@@ -1,0 +1,732 @@
+<div class="app-content__body app-content__kendoexpansion-main">
+    <form [formGroup]="professionalReqBroadcastForm">
+        <div class="col-xs-12 col-md-12">
+            <app-status-bar-proff [statusId]="statusId" [isEditMode]="false"
+                [approverlength]="approverLength"></app-status-bar-proff>
+        </div>
+        <kendo-expansionpanel [expanded]="false" class="card floating-layout floating-layout__view-layout">
+            <ng-template kendoExpansionPanelTitleDirective>
+                <div (click)="$event.stopPropagation()">
+                    <h4 class="card__heading">{{'RequisitionQuickView' | translate}}</h4>
+                </div>
+                <div class="card__header-icon">
+                    <div class="card__header-icon--error">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                </div>
+            </ng-template>
+            <div class="card__body">
+                <div class="card__body--inner-wrapper">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <div class="new-view">
+                                    <kendo-label text="{{'RequestId' | translate}}"> </kendo-label>
+                                    <span class="data-answere"><a href="javascript:;" class="request_id"
+                                            data-bs-toggle="offcanvas"
+                                            data-bs-target="#requestSidebar2">{{proffUkeyData.ProfRequest.RequestDetail.RequestCode}}</a></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'IsPreIdentifiedRequest'"
+                                    [value]="isPreIdentifiedRequest? 'Yes' : 'No'"></app-kendo-label>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'RequestingPrimaryManagerName'"
+                                    [value]="proffUkeyData.ProfRequest.RequestDetail.RequestingMangerName"></app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'LaborCategory'"
+                                    [value]="proffUkeyData.ProfRequest.PositionDetail.LaborCategoryName"></app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'JobCategory'"
+                                    [value]="proffUkeyData.ProfRequest.PositionDetail.JobCategoryName"></app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <div class="new-view">
+                                    <kendo-label text="{{'Location' | translate}}"> </kendo-label>
+                                    <p class="label-answere">
+                                        {{proffUkeyData.ProfRequest.RequestDetail.WorkLocationName}}<br />
+                                        <span
+                                            class="achor__text">{{proffUkeyData.ProfRequest.RequestDetail.WorkLocationAddress}}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'NumberOfPositionsRequested'"
+                                    [value]="proffUkeyData.ProfRequestAssignment.AssignmentRequirement.PositionNeeded"></app-kendo-label>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-12"
+                            *ngIf="proffUkeyData.ProfRequestAssignment.ShiftRequirement.ShiftName">
+                            <div class="form-group">
+                                <div class="new-view">
+                                    <kendo-label text="{{'Shift' | translate}}"> </kendo-label>
+                                    <p class="label-answere">
+                                        {{proffUkeyData.ProfRequestAssignment.ShiftRequirement.ShiftName}}<br />
+                                        <app-weekday-picker [dayInfo]="daysInfo" [isWeekdayEditMode]="false"
+                                            [timeRangeProperties]="timeRange" [timeFormat]="'hh:mm a'"
+                                            [startTimeControlName]="'startTimeControlName'"
+                                            [endTimeControlName]="'endTimeControlName'" [isReadonly]="false">
+                                        </app-weekday-picker>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'HourDistribution'"
+                                    [value]="proffUkeyData.ProfRequestFinancial.HourDistributionRuleName"></app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <app-kendo-label [label]="getNteBillRateLabel()" [isCurrency]="true"
+                                    [value]="proffUkeyData.ProfRequestFinancial.NewNteBillRate"></app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'EstimatedCost'" [isCurrency]="true"
+                                    [value]="proffUkeyData.ProfRequestFinancial.EstimatedCost">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'PositionTitle'"
+                                    [value]="proffUkeyData.ProfRequest.PositionDetail.PositionTitle"></app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12" *ngIf="!isPreIdentifiedRequest">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'SubmittalsAllowedPerStaffingAgency'"
+                                    [value]="proffUkeyData.ProfRequest.RequestDetail.SubmittalAllowedPerStaffing"></app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12" *ngIf="!isPreIdentifiedRequest">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'SubmittalsAllowedForThisRequisition'"
+                                    [value]="proffUkeyData.ProfRequest.RequestDetail.SubmittalAllowedForThisRequest"></app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'TargetStartDate'" [isDate]="true"
+                                    [value]="proffUkeyData.ProfRequestAssignment.AssignmentRequirement.TargetStartDate"></app-kendo-label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </kendo-expansionpanel>
+
+        <kendo-expansionpanel [expanded]="openBroadcastPanel" class="card" 
+        (expandedChange)="togglePanelState1()">
+            <ng-template kendoExpansionPanelTitleDirective>
+                <div (click)="$event.stopPropagation()">
+                    <h4 class="card__heading">{{'BroadcastDetails' | translate}}</h4>
+                </div>
+                <div class="card__header-icon">
+                    <div class="card__header-icon--error">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                </div>
+            </ng-template>
+            <div class="card__body">
+                <div class="card__body--inner-wrapper">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'LastBroadcastRound'"
+                                    [value]="lastBroadcastRound"></app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12" *ngIf="lastBroadcastRound && lastBroadcastRound !== '0'">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'LastBroadcastDate'" [isDate]="true"
+                                    [value]="lastBroadcastDate"></app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group floating__view-no-border">
+                                <app-kendo-dropdown [isRequired]="true" [label]="'BroadcastRound'"
+                                    [controlName]="'broadcastRound'" [list]="broadcastRoundDropdown"
+                                    [placeholder]="'DdlSelect'"></app-kendo-dropdown>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group floating__view-no-border">
+                                <app-kendo-dropdown [isRequired]="true" [label]="'SelectBroadcastReason'"
+                                    [controlName]="'broadcastReason'" [list]="broadcastReasonList"
+                                    [placeholder]="'DdlSelect'"></app-kendo-dropdown>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="col-sm-6 col-md-6" *ngIf="!isPreIdentifiedRequest">
+                            <div class="form-group floating__view-no-border">
+                                <app-kendo-datepicker [label]="'SubmittalCutOffDate'"
+                                    [controlName]="'submittalCutOffDate'"
+                                    [disabledDates]="disabledDates"></app-kendo-datepicker>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-12"
+                            *ngIf="isOverrideConfiguredDelayedNotification && !isPreIdentifiedRequest">
+                            <div class="form-group floating__view-no-border">
+                                <app-kendo-switch [controlName]="'overrideConfiguredNotif'"
+                                    [label]="'OverrideConfiguredNotification'" [onLabel]="'Yes'" [offLabel]="'No'">
+                                </app-kendo-switch>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <div class="col-sm-12 col-md-12 halfGridCol2 tree-bxs">
+                                    <app-tree-view [label]="'StaffingAgency'" [data]="staffingAgencyList"
+                                        [isFiltered]="false" [textField]="'text'"
+                                        (onCheckedTree)="selectedStaffingAgency($event)" [checkedKeys]="checkedKeys"
+                                        [childrenField]="'items'" [expandedKeys]="expandedKeys" [disabledKeys]="disabledKeys"
+                                        [isViewApprovalCase]="true" [treeViewType]="'multileveltreeview'"
+                                        [isRequired]="true"></app-tree-view>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </kendo-expansionpanel>
+
+        <kendo-expansionpanel [expanded]="false" class="card floating-layout floating-layout__view-layout">
+            <ng-template kendoExpansionPanelTitleDirective>
+                <div (click)="$event.stopPropagation()">
+                    <h4 class="card__heading">{{'Comments' | translate}}</h4>
+                </div>
+                <div class="card__header-icon">
+                    <div class="card__header-icon--error">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                </div>
+            </ng-template>
+            <div class="card__body">
+                <div class="card__body--inner-wrapper">
+                    <div class="row">
+
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'ManagerCommentstoStaffingAgency'"
+                                    [value]="proffUkeyData.ProfRequestComment.ClientCommentsToStaffingAgency"></app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'ManagerCommentsNotViewablebyStaffingAgency'"
+                                    [value]="proffUkeyData.ProfRequestComment.ClientComments"></app-kendo-label>
+                            </div>
+                        </div>
+
+                        <app-multi-level-comments *ngIf="broadcastComments?.length"
+                            [label]="'PreviousBroadcastComments'" [allComments]="broadcastComments"
+                            [dateKey]="'BroadcastedOnDate'" [labelKey]="'BroadcastedBy'"
+                            [commentsKey]="'Comments'">
+                        </app-multi-level-comments>
+
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-group mb-4">
+                                <app-kendo-textarea [controlName]="'broadcastComments'" [allowBullets]="true"
+                                    [maxCharacters]="2000" [label]="'BroadcastCommentsViewabletoStaffingAgency'">
+                                </app-kendo-textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </kendo-expansionpanel>
+
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="requestSidebar2" aria-labelledby="requestSidebar2">
+            <div class="offcanvas-header">
+                <h5>{{'RequestDetails' | translate}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+                </button>
+            </div>
+            <div class="offcanvas-body floating-layout floating-layout__view-layout">
+                <div class="card">
+                    <div class="card__header">
+                        <h4 class="card__heading">{{'RequestDetails' | translate}}</h4>
+                    </div>
+                    <div class="card__body">
+                        <div class="row">
+
+                            <div class=" col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'RequestId'"
+                                        [value]="proffUkeyData.ProfRequest.RequestDetail.RequestCode"></app-kendo-label>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'IsPreIdentifiedRequest'"
+                                        [value]="isPreIdentifiedRequest? 'Yes' : 'No'"></app-kendo-label>
+                                </div>
+                            </div>
+
+                            <div class=" col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'Sector'"
+                                        [value]="proffUkeyData.ProfRequest.RequestDetail.SectorName"></app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <div class="new-view">
+                                        <kendo-label text="{{'ContractorsWorkLocation' | translate}}"> </kendo-label>
+                                        <p class="label-answere">
+                                            {{proffUkeyData.ProfRequest.RequestDetail.WorkLocationName}}<br />
+                                            <span
+                                                class="achor__text">{{proffUkeyData.ProfRequest.RequestDetail.WorkLocationAddress}}</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'RequestingPrimaryManagerName'"
+                                        [value]="proffUkeyData.ProfRequest.RequestDetail.RequestingMangerName"></app-kendo-label>
+                                </div>
+                            </div>
+                            <div class=" col-sm-12 col-md-12" *ngIf="orgType1Data && orgType1Data?.IsVisible">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="orgType1Data.OrgName"
+                                        [value]="proffUkeyData.ProfRequest.RequestDetail.OrgLevel1Name"></app-kendo-label>
+                                </div>
+                            </div>
+                            <div class=" col-sm-12 col-md-12" *ngIf="orgType2Data && orgType2Data?.IsVisible">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="orgType2Data.OrgName"
+                                        [value]="proffUkeyData.ProfRequest.RequestDetail.OrgLevel2Name"></app-kendo-label>
+                                </div>
+                            </div>
+                            <div class=" col-sm-12 col-md-12" *ngIf="orgType3Data && orgType3Data?.IsVisible">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="orgType3Data.OrgName"
+                                        [value]="proffUkeyData.ProfRequest.RequestDetail.OrgLevel3Name"></app-kendo-label>
+                                </div>
+                            </div>
+                            <div class=" col-sm-12 col-md-12" *ngIf="orgType4Data && orgType4Data?.IsVisible">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="orgType4Data.OrgName"
+                                        [value]="proffUkeyData.ProfRequest.RequestDetail.OrgLevel4Name"></app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12" *ngIf="sectorDetails.IsChargeInReqPsr">
+                                <div class="form-group">
+                                    <div class="new-view">
+                                        <kendo-label text="{{'CostAccountingCode' | translate}}"> </kendo-label>
+                                        <p class="label-answere">
+                                            {{proffUkeyData.ProfRequest.RequestDetail.CostAccountingName}}<br />
+                                            <span
+                                                class="achor__text">{{proffUkeyData.ProfRequest.RequestDetail.DefaultCostCenterDescription}}</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'ReasonForRequest'"
+                                        [value]="proffUkeyData.ProfRequest.RequestDetail.ReasonForRequestName"></app-kendo-label>
+                                </div>
+                            </div>
+
+                            <div class=" col-sm-12 col-md-12" *ngIf="!isPreIdentifiedRequest">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'SubmittalsAllowedPerStaffingAgency'"
+                                        [value]="proffUkeyData.ProfRequest.RequestDetail.SubmittalAllowedPerStaffing"></app-kendo-label>
+                                </div>
+                            </div>
+                            <div class=" col-sm-12 col-md-12" *ngIf="!isPreIdentifiedRequest">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'SubmittalsAllowedForThisRequisition'"
+                                        [value]="proffUkeyData.ProfRequest.RequestDetail.SubmittalAllowedForThisRequest"></app-kendo-label>
+                                </div>
+                            </div>
+                            <div class=" col-sm-12 col-md-12" *ngIf="sectorDetails.DisplayCanSupplierContactQusInReq">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'AllowtheStaffingAgencyContactRegardingThisRequest'"
+                                        [value]="proffUkeyData.ProfRequest.RequestDetail.IsAllowStaffingToContact ? 'Yes' : 'No'"></app-kendo-label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card__header">
+                        <h4 class="card__heading">{{'PositionDetails' | translate}}</h4>
+                    </div>
+                    <div class="card__body">
+                        <div class="row">
+                            <div class=" col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'PositionTitle'"
+                                        [value]="proffUkeyData.ProfRequest.PositionDetail.PositionTitle"></app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'LaborCategory'"
+                                        [value]="proffUkeyData.ProfRequest.PositionDetail.LaborCategoryName"></app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'JobCategory'"
+                                        [value]="proffUkeyData.ProfRequest.PositionDetail.JobCategoryName"></app-kendo-label>
+                                </div>
+                            </div>
+                            <div class=" col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'AssignmentType'"
+                                        [value]="proffUkeyData.ProfRequest.PositionDetail.AssignmentTypeName"></app-kendo-label>
+                                </div>
+                            </div>
+
+                            <div class="clearfix"></div>
+
+                            <div class=" col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'SecurityClearance'"
+                                        [value]="proffUkeyData.ProfRequest.PositionDetail.SecurityClearanceName"></app-kendo-label>
+                                </div>
+                            </div>
+                            <div class=" col-sm-12 col-md-12" *ngIf="isSecurityClearanceRequired">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'MinimumRequirementToStart'"
+                                        [value]="proffUkeyData.ProfRequest.PositionDetail.MinimumClearanceToStartName"></app-kendo-label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card__header">
+                        <h4 class="card__heading">{{'AssignmentRequirement' | translate}}</h4>
+                    </div>
+                    <div class="card__body">
+                        <div class="row">
+
+                            <div class=" col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'TargetStartDate'" [isDate]="true"
+                                        [value]="proffUkeyData.ProfRequestAssignment.AssignmentRequirement.TargetStartDate"></app-kendo-label>
+                                </div>
+                            </div>
+                            <div class=" col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'TargetEndDate'" [isDate]="true"
+                                        [value]="proffUkeyData.ProfRequestAssignment.AssignmentRequirement.TargetEndDate"></app-kendo-label>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 col-md-12"
+                                *ngIf="proffUkeyData.ProfRequestAssignment.ShiftRequirement.ShiftName">
+                                <div class="form-group">
+                                    <div class="new-view">
+                                        <kendo-label text="{{'Shift' | translate}}"> </kendo-label>
+                                        <p class="label-answere">
+                                            {{proffUkeyData.ProfRequestAssignment.ShiftRequirement.ShiftName}}<br />
+                                            <app-weekday-picker [dayInfo]="daysInfo" [isWeekdayEditMode]="false"
+                                                [timeRangeProperties]="timeRange" [timeFormat]="'hh:mm a'"
+                                                [startTimeControlName]="'startTimeControlName'"
+                                                [endTimeControlName]="'endTimeControlName'" [isReadonly]="false">
+                                            </app-weekday-picker>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class=" col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'NumberOfPositionsRequested'"
+                                        [value]="proffUkeyData.ProfRequestAssignment.AssignmentRequirement.PositionNeeded"></app-kendo-label>
+                                </div>
+                            </div>
+
+                            <div class="clearfix"></div>
+
+                            <div class=" col-sm-12 col-md-12" *ngIf="showDrugField()">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'DrugScreenId'"
+                                        [value]="proffUkeyData.ProfRequestAssignment.AssignmentRequirement.IsDrugTestRequired ? 'Yes' : 'No'"></app-kendo-label>
+                                </div>
+                            </div>
+                            <div class=" col-sm-12 col-md-12" *ngIf="showaBackgroundField()">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'BackgroundChecksTitle'"
+                                        [value]="proffUkeyData.ProfRequestAssignment.AssignmentRequirement.IsBackgrounCheckRequired ? 'Yes' : 'No'"></app-kendo-label>
+                                </div>
+                            </div>
+                            <div class=" col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'PositionDescription'" [allowMultilineText]="true"
+                                        [value]="proffUkeyData.ProfRequestAssignment.AssignmentRequirement.PositionDescription"></app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'SkillsRequired'" [allowMultilineText]="true"
+                                        [value]="proffUkeyData.ProfRequestAssignment.AssignmentRequirement.SkillsRequired"></app-kendo-label>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'SkillsPreferred'" [allowMultilineText]="true"
+                                        [value]="proffUkeyData.ProfRequestAssignment.AssignmentRequirement.SkillsPreferred"></app-kendo-label>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'ExperienceRequired'" [allowMultilineText]="true"
+                                        [value]="proffUkeyData.ProfRequestAssignment.AssignmentRequirement.ExperienceRequired"></app-kendo-label>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'ExperiencePreferred'" [allowMultilineText]="true"
+                                        [value]="proffUkeyData.ProfRequestAssignment.AssignmentRequirement.ExperiencePreferred"></app-kendo-label>
+
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'EducationRequired'"
+                                        [value]="proffUkeyData.ProfRequestAssignment.AssignmentRequirement.EducationRequired"></app-kendo-label>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'EducationPreferred'"
+                                        [value]="proffUkeyData.ProfRequestAssignment.AssignmentRequirement.EducationPreferred"></app-kendo-label>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'AdditionalInformation'"
+                                        [value]="proffUkeyData.ProfRequestAssignment.AssignmentRequirement.AdditionalInformation"></app-kendo-label>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card__header">
+                        <h4 class="card__heading">{{'RateDetails' | translate}}</h4>
+                    </div>
+                    <div class="card__body">
+                        <div class="row">
+                            <div class=" col-sm-12 col-md-12"
+                                *ngIf="proffUkeyData.ProfRequestFinancial.BaseWageRate && proffUkeyData.ProfRequestFinancial.BaseWageRate > 0">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="getDayHourLocalizationValue('ActualPayRate')"
+                                        [value]="proffUkeyData.ProfRequestFinancial.BaseWageRate | number: '1.2-2'"></app-kendo-label>
+                                </div>
+                            </div>
+                            <div class=" col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'RateUnit'"
+                                        [value]="proffUkeyData.ProfRequestFinancial.RateUniteName"></app-kendo-label>
+                                </div>
+                            </div>
+                            <div class=" col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="getNteBillRateLabel()" [isCurrency]="true"
+                                        [value]="proffUkeyData.ProfRequestFinancial.NewNteBillRate"></app-kendo-label>
+                                </div>
+                            </div>
+                            <div class=" col-sm-12 col-md-12" *ngIf="proffUkeyData.ProfRequestFinancial.DeltaCost">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'DeltaCostOfException'" [isCurrency]="true"
+                                        [value]="proffUkeyData.ProfRequestFinancial.DeltaCost"></app-kendo-label>
+                                </div>
+                            </div>
+                            <div class=" col-sm-12 col-md-12"
+                                *ngIf="proffUkeyData.ProfRequestFinancial.ReasonForException">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'ReasonForException'"
+                                        [value]="proffUkeyData.ProfRequestFinancial.ReasonForException"></app-kendo-label>
+                                </div>
+                            </div>
+
+                            <div class="clearfix"></div>
+
+                            <div class=" col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'HourDistribution'"
+                                        [value]="proffUkeyData.ProfRequestFinancial.HourDistributionRuleName"></app-kendo-label>
+                                </div>
+                            </div>
+
+                            <div class=" col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'EstimatedRegularHoursPerWeek'"
+                                        [value]="proffUkeyData.ProfRequestFinancial.EstimatedRegularHoursPerWeek | number: '1.2-2'"></app-kendo-label>
+                                </div>
+                            </div>
+
+                            <div class="clearfix"></div>
+
+                            <div class=" col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'OTHoursAllowed'"
+                                        [value]="proffUkeyData.ProfRequestFinancial.IsOtExpected ? 'Yes' : 'No'"></app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12" *ngIf="isOTHousBilledAtShow">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'OTHoursBilledAt'"
+                                        [value]="proffUkeyData.ProfRequestFinancial.OthersBilledAtName"></app-kendo-label>
+                                </div>
+                            </div>
+                            <div class=" col-sm-12 col-md-12" *ngIf="proffUkeyData.ProfRequestFinancial.IsOtExpected">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'EstimatedOTHoursPerWeek'"
+                                        [value]="proffUkeyData.ProfRequestFinancial.EstimatedOtHoursPerWeek | number: '1.2-2'"></app-kendo-label>
+                                </div>
+                            </div>
+                            <div class=" col-sm-12 col-md-12" *ngIf="isBudgetedHour">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'BudgetedHours'"
+                                        [value]="proffUkeyData.ProfRequestFinancial.BudgetedHours"></app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+
+                            <div class="col-sm-12 col-md-12" [hidden]="!hasBenefitAdderLength">
+                                <div class="form-group">
+                                    <app-benefit-adder [requestId]="proffUkeyData.ProfRequest.RequestDetail.RequestId"
+                                        [entityId]="entityId"
+                                        [reqLibraryId]="proffUkeyData.ProfRequest.PositionDetail.ReqLibraryId"
+                                        [sectorId]="proffUkeyData.ProfRequest.RequestDetail.SectorId"
+                                        [showInOneLine]="true"
+                                        [locationId]="proffUkeyData.ProfRequest.RequestDetail.WorkLocationId"
+                                        (onDataPicked)="getBenefitAdderData($event)"></app-benefit-adder>
+                                </div>
+                            </div>
+                            <div class=" col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'EstimatedCost'" [isCurrency]="true"
+                                        [value]="proffUkeyData.ProfRequestFinancial.EstimatedCost"></app-kendo-label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" [hidden]="!hasUDFLength">
+                    <div class="card__header">
+                        <h4 class="card__heading">{{'OtherDetailsUDFs' | translate}}</h4>
+                    </div>
+                    <app-udf-implementation [entityId]="entityId"
+                        [sectorId]="proffUkeyData.ProfRequest.RequestDetail.SectorId" [recordUKey]="recordUKey"
+                        [actionTypeId]="actionTypeId" [showTitle]="false" (hasUDFLength)="getUDFLength($event)">
+                    </app-udf-implementation>
+                </div>
+
+                <div class="card" [hidden]="!hasApproverDataLength">
+                    <div class="card__header">
+                        <h4 class="card__heading">{{'RequisitionApprovers' | translate}}</h4>
+                    </div>
+                    <app-approval-widget-v2 [entityId]="entityId" [isView]="true"
+                        [isRecordId]="proffUkeyData.ProfRequest.RequestDetail.RequestId" [isheading]="false"
+                        [heading]="'RequisitionApprovers'" (onApproverSubmitReq)="onApproverSubmit($event)"
+                        [sector]="proffUkeyData.ProfRequest.RequestDetail.SectorId"></app-approval-widget-v2>
+                </div>
+                <div class="card">
+                    <div class="card__header">
+                        <h4 class="card__heading">{{'Comments' | translate}}</h4>
+                    </div>
+
+                    <div class="card__body">
+                        <div class="row">
+
+                            <div class=" col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'ManagerCommentstoStaffingAgency'"
+                                        [value]="proffUkeyData.ProfRequestComment.ClientCommentsToStaffingAgency"></app-kendo-label>
+                                </div>
+                            </div>
+                            <div class=" col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'ManagerCommentsNotViewablebyStaffingAgency'"
+                                        [value]="proffUkeyData.ProfRequestComment.ClientComments"></app-kendo-label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card__header" [hidden]="!hasDMSLength">
+                        <h4 class="card__heading">{{'DocumentUpload' | translate}}</h4>
+                    </div>
+                    <app-dms-implementation #dms [workFlowId]="entityId" [userGroupId]="userGroupId"
+                        [sectorId]="proffUkeyData.ProfRequest.RequestDetail.SectorId" [uploadStageId]="uploadStageId"
+                        [actionTypeId]="actionTypeId" [recordId]="proffUkeyData.ProfRequest.RequestDetail.RequestId"
+                        [showTitle]="false" [processingId]="processingId" (hasDMSLength)="getDMSLength($event)">
+                    </app-dms-implementation>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-footer">
+            <div class="btn-box btn-box--center">
+
+                <button kendoButton href="javascript:;" fillMode="outline" themeColor="primary"
+                    routerLink="/xrm/job-order/professional/list">{{'Back' | translate}}</button>
+
+                <button *ngIf="!isRebroadcasting()" type="button" kendoButton x themeColor="primary" appFocusOnError
+                    [formName]="professionalReqBroadcastForm" (click)="submitForm()">
+                    {{'Broadcast' | translate}}
+                </button>
+                <button *ngIf="isRebroadcasting()" type="button" kendoButton x themeColor="primary" appFocusOnError
+                    [formName]="professionalReqBroadcastForm" (click)="submitForm(true)">
+                    {{'Rebroadcast' | translate}}
+                </button>
+            </div>
+        </div>
+    </form>
+
+</div>

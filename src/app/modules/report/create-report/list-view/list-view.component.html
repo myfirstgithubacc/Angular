@@ -1,0 +1,359 @@
+<div class="app-content__body custom_report--page custom_report--build">
+    <form [formGroup]="commonHeader">
+        <ng-container *ngIf="reportDetails.ReportName != '' && reportDetails.ReportName != null">
+            <app-common-header [recordName]="'Report'" [recordId]="'ABC'"
+        [entityId]="entityId" [recordIdTitle]="'AssignmentID'" [recordStatus]="'Active'"
+        [recordStatusTitle]="'Status'| translate" [isStatusEditable]="false"
+        [statusData]="statusData"></app-common-header>
+        </ng-container>
+
+        </form>
+    <form>
+        <div class="card output-report-list">
+            <!-- Card Body Section-->
+            <div class="card__body">
+                <div class="card__header-icon card__header-icon2">
+                    <kendo-splitbutton *ngIf="OutputTypeId == 295 || OutputTypeId == 296" size="medium"
+                        class="icon-group__item me-2" [data]="splitButtonItems"
+                        (itemClick)="onSplitButtonItemClick($event)" (buttonClick)="onSplitButtonItemClick($event)">
+                        <xrm-icon [name]="'download'" [color]="'black-color'" [size]="15"
+                            [strokeWidth]="1.7"></xrm-icon>
+                    </kendo-splitbutton>
+                    <button type="button" aria-label="filter" kendoButton fillMode="solid" icon="filter"
+                        themeColor="base" (click)="openFilterPopup()"></button>
+                </div>
+                <div class="list-view report-screen-grid mb-0 mt-2">
+                    <div class="report-view__tab">
+                        <kendo-tabstrip (tabSelect)="onTabSelect($event)" class="report__tab-item">
+                            <kendo-tabstrip-tab
+                                [title]="OutputTypeId === 295 || OutputTypeId === 296 ? 'Output' : 'Recent Runs'"
+                                [selected]="true">
+                                <ng-template kendoTabContent>
+                                    <div class="list-view">
+                                        <ng-template #template let-anchor>
+                                            <span>{{ anchor.nativeElement.innerText }}</span>
+                                        </ng-template>
+                                        <div kendoTooltip [tooltipTemplate]="template" filter=".k-grid td"
+                                            (mouseover)="showTooltip($event)">
+                                            <ng-container
+                                                *ngIf="(OutputTypeId == 295 || OutputTypeId == 296) && !isOuterGroupMode">
+                                                <div id="grid-reportList">
+                                                    <kendo-grid [data]="returnData() | async" [resizable]="true"
+                                                        [pageable]="true" [pageable]="{ position: 'both' }"
+                                                        [pageSize]="state.take" [skip]="state.skip"
+                                                        (pageChange)="onPageChangeGrid($event)"
+                                                        (detailExpand)="rowDetailExpanded($event,0)"
+                                                        (detailCollapse)="rowDetailCollapse($event)"
+                                                        [isDetailExpanded]="isDetailExpanded">
+                                                        <kendo-grid-column *ngFor="let column of columnCaption"
+                                                            field="{{ column.ColumnValue }}"
+                                                            title="{{ column.ColumnName }}"
+                                                            [width]="118"></kendo-grid-column>
+                                                        <ng-template
+                                                            *ngIf="reportDetails.Json.ReportType?.toLowerCase() == 'summary'"
+                                                            kendoGridDetailTemplate let-dataItem
+                                                            let-rowIndex="rowIndex">
+                                                            <section>
+                                                                <kendo-grid [data]="dataItem.array | async"
+                                                                    [resizable]="true" [pageSize]="dataItem.take || 100"
+                                                                    [skip]="dataItem.skip" [pageable]="true"
+                                                                    (pageChange)="onPageChangeGridInt($event, rowIndex)"
+                                                                    [pageable]="{ position: 'both' }">
+                                                                    <kendo-grid-column
+                                                                        *ngFor="let column of columnCaptionDrill"
+                                                                        [field]="column.ColumnValue"
+                                                                        [title]="column.ColumnName"
+                                                                        media="(min-width: 921px)">
+                                                                    </kendo-grid-column>
+                                                                    <ng-template kendoGridNoRecordsTemplate>
+                                                                        {{ 'GridNoRecordAvailable' | translate }}
+                                                                    </ng-template>
+                                                                    <ng-template kendoPagerTemplate
+                                                                        let-totalPages="totalPages"
+                                                                        let-currentPage="currentPage">
+                                                                        <ng-container>
+                                                                            <kendo-pager-info></kendo-pager-info>
+                                                                            <kendo-pager-prev-buttons></kendo-pager-prev-buttons>
+                                                                            <!-- <kendo-pager-numeric-buttons [buttonCount]="buttonCount"></kendo-pager-numeric-buttons> -->
+                                                                            <kendo-pager-next-buttons></kendo-pager-next-buttons>
+                                                                            <kendo-pager-input></kendo-pager-input>
+                                                                            <kendo-grid-messages
+                                                                                pagerItems="{{ 'GridItem' | translate }}"
+                                                                                pagerItemsPerPage="{{ 'GridItemsPerPage' | translate }}"
+                                                                                pagerPage="{{ 'Page' | translate }}"
+                                                                                columns="{{ 'Columns' | translate }}"
+                                                                                columnsApply="{{ 'Apply' | translate }}"
+                                                                                columnsReset="{{ 'Reset' | translate }}"
+                                                                                pagerNextPage="{{ 'GoToNextPage' | translate }}"
+                                                                                pagerLastPage="{{ 'GoToLastPage' | translate }}"
+                                                                                pagerFirstPage="{{ 'GoToFirstPage' | translate }}"
+                                                                                pagerPreviousPage="{{ 'GoToPreviousPage' | translate }}">
+                                                                            </kendo-grid-messages>
+
+                                                                            <kendo-pager-page-sizes
+                                                                                [pageSizes]="[10,20,50,100]"></kendo-pager-page-sizes>
+                                                                        </ng-container>
+                                                                    </ng-template>
+                                                                </kendo-grid>
+                                                            </section>
+                                                        </ng-template>
+                                                        <ng-template kendoPagerTemplate let-totalPages="totalPages"
+                                                            let-currentPage="currentPage">
+                                                            <ng-container>
+                                                                <kendo-pager-info></kendo-pager-info>
+                                                                <kendo-pager-prev-buttons></kendo-pager-prev-buttons>
+                                                                <!-- <kendo-pager-numeric-buttons [buttonCount]="buttonCount"></kendo-pager-numeric-buttons> -->
+                                                                <kendo-pager-next-buttons></kendo-pager-next-buttons>
+                                                                <kendo-pager-input></kendo-pager-input>
+                                                                <kendo-grid-messages
+                                                                    pagerItems="{{ 'GridItem' | translate }}"
+                                                                    pagerItemsPerPage="{{ 'GridItemsPerPage' | translate }}"
+                                                                    pagerPage="{{ 'Page' | translate }}"
+                                                                    columns="{{ 'Columns' | translate }}"
+                                                                    columnsApply="{{ 'Apply' | translate }}"
+                                                                    columnsReset="{{ 'Reset' | translate }}"
+                                                                    pagerNextPage="{{ 'GoToNextPage' | translate }}"
+                                                                    pagerLastPage="{{ 'GoToLastPage' | translate }}"
+                                                                    pagerFirstPage="{{ 'GoToFirstPage' | translate }}"
+                                                                    pagerPreviousPage="{{ 'GoToPreviousPage' | translate }}">
+                                                                </kendo-grid-messages>
+
+                                                                <kendo-pager-page-sizes
+                                                                    [pageSizes]="[10,20,50,100]"></kendo-pager-page-sizes>
+                                                            </ng-container>
+                                                        </ng-template>
+                                                        <ng-template kendoGridNoRecordsTemplate>
+                                                            {{ 'GridNoRecordAvailable' | translate }}
+                                                        </ng-template>
+                                                    </kendo-grid>
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="isOuterGroupMode">
+                                                <kendo-datapager class="main__topgrid-pagination"
+                                                    [total]="pager.TotalRecords" [pageSize]="state.take"
+                                                    [skip]="state.skip || 0" (pageChange)="onPageChangeGrid($event)">
+                                                </kendo-datapager>
+                                                <div *ngFor="let group of outerGroupgrid; let ind= index">
+                                                    <div class="manage__grouping-header">
+                                                        <ul>
+                                                            <li *ngFor="let data of group.labelGroup">
+                                                                <strong>{{data.CustomLabel}} :</strong> {{data.Value}}
+                                                            </li>
+                                                        </ul>
+                                                        <ng-container *ngIf="ind == 0">
+                                                            <a href="javascript:void;"
+                                                                (click)="ismanagegroupetoggleVisible =!ismanagegroupetoggleVisible">
+                                                                <span>Manage Groups</span>
+                                                                <div class="dots"></div>
+                                                            </a>
+                                                            <div *ngIf="ismanagegroupetoggleVisible"
+                                                                class="managegroupPopup">
+                                                                <ul>
+                                                                    <li *ngFor="let data of group.labelGroup">
+                                                                        {{data.CustomLabel}} <xrm-icon name="x"
+                                                                            color="black-color"
+                                                                            (click)="clearGroups(data.CustomLabel);ismanagegroupetoggleVisible = false"
+                                                                            [size]="10" [strokeWidth]="2.5"></xrm-icon>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </ng-container>
+                                                    </div>
+                                                    <kendo-grid [data]="returnDataOuterGroup(ind) | async"
+                                                        [resizable]="true" [pageable]="true" [pageSize]="group.take"
+                                                        [skip]="group.skip"
+                                                        (pageChange)="onPageChangeGridOuterGroup($event, ind)"
+                                                        (detailExpand)="rowDetailExpanded($event, ind)"
+                                                        [pageable]="{ position: 'both' }"
+                                                        (detailCollapse)="rowDetailCollapse($event)"
+                                                        [isDetailExpanded]="isDetailExpanded">
+                                                        <kendo-grid-column
+                                                            *ngFor="let column of columnCaptionOuterGroup"
+                                                            field="{{ column.ColumnValue }}"
+                                                            title="{{ column.ColumnName }}"></kendo-grid-column>
+                                                        <ng-template
+                                                            *ngIf="reportDetails.Json.ReportType?.toLowerCase() == 'summary'"
+                                                            kendoGridDetailTemplate let-dataItem
+                                                            let-rowIndex="rowIndex">
+                                                            <section>
+                                                                <kendo-grid
+                                                                    [data]="returnDataOuterGroupInt(ind,rowIndex) | async"
+                                                                    [resizable]="true" [sortable]="true"
+                                                                    [pageSize]="dataItem.take" [skip]="dataItem.skip"
+                                                                    [pageable]="true"
+                                                                    (pageChange)="onPageChangeGridInt($event, rowIndex)"
+                                                                    [pageable]="{ position: 'both' }">
+                                                                    <kendo-grid-column
+                                                                        *ngFor="let column of columnCaptionDrill"
+                                                                        [field]="column.ColumnValue"
+                                                                        [title]="column.ColumnName"
+                                                                        media="(min-width: 921px)">
+                                                                    </kendo-grid-column>
+                                                                    <ng-template kendoPagerTemplate
+                                                                        let-totalPages="totalPages"
+                                                                        let-currentPage="currentPage">
+                                                                        <ng-container>
+                                                                            <kendo-pager-info></kendo-pager-info>
+                                                                            <kendo-pager-prev-buttons></kendo-pager-prev-buttons>
+                                                                            <kendo-pager-numeric-buttons [buttonCount]="2"></kendo-pager-numeric-buttons>
+                                                                            <kendo-pager-next-buttons></kendo-pager-next-buttons>
+                                                                            <kendo-pager-input></kendo-pager-input>
+                                                                            <kendo-grid-messages
+                                                                                pagerItems="{{ 'GridItem' | translate }}"
+                                                                                pagerItemsPerPage="{{ 'GridItemsPerPage' | translate }}"
+                                                                                pagerPage="{{ 'Page' | translate }}"
+                                                                                columns="{{ 'Columns' | translate }}"
+                                                                                columnsApply="{{ 'Apply' | translate }}"
+                                                                                columnsReset="{{ 'Reset' | translate }}"
+                                                                                pagerNextPage="{{ 'GoToNextPage' | translate }}"
+                                                                                pagerLastPage="{{ 'GoToLastPage' | translate }}"
+                                                                                pagerFirstPage="{{ 'GoToFirstPage' | translate }}"
+                                                                                pagerPreviousPage="{{ 'GoToPreviousPage' | translate }}">
+                                                                            </kendo-grid-messages>
+
+                                                                            <kendo-pager-page-sizes
+                                                                                [pageSizes]="[10,20,50,100]"></kendo-pager-page-sizes>
+                                                                        </ng-container>
+                                                                    </ng-template>
+                                                                    <ng-template kendoGridNoRecordsTemplate>
+                                                                        {{ 'GridNoRecordAvailable' | translate }}
+                                                                    </ng-template>
+                                                                </kendo-grid>
+                                                            </section>
+                                                        </ng-template>
+                                                        <ng-template kendoPagerTemplate let-totalPages="totalPages"
+                                                            let-currentPage="currentPage">
+                                                            <ng-container>
+                                                                <kendo-pager-info></kendo-pager-info>
+                                                                <kendo-pager-prev-buttons></kendo-pager-prev-buttons>
+                                                                <kendo-pager-numeric-buttons [buttonCount]="2"></kendo-pager-numeric-buttons>
+                                                                <kendo-pager-next-buttons></kendo-pager-next-buttons>
+                                                                <kendo-pager-input></kendo-pager-input>
+                                                                <kendo-grid-messages
+                                                                    pagerItems="{{ 'GridItem' | translate }}"
+                                                                    pagerItemsPerPage="{{ 'GridItemsPerPage' | translate }}"
+                                                                    pagerPage="{{ 'Page' | translate }}"
+                                                                    columns="{{ 'Columns' | translate }}"
+                                                                    columnsApply="{{ 'Apply' | translate }}"
+                                                                    columnsReset="{{ 'Reset' | translate }}"
+                                                                    pagerNextPage="{{ 'GoToNextPage' | translate }}"
+                                                                    pagerLastPage="{{ 'GoToLastPage' | translate }}"
+                                                                    pagerFirstPage="{{ 'GoToFirstPage' | translate }}"
+                                                                    pagerPreviousPage="{{ 'GoToPreviousPage' | translate }}">
+                                                                </kendo-grid-messages>
+
+                                                                <kendo-pager-page-sizes
+                                                                    [pageSizes]="[10,20,50,100]"></kendo-pager-page-sizes>
+                                                            </ng-container>
+                                                        </ng-template>
+                                                        <ng-template kendoGridNoRecordsTemplate>
+                                                            {{ 'GridNoRecordAvailable' | translate }}
+                                                        </ng-template>
+                                                    </kendo-grid>
+                                                </div>
+                                                <kendo-datapager class="main__bottomgrid-pagination"
+                                                    [total]="pager.TotalRecords" [pageSize]="state.take"
+                                                    [skip]="state.skip || 0" (pageChange)="onPageChangeGrid($event)">
+                                                    <ng-template
+                                                    kendoDataPagerTemplate
+                                                    let-totalPages="totalPages"
+                                                    let-currentPage="currentPage"
+                                                  >
+                                                    <div class="k-pager-numbers-wrap">
+                                                      <kendo-datapager-prev-buttons></kendo-datapager-prev-buttons>
+                                                      <kendo-datapager-numeric-buttons
+                                                        [buttonCount]="2"
+                                                      ></kendo-datapager-numeric-buttons>
+                                                      <kendo-datapager-next-buttons></kendo-datapager-next-buttons>
+                                                    </div>
+                                            
+                                                    <kendo-datapager-input></kendo-datapager-input>
+                                                    <kendo-datapager-info></kendo-datapager-info>
+                                                    <kendo-datapager-page-sizes
+                                                      [pageSizes]="[10,20,50,100]"
+                                                    ></kendo-datapager-page-sizes>
+                                                  </ng-template>
+                                                </kendo-datapager>
+                                                <div [innerHTML]="html"></div>
+                                            </ng-container>
+                                            <ng-container
+                                                *ngIf="OutputTypeId != 295 && OutputTypeId != 296 && !isOuterGroupMode">
+                                                <grid-view class="file__list-grid" [gridData]="recentRunViewData"
+                                                    [columnOptions]="columnOptions" [pageSize]="10"
+                                                    [actionSet]="actionSet" [tabOptions]="tabOptions"
+                                                    [isColumnChooserVisible]="false"
+                                                    [actionItemCategoryField]="'Status'" [isInternalSearch]="false"
+                                                    [isPaginationVisible]="true" [isToolbarVisible]="true"
+                                                    [isExportHide]="true" [showTabs]="false"
+                                                    (emitFileData)="onLinkDownloadReport($event)">
+                                                </grid-view>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </kendo-tabstrip-tab>
+                        </kendo-tabstrip>
+                    </div>
+                    <!--Basic Details Section end-->
+                </div>
+            </div>
+            <!-- End Card Body Section-->
+        </div>
+
+        <div class="page-footer stepper-button">
+            <div class="stepper-button__prev">
+                <button type="button" kendoButton fillMode="outline" themeColor="primary"
+                    (click)="backReport()">
+                    <i class="fa-solid fa-chevron-left"></i> {{'BackToReports' | translate}} </button>
+            </div>
+            <div class="stepper-button__next">
+                <button type="button" kendoButton href="javascript:;" themeColor="primary" fillMode="outline"
+                    (click)="edit()" *ngIf="hasEditPermission">{{'EditReport' | translate}}</button>
+                <button type="button" kendoButton href="javascript:;" themeColor="primary"
+                    *ngIf="OutputTypeId == 295 || OutputTypeId == 296" (click)="printReport()">Print</button>
+            </div>
+        </div>
+
+
+        <!-- Add day Details sidebar -->
+        <kendo-popup [animate]="animation" class="report-filter-sidebar__popup"
+            popupClass="content report-filter-sidebar" [margin]="margin" *ngIf="show" (close)="closePopup()">
+            <div #popup>
+                <div class="offcanvas-header">
+                    <h5>Filters</h5>
+                    <xrm-icon name="x" [size]="18" color="black-color" [strokeWidth]="2.5"
+                        (click)="closePopup()"></xrm-icon>
+                </div>
+                <div class="offcanvas-body">
+                    <div class="master-search__filter-box">
+                        <div class="card">
+                            <!-- Card Body Section-->
+                            <div class="card__body">
+                                <div class="row   report__filters">
+                                    <app-fiter-report [fieldList]="fieldList" [value]="value"
+                                        [reportId]="reportDetails.Json.ReportId"
+                                        (selectedFilters)="selectedFilters($event)"
+                                        (isInvalidFilter)="isInvalidFilter($event)"></app-fiter-report>
+                                </div>
+                            </div>
+                            <!-- End Card Body Section-->
+                        </div>
+                    </div>
+                </div>
+                <div class="offcanvas-footer">
+                    <div class="col-md-12">
+                        <div class="master-search__button-box">
+                            <div class="button-group">
+                                <button type="button" data-bs-dismiss="offcanvas" aria-label="Close" kendoButton
+                                    themeColor="primary" (click)="applyButton()">Apply & Run</button>
+                                <button type="button" kendoButton themeColor="primary" fillMode="outline"
+                                    (click)="resetFilter()">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </kendo-popup>
+        <!-- End day Details sidebar -->
+    </form>
+</div>

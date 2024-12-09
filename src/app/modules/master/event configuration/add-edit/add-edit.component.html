@@ -1,0 +1,136 @@
+<div class="app-content__body">
+        <form [formGroup]="addEditEventConfigForm" (ngSubmit)="submitForm()">
+        <div class="card">
+            <div class="card__header">
+                <h4 class="card__heading">{{'BasicDetails'| translate}}</h4>
+                <div class="card__header-icon">                 
+                </div>
+            </div>
+            <div class="card__body">
+                <div class="row">
+                    <div class=" col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-dropdown [list]="sectorDropDownList" [label]="'Sector'"
+                                [controlName]="'SectorId'" [placeholder]="'DdlSelect'" [isRequired]="true"
+                                [isEditMode]="isEditMode"></app-kendo-dropdown>
+                            <p *ngIf="isEditMode" class="label-answere">{{editEventConfigData.SectorName}}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-textbox [controlName]="'EventName'" [label]="'EventName'"
+                                [isRequired]="true"></app-textbox>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12">
+                        <h4 class="card__body--subheading">{{'ConfigurationDetails' | translate}}</h4>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-radio-button [controlName]="'DateTypeId'" [RadioGroup]="DateTypeValue"
+                                [label]="'DateType'" [isRequired]="true">
+                            </app-kendo-radio-button>
+                        </div>  
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-switch [controlName]="'RequiresEventReason'" [label]="'RequiresEventReason'"
+                                [onLabel]="'Yes'" [offLabel]="'No'"></app-kendo-switch>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-switch [controlName]="'RequiresComment'" [label]="'RequiresComment'"
+                                [onLabel]="'Yes'" [offLabel]="'No'"></app-kendo-switch>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-switch [controlName]="'RequiresBackfill'" [label]="'RequiresBackfill'"
+                                [onLabel]="'Yes'" [offLabel]="'No'"> (onChangeSwitch)="onChangeNeedBackfill($event)" </app-kendo-switch>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6" *ngIf="addEditEventConfigForm?.get('RequiresBackfill')?.value">
+                        <div class="form-group">
+                            <app-kendo-switch [controlName]="'BackfillDefaultValue'" [label]="'BackfillDefaultValue'"
+                                [onLabel]="'Yes'" [offLabel]="'No'"></app-kendo-switch>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class=" col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-dropdown [list]="DailySchedule" [label]="'EffectOnDailySchedule'"
+                                [controlName]="'EffectOnDailyScheduleId'" [placeholder]="'-Select-'" [isRequired]="true"
+                               ></app-kendo-dropdown>                          
+                        </div>
+                    </div>
+                    <div class=" col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-multiselect-dropdown [list]="EventEntered" [label]="'EventEnteredBy'"
+                                [controlName]="'EventEnteredBy'" [placeholder]="'-Select-'" [isRequired]="true"
+                               ></app-kendo-multiselect-dropdown>                          
+                        </div>
+                    </div>
+                    <div class=" col-sm-6 col-md-6">
+                        <div class="form-group">                    
+                            <app-kendo-multiselect-dropdown [list]="EventEntered" [label]="'NotifyTo'"
+                            [controlName]="'NotifyTo'" [placeholder]="'-Select-'" [isRequired]="true"></app-kendo-multiselect-dropdown>                     
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-switch [controlName]="'DelayNotificationBeforeEvent'" [label]="'DelayNotificationBeforeEvent'" [isDisable]="true"
+                                [onLabel]="'Yes'" [offLabel]="'No'" ></app-kendo-switch>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6" *ngIf="addEditEventConfigForm?.get('DelayNotificationBeforeEvent')?.value">
+                        <div class="form-group">             
+                            <app-numeric-box [controlName]="'DaysPriorToEventDate'" [label]="'DaysPriorToEventDate'"
+                            [isRequired]="true" [min]="0" [maxlength]="3"  ></app-numeric-box>
+                        </div>
+                    </div> 
+                    <div class="clearfix"></div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-switch [controlName]="'ValidateEventDateWithTimesheet'" [label]="'ValidateEventDateWithTimesheet'"
+                                [onLabel]="'Yes'" [offLabel]="'No'"></app-kendo-switch>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12">
+                        <h4 class="card__body--subheading">{{'ApplicableIn' | translate}}</h4>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-switch [controlName]="'IsProfessionalContractor'" [label]="'IsProfessionalContractor'"
+                                [onLabel]="'Yes'" [offLabel]="'No'"></app-kendo-switch>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-switch [controlName]="'IsLightIndustrialContractor'" [label]="'IsLightIndustrialContractor'"
+                                [onLabel]="'Yes'" [offLabel]="'No'"></app-kendo-switch>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+ <div class="page-footer">
+    <div class="btn-box btn-box--center">
+        <button type="button" kendoButton fillMode="outline" themeColor="primary" (click)="navigate()"> {{ "Cancel"
+            | translate }}
+        </button>
+        <button type="button" kendoButton (click)="submitForm()" themeColor="primary"
+            [disabled]="isEditMode ? addEditEventConfigForm.pristine : false" appFocusOnError
+            [formName]="addEditEventConfigForm">
+            {{ "Save" | translate}}
+
+        </button>
+        
+    </div>
+</div>
+    </form>
+</div>
+
+
+

@@ -1,0 +1,74 @@
+.basic-status-left {
+  ul {
+    padding-left: 0;
+    margin-bottom: 0;
+
+    li {
+      list-style-type: none;
+      display: inline-block;
+      position: relative;
+
+      &::before {
+        content: "|";
+        color: #9b9b9b;
+        padding: 0 5px;
+      }
+
+      &:first-child {
+        &:before {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.basic-title {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.basic-code {
+  font-weight: 300;
+  font-size: var(--base-font-size);
+}
+
+.basic-status {
+  font-weight: 300;
+  font-size: 11px;
+}
+
+.link-font {
+  font-size: var(--base-font-size);
+}
+
+hr {
+  margin-top: 0;
+  color: #c0c0c0;
+}
+
+.contractor-basic-variant {
+  display: flex;
+  align-items: center;
+
+  .contrator-subheading {
+    font-size: 17px;
+    font-weight: 600;
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    padding-right: 10px;
+
+    &:before {
+      position: absolute;
+      background: #000;
+      content: "";
+      width: 1px;
+      height: 18px;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}

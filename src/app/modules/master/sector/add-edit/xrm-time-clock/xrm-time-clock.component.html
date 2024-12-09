@@ -1,0 +1,254 @@
+<form [formGroup]="xrmTimeClockDetailsForm">
+    <!--XRM Time Clock Section start-->
+    <div class="card">
+        <!-- Card Header Section-->
+        <div class="card__header">
+            <h4 class="card__heading">{{'XRMTimeClock' | translate}}</h4>
+            <div class="card__header-icon">
+            </div>
+        </div>
+        <!-- End Card Header Section-->
+
+        <!-- Card Body Section-->
+        <div class="card__body">
+            <div class="row">
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'IsXrmTimeClockRequired'" [label]="'IsXrmTimeClockRequired'"
+                            [tooltipVisible]="true" [tooltipTitle]="'Enable_XRM_Time_Clock_Tooltip'" [onLabel]="'Yes'"
+                            [offLabel]="'No'" (onChangeSwitch)="switchXRMTimeClock($event)"
+                            [isDisable]="disableControls && !isDraft">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <ng-container *ngIf="isSwitchXRMTimeClock">
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                                [tooltipTitle]="'Is_Daily_Punch_Approval_Needed_Tooltip'"
+                                [controlName]="'IsDailyPunchApprovalNeeded'" [label]="'IsDailyPunchApprovalNeeded'">
+                            </app-kendo-switch>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                                [tooltipTitle]="'Allow_Manager_To_Adjust_Punch_In_Out_Tooltip'"
+                                [controlName]="'IsAllowManagerAdjustPunchInOut'"
+                                [label]="'IsAllowManagerAdjustPunchInOut'">
+                            </app-kendo-switch>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                                [tooltipTitle]="'AccrueHoursFromActualPunchInToolTip'"
+                                [controlName]="'AccrueHoursFromActualPunchIn'" [label]="'AccrueHoursFromActualPunchIn'"
+                                (onChangeSwitch)="switchAccrueHoursFromActualPunchIn()">
+                            </app-kendo-switch>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <kendo-label text=><tooltip-content
+                                    [tooltipTitle]="'Allow_Manual_Selection_During_Punch_For_Tooltip'"
+                                    [label]="'AllowManualSelectionDuringPunchFor'" [tooltipVisible]="true">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'"
+                                                    [controlName]="'IsAllowManualCharge'"
+                                                    [label]="'CostAccountingCode'">
+                                                </app-kendo-switch>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <app-kendo-switch [onLabel]="'Yes'" [isEditMode]="true"
+                                                    [offLabel]="'No'" [controlName]="'IsAllowManualShift'"
+                                                    [label]="'IsAllowManualShift'"
+                                                    *ngIf="timeAndExpenseConfigForm.controls.IsClpJobRotationAllowed.value">
+                                                </app-kendo-switch>
+                                            </div>
+                                        </div> -->
+                                        <!-- <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'"
+                                                    [isEditMode]="true" [controlName]="'IsAllowManualJobCategory'"
+                                                    [label]="'JobCategory'"
+                                                    *ngIf="timeAndExpenseConfigForm.get('IsClpJobRotationAllowed')?.value">
+                                                </app-kendo-switch>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                </tooltip-content>
+                            </kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-radio-button [controlName]="'XrmUseEmployeeIdTimeClockId'"
+                                [tooltipVisible]="true"
+                                [tooltipTitle]="'Will_XRM_Use_Employee_ID_Or_Time_Clock_ID_Tooltip'"
+                                [name]="'EmployeeIDType'" [RadioGroup]="xrmUseEmployeeTimeClock"
+                                [label]="'XrmUseEmployeeIdTimeClockId'" [isRequired]="true">
+                            </app-kendo-radio-button>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <div class="clearfix"></div>
+
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-timepicker [tooltipVisible]="true"
+                                [tooltipTitle]="'Clock_Buffer_To_Set_Reporting_Date_Tooltip'"
+                                [controlName]="'ClockBufferForReportingDate'" [label]="'ClockBufferForReportingDate'"
+                                [isRequired]=true [timeFormat]="'HH:mm'">
+                            </app-kendo-timepicker>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-timepicker [tooltipVisible]="true"
+                                [tooltipTitle]="'Clock_Buffer_For_Showing_CLPs_Early_Shift_Start_Tooltip'"
+                                [controlName]="'ClockBufferForShiftStart'" [label]="'ClockBufferForShiftStart'"
+                                [isRequired]=true [timeFormat]="'HH:mm'">
+                            </app-kendo-timepicker>
+                        </div>
+                    </div>
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-switch [onLabel]="'Yes'" [tooltipVisible]="true"
+                                [tooltipTitle]="'AutoLunchDeductionAllowedToolTip'" [offLabel]="'No'"
+                                [controlName]="'IsAutoLunchDeduction'" [label]="'IsAutoLunchDeduction'"
+                                (onChangeSwitch)="OnChangeSwitchLunchDeduction($event)">
+                            </app-kendo-switch>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="isSwitchLunchDeduction">
+                        <div class="form-group">
+                            <app-numeric-box [label]="'MinimumHourWorkedBeforeLunchDeduction'"
+                                [controlName]="'MinimumHourWorkedBeforeLunchDeduction'" [tooltipVisible]="true"
+                                [tooltipTitle]="'MinimumHoursToBeWorkedBeforeLunchDeductionToolTip'"
+                                [isRequired]="false" [isRequired]=true format="n1" [min]=magicNumbers.zero [maxlength]=magicNumbers.four [decimals]=magicNumbers.two>
+                            </app-numeric-box>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="isSwitchLunchDeduction">
+                        <div class="form-group">
+                            <app-numeric-box [label]="'LunchTimeDeducted'" [tooltipVisible]="true"
+                                [tooltipTitle]="'Lunch_Time_To_Be_Deducted_Tooltip'" [controlName]="'LunchTimeDeducted'"
+                                [isRequired]="false" [min]=magicNumbers.zero [maxlength]=magicNumbers.four [isRequired]=true>
+                            </app-numeric-box>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="isEffectiveDate">
+                        <div class="form-group">
+                            <app-kendo-datepicker [controlName]="'EffectiveDateForLunchConfiguration'"
+                                [getFormattedDate]="true"
+                                [tooltipVisible]="true"
+                                [tooltipTitle]="'Effective_Date_for_Lunch_Configuration_Tooltip'"
+                                [label]="'EffectiveDateForLunchConfiguration'" [isRequired]=true>
+                            </app-kendo-datepicker>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                                [tooltipTitle]="'Punch_Rounding_Needed_Tooltip'" [controlName]="'IsPunchRoundingNeeded'"
+                                [label]="'IsPunchRoundingNeeded'" (onChangeSwitch)="OnChangeSwitchPunchRoundingNeeded($event)">
+                            </app-kendo-switch>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <div class="clearfix"></div>
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="isSwitchPunchRoundingNeeded">
+                        <div class="form-group">
+                            <app-kendo-dropdown [list]="punchTimeIncRoundings" [label]="'PunchInTimeIncrementRounding'"
+                                [tooltipVisible]="true" [tooltipTitle]="'PunchInTimeIncrementRoundingToolTip'"
+                                [controlName]="'PunchInTimeIncrementRounding'" [placeholder]="'DdlSelect'"
+                                [isRequired]=true>
+                            </app-kendo-dropdown>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="isSwitchPunchRoundingNeeded">
+                        <div class="form-group">
+                            <app-kendo-dropdown [list]="punchTimeIncRoundings" [label]="'PunchOutTimeIncrementRounding'"
+                                [tooltipVisible]="true" [tooltipTitle]="'PunchOutTimeIncrementRoundingToolTip'"
+                                [controlName]="'PunchOutTimeIncrementRounding'" [placeholder]="'DdlSelect'"
+                                [isRequired]=true>
+                            </app-kendo-dropdown>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="isSwitchPunchRoundingNeeded">
+                        <div class="form-group">
+                            <app-kendo-dropdown [list]="punchTimeRoundings" [label]="'PunchInTimeRounding'"
+                                [tooltipVisible]="true" [tooltipTitle]="'Punch_Time_Rounding_Tooltip'"
+                                [controlName]="'PunchInTimeRounding'" [placeholder]="'DdlSelect'" [isRequired]=true>
+                            </app-kendo-dropdown>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="isSwitchPunchRoundingNeeded">
+                        <div class="form-group">
+                            <app-kendo-dropdown [list]="punchTimeRoundings" [tooltipVisible]="true"
+                                [tooltipTitle]="'Punch_Out_Time_Rounding_Tooltip'" [label]="'PunchOutTimeRounding'"
+                                [controlName]="'PunchOutTimeRounding'" [placeholder]="'DdlSelect'" [isRequired]=true>
+                            </app-kendo-dropdown>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                </ng-container>
+            </div>
+        </div>
+        <!-- End Card Body Section-->
+        <!-- Card Footer Section-->
+
+        <!--End Card Footer Section-->
+    </div>
+
+
+</form>

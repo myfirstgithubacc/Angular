@@ -1,0 +1,28 @@
+<div class="master-search">
+    <div class="row">
+        <div class="col-md-12 master-search__wapper">
+            <div class="master-search__search-box">
+                <div class="custom-search">
+                    <div class="custom-search__input-box">
+                        <app-search [isServerSidePagingEnable]="isServerSidePagingEnable"  [placeholder]="'SearchFor'"  [buttonNameSearch]="''" [EntityId]="entityId"
+                        [columnOptions]="columnOptions" (onSearch)="onSearch($event)"></app-search>
+                    </div>
+                    <app-advance-search  [isServerSidePagingEnable]="isServerSidePagingEnable" [apiAddress]="apiUrlForAdv" [EntityId]="entityId"  (selectedFilter)="onFilter($event)" [isApiGateway]="true"></app-advance-search>
+                </div>
+            </div>
+            <div class="master-search__button-box master-search__button-box--right">
+                <app-kendo-button [xrmEntityId]="entityId" [buttonName]="'NewEventConfig'" 
+                (Click)="navigate()" [buttonIcon]="'plus'"></app-kendo-button>
+              </div> 
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <grid-view [isServerSidePagingEnable]="isServerSidePagingEnable" [columnOptions]="columnOptions" [actionSet]="actionSet" [tabOptions]="tabOptions"
+        [kendoGridSelectedBy]="'UKey'" [extraButtonSet]="extraButton" (gridHeaderBtnType)="openCopy()" [entityId]="entityId" [apiAddress]="apiUrlForGrid"
+         [isSortingAllowed]="true"  [isFilteringAllowed]="true" [isActionColumnVisible]="true"  (onGroupedAction)="onAllActivateDeactivateAction($event)" [isApiGateway]="true"
+        [pageSize]="pageSize" [multiSelect]="false" [fileName]="'Event Configurations'" [advFilterData]="appliedAdvFilter" [searchText]="searchText"  [extraButtonSet]="!isActionIdFound ? extraButton : []"></grid-view>
+
+</div>

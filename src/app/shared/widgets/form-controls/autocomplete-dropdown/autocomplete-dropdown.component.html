@@ -1,0 +1,34 @@
+<div *ngIf="isEditMode; then thenTemplateName; else elseTemplateName"></div>
+<ng-template #thenTemplateName>
+  <app-kendo-label *ngIf="isEditMode" [label]="label"
+    [value]="listControlName ? listControlName.value : formControl.value" [tooltipPosition]=""
+    [labelLocalizeParam]="labelLocalizeParam" 
+    [addOnLabelText]="addOnLabelText" [addOnLabelTextLocalizeParam]="addOnLabelTextLocalizeParam"
+    [tooltipVisible]="tooltipVisible" [tooltipTitle]="tooltipTitle" [tooltipTitleLocalizeParam]="tooltipTitleLocalizeParam">
+  </app-kendo-label> 
+</ng-template>
+  <ng-template #elseTemplateName>
+  <kendo-formfield>
+    <tooltip-content [tooltipVisible]="tooltipVisible" [tooltipTitle]="tooltipTitle" [label]="label"
+      [addOnLabelText]="addOnLabelText" [addOnLabelTextLocalizeParam]="addOnLabelTextLocalizeParam" [isRequired]="isRequired"
+      [tooltipPosition]="" [tooltipTitleLocalizeParam]="tooltipTitleLocalizeParam" [isHtmlContent]="isHtmlContent"
+      [labelLocalizeParam]="labelLocalizeParam">
+    </tooltip-content>
+<div class="autocomplete-search">
+<kendo-autocomplete
+    #autocomplete
+    [data]="data"
+    [filterable]="true"
+    [formControl]="listControlName ? listControlName : formControl"
+    [placeholder]="placeholder | translate"
+    [highlightFirst]="true"
+    (valueChange)="OnChange($event)"
+    (focus)="onFocus()"
+  >
+  </kendo-autocomplete>
+  <span class="k-icon k-font-icon k-i-search"></span>
+</div>
+    <app-print-error-message [control]="listControlName ? listControlName : formControl"></app-print-error-message>
+  </kendo-formfield>
+</ng-template>
+

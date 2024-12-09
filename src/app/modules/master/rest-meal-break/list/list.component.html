@@ -1,0 +1,37 @@
+<div class="master-search">
+  <div class="row">
+    <div class="col-md-12 master-search__wapper">
+      <div class="master-search__search-box">
+        <div class="custom-search">
+          <div class="custom-search__input-box">
+            <app-search [placeholder]="'SearchFor'" [isServerSidePagingEnable]="isServerSidePagingEnable"
+              [buttonNameSearch]="''" [EntityId]="xrmEntityId" (onSearch)="onSearchTriggered($event)"
+              [columnOptions]="columnOptions">
+            </app-search>
+          </div>
+          <app-advance-search [apiAddress]="advApiAddress" [isServerSidePagingEnable]="isServerSidePagingEnable"
+            [EntityId]="xrmEntityId" (selectedFilter)="onFilterTriggered($event)" [isApiGateway]="true">
+          </app-advance-search>
+        </div>
+        <div class="custom-search__applied--Filters mx-2">
+          <div class="custom-search__applied--Filters"><app-kendo-label class="k-label"></app-kendo-label>
+          </div>
+        </div>
+      </div>
+
+      <div class="master-search__button-box master-search__button-box--right">
+        <app-kendo-button [xrmEntityId]="xrmEntityId" [buttonName]="'New Rest/Meal Break'" [buttonIcon]="'plus'"
+          (Click)="navigate()">
+        </app-kendo-button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" *ngIf="isLoading">
+  <grid-view [isServerSidePagingEnable]="isServerSidePagingEnable" [apiAddress]="apiAddress" [searchText]="searchList"
+    [advFilterData]="appliedAdvFilters" [entityId]="xrmEntityId" [columnOptions]="columnOptions" [actionSet]="actionSet"
+    [tabOptions]="tabOptions" [fileName]="'RestOrMealBreakConfiguration'|translate" [kendoGridSelectedBy]="'UKey'"
+    [actionItemCategoryField]="'Disabled'" [pageSize]="pageSize" [multiSelect]="false" [isApiGateway]="true">
+  </grid-view>
+</div>

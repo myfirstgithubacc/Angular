@@ -1,0 +1,226 @@
+<!-- {{'0' | boolean}} -->
+<!-- {{
+null | containsNull : 'XRM'
+}} -->
+<!-- {{ 'Hello' | containsValue : 'll' }} -->
+<!-- {{ 'India' | countryCode }} -->
+<!-- {{ '1111111111' | countryPhone: 'India' }} -->
+<!-- {{ 'INR' | currencySymbol }} {{ 100 }} -->
+<!-- {{ '0' | disable }} -->
+<!-- {{"acro technology" | normaliseCamelcase}} -->
+<!-- {{ "acro" | prefix : "ATIPL" }} -->
+<!-- {{ "Acro-Tech" | removeUnderscore}} -->
+<!-- {{"Acro" | suffix:'Tech'}} -->
+<!-- {{true | yesNo}} -->
+<!-- {{ '201301' | zipcode }} -->
+<!-- {{['a','c','b'] | sorting: 'asc'}} -->
+
+            <kendo-grid
+            [kendoGridReactiveEditing]="createFormGroup"
+            [kendoGridBinding]="products"
+            [pageSize]="5"
+            [pageable]="true"
+            [sortable]="true"
+            [navigable]="true"
+        >
+                <ng-template kendoGridToolbarTemplate>
+                <button kendoGridAddCommand>Add new</button>
+            </ng-template>
+            <kendo-grid-column field="ProductName" title="Product Name">
+            <ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
+         {{column.field}}
+      </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column field="UnitPrice" editor="date" title="Price">
+            <ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
+         {{column.field}}
+      </ng-template>
+
+                    <ng-template kendoGridCellTemplate let-column let-columnIndex="columnIndex" let-isNew="isNew">
+
+
+                    {{column.arr?'s':'w'}}
+
+                    </ng-template>
+
+            </kendo-grid-column>
+            <kendo-grid-column field="Discontinued" editor="boolean" title="Discontinued"></kendo-grid-column>
+            <kendo-grid-column field="UnitsInStock" editor="numeric" title="Units In Stock"></kendo-grid-column>
+
+
+            <kendo-grid-command-column title="command" [width]="220">
+                <ng-template kendoGridCellTemplate let-isNew="isNew">
+                    <button kendoGridEditCommand [primary]="true">Edit</button>
+                    <button kendoGridRemoveCommand>Remove</button>
+                    <button kendoGridSaveCommand [disabled]="formGroup.invalid">{{ isNew ? 'Add' : 'Update' }}</button>
+                    <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+                </ng-template>
+            </kendo-grid-command-column>
+        </kendo-grid>
+
+<form [formGroup]="myForm">
+  <div formArrayName="myArray">
+    <div *ngFor="let control of myArray.controls; let i = index">
+      <div [formGroupName]="i">
+        <app-kendo-dropdown [list]="listItems" ></app-kendo-dropdown>
+        <app-kendo-datepicker [isEditMode]="false" [listControlName]="getControl(i).get('datePicker')"></app-kendo-datepicker>
+        <app-kendo-switch [isEditMode]="false" [label]="'kendo switch'" [listControlName]="getControl(i).get('switch')"></app-kendo-switch>
+        <app-textbox [isEditMode]="true" [label]="'TextBox'" ></app-textbox>
+        <app-numeric-box [isEditMode]="false" [label]="'Numeric Box'" [listControlName]="getControl(i).get('numeric')"></app-numeric-box>
+        <app-kendo-fileselect  [label]="'File Upload'" [isRequired]="true" [multiple]="true"
+  [dropFilesMessage]="'drop file here'" [fileExtAllow]="extensionsAllow"></app-kendo-fileselect>
+  <app-kendo-radio-button [RadioGroup]="clientConfigureType" ></app-kendo-radio-button>
+  <app-kendo-textarea [isEditMode]="false" [label]="'TextArea'"></app-kendo-textarea>
+
+
+ 
+        <br>
+        <br>
+        <button (click)="removeItem(i)">Remove</button>
+      </div>
+    </div>
+    <button (click)="addItem()">Add Item</button>
+    <button (click)="printFormData()">Print</button>
+  </div>
+</form>
+
+
+<div class="card my-5" [formGroup]="TestReactiveForm">
+  <div class="row mx-5 my-5">
+    <div class="col-4">
+      <app-kendo-dropdown [controlName]="'sector'" [label]="'Sector'" [list]="listItems" [tooltipVisible]="true"
+        [tooltipTitle]="'IsRfxSowRequired'" [tooltipTitleLocalizeParam]="localizeParam"></app-kendo-dropdown>
+    </div>
+    <div class="col-4">
+      <app-kendo-dropdown [controlName]="'sector'" [label]="'DoYouWantToActivateThisSector'"
+        [labelLocalizeParam]="labelLocalizeParam" [list]="listItems" [tooltipVisible]="true"
+        [tooltipTitle]="'All_Time_Adjustments_Require_Approval_Tooltip'"></app-kendo-dropdown>
+    </div>
+
+    <div class="col-4">
+      <p>Direct on level</p>
+      <app-kendo-label [label]="'EntityId'" [labelLocalizeParam]="labelLocalizeParam">
+      </app-kendo-label>
+    </div>
+  </div>
+
+  <div class="row mx-5 my-5">
+    <div class="col-4">
+      <p>On Button</p>
+      <app-kendo-button [buttonName]="'EntityId'" [buttonLocalizeParam]="labelLocalizeParam"></app-kendo-button>
+    </div>
+
+    <div class="col-4">
+      <p>From HTML</p>
+      <button type="submit">
+        {{
+        "IsRfxSowRequired"
+        | translate
+        : {
+        placeholder1: "Labor Category",
+        placeholder2: "lsingh",
+        placeholder3: "Welcome@1"
+        }
+        }}
+      </button>
+    </div>
+
+    <div class="col-4">
+      <p>On Confirm popup box</p>
+      <app-kendo-button [buttonName]="'On Confirmpopup'" (Click)="showConfirmPopup()"></app-kendo-button>
+    </div>
+  </div>
+
+  <div class="row mx-5 my-5">
+    <div class="col-4">
+      <p>On Confirm popup box with textarea</p>
+      <app-kendo-button [buttonName]="'On Confirmpopup with text area'"
+        (Click)="showConfirmPopupWithTextArea()"></app-kendo-button>
+    </div>
+
+    <div class="col-4">
+      <p>On Success popup box</p>
+      <app-kendo-button [buttonName]="'On Sussess popup'" (Click)="showSuccess()"></app-kendo-button>
+    </div>
+
+    <div class="col-4">
+      <p>On Error popup box</p>
+      <app-kendo-button [buttonName]="'On Error popup'" (Click)="showError()"></app-kendo-button>
+    </div>
+  </div>
+
+  <hr />
+  <div class="row mx-5 my-5">
+    <p>dsdsds</p>
+    <div class="col-4">
+
+      <app-kendo-dropdown [controlName]="'sector'" [placeholder]="'- Sector -'"
+        [label]="'isSpecialCharacterAllowed = true, not allowed (!, #)'" [list]="listItems"
+        [isSpecialCharacterAllowed]="true" [specialCharactersNotAllowed]="['!', '#']" (onChange)="onNameSelect($event)"
+        [tooltipVisible]="true" [tooltipTitle]="'IsRfxSowRequired'"
+        [tooltipTitleLocalizeParam]="localizeParam"></app-kendo-dropdown>
+    </div>
+
+    <div class="col-4">
+    <app-kendo-input [isEditMode]="false" [controlName]="'Rank'" [label]="'Rank'" [placeholder]="'Enter email address'"
+        [isSpecialCharacterAllowed]="true" [specialCharactersAllowed]="['@','.','-','_', ',']"></app-kendo-input>
+    </div>
+
+    <div class="col-4">
+      <app-textbox [isEditMode]="false" [controlName]="'name'" [label]="'isSpecialCharacterAllowed = false'"
+        [placeholder]="'Enter name'" [tooltipVisible]="true" [isSpecialCharacterAllowed]="false"
+        [specialCharactersNotAllowed]="['!', '@', '#', '€', '']">
+      </app-textbox>
+    </div>
+  </div>
+
+  <div class="row mx-5 my-5">
+    <div class="col-4">
+      <app-textbox [isEditMode]="false" [controlName]="'Email'" [label]="'Email'" [placeholder]="'Enter address'"
+        [isSpecialCharacterAllowed]="true" [specialCharactersAllowed]="['@', '.', '-', '_', ',']">
+      </app-textbox>
+    </div>
+
+    <div class="col-4">
+      <app-kendo-textarea [isEditMode]="false" [controlName]="'address'" [placeholder]="'Enter address'"
+        [label]="'EntityId'" [labelLocalizeParam]="localizeParam" [tooltipVisible]="true"
+        [isSpecialCharacterAllowed]="true" [specialCharactersNotAllowed]="['!', '#']"
+      >
+      </app-kendo-textarea>
+    </div>
+
+    <div class="col-4">
+      <app-numeric-box [label]="'Mobile No.'" [controlName]="'mobile'" [placeholder]="'Enter mobile no'"
+        [tooltipVisible]="true" [tooltipTitle]="'IsRfxSowRequired'" [tooltipTitleLocalizeParam]="localizeParam">
+      </app-numeric-box>
+    </div>
+  </div>
+
+  <div class="row mx-5 my-5">
+    <div class="col-4">
+      <app-kendo-label [label]="'IsRfxSowRequired'" [labelLocalizeParam]="localizeParam">
+      </app-kendo-label>
+    </div>
+
+    <div class="col-sm-4">
+      Fully from backend
+      <ul><li>{{ getMsg() }}</li></ul>
+      Partial from backend
+      <ul><li>{{ "IsRfxSowRequired" | translate : getObj() }}</li></ul>
+      From frontEnd
+      <ul><li [translate]="'TestDynamicDataInValue'" [translateParams]="{ _: 300 }"></li></ul>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <div class="btn-box btn-box--center">
+      <app-kendo-button [buttonName]="isEdit ? 'BtnUpdate' : 'BtnSave'" (Click)="submit()"
+        [buttonLocalizeParam]="localizeParam">
+      </app-kendo-button>
+      <app-kendo-button [buttonName]="'BtnCancel'"> </app-kendo-button>
+    </div>
+  </div>
+
+  <app-kendo-datepicker [controlName]="'TDate'" [label]="'DatePicker'"></app-kendo-datepicker>
+</div>

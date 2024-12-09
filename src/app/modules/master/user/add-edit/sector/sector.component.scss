@@ -1,0 +1,18 @@
+.add_sector {
+  position: absolute;
+    right: 0;
+    top: 10px;
+    font-size: 13px;
+    cursor: pointer;
+    z-index: 1;
+}
+.list-view__tab {
+  border-bottom: 1px solid #eaedf1;
+}
+.list-view__tab--custom {
+  margin-bottom: 12px;
+  position: relative;
+}
+.list-view.staf-list .k-grid {
+  margin-right: 0px !important;
+}

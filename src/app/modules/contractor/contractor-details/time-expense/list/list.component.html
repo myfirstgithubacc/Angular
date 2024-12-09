@@ -1,0 +1,53 @@
+<div class="col-md-12 master-search__wapper">
+    <div class="master-search__search-box">
+        <div class="custom-search">
+            <div class="custom-search__input-box">
+                <app-search [placeholder]="'SearchFor'" [buttonNameSearch]="''"
+                    (onSearch)="OnSearch($event)">
+                </app-search>
+            </div>
+            <app-advance-search [JsonData]="timeadvanceSearchFields" *ngIf="selectedRadio == 1" (click)="showButton1()"
+                (selectedFilter)="OnFilter($event)">
+            </app-advance-search>
+            <app-advance-search [JsonData]="expenseadvanceSearchFields" *ngIf="selectedRadio == 2" (click)="showButton2()"
+            (selectedFilter)="OnFilter($event)">
+        </app-advance-search>
+        </div>
+    </div>
+</div>
+
+<!-- input box start -->
+<div class="col-sm-8 col-md-8">
+    <div class="form-group">
+        <div>
+            <div class="radio-input">
+                <input type="radio" name="radioValueTypeEdit" (change)="onRadioChange(1)"
+                    [checked]="true" value="Overtime (Non-Exempt)" id="TimeRecord" kendoRadioButton />
+                <kendo-label text="{{'TimeRecord' | translate}}" for="TimeRecord" kendoTooltip>
+                </kendo-label>
+            </div>
+            <div class="radio-input">
+                <input type="radio" name="radioValueTypeEdit" (change)="onRadioChange(2)"
+                    value="Overtime (Non-Exempt)" id="ExpenseRecord" kendoRadioButton />
+                <kendo-label text="{{'ExpenseRecord' | translate}}" for="ExpenseRecord" kendoTooltip>
+                </kendo-label>
+            </div>
+        </div>
+    </div>
+</div>
+<!--radio button end -->
+
+<div class="list-view " *ngIf="selectedRadio == 1">
+    <grid-view [gridData]="time" [columnOptions]="columnOptionstime" [actionSet]="actionSet"
+        [tabOptions]="tabOptionstimeexpense" [kendoGridSelectedBy]="'ukey'"
+        (selectedTab)="selectedTab($event)" [actionItemCategoryField]="'active'"
+        [pageSize]="20" [fileName]="'Roles'"></grid-view>
+</div>
+
+<div class="list-view " *ngIf="selectedRadio == 2">
+    <grid-view [gridData]="expense" [columnOptions]="columnOptionsexpense"
+        [actionSet]="actionSet" [tabOptions]="tabOptionstimeexpense"
+        [kendoGridSelectedBy]="'ukey'" (selectedTab)="selectedTab($event)"
+        [actionItemCategoryField]="'active'" [pageSize]="20"
+        [fileName]="'Roles'"></grid-view>
+</div>

@@ -1,0 +1,116 @@
+.k-window {
+	border-radius: 3px;
+
+	.k-button {
+		margin: 5px;
+		padding: 6px 12px;
+	}
+}
+
+.k-window-content {
+	overflow: hidden;
+	padding: 0 20px;
+	overflow: hidden;
+}
+
+.k-dialog-content {
+	overflow: auto;
+	max-height: 400px;
+
+	&.copy-dailog-popup {
+		max-height: max-content;
+	}
+}
+
+.close-dailog {
+	position: absolute;
+	right: 0;
+	top: 0;
+	color: #000;
+	font-weight: 600;
+	border-radius: 4px;
+	padding: 7px 12px;
+
+	i {
+		font-size: 20px;
+		font-weight: 600;
+	}
+}
+
+.dailog__icon {
+	text-align: center;
+	display: block;
+	font-size: var(--dailog-icon-size);
+	margin-bottom: 16px;
+	color: var(--color-primary);
+}
+
+.dailog__title {
+	font-size: var(--dialog-heading-font-size);
+	margin-bottom: 16px;
+	margin-top: 8px;
+}
+
+.dailog__text {
+	font-size: var(--dialog-base-font-size);
+	line-height: 22px;
+	margin-bottom: 16px;
+}
+
+/*
+.form-scroll {
+	max-height: 248px;
+	overflow-y: auto;
+	padding: 0 6px;
+
+	&::-webkit-scrollbar {
+		width: 4px;
+	}
+
+	&::-webkit-scrollbar-track {
+		box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: var(--color-primary);
+		border-radius: 8px;
+	}
+}*/
+.copy-dailog-popup {
+	.feather-icons {
+		&.input-info {
+			svg {
+				width: 18px;
+			}
+		}
+	}
+}
+
+/* 
+::-webkit-scrollbar {
+	width: 5px;
+}
+
+.tree_view_appearance {
+	&::-webkit-scrollbar {
+		width: 5px;
+	}
+}
+
+*/
+.treeError {
+	margin-top: 4px;
+	display: flex;
+	font-style: inherit;
+	font-size: 11px;
+	color: red;
+}
+
+kendo-dialog-actions {
+	&.k-actions-stretched {
+		display: table;
+		margin: auto;
+		text-align: center;
+		border: none;
+	}
+}

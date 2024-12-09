@@ -1,0 +1,131 @@
+<div class="app-content__body users__main">
+  <form *ngIf="isEditMode" [formGroup]="addEditEventReasonForm">
+      <app-common-header
+        [entityId]="entityId"
+        [recordStatus]="getUserStatus()"
+        [statusData]="statusData"
+        [buttonSet]="buttonSet"
+        [isStatusEditable]="false"
+    ></app-common-header>
+  </form>
+  <br>
+  <form [formGroup]="addEditUsersForm">
+    <div class="row">
+      <div class="col-sm-3">
+        <app-side-menu-user [TabList]="tabList" (selectedTapEvent)="selectedTapEvent($event)" [isApiCallOnTabBasis]="true"></app-side-menu-user>
+
+        <div class="card" *ngIf="CurrentTab === userFormTab.Preferences">
+          <div class="card__header">
+              <h4 class="card__heading">{{'Profile Picture'}}</h4>
+          </div>
+          <div class="card__body">
+            <div class="avatar-upload">
+                <div class="avatar-preview">
+                  <img id="output2" alt="" [src]="profilePic" />
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+
+
+      <div class="col-sm-9">
+        <app-basicdetails *ngIf="CurrentTab === userFormTab.UserDetails"
+          [inputProperties]="{
+            disableResendActivationLinkButton:disableResendActivationLinkButton,
+            addEditUserForm: addEditUsersForm,
+            isEditMode:isEditMode,
+            userDetails:userDetails,
+            timezonelist: timezonelist,
+            entityType:entityType,
+            entityId:entityId,
+            languageList:languageList,
+            homeCountrylist: homeCountrylist,
+            userTypeList: userTypeList,
+            selectedKey: selectedKey,
+            selectedKeyLocation: selectedKeyLocation,
+            selectedActionList: selectedActionList,
+            loginList: loginList,
+            userRoleList: userRoleList,
+            dataAccessList: dataAccessList,
+            staffingAgencyList: staffingAgencyList,
+            homeStatelist: homeStatelist,
+            expandedKeys: [],
+            isDublicateUserID: isDublicateUserID,
+            isStaffingAgencyUserLogin: isStaffingAgencyUserLogin,
+            accessSectorRadioGroupList:accessSectorRadioGroupList,
+            accessLocationRadioGroupList:accessLocationRadioGroupList,
+            allSectorList:allSectorList,
+            locationSectorGroupingList:locationSectorGroupingList,
+            stateLabel:stateLabel,
+            zipLabel:zipLabel,
+            selectedLocationIndex: this.selectedLocationIndex
+         }"
+         (onChangeCountry)="OnChangeCountry($event)"
+         (OnChangeSectorTree)="onChangeSectorTree($event)"
+         (OnChangeLocationRadio)="OnChangeLocationRadio($event)"
+          (OnChangeLocationTree)="OnChangeLocationTree($event)"
+          (onChangeLoginMethod)="onChangeLoginMethod($event)"
+         (onChangeStaffingAgency)="onChangeStaffingAgency($event)"
+         (onChangeDataAccessRight)="setDefaultTreeData()"
+         (onDisableResendActivationLinkButton)="onDisableResendActivationLinkButton($event)"
+          ></app-basicdetails>
+        <app-sector *ngIf="CurrentTab === userFormTab.Sector" [inputProperties]="{
+          AddEditUserForm: addEditUsersForm,
+          SectorLabel: SectorLabel,
+          allSectorList: allSectorList,
+          staffingAgencyUserList:staffingAgencyList ,
+          isEditMode: isEditMode,
+          userDetails:userDetails,
+          }"
+          (onChangeSectorDropdown)="onChangeSectorDropdown($event)"
+          (udfData)="udfDataGet($event)"
+          (onAddNewSector)="onAddNewSector()"
+          (onselectedConfiguredTreeItems)="onselectConfiguredTreeItems($event)"
+          (onChangeDefaultSectorSwitch)="onChangeDefaultSectorSwitch($event)"
+          (onChangeOrg1Dropdown)="setDefaultTreeData()"
+          (onChangeLocationDropdown)="setDefaultTreeData()"
+          (onChangeApprovalConfiguration)="onChangeApprovalConfiguration($event)"></app-sector>
+          <app-alternate-contact-details *ngIf="CurrentTab === userFormTab.AlternateContactDetails"
+          [inputProperties]="{
+            addEditUserForm:addEditUsersForm,
+            isEditMode:isEditMode,
+            homeStatelist:homeStatelist,
+            entityType:entityType,
+            entityId:entityId,
+            stateLabel:stateLabel,
+            zipLabel:zipLabel}"
+            (onAlternateContactSave) = "OnAlternateContactSave($event)"
+          >
+          </app-alternate-contact-details>
+        <app-preference [ngClass]="{'hidden': CurrentTab !== userFormTab.Preferences}"
+          [inputProperties]="{proxyuserList: proxyuserList,
+            userDetails: userDetails,
+            proxyAuthorizationTypesList: proxyAuthorizationTypesList,
+            notificationoptionList:[],
+            notificationoptiondropdownList:notificationoptiondropdownList,
+            securityQuestionList: securityQuestionList,
+            landingPageList: landingPageList,
+            timezonelist: timezonelist,
+            languageList: languageList,
+            dateFormatList: dateFormatList,
+            cancelNavigationUrl: '/xrm/master/user/',
+            isFromProfile: false}"
+          (onUpdatePreference)="onUpdatePreference($event)"
+          (onChangeForm)="getPreferenceForm($event)"
+          ></app-preference>
+        <div class="page-footer" *ngIf="CurrentTab == userFormTab.UserDetails || CurrentTab == userFormTab.Sector">
+          <div class="btn-box d-flex justify-content-end">
+            <button kendoButton fillMode="outline" themeColor="primary" (click)="cancel()">Cancel</button>
+            <button kendoButton appScrollOnTop themeColor="primary" [disabled]="isEditMode ? usersDataService.checkTabDirty(addEditUsersForm,CurrentTab) : false"
+              (click)="SaveUser()" appFocusOnError [listformName]="[addEditUsersForm]">{{CurrentTab=='UserDetails' && addEditUsersForm.get('UserDetails')?.get('RoleGroupId')?.value?.Value == userRoleEnum.Client && !this.isEditMode
+              ? ('ProceedToSector' | translate) : ('Save' | translate)}}</button>
+          </div>
+        </div>
+        <div *ngIf="isEditMode">
+          <event-log></event-log>
+      </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,61 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "strictPropertyInitialization": false,
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "ES2022",
+    "useDefineForClassFields": false,
+    "lib": [
+      "ES2022",
+      "dom"
+    ],
+    "paths": {
+      "@xrm-core/*": [
+        "src/app/core/*"
+      ],
+      "@xrm-widgets": [
+        "src/app/shared/widgets"
+      ],
+      "@xrm-pipes": [
+        "src/app/shared/pipes"
+      ],
+      "@xrm-directives": [
+        "src/app/shared/directives"
+      ],
+      "@xrm-services": [
+        "src/app/shared/services"
+      ],
+      "@xrm-shared/*": [
+        "src/app/shared/*"
+      ],
+      "@xrm-environments/*": [
+        "src/app/environments/*"
+      ],
+      "@xrm-master/*": [
+        "src/app/modules/master/*"
+      ]
+    }
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
+}

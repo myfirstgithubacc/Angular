@@ -1,0 +1,35 @@
+#drag-status {
+    position: absolute;
+    pointer-events: none; /* Allows clicks to pass through */
+    display: none;
+    z-index: 999999999999 !important;
+    width: 100%;
+}
+.field-selected{
+    background-color: #d7d7d7 !important;
+    color: #737373 !important;
+}
+.draggable {
+    user-select: none; /* Prevent text selection */
+  }
+
+  .rowHint {
+    background-color: #ededed;
+    padding: 5px;
+    margin: 5px;
+    pointer-events: none;
+    z-index: 9999999999 !important;
+}
+
+.rowHint > td {
+    border: none;
+}
+li.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.bg-highlighted{
+    background-color: #737373;
+}

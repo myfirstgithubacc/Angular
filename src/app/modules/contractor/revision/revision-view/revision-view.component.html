@@ -1,0 +1,9 @@
+<app-revision-shared-view [revisionObject]="revisionObject" [statusData]="statusData"></app-revision-shared-view>
+<div class="page-footer">
+  <div class="btn-box btn-box--center">
+    <button type="button" kendoButton themeColor="primary" (click)="navigate()">
+      {{"Back" | translate}}
+    </button>
+  </div>
+</div>
+<event-log [entityId]="entityId"></event-log>

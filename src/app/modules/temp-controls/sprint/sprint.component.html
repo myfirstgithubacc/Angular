@@ -1,0 +1,41 @@
+<div class="wrapper">
+      <kendo-tabstrip>
+        <kendo-tabstrip-tab title="Sprint Review" [selected]="true">
+          <ng-template kendoTabContent>
+            <div class="content">
+            
+<form [formGroup]="myForm">
+   <app-kendo-dropdown-additional  [list]="securityLevel" [label]="'Dropdown'"
+ [controlName]="'dropdown'" [placeholder]="'DdlSelect'" [isRequired]="false" >
+</app-kendo-dropdown-additional>
+
+<app-kendo-multiselect-additional [isSearchableMode]="true" [label]="'Multi Select Dropdown'" [controlName]="'multiselect'"
+[placeholder]="'DdlSelect'" [list]="securityLevel" ></app-kendo-multiselect-additional>
+
+<app-textbox [label]="'Answer'" [isRequired]="true" [type]="'password'" [controlName]="'password'"></app-textbox>
+
+<app-kendo-dropdown [list]="ddlValue" [tooltipVisible]="true" [tooltipTitle]="'Pre_defined_Work_Schedule_Tooltip_IsEditMode'" [label]="'file Extension'" [placeholder]="'DdlSelect'"
+            [controlName]="'ddData'" [isHtmlContent]="true" [isEditMode]="false" [singleItemautoLable]="true"></app-kendo-dropdown>
+
+            <app-weekday-picker 
+            [dayInfo]="daysInfo" 
+            [isWeekdayEditMode]="false"
+            [timeRangeProperties]="timeRange"
+            [startTimeControlName]="'startTimeControlName'"
+            [endTimeControlName]="'endTimeControlName'"
+            (selectedTimeChange)="updateSelectedTime($event)"
+            (daySelectionChanged)="updateDayInfo($event)"
+            (getWeekDayInfo)="getWeekData($event)"
+            (onCancel)="getStatus($event)"
+            [skipOnChanges]="skipOnChanges"
+            [timeFormat]="'hh:mm a'">
+            </app-weekday-picker>
+
+
+          </form>
+
+            </div>
+          </ng-template>
+        </kendo-tabstrip-tab>
+      </kendo-tabstrip>
+    </div>

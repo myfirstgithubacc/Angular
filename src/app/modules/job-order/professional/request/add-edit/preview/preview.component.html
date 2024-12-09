@@ -1,0 +1,741 @@
+<div class="app-content__body floating-layout floating-layout__view-layout">
+    <form [formGroup]="weekDayForm">
+        <div class="col-xs-12 col-md-12">
+            <app-status-bar-proff [statusId]="statusId" [isEditMode]="false"></app-status-bar-proff>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 col-sm-3 mobile-none">
+                <div class="wizard">
+                    <kendo-stepper [steps]="steps" stepType="full" [(currentStep)]="currentStep" [linear]="false"
+                        orientation="vertical">
+                    </kendo-stepper>
+                </div>
+            </div>
+
+            <div class="col-md-9 col-sm-9">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Step 1 -->
+                        <kendo-expansionpanel *ngIf="currentStep === 0 || resetStep" [attr.id]='steps' [expanded]="true"
+                            class="card">
+                            <ng-template kendoExpansionPanelTitleDirective>
+                                <div (click)="$event.stopPropagation()">
+                                    <h4 class="card__heading">{{'RequestDetails' | translate}}</h4>
+                                </div>
+                            </ng-template>
+                            <div class="card__body">
+                                <div class="row">
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'IsPreIdentifiedRequest'"
+                                                [value]="priviewRequestData.requestDetails.IsPreIdentifiedRequest ? 'Yes' :'No'"></app-kendo-label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Input Box Start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'Sector'"
+                                                [value]="priviewRequestData.requestDetails.SectorId.Text"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class="col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <div class="new-view">
+                                                <kendo-label text="{{'ContractorsWorkLocation' | translate}}">
+                                                </kendo-label>
+                                                <p class="label-answere">
+                                                    {{priviewRequestData.requestDetails.WorkLocationId.Text}}<br />
+                                                    <span
+                                                        class="achor__text">{{locationDetails?.LocationAddress}}</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class="col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'RequestingPrimaryManagerName'"
+                                                [value]="priviewRequestData.requestDetails.RequestingManagerId.Text"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- Input Box Start -->
+                                    <div class=" col-sm-12 col-md-12" *ngIf="orgType1Data && orgType1Data?.IsVisible">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="orgType1Data.OrgName"
+                                                [value]="priviewRequestData.requestDetails.OrgLevel1Id.Text"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- Input Box Start -->
+                                    <div class=" col-sm-12 col-md-12" *ngIf="orgType2Data && orgType2Data?.IsVisible">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="orgType2Data.OrgName"
+                                                [value]="priviewRequestData.requestDetails.OrgLevel2Id?.Text"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- Input Box Start -->
+                                    <div class=" col-sm-12 col-md-12" *ngIf="orgType3Data && orgType3Data?.IsVisible">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="orgType3Data.OrgName"
+                                                [value]="priviewRequestData.requestDetails.OrgLevel3Id?.Text"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- Input Box Start -->
+                                    <div class="col-sm-12 col-md-12" *ngIf="orgType4Data && orgType4Data?.IsVisible">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="orgType4Data.OrgName"
+                                                [value]="priviewRequestData.requestDetails.OrgLevel4Id?.Text"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class="col-sm-12 col-md-12"
+                                        *ngIf="priviewRequestData.requestDetails.CostAccountingId">
+                                        <div class="form-group">
+                                            <div class="new-view">
+                                                <kendo-label text="{{'CostAccountingCode' | translate}}"> </kendo-label>
+                                                <p class="label-answere">
+                                                    {{priviewRequestData.requestDetails.CostAccountingId.Text}}<br />
+                                                    <span
+                                                        class="achor__text">{{costAccountingCodeDetails?.[0]?.Description}}</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'ReasonForRequest'"
+                                                [value]="priviewRequestData.requestDetails.ReasonForRequestId?.Text"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'Submittals allowed per Staffing Agency'"
+                                                [value]="priviewRequestData.requestDetails.SubmittalAllowedPerStaffing"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'Submittals allowed for this Requisition'"
+                                                [value]="priviewRequestData.requestDetails.SubmittalAllowedForThisRequest"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label
+                                                [label]="'Allow the Staffing Agency to Contact regarding this Request'"
+                                                [value]="priviewRequestData.requestDetails.IsAllowStaffingToContact ? 'Yes' : 'No'"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+                                </div>
+                            </div>
+                        </kendo-expansionpanel>
+
+                        <kendo-expansionpanel *ngIf="currentStep === 0 || resetStep" [attr.id]='steps' [expanded]="true"
+                            class="card">
+                            <ng-template kendoExpansionPanelTitleDirective>
+                                <div (click)="$event.stopPropagation()">
+                                    <h4 class="card__heading">{{'PositionDetails' | translate}}</h4>
+                                </div>
+                            </ng-template>
+                            <div class="card__body">
+                                <div class="row">
+                                    <!-- Input Box Start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'PositionTitle'"
+                                                [value]="priviewRequestData.positionDetails.PositionTitle"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class="col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'LaborCategory'"
+                                                [value]="priviewRequestData.positionDetails.LaborCategoryId.Text"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class="col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'JobCategory'"
+                                                [value]="priviewRequestData.positionDetails.JobCategoryId.Text"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'AssignmentType'"
+                                                [value]="priviewRequestData.positionDetails.AssignmentTypeId?.Text"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <div class="clearfix"></div>
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'SecurityClearance'"
+                                                [value]="priviewRequestData.positionDetails.SecurityClearanceId.Text"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12" *ngIf="isSecurityClearanceRequired">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'Minimum Requirement to start'"
+                                                [value]="priviewRequestData.positionDetails.MinimumClearanceToStartId?.Text"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                </div>
+                            </div>
+                        </kendo-expansionpanel>
+
+                        <ng-container *ngIf="priviewRequestData.requestDetails.IsPreIdentifiedRequest">
+                            <kendo-expansionpanel *ngIf="currentStep === 0 || resetStep" [attr.id]='steps'
+                                [expanded]="true" class="card">
+                                <ng-template kendoExpansionPanelTitleDirective>
+                                    <div (click)="$event.stopPropagation()">
+                                        <h4 class="card__heading">{{'CandidateDetails' | translate}}</h4>
+                                    </div>
+                                </ng-template>
+                                <div class="card__body">
+                                    <div class="row">
+                                        <!-- Input Box Start -->
+                                        <div class=" col-sm-12 col-md-12">
+                                            <div class="form-group">
+                                                <app-kendo-label [label]="'CandidateName'"
+                                                    [value]="candidateFullName"></app-kendo-label>
+                                            </div>
+                                        </div>
+                                        <!-- input box end -->
+
+                                        <!-- input box start -->
+                                        <div class="col-sm-12 col-md-12">
+                                            <div class="form-group">
+                                                <app-kendo-label [label]="'EmailAddress'"
+                                                    [value]="priviewRequestData.candidateDetails.Email"></app-kendo-label>
+                                            </div>
+                                        </div>
+                                        <!-- input box end -->
+
+                                        <!-- input box start -->
+                                        <div class="col-sm-12 col-md-12">
+                                            <div class="form-group">
+                                                <app-kendo-phone [label]="'ContactNumber'" [isEditMode]="false"
+                                                    [phoneControlName]="'PhoneNumber'"
+                                                    [phoneExtControlName]="'PhoneExt'"
+                                                    [isExtension]="isPhoneNumberExtension"></app-kendo-phone>
+                                            </div>
+                                        </div>
+                                        <!-- input box end -->
+                                    </div>
+                                </div>
+                            </kendo-expansionpanel>
+                        </ng-container>
+                        <!-- Step 1 -->
+
+
+                        <!-- Step 2 -->
+                        <kendo-expansionpanel *ngIf="currentStep === 1 || resetStep" [expanded]="true" class="card">
+                            <ng-template kendoExpansionPanelTitleDirective>
+                                <div (click)="$event.stopPropagation()">
+                                    <h4 class="card__heading">Assignment Requirement</h4>
+                                </div>
+                            </ng-template>
+                            <div class="card__body">
+                                <div class="row">
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'TargetStartDate'"
+                                                [value]="priviewRequestData.assignmentRequirement.TargetStartDate"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'TargetEndDate'"
+                                                [value]="priviewRequestData.assignmentRequirement.TargetEndDate"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start-->
+                                    <div class="col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <div class="new-view">
+                                                <kendo-label text="{{'Shift' | translate}}"> </kendo-label>
+                                                <p class="label-answere">
+                                                    {{priviewRequestData.assignmentRequirement.ShiftId.Text}}<br />
+                                                    <app-weekday-picker [dayInfo]="daysInfo" [isWeekdayEditMode]="false"
+                                                        [timeRangeProperties]="timeRange" [timeFormat]="'hh:mm a'"
+                                                        [startTimeControlName]="'startTimeControlName'"
+                                                        [endTimeControlName]="'endTimeControlName'"
+                                                        [isReadonly]="false">
+                                                    </app-weekday-picker>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- input box end-->
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'Number of Positions Requested'"
+                                                [value]="priviewRequestData.assignmentRequirement.PositionNeeded"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <div class="clearfix"></div>
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12" *ngIf="showDrugField()">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'DrugScreenId'"
+                                                [value]="priviewRequestData.assignmentRequirement.IsDrugTestRequired ? 'Yes' : 'No'"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12" *ngIf="showaBackgroundField()">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'BackgroundChecksTitle'"
+                                                [value]="priviewRequestData.assignmentRequirement.IsBackgrounCheckRequired ? 'Yes' : 'No'"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'PositionDescription'" [allowMultilineText]="true"
+                                                [value]="priviewRequestData.assignmentRequirement.PositionDescription"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class="col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'Skills Required'" [allowMultilineText]="true"
+                                                [value]="priviewRequestData.assignmentRequirement.SkillsRequired"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class="col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'Skills Preferred'" [allowMultilineText]="true"
+                                                [value]="priviewRequestData.assignmentRequirement.SkillsPreferred"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'ExperienceRequired'" [allowMultilineText]="true"
+                                                [value]="priviewRequestData.assignmentRequirement.ExperienceRequired"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class="col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'ExperiencePreferred'" [allowMultilineText]="true"
+                                                [value]="priviewRequestData.assignmentRequirement.ExperiencePreferred"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class="col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'EducationRequired'" [allowMultilineText]="true"
+                                                [value]="priviewRequestData.assignmentRequirement.EducationRequired"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'Education Preferred'" [allowMultilineText]="true"
+                                                [value]="priviewRequestData.assignmentRequirement.EducationPreferred"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'AdditionalInformation'"
+                                                [allowMultilineText]="true"
+                                                [value]="priviewRequestData.assignmentRequirement.AdditionalInformation"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                </div>
+                            </div>
+                        </kendo-expansionpanel>
+                        <!-- Step 2 -->
+
+
+                        <!-- Step 3 -->
+                        <kendo-expansionpanel *ngIf="currentStep === 2 || resetStep" [expanded]="true" class="card">
+                            <ng-template kendoExpansionPanelTitleDirective>
+                                <div (click)="$event.stopPropagation()">
+                                    <h4 class="card__heading">{{'RateDetails' | translate}}</h4>
+                                </div>
+                            </ng-template>
+                            <div class="card__body">
+                                <div class="row">
+                                    <!-- Input Box Start -->
+                                    <div class=" col-sm-12 col-md-12"
+                                        *ngIf="priviewRequestData.rateDetails.BaseWageRate && priviewRequestData.rateDetails.BaseWageRate > 0">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="getDayHourLocalizationValue('ActualPayRate')"
+                                                [value]="priviewRequestData.rateDetails.BaseWageRate | number: '1.2-2'"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- Input Box Start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'RateUnit'"
+                                                [value]="getRateUnitText(priviewRequestData.rateDetails.RateUnitId)"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- Input Box Start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="getNteBillRateLabel()" [isCurrency]="true"
+                                                [value]="priviewRequestData.rateDetails.NewNteBillRate"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- Input Box Start -->
+                                    <div class=" col-sm-12 col-md-12" *ngIf="priviewRequestData.rateDetails.DeltaCost">
+                                        <div class="form-group">
+                                            <app-kendo-label label="Delta Cost of Exception" [isCurrency]="true"
+                                                [value]="priviewRequestData.rateDetails.DeltaCost"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- Input Box Start -->
+                                    <div class=" col-sm-12 col-md-12"
+                                        *ngIf="priviewRequestData.rateDetails.ReasonForException">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'Reason for Exception'"
+                                                [value]="priviewRequestData.rateDetails.ReasonForException"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <div class="clearfix"></div>
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'HourDistribution'"
+                                                [value]="priviewRequestData.rateDetails.HourDistributionRuleId.Text"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'Estimated Regular Hours/Week'"
+                                                [value]="priviewRequestData.rateDetails.EstimatedRegularHoursPerWeek | number: '1.2-2'"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <div class="clearfix"></div>
+
+                                    <!-- Input Box Start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'OT Hours Allowed'"
+                                                [value]="priviewRequestData.rateDetails.IsOtExpected ? 'Yes' : 'No'"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class="col-sm-12 col-md-12" *ngIf="isOTHousBilledAtShow">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'OTHoursBilledAt'"
+                                                [value]="priviewRequestData.rateDetails.OthoursBilledAt == 62 ? 'Overtime (Non-Exempt)' : 'Straight Time (Exempt)'"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box start -->
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12"
+                                        *ngIf="priviewRequestData.rateDetails.IsOtExpected">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'Estimated OT Hours/Week'"
+                                                [value]="priviewRequestData.rateDetails.EstimatedOtHoursPerWeek | number: '1.2-2'"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <!-- input box start -->
+                                    <div class=" col-sm-12 col-md-12" *ngIf="isBudgetedHour">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'BudgetedHours'"
+                                                [value]="priviewRequestData.rateDetails.BudgetedHours"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                    <div class="clearfix"></div>
+
+                                    <!-- Input Box Start -->
+                                    <div class="col-sm-12 col-md-12" [hidden]="!hasBenefitAdderLength">
+                                        <app-benefit-adder [reqLibraryId]="2127"
+                                            (onDataPicked)="getBenefitAdderData($event)" [isCreate]="true"
+                                            [sectorId]="priviewRequestData.requestDetails.SectorId.Value"
+                                            [locationId]="priviewRequestData.requestDetails.WorkLocationId.Value"></app-benefit-adder>
+                                    </div>
+                                    <!-- Input Box end -->
+
+                                    <!-- Input Box Start -->
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label label="EstimatedCost" [isCurrency]="true"
+                                                [value]="priviewRequestData.rateDetails.EstimatedCost"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+
+                                </div>
+                            </div>
+                        </kendo-expansionpanel>
+                        <!-- Step 3 -->
+
+
+                        <!-- Step 4 -->
+                        <kendo-expansionpanel *ngIf="(currentStep === 3 || resetStep) && udfExtractedData.length > 0"
+                            [expanded]="true" class="card">
+                            <ng-template kendoExpansionPanelTitleDirective>
+                                <div (click)="$event.stopPropagation()">
+                                    <h4 class="card__heading">{{'OtherDetailsUDFs' | translate}}</h4>
+                                </div>
+                            </ng-template>
+                            <div class="card__body">
+                                <div class="row">
+                                    <div *ngFor="let item of udfExtractedData" class="col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="item.FieldLabelLocalizedKey"
+                                                [value]="item.Text"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </kendo-expansionpanel>
+
+                        <kendo-expansionpanel
+                            *ngIf="(currentStep === 3 || resetStep) && approverExtractedData.length > 0"
+                            [expanded]="true" class="card">
+                            <ng-template kendoExpansionPanelTitleDirective>
+                                <div (click)="$event.stopPropagation()">
+                                    <h4 class="card__heading">Requisition Approvers</h4>
+                                </div>
+                            </ng-template>
+                            <div class="card__body">
+                                <div class="row">
+                                    <div *ngFor="let item of approverExtractedData" class="col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="item.Text" [value]="item.Value"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </kendo-expansionpanel>
+
+                        <kendo-expansionpanel *ngIf="currentStep === 3 || resetStep" [expanded]="true" class="card">
+                            <ng-template kendoExpansionPanelTitleDirective>
+                                <div (click)="$event.stopPropagation()">
+                                    <h4 class="card__heading">Comments and Documents</h4>
+                                </div>
+                            </ng-template>
+                            <div class="card__body">
+                                <div class="row">
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'ManagerCommentstoStaffingAgency'"
+                                                [value]="priviewRequestData.requestComments.ClientCommentsToStaffingAgency ?? ''"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <div class=" col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'ManagerCommentsNotViewablebyStaffingAgency'"
+                                                [value]="priviewRequestData.requestComments.ClientComments ?? ''"></app-kendo-label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-12" *ngIf="dmsExtractedData?.length">
+                                    <h4 class="card__body--subheading">Document Upload</h4>
+                                    <div
+                                        class="col-sm-12 col-md-12 list-view third-lavel-grid staf-list custom__file__list">
+                                        <div class="form-group">
+                                            <kendo-grid [data]="dmsExtractedData">
+                                                <kendo-grid-column field="documentTitle"
+                                                    title="{{'DocumentType' | translate}}" media="(min-width: 921px)">
+                                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                                        <span>{{dataItem?.documentTitle}}</span>
+                                                    </ng-template>
+                                                </kendo-grid-column>
+
+                                                <kendo-grid-column title="{{'Document' | translate}}"
+                                                    media="(min-width: 921px)">
+                                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                                        <div class="col-sm-12">
+                                                            <div class="attachment-file2" kendoTooltip>
+                                                                <div class="file-icon">
+                                                                    <img *ngIf="dataItem?.extension == 'pdf'"
+                                                                        src="./assets/images/pdf.png" alt=""
+                                                                        height="22">
+                                                                    <img *ngIf="dataItem?.extension == 'doc'"
+                                                                        src="./assets/images/doc.png" alt=""
+                                                                        height="22">
+                                                                    <img *ngIf="dataItem?.extension == 'docx'"
+                                                                        src="./assets/images/docx.png" alt=""
+                                                                        height="22">
+                                                                    <img *ngIf="dataItem?.extension == 'mp4'"
+                                                                        src="./assets/images/mp4.png" alt=""
+                                                                        height="22">
+                                                                </div>
+                                                                <div class="file-type">
+                                                                    <a href="javascript:;"
+                                                                        title="{{dataItem?.fileNameWithExtension}}"
+                                                                        (click)="downloadFile(dataItem)">{{dataItem?.fileNameWithExtension}}</a>
+                                                                    <p>{{getFileSizeWithUnit(dataItem.size)}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </ng-template>
+                                                </kendo-grid-column>
+
+                                                <kendo-grid-column field="uploadedBy"
+                                                    title="{{'UploadedBy' | translate}}" media="(min-width: 921px)">
+                                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                                        <span kendoTooltip>
+                                                            <span [title]="dataItem?.uploadedBy">{{ dataItem?.uploadedBy
+                                                                }}</span>
+                                                        </span>
+                                                    </ng-template>
+                                                </kendo-grid-column>
+
+                                                <kendo-grid-column field="uploadedOn"
+                                                    title="{{'UploadedOn' | translate}}" media="(min-width: 921px)">
+                                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                                        <span>{{ dataItem?.uploadedOn }}</span>
+                                                    </ng-template>
+                                                </kendo-grid-column>
+
+                                                <kendo-grid-column field="actions" title="{{'Actions' | translate}}"
+                                                    media="(min-width: 921px)">
+                                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                                        <div class="action-item" kendoTooltip>
+                                                            <a href="javascript:;" kendoButton
+                                                                title="{{'Download' | translate}}"
+                                                                (click)="downloadFile(dataItem)">
+                                                                <xrm-icon [name]="'download'"
+                                                                    [color]="'dark-blue-color'" [size]="17"
+                                                                    class="sw-bold"></xrm-icon>
+                                                            </a>
+                                                        </div>
+                                                    </ng-template>
+                                                </kendo-grid-column>
+
+                                                <ng-template kendoGridNoRecordsTemplate>
+                                                    <p>{{"GridNoRecordAvailable" | translate}}</p>
+                                                </ng-template>
+                                            </kendo-grid>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </kendo-expansionpanel>
+                        <!-- Step 4 -->
+
+                    </div>
+                </div>
+                <!--  Page Footer Section-->
+                <div class="page-footer">
+                    <div class="btn-box btn-box--center">
+                        <button type="button" fillMode="outline" kendoButton themeColor="primary" (click)="backform()">
+                            {{'Back' | translate}}
+                        </button>
+                        <button *ngIf="!isEditMode || (isEditMode && statusId == 235)" type="button" kendoButton
+                            themeColor="primary" (click)="submitForm()">
+                            {{'Submit' | translate}}
+                        </button>
+                        <button *ngIf="isEditMode && (statusId != 235)" type="button" kendoButton themeColor="primary"
+                            (click)="submitFormEdit()">
+                            {{'Submit' | translate}}
+                        </button>
+                    </div>
+                </div>
+                <!-- End Footer Section-->
+            </div>
+        </div>
+    </form>
+</div>

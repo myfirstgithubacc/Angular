@@ -1,0 +1,181 @@
+<form [formGroup]="RfxConfigForm">
+
+    <div class="card">
+        <!-- Card Header Section-->
+        <div class="card__header">
+            <h4 class="card__heading">{{ 'RFxConfigurations' | translate }}
+            </h4>
+            <div class="card__header-icon">
+            </div>
+        </div>
+        <!-- End Card Header Section-->
+
+        <!-- Card Body Section-->
+        <div class="card__body">
+            <div class="row">
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'"
+                            [isDisable]="disableControls && !isDraft" [tooltipVisible]="true"
+                            [tooltipTitle]="'Is_RFx_SOW_Required_Tooltip'" [controlName]="'IsRfxSowRequired'"
+                            [label]="'RfxSowRequired'" (onChangeSwitch)="switchRFXSOW($event)">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+
+                <div *ngIf="isSwitchRFXSOW">
+                    <!-- input box start -->
+                    <div class="row">
+
+                        <!-- input box start -->
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-numeric-box [label]="'SowMspFeePercentage'" [controlName]="'SowMspFeePercentage'"
+                                    [tooltipVisible]="true" [tooltipTitle]="'SOW_MSP_Fee_Percentage__Tooltip'"
+                                    [isRequired]="true" [isAutoCorrect]="true" format=n2 [min]='magicNumbers.zero' [decimals]=magicNumbers.two
+                                    [maxlength]='magicNumbers.five'>
+                                </app-numeric-box>
+                            </div>
+                        </div>
+                        <!-- input box start -->
+
+                        <!-- input box start -->
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-numeric-box [label]="'IcMspFeePercentage'" [controlName]="'IcMspFeePercentage'"
+                                    [tooltipVisible]="true" [tooltipTitle]="'IC_MSP_Fee_Percentage__Tooltip'" format=n2
+                                    [isAutoCorrect]="true" [maxlength]='magicNumbers.five' [min]='magicNumbers.zero' [decimals]=magicNumbers.two [isRequired]="true">
+                                </app-numeric-box>
+                            </div>
+                        </div>
+                        <!-- input box start -->
+
+                        <!-- input box start -->
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-numeric-box [label]="'SowAdminFee'" [controlName]="'SowAdminFee'"
+                                    [tooltipVisible]="true" [tooltipTitle]="'SOW_Admin_Fee_Tooltip'" [maxlength]='magicNumbers.ten'
+                                    [min]='magicNumbers.zero' format=n2 [decimals]=magicNumbers.two [isRequired]="false">
+                                </app-numeric-box>
+                            </div>
+                        </div>
+                        <!-- input box start -->
+
+                        <!-- input box start -->
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Requisition_Library_Used_For_T_and_M_SOW_Tooltip'"
+                                    [controlName]="'IsReqLibraryUsedforTmSow'" [label]="'IsReqLibraryUsedforTmSow'">
+                                </app-kendo-switch>
+
+                            </div>
+                        </div>
+                        <!-- input box start -->
+
+                        <!-- input box start -->
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Skip_Process_RFx_Submittal_Tooltip'"
+                                    [controlName]="'IsSkipProcessRfxSubmittal'" [label]="'IsSkipProcessRfxSubmittal'">
+                                </app-kendo-switch>
+
+                            </div>
+                        </div>
+                        <!-- input box start -->
+
+                        <!-- input box start -->
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-switch [onLabel]="'Yes'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Skip_Process_SOW_By_MSP_Tooltip'" [offLabel]="'No'"
+                                    [controlName]="'IsProcessSowbyMsp'" [label]="'IsProcessSowbyMsp'">
+                                </app-kendo-switch>
+
+                            </div>
+                        </div>
+                        <!-- input box start -->
+
+                        <div class="clearfix"></div>
+
+                        <!-- input box start -->
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Is_There_A_Limit_On_The_Total_SOW_Amount_Tooltip'"
+                                    [controlName]="'IsSowAmountLimitRequired'" [label]="'IsSowAmountLimitRequired'"
+                                    (onChangeSwitch)="switchTotalSOWCertainValue($event)">
+                                </app-kendo-switch>
+
+                            </div>
+                        </div>
+                        <!-- input box start -->
+
+                        <!-- input box start -->
+                        <div class="col-sm-6 col-md-6" *ngIf="isSwitchTotalSOWCertainValue">
+                            <div class="form-group">
+                                <app-numeric-box [countryId]="countryId" [label]="'SowAmountLimit'"
+                                    [isCurrencyType]="true" [controlName]="'SowAmountLimit'" [tooltipVisible]="true"
+                                    [isCurrency]="true" [tooltipTitle]="'Max_SOW_Amount_Tooltip'" [maxlength]='magicNumbers.eight'
+                                    format=n2 [min]='magicNumbers.zero' placeholder="" [decimals]=magicNumbers.two [isRequired]="true">
+                                </app-numeric-box>
+                            </div>
+                        </div>
+                        <!-- input box start -->
+
+                        <div class="clearfix"></div>
+
+                        <!-- input box start -->
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-radio-button [controlName]="'PoTypeSowIc'" [RadioGroup]="POType"
+                                    [tooltipVisible]="true" [tooltipTitle]="'Po_Tooltip'"
+                                    [tooltipTitleLocalizeParam]='sectorLabelTextParams' [label]="'PO'"
+                                    [isRequired]="true" (onChangeRadio)="onPOClick($event)">
+                                </app-kendo-radio-button>
+                            </div>
+                        </div>
+                        <!-- input box start -->
+
+                        <!-- input box start -->
+                        <div class="col-sm-6 col-md-6" *ngIf="isPORecruitment">
+                            <div class="form-group">
+                                <app-textbox [controlName]="'DefaultPoForSowIc'" [maxCharacters]=magicNumbers.eighteen
+                                    [isSpecialCharacterAllowed]=true [label]="'DefaultPoForSowIc'" [isRequired]="true">
+                                </app-textbox>
+                            </div>
+                        </div>
+                        <!-- input box start -->
+
+                        <div class="col-sm-12 col-md-12 list-view list-view__border">
+                            <app-list-view #RfxStandardFields [labelText]="RfxStandardLabelText"
+                                (formData)="getFormStatus($event)" [columnData]="RfxStandardColumns"
+                                [columnConfigure]="RfxStandardFieldColumnConfigs"
+                                [populatedData]="RfxStandardPrefilledData">
+                            </app-list-view>
+                        </div>
+
+                        <div class="col-sm-12 col-md-12">
+                            <div class="card__body--subheading"></div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-12 list-view list-view__border">
+                            <app-list-view #CommotdityTypeFields [labelText]="CommodityTypeLabelText"
+                                (formData)="getFormStatus($event)" [columnData]="CommodityTypeColumns"
+                                [columnConfigure]="CommodityTypesColumnConfigs"
+                                [populatedData]="CommodityTypeNamePrefilledData">
+                            </app-list-view>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Card Body Section-->
+
+        </div>
+    </div>
+    <!--RFx Configuration Section end-->
+</form>

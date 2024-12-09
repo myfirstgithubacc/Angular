@@ -1,0 +1,40 @@
+<div class="master-search widget-filter__search">
+  <div class="row">
+    <div class="col-md-12 master-search__wapper">
+      <div class="master-search__search-box">
+        <div class="custom-search">
+          <div class="custom-search__input-box">
+            <app-search [isServerSidePagingEnable]="isServerSidePagingEnable" [placeholder]="'SearchFor'"
+              [buttonNameSearch]="''" [EntityId]="entityId" (onSearch)="onSearchTriggered($event)"
+              [isSpecialCharacterAllowed]="true" [columnOptions]="columnOptions">
+            </app-search>
+          </div>
+
+          <app-advance-search [apiAddress]="advApiAddress" [isServerSidePagingEnable]="isServerSidePagingEnable"
+            [EntityId]="entityId" (selectedFilter)="onFilterTriggered($event)" [isApiGateway]="true">
+          </app-advance-search>
+
+        </div>
+        <div class="custom-search__applied--Filters mx-2">
+          <div class="custom-search__applied--Filters"><app-kendo-label class="k-label"></app-kendo-label>
+          </div>
+        </div>
+      </div>
+
+      <div class="master-search__button-box master-search__button-box--right">
+        <app-kendo-button *ngIf="canCreate" [xrmEntityId]="entityId" [buttonName]="'NewLIRequest'" [buttonIcon]="'plus'"
+          (Click)="navigateToAdd()">
+        </app-kendo-button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+
+  <grid-view [isServerSidePagingEnable]="isServerSidePagingEnable" [apiAddress]="apiAddress" [searchText]="searchText" [isApiGateway]="true"
+    [advFilterData]="appliedAdvFilters" [columnOptions]="columnOptions" [pageSize]="pageSize" [actionSet]="actionSet"
+    [entityId]="entityId" [tabOptions]="tabOptions" [fileName]="'LightIndustrial'" [kendoGridSelectedBy]="'Ukey'" [manageActionSets]="manageActionSets"
+    [isSortingAllowed]="true" [isFilteringAllowed]="true" [isActionColumnVisible]="true"
+    [multiSelect]="false"></grid-view>
+</div>

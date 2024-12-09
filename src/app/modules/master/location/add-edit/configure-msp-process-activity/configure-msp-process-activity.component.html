@@ -1,0 +1,74 @@
+<form [formGroup]="configureMSPProcessActivityForm">
+   <!--Configure MSP Process Activity Section Start-->
+   <div class="card">
+      <!-- Card Header Section-->
+      <div class="card__header">
+         <h4 class="card__heading">{{'ConfigureMSPProcessActivity' | translate}}</h4>
+      </div>
+      <!-- End Card Header Section-->
+      <!-- Card Body Section-->
+      <div class="card__body">
+         <div class="row">
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group">
+                  <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                     [tooltipTitle]="'AlternateSectorConfigurationToolTip'"
+                     [isDisable]="oneTimeSettingForToggleSwitchToMakeDisable('AltMSPProcessActivityConfigs')"
+                     [controlName]="'alternateConfigureMspProcessActivity'" [onLabel]="'Yes'" [offLabel]="'No'"
+                     [label]="'AlternateConfigureMSPProcessActivityConfigurations'"
+                     (onChangeSwitch)="onAlternateConfigureMspProcessActivityChange($event)"></app-kendo-switch>
+               </div>
+            </div>
+            <!-- Input Box End -->
+            <div class="clearfix"></div>
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6"
+               *ngIf="configureMSPProcessActivityForm?.get('alternateConfigureMspProcessActivity')?.value">
+               <div class="form-group">
+                  <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                     [isDisable]="oneTimeSettingForToggleSwitchToMakeDisable('SkipProcessSubmittalByMsp')"
+                     [tooltipTitle]="'SkipProcessSubmittalByMspToolTip'" [controlName]="'skipProcessSubmittalByMsp'"
+                     [label]="'IsSkipProcessSubByMsp'"></app-kendo-switch>
+               </div>
+            </div>
+            <!-- Input Box End -->
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group"
+                  *ngIf="configureMSPProcessActivityForm?.get('alternateConfigureMspProcessActivity')?.value">
+                  <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                     [tooltipTitle]="'HideNTERateFromRequisitionLibraryToolTip'"
+                     [controlName]="'hideNTERateFromRequisitionLibrary'"
+                     [label]="'HideNteRatefromCopyReqLib'"></app-kendo-switch>
+               </div>
+            </div>
+            <!-- Input Box End -->
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group"
+                  *ngIf="configureMSPProcessActivityForm?.get('alternateConfigureMspProcessActivity')?.value">
+                  <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                     [tooltipTitle]="'SkipLIRequestProcessbyMSPToolTip'" [controlName]="'skipLIRequestProcessbyMSP'"
+                     [label]="'IsSkipLIRequestProcessByMsp'"
+                     (onChangeSwitch)="onSkipLIRequestProcessbyMSPChange($event)"></app-kendo-switch>
+               </div>
+            </div>
+            <!-- Input Box End -->
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6"
+               *ngIf="configureMSPProcessActivityForm?.get('skipLIRequestProcessbyMSP')?.value && configureMSPProcessActivityForm?.get('alternateConfigureMspProcessActivity')?.value">
+               <div class="form-group">
+                  <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                     [tooltipTitle]="'AutoBroadcastForLIRequestToolTip'" [controlName]="'autoBroadcastForLIRequest'"
+                     [label]="'IsAutoBroadcastForLiRequest'"></app-kendo-switch>
+               </div>
+            </div>
+            <!-- Input Box End -->
+         </div>
+      </div>
+      <!-- Card Body Section End-->
+   </div>
+   <!--Configure MSP Process Activity Section End -->
+
+</form>

@@ -1,0 +1,30 @@
+.k-combobox.k-disabled .k-button {
+	border-radius: 0;
+}
+.autocomplete-search {
+	position: relative;
+	.k-i-search {
+		position: absolute;
+		right: 0px;
+		top: 0;
+		width: 40px;
+		height: 34px;
+		line-height: 34px;
+		text-align: center;
+	}
+	.k-i-loading {
+		position: absolute;
+		right: 30px;
+		top: 5px;
+	}
+}
+.required--dropdown-value {
+	font-size: 14px;
+	vertical-align: baseline;
+	padding: 0;
+	line-height: 0;
+}
+.search-singleselect kendo-combobox .k-i-caret-alt-down,
+.search-singleselect kendo-combobox .k-clear-value {
+	display: none !important;
+}

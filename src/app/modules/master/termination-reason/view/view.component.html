@@ -1,0 +1,134 @@
+<!-- Main Body Section-->
+<div class="app-content__body floating-layout floating-layout__view-layout">
+    <form>
+        <!-- Start Card Section-->
+        <div class="card">
+            <!-- Card Header Section-->
+            <div class="card__header">
+                <h4 class="card__heading">{{'BasicDetails'|translate}}</h4>
+            </div>
+            <!-- End Card Header Section-->
+
+            <!-- Card Body Section-->
+            <div class="card__body">
+                <div class="row">
+                    <!-- Text Box Start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'Sector'" [value]="terminationDetails.SectorName"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- Text Box End -->
+                     <!-- Text Box Start -->
+                     <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'TerminationReason'" [value]="terminationDetails.TerminationReasonName"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- Text Box End -->
+
+                    <!-- Text Box Start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'ReasonType'" [value]="terminationDetails.ReasonTypeName"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- Text Box End -->
+
+                    <!-- Page Subheading -->
+                    <div class="col-sm-12 col-md-12">
+                        <h4 class="card__body--subheading">{{'ApplicableIn'| translate}}</h4>
+                    </div>
+                    <!-- Page Subheading -->
+
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'ProfessionalCLP'" [value]="terminationDetails.ProfessionalContractor" ></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- Input Box End -->
+                     <!-- Input Box Start -->
+                     <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'IsLightIndustrialContractor'" [value]="terminationDetails.LIContractor" ></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- Input Box End -->
+                    <!-- Input Box Start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="terminationDetails.SOWResources !== 'N/A'">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'SowResources'" [value]="terminationDetails.SOWResources" ></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- Input Box End -->
+
+            </div>
+        </div>
+
+</div>
+
+
+<div class="card">
+    <!-- Card Header Section-->
+    <div class="card__header">
+        <h4 class="card__heading">{{'OtherConfiguration' | translate}}</h4>
+    </div>
+    <!-- End Card Header Section-->
+
+    <!-- Card Body Section-->
+    <div class="card__body">
+        <div class="row">
+
+             <!-- Input Box Start -->
+             <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                    <app-kendo-label [tooltipVisible]="true" 
+                    [tooltipTitle]="'NeedBackfillTooltip'" 
+                    [label]="'BackfillNeeded'" [value]="terminationDetails.BackfillNeeded" ></app-kendo-label>
+                </div>
+            </div>
+            <!-- Input Box End -->
+
+             <!-- Input Box Start -->
+             <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                    <app-kendo-label [tooltipVisible]="true" 
+                    [tooltipTitle]="'ManagerSurveyRequestedTooltip'" 
+                    [label]="'ManagerSurveyToRequested'" [value]="terminationDetails.ManagerSurveyRequested" ></app-kendo-label>
+                </div>
+            </div>
+            <!-- Input Box End -->
+
+
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                    <app-kendo-label [tooltipVisible]="true" 
+                    [tooltipTitle]="'DoNotReturnTooltip'" 
+                    [label]="'EnableContractorDoNotReturn'" [value]="terminationDetails.DoNotReturn" ></app-kendo-label>
+                </div>
+            </div>
+            <!-- Input Box End -->
+
+    </div>
+</div>
+
+</div>
+
+<!--  Page Footer Section-->
+<div class="page-footer">
+    <div class="btn-box btn-box--center">
+    <button
+        type="button"
+        kendoButton
+        themeColor="primary"
+        (click)="listNavigation()"
+    >
+        {{ "Back" }}
+    </button>
+    </div>
+</div>
+<!-- End Footer Section-->
+</form>
+</div>
+

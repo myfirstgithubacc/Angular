@@ -1,0 +1,93 @@
+<form [formGroup]="AddEditSampleForm">
+   <div class="card">
+    <div class="row mx-5 my-5">
+        <div class="col-6">
+            <app-kendo-dropdown
+            [list]="SectorList"
+            [label]="'Sector'"
+            [tooltipVisible]="true" [tooltipTitle]="'Dropdown'"
+            [controlName]="'sectorName'"
+            [placeholder]="'select sector'"
+            [isRequired]="true"
+            (onChange)="onChange($event)"
+          >
+          </app-kendo-dropdown>
+        </div>
+        <div class="col-6">
+            <app-textbox
+            [controlName]="'textbox'"
+            [label]="'text box'"
+            [placeholder]="'enter'"
+            [isRequired]="true"
+          >
+          </app-textbox>
+        </div>
+        <div class="col-6">
+            <app-numeric-box
+            [tooltipVisible]="true" [tooltipTitle]="'Numeric'"
+            [controlName]="'numericbox'"
+            [label]="'numericbox'"
+            [placeholder]="'enter number'"
+            [isRequired]="true"
+          >
+          </app-numeric-box>
+        </div>
+        <div class="col-6">
+            <app-kendo-radio-button
+            [controlName]="'radiobtn'"
+            [tooltipVisible]="true" [tooltipTitle]="'RadioButton'"
+            [RadioGroup]="Gender"
+            [label]="'Gender'"
+            [isRequired]="true"
+            ></app-kendo-radio-button>
+        </div>
+        <div class="col-6">
+            <app-kendo-textarea 
+            [controlName]="'textarea'"
+            [label]="'textarea'"
+            [isRequired]="true"
+            ></app-kendo-textarea>
+        </div>
+        <div class="col-6">
+            <app-kendo-switch  
+            [controlName]="'switch'"
+            [tooltipVisible]="true"
+            [tooltipTitle]="'Switch'"
+            [label]="'Switch'"
+            [isRequired]="true"
+            ></app-kendo-switch>
+        </div>
+        <div class="col-6">
+            <app-kendo-datepicker [controlName]="'Date'" [tooltipVisible]="true" [tooltipTitle]="'Datepicker'" [label]="'Start Date'" [isRequired]="true"></app-kendo-datepicker>
+        </div>
+        <div class="col-6">
+            <app-kendo-timepicker [controlName]="'time'" [label]="'Start Time'" [isRequired]="true"></app-kendo-timepicker>
+        </div>
+
+        <div class="col-6">
+
+            <app-kendo-checkbox 
+            [controlName]="'checkbox'" 
+            [tooltipVisible]="true" 
+            [tooltipTitle]="'Checkbox'" 
+            [label]="'Checkbox'" 
+            [isRequired]="true">
+           </app-kendo-checkbox>
+
+        </div>
+        <div class="col-6">
+            <app-kendo-multiselect-dropdown
+            [list]="SectorList"
+            [label]="'Sector'"
+            [tooltipVisible]="true" [tooltipTitle]="'Multiselect'"
+            [controlName]="'multiselect'"
+            [placeholder]="'select sector'"
+            (onChange)="onChange($event)"
+            [isRequired]="true"
+          >
+          </app-kendo-multiselect-dropdown>
+        </div>
+
+    </div>
+   </div>
+</form>

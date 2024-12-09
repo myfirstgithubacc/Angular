@@ -1,0 +1,77 @@
+.card.tab_view .nav.nav-pills .tab.user:last-child button.nav-link,
+.card.tab_view .nav.nav-pills .tab.user:last-child {
+	border-bottom: none;
+}
+
+.card.tab_view .nav.nav-pills .tab.user {
+	border-bottom: #f1f1f1 solid 1px;
+	margin: 0 1px !important;
+}
+
+.card.tab_view .nav.nav-pills .tab.user button.nav-link {
+	display: block;
+	margin: 0;
+	padding: 5px 6px;
+	color: #000;
+	border-bottom: #f1f1f1 solid 1px;
+	cursor: pointer;
+	position: relative;
+}
+
+.card.tab_view .nav.nav-pills .tab.user button.nav-link.active p.label-answere {
+	color: #434cb3;
+	font-weight: 600;
+}
+
+.card.tab_view .nav.nav-pills .tab.user button.nav-link p.label-answere {
+	font-weight: 400;
+}
+
+.card.tab_view .nav.nav-pills .tab.user button.nav-link.active {
+	color: #434cb3;
+	font-weight: 600;
+	background: #CCE0F7;
+	border-radius: 4px;
+}
+
+.card.tab_view .nav.nav-pills .tab.user button.nav-link.active .quick--action__icon {
+	background: #434cb3 !important;
+	color: var(--color-white) !important;
+	border: 1px solid #434cb3;
+}
+
+.card.tab_view .nav.nav-pills .tab.user button.nav-link .arrow {
+	font-size: var(--base-font-size);
+	right: 8px;
+}
+
+.card.tab_view .nav.nav-pills .tab.user button.nav-link.active .arrow {
+	color: #434cb3;
+}
+
+.users__main .card .card__body .page-footer .k-button {
+	margin-right: 0;
+}
+
+// .list-view .k-grid-pager {
+// 	border: none;
+// 	display: flex;
+// 	justify-content: end;
+// 	padding-bottom: 0;
+// 	background: none;
+// 	padding: 10px 0;
+// 	flex-direction: row-reverse;
+// }
+
+.k-pager-nav {
+	height: calc(1.4285714286em + 5px);
+	font-size: 11px;
+}
+
+.k-pager-info {
+	display: none;
+}
+
+.k-grid .k-grid-pager:focus {
+	box-shadow: none;
+}

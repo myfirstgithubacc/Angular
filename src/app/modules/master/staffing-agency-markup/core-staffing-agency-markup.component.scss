@@ -1,0 +1,231 @@
+.card__header-icon {
+    display: flex;
+    gap: 24px;
+    cursor: pointer;
+    align-items: center;
+}
+
+.card__header-icon--success {
+    color: var(--green-color);
+    display: none;
+}
+
+.card__header-icon--error {
+    color: var(--red-color);
+    display: none;
+}
+
+.card.card--success .card__header-icon--success,
+.card.card--error .card__header-icon--error {
+    display: block;
+}
+
+.card .card__header-icon .card__header-icon--success i,
+.card .card__header-icon .card__header-icon--error i {
+    font-size: 16px;
+}
+
+.markup-page .list-view .k-grid th,
+.markup-page .list-view .k-grid td {
+    padding: 4px !important;
+}
+
+.markup-page {
+    padding: 0 !important;
+
+    .k-grid {
+        .k-detail-row {
+            .k-detail-cell {
+                padding: 0 0 15px !important;
+            }
+        }
+    }
+
+    .k-grid-content {
+        padding: 0 !important;
+    }
+
+    .k-detail-row {
+        td {
+            input[type=text] {
+                font-size: var(--base-font-size);
+                border-radius: 4px;
+                padding: 0 10px;
+                height: 32px;
+            }
+        }
+    }
+
+    .card__footer {
+        padding: 15px 24px;
+        border-top: #e1e1e1 solid 1px;
+    }
+
+    .btn-box {
+        &.btn-box--left {
+            .k-button {
+                margin-right: 10px;
+            }
+        }
+    }
+
+    .gridView1 {
+        .k-grid-header {
+            background: #baceff !important;
+        }
+    }
+
+    .gridView2 {
+        .k-header {
+            background: #d5e1ff !important;
+        }
+    }
+
+    .gridView3 {
+        padding: 15px 0 0 !important;
+
+        .k-header {
+            background: #ecf0fa !important;
+        }
+    }
+
+    .tab-pane {
+        &.fade {
+            display: none;
+            display: none;
+
+            &.show {
+                display: block;
+                display: block;
+            }
+        }
+    }
+
+    .list-group-item {
+        text-align: left;
+        padding: 10px 15px;
+        text-align: left;
+
+        &.active {
+            background: var(--color-primary);
+        }
+    }
+
+    .card__body {
+        .row {
+            &>.col-sm-6 {
+                flex: 0 0 auto;
+                width: 50%;
+            }
+        }
+    }
+
+    .k-popup {
+        .offcanvas-body {
+            kendo-taglist {
+                &.k-chip-list {
+                    padding-right: 30px;
+                }
+            }
+        }
+    }
+}
+
+.markup-page .list-view .k-input-md .k-input-inner,
+.markup-page .list-view .k-picker-md .k-input-inner {
+    padding: 8px 6px;
+    font-size: var(--base-font-size);
+}
+
+.markup-page .k-grid .k-hierarchy-cell>.k-icon,
+.markup-page .k-grid .k-drag-cell>.k-icon {
+    line-height: 26px;
+    padding: 0 !important;
+}
+
+.grid-form {
+    .k-label {
+        white-space: nowrap;
+    }
+}
+
+.gridView3 {
+    .k-grid-aria-root {
+        border: #e2e2e2 solid 1px;
+    }
+}
+
+.markup-button {
+    .appliedFilters {
+        margin-left: 15px;
+        margin-top: 8px;
+        display: block;
+
+        .k-label {
+            color: var(--color-primary) !important;
+            cursor: pointer;
+        }
+    }
+
+    .custom-search__btn-box {
+        margin-top: 18px;
+        display: flex;
+        margin-top: 18px;
+
+        .k-button {
+            height: 34px;
+            width: 35px;
+            border-radius: 4px;
+            padding: 6px 16px !important;
+            line-height: 21px;
+            border-color: var(--k-input-border-color);
+            background: var(--k-input-bg-color);
+
+            &:hover {
+                background: #4158d0 !important;
+            }
+        }
+    }
+}
+
+.markup-button .custom-search__btn-box .k-button:hover .k-i-filter:before {
+    filter: brightness(0) invert(1);
+}
+
+.view__markup {
+    height: 26px;
+    width: 30px;
+    border: #e2e2e2 solid 1px;
+    display: inline-block;
+    line-height: 24px;
+    text-align: center;
+    border-radius: 4px;
+    color: var(--color-primary) !important;
+
+    &:hover {
+        background: var(--color-primary);
+        color: #ffffff !important;
+    }
+}
+
+.dailog__markup {
+    .k-dialog {
+        .k-window-content {
+            max-height: 480px;
+            overflow-y: scroll;
+        }
+    }
+}
+
+.noBorder {
+    border-left: inherit !important;
+}
+
+.gridView2 .grid__expend svg {
+    width: 14px !important;
+    height: 14px !important;
+}
+
+.markup-page+.offcanvas {
+    background-color: var(--body-color) !important;
+}

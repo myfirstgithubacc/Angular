@@ -1,0 +1,11 @@
+<div *ngIf="incompatibleBrowser">
+    <app-browser-not-supported></app-browser-not-supported>
+</div>
+
+<div *ngIf="!incompatibleBrowser">
+
+    <router-outlet></router-outlet>
+    <app-loader></app-loader>
+    <div kendoDialogContainer></div>
+
+</div>

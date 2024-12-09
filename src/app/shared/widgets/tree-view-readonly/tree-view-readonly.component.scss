@@ -1,0 +1,141 @@
+.k-checkbox {
+	&:indeterminate {
+		&:before {
+			position: absolute;
+			width: 10px;
+			height: 10px;
+			background: #555;
+			content: "";
+			top: 50%;
+			left: 50%;
+			border-radius: 2px;
+			transform: translate(-50%, -50%);
+		}
+	}
+}
+.k-checkbox:checked, .k-checkbox.k-checked {
+	border-color: var(--k-check-border-color);
+	background-color: var(--k-check-active-bg-color);
+}
+.k-checkbox:checked:focus, .k-checkbox.k-checked.k-focus {
+	box-shadow: var(--k-check-active-shadow);
+}
+.k-treeview .k-checkbox-wrap, .k-treeview .k-checkbox-wrapper {
+	align-self: flex-start;
+	margin-top: 2px;
+}
+.k-treeview-item {
+	outline-style: none;
+	margin: 0;
+	padding: 0 0 0 24px;
+	border-width: 0;
+	display: block;
+}
+.halfGrid {
+	ul {
+		li {
+			&:nth-child(1) {
+				li {
+					ul {
+						columns: 3;
+					}
+				}
+			}
+			&:nth-child(2) {
+				li {
+					ul {
+						columns: 3;
+						columns: 3;
+					}
+				}
+			}
+			&:nth-child(3) {
+				li {
+					ul {
+						columns: 3;
+						columns: 3;
+					}
+				}
+			}
+			&:nth-child(4) {
+				li {
+					ul {
+						columns: 3;
+						columns: 3;
+					}
+				}
+			}
+			&:nth-child(5) {
+				li {
+					ul {
+						columns: 3;
+						columns: 3;
+					}
+				}
+			}
+			ul {
+				li {
+					ul {
+						li {
+							&:nth-child(1) {
+								ul {
+									columns: 3;
+									columns: 3;
+								}
+							}
+							&:nth-child(2) {
+								ul {
+									columns: 3;
+									columns: 3;
+								}
+							}
+							&:nth-child(3) {
+								ul {
+									columns: 3;
+									columns: 3;
+								}
+							}
+							&:nth-child(4) {
+								ul {
+									columns: 3;
+									columns: 3;
+								}
+							}
+							&:nth-child(5) {
+								ul {
+									columns: 3;
+									columns: 3;
+								}
+							}
+						}
+					}
+					&:nth-child(2) {
+						ul {
+							columns: 3;
+							columns: 3;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.halfGridCol2 {
+	ul {
+		li {
+			ul {
+				columns: 4;
+			}
+		}
+	}
+}
+.k-treeview-group {
+	font-weight: 600;
+	color: #444;
+}
+.k-treeview-md {
+	.k-treeview-leaf {
+		font-size: 11px;
+	}
+}

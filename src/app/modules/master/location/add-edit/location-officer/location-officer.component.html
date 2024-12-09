@@ -1,0 +1,25 @@
+<form [formGroup]="locationOfficerForm">
+
+   <!-- Card Section Basic Details -->
+   <div class="card">
+      <!-- Card Header Section-->
+      <div class="card__header">
+         <h4 class="card__heading">{{'LocationOfficer' | translate}}
+         </h4>
+      </div>
+      <!-- End Card Header Section-->
+
+      <!-- Card Body Section-->
+      <div class="card__body">
+         <div class="row">
+            <div class="list-view">
+               <app-list-view #locationOfficerListView (formData)="getLocationOfficerFormStatus($event)"
+                  [columnData]="locationOfficerColumn" [columnConfigure]="locationOfficerColumnConfiguration"
+                  [populatedData]="locationOfficerPrefilledData">
+               </app-list-view>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- Card Section Basic Details -->
+</form>

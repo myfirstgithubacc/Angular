@@ -1,0 +1,17 @@
+.app-content__body--li-create {
+	.k-expander-header {
+		.card__header-icon {
+			i {
+				font-size: 18px;
+			}
+		}
+	}
+}
+
+.offcanvas .offcanvas-body {
+	padding: 0;
+}
+
+.offcanvas#loadMoreId .offcanvas-body {
+	overflow: hidden;
+}

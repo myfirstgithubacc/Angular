@@ -1,0 +1,17 @@
+.textarea-suffix-custom {
+	position: relative;
+	.textarea__count {
+		bottom: -20px;
+		color: var(--color-default);
+		font-weight: 400;
+		font-size: 11px;
+		position: absolute;
+		right: 0;
+	}
+}
+textarea {
+	&.k-input-inner {
+		min-height: 4rem !important;
+		max-height: 8rem !important;
+	}
+}

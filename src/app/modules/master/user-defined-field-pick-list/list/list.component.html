@@ -1,0 +1,34 @@
+<app-toaster [isOnComponent]="true"></app-toaster>
+<h3 class="dailog__title">{{'PickList' | translate}}</h3>
+<div class="row">
+  <div class="col-md-12 master-search__wapper">
+    <div class="master-search__search-box">
+      <div class="custom-search">
+        <div class="custom-search__input-box">
+          <app-search [placeholder]="'SearchFor'" [buttonNameSearch]="''" [EntityId]="entityId"
+            [isServerSidePagingEnable]="true" (onSearch)="onSearch($event)"
+            [isSpecialCharacterAllowed]="true" [columnOptions]="columnOptions"></app-search>
+        </div>
+      </div>
+
+      <div class="custom-search__applied--Filters mx-2">
+        <div class="custom-search__applied--Filters"></div>
+      </div>
+    </div>
+
+    <div class="master-search__button-box master-search__button-box--right">
+      <button type="button" kendoButton fillMode="outline" themeColor="primary" class="send-button" icon="plus"
+        (click)="navigateToNewPickList()">
+        {{'NewPickList' | translate}}
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <grid-view [columnOptions]="columnOptions" [actionSet]="actionSet" [tabOptions]="tabOptions"
+    [isServerSidePagingEnable]="true" [apiAddress]="apiAddress" [searchText]="searchText"
+    [isApiGateway]="true" [kendoGridSelectedBy]="'UKey'" [entityId]="entityId" [fileName]="'UDFPickList'"
+    [pageSize]="pageSize" (onGroupedAction)="onAllActivateDeactivateAction($event)">
+  </grid-view>
+</div>

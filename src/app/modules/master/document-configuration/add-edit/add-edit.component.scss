@@ -1,0 +1,33 @@
+.document-config__visibleTo {
+	.table__div {
+		.td {
+			.gropping-row {
+				.gropping-cell {
+					.k-input-button {
+						&.k-button {
+							&.k-icon-button {
+								&.k-button-md {
+									&.k-button-solid {
+										&.k-button-solid-base {
+											width: 36px;
+											padding: 0;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.k-disabled {
+		.k-button {
+			background: transparent !important;
+			border: none !important;
+			opacity: 1;
+			background-color: #e0e0e0 !important;
+		}
+	}
+}

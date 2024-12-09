@@ -1,0 +1,36 @@
+<div class="master-search widget-filter__search">
+  <div class="row">
+    <div class="col-md-12 master-search__wapper">
+      <div class="master-search__search-box">
+        <div class="custom-search">
+          <div class="custom-search__input-box">
+            <app-search [isServerSidePagingEnable]="true" [placeholder]="'SearchFor'" [buttonNameSearch]="''"
+              [EntityId]="entityId" (onSearch)="onSearchTriggered($event)" [isSpecialCharacterAllowed]="true"
+              [columnOptions]="columnOptions">
+            </app-search>
+          </div>
+
+          <app-advance-search [apiAddress]="advApiAddress" [isServerSidePagingEnable]="true" [EntityId]="entityId"
+            [entityType]="entityType" (selectedFilter)="onFilterTriggered($event)" [isApiGateway]="true">
+          </app-advance-search>
+
+        </div>
+      </div>
+
+      <div class="master-search__button-box master-search__button-box--right">
+        <app-kendo-button *ngIf="canCreate" [xrmEntityId]="entityId" [buttonName]="'CreateProfessionalRequest'"
+          [buttonIcon]="'plus'" (Click)="navigateToAdd()">
+        </app-kendo-button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <grid-view [isServerSidePagingEnable]="true" [apiAddress]="apiAddress" [searchText]="searchText" [isApiGateway]="true"
+    [advFilterData]="appliedAdvFilters" [columnOptions]="columnOptions" [pageSize]="pageSize" [actionSet]="actionSet"
+    [entityId]="entityId" [entityType]="entityType" [tabOptions]="tabOptions" [fileName]="'ProfessionalRequest'"
+    [kendoGridSelectedBy]="'Ukey'" [isSortingAllowed]="true" [isFilteringAllowed]="true"
+    [actionItemCategoryField]="'StatusId'" [manageActionSets]="manageActionSets" [isActionColumnVisible]="true"
+    [multiSelect]="false"></grid-view>
+</div>

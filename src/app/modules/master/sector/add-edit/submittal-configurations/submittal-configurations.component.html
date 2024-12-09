@@ -1,0 +1,65 @@
+<form [formGroup]="submittalConfigForm">
+    <!--Submittal Configuration Section start-->
+    <div class="card">
+        <div class="card__header">
+            <h4 class="card__heading">{{'SubmittalConfigurations'| translate}}</h4>
+            <div class="card__header-icon">
+            </div>
+        </div>
+        <div class="card__body">
+            <div class="row">
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+
+                        <app-kendo-switch [controlName]="'IsSubmittalReminderToManager'" [onLabel]="'Yes'"
+                            [offLabel]="'No'" [tooltipVisible]="true"
+                            [tooltipTitle]="'Send_Submittal_Reminder_To_Manager_Tooltip'"
+                            [label]="'IsSubmittalReminderToManager'"
+                            (onChangeSwitch)="switchSendSubmittalReminderManager($event)">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6" *ngIf="IsSubmittalReminderToManager">
+
+                    <div class="form-group">
+                        <app-numeric-box [label]="'SubmittalReminderInterval'" [min]="magicNumbers.zero" [tooltipVisible]="true"
+                            [tooltipTitle]="'Submittal_Reminder_Interval_Tooltip'" [maxlength]="magicNumbers.two"
+                            [controlName]="'SubmittalReminderInterval'" [placeholder]="'NumberOfDays'"
+                            [isRequired]="true" [format]="'n0'" [decimals]="magicNumbers.zero">
+                        </app-numeric-box>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'SubmittalReminderToStaffingForNotOfferAccepting'"
+                            [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                            [tooltipTitle]="'Send_Reminder_To_Staffing_Agencies_For_Not_Offer_Accepting_Tooltip'"
+                            [label]="'SubmittalReminderToStaffingForNotOfferAccepting'"
+                            (onChangeSwitch)="switchSendReminderStaffingAgenciesOfferAccepting($event)">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6" *ngIf="SubmittalReminderToStaffingForNotOfferAccepting">
+
+                    <div class="form-group">
+                        <app-numeric-box [label]="'SubmittalReminderIntervalToStaffing'"
+                            [controlName]="'SubmittalReminderIntervalToStaffing'" [maxlength]="magicNumbers.two"
+                            [placeholder]="'NumberOfDays'" [tooltipVisible]="true"
+                            [tooltipTitle]="'Submittal_Reminder_Interval_To_Staffing_Agency_Tooltip'" [min]="magicNumbers.zero"
+                            [isRequired]="true" [format]="'n0'" [decimals]="magicNumbers.zero">
+                        </app-numeric-box>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12">
+                    <h4 class="card__body--subheading">{{'UniqueSubmittals' | translate}}</h4>
+                </div>
+                <div class="col-sm-12 col-md-12 list-view list-view__border form-group">
+                    <app-list-view #list (formData)="getFormStatus($event)" [columnData]="column" [labelText]="label"
+                        (onChangeNumeric)="OnChangeNum($event)" (onChangeSwitch)="switchEvent($event)"
+                        [columnConfigure]="columnSubmitalConfig" [populatedData]="prefilledData">
+                    </app-list-view>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

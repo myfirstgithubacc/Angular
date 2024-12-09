@@ -1,0 +1,140 @@
+.kendo__stepper-custom {
+	margin: 0 0 12px;
+
+	.k-stepper {
+		width: 100%;
+
+		.k-step-label {
+			&:only-child {
+				background-color: #f3f6fd;
+			}
+		}
+	}
+
+	.k-step-list-horizontal {
+		.k-step {
+			pointer-events: none;
+		}
+
+
+		.k-step-link {
+			max-width: 20em;
+			line-height: normal;
+		}
+
+		&~.k-progressbar {
+			height: 1px;
+			top: 14px;
+			border-bottom: 2px dotted #aebcd0;
+			left: -2%;
+		}
+	}
+
+	.k-step {
+		.k-step-link {
+			.k-step-label {
+				font-size: 11px;
+			}
+		}
+
+		.step-progress {
+			position: relative;
+			width: 20px;
+			height: 20px;
+			background-color: #cddaee;
+			border-radius: 100px;
+			padding: 2px;
+			display: inline-block;
+			margin-right: 5px;
+
+			&:after {
+				content: "";
+				width: 14px;
+				height: 14px;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				border-radius: 100px;
+			}
+		}
+	}
+
+	.k-step-done {
+		.step-progress {
+			border: 1px solid var(--green-color);
+			background-color: #fff;
+
+			&:after {
+				background-color: var(--green-color);
+			}
+		}
+	}
+
+	.k-step-current {
+		.step-progress {
+			border: 1px solid var(--orange-color);
+			background-color: #fff;
+
+			&:after {
+				background-color: var(--orange-color);
+			}
+		}
+	}
+
+	.k-progressbar {
+		.k-selected {
+			border-bottom: 2px solid var(--green-color);
+			background-color: var(--green-color);
+		}
+	}
+}
+
+.wizard {
+	.k-stepper {
+		.k-step-current {
+			.k-step-label {
+				box-shadow: none;
+			}
+		}
+	}
+}
+
+.xrm-stepper-pointer {
+
+	.k-step,
+	.k-step-label,
+	.k-step-link {
+		cursor: default;
+	}
+}
+
+.k-stepper {
+	.k-step-current {
+		.k-step-label {
+			box-shadow: inset 0 0 0 2px #00000014;
+		}
+	}
+}
+
+
+.k-stepper .k-step-label .k-step-text {
+	max-width: inherit;
+	white-space: normal;
+	overflow: inherit;
+	font-size: var(--base-font-size);
+	font-weight: 500;
+}
+
+.stepper-button {
+	display: flex;
+	justify-content: space-between;
+}
+
+.k-stepper .text-error.k-step-done .k-step-label {
+	color: var(--color-inactive);
+}
+
+.k-stepper .text-error.k-step-done .k-step-label {
+	color: var(--color-inactive);
+}

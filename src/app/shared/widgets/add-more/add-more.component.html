@@ -1,0 +1,138 @@
+{{listValue | json}}
+<!-- {{columnConfigure.noOfRows}} -->
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <div class="card__body border mx-4 mb-3 rounded custom-listgrid-view">
+    <div class="row border-bottom py-2 custom-listgrid-header">
+      <!-- input box start -->
+      <div class="col-sm-1 custom-border" *ngIf="columnConfigure?.isShowfirstColumn">
+        <p class="text-dark">{{ columnConfigure.firstColumnName }}</p>
+      </div>
+      <ng-container *ngFor="let c of columnData">
+        <div class="custom-border col-sm-{{ c.colSpan }}">
+          <p class="text-dark">{{ c.columnName }}</p>
+        </div>
+      </ng-container>
+      <div class="custom-border col-sm-1 addMore" *ngIf="columnConfigure?.isShowLastColumn">
+        <a
+          class="text-primary fw-bold text-decoration-none"
+          (click)="addGroup(false)"
+          >+{{ columnConfigure.secondColumnName | translate }}</a
+        >
+      </div>
+    </div>
+    <div formArrayName="fields" class="scroll">
+      <div *ngFor="let time of fa?.value; let i = index; trackBy: trackByFn">
+        <div [formGroupName]="i" *ngIf="!time.isDisabled">
+          <div class="row custom-body py-2">
+            <div class="col-1 custom-body-border" *ngIf="columnConfigure?.isShowfirstColumn">
+              <div class="list-view list-view__border mt-2">
+                <p>{{ columnConfigure.itemLabelName }} {{ i + 1 }}</p>
+              </div>
+            </div>
+
+            <ng-container *ngFor="let control of columnData; let index = index">
+              <div class="custom-body-border col-{{ control.colSpan }}">
+<ng-container *ngFor="let c of control.controls">
+
+<ng-container *ngIf="c.controlType == 'label'">
+                 <app-kendo-label *ngIf="labelText.length != 0" [label]="labelText[i]"></app-kendo-label>
+                </ng-container>
+
+                <ng-container
+                  *ngIf="
+                    c.controlType == 'text' ||
+                    c.controlType == 'email' ||
+                    c.controlType == 'password' ||
+                    c.controlType == 'number'
+                  "
+                >
+                  <kendo-formfield>
+                    <input
+                      *ngIf="fa.value[i].controlId != 3"
+                      class="input_textbox"
+                      [type]="c.controlType"
+                      [placeholder]="c?.placeholder??''"
+                      formControlName="{{ c.controlId }}"
+                      kendoTextBox
+                    />
+                    <kendo-formerror>{{
+                      c.requiredMsg??'' | translate
+                    }}</kendo-formerror>
+                  </kendo-formfield>
+                </ng-container>
+
+                <ng-container *ngIf="c.controlType == 'dropdown'">
+                  <kendo-formfield>
+                    <kendo-combobox
+                      [data]="c.defaultValue == undefined ? listItems :  c.defaultValue"
+                      textField="Text"
+                      valueField="Value"
+                      #combobox
+                      (valueChange)="evaluationType($event, i)"
+                      [valuePrimitive]="true"
+                      placeholder="{{ c?.placeholder??'' }}"
+                      formControlName="{{ c.controlId }}"
+                    >
+                    </kendo-combobox>
+                    <kendo-formerror>{{
+                      c.requiredMsg??'' | translate
+                    }}</kendo-formerror>
+                  </kendo-formfield>
+                </ng-container>
+
+                <ng-container *ngIf="c.controlType == 'textarea'">
+                  <kendo-formfield>
+                    <textarea
+                      kendoTextArea
+                      [placeholder]="c?.placeholder??''"
+                      formControlName="{{ c.controlId }}"
+                    ></textarea>
+                    <kendo-formerror>{{
+                      c.requiredMsg??'' | translate
+                    }}</kendo-formerror>
+                  </kendo-formfield>
+                </ng-container>
+
+                <ng-container *ngIf="c.controlType == 'switch'">
+                  <kendo-switch
+                    formControlName="{{ c.controlId }}"
+                    [onLabel]="c.onLabel??''"
+                    [offLabel]="c.offLabel??''"
+                    (valueChange)="onSwitchChange($event, i, c.controlId)"
+                  ></kendo-switch>
+                </ng-container>
+                <ng-container *ngIf="c.controlType == 'multi_select_dropdown'">
+                  <kendo-formfield>
+                    <kendo-multiselect
+                      [data]="c.defaultValue == undefined ? listItems :  c.defaultValue"
+                      textField="Text"
+                      valueField="Value"
+                      formControlName="{{ c.controlId }}"
+                      [placeholder]="c?.placeholder??''"
+                    >
+                    </kendo-multiselect>
+                    <kendo-formerror>{{
+                      c.requiredMsg??'' | translate
+                    }}</kendo-formerror>
+                  </kendo-formfield>
+                </ng-container>
+
+</ng-container>
+            
+              </div>
+            </ng-container>
+            <div class="custom-body-border col-1" *ngIf="columnConfigure?.isShowLastColumn">
+              <div *ngIf="i != 0" class="list-view list-view__border delete">
+                <a (click)="removeGroup(i)">
+                  <xrm-icon [name]="'trash-2'" [color]="'red-color'" [size]="16" class="text-dark sw-bold"></xrm-icon>
+                  {{ columnConfigure.deleteButtonName | translate }}</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+

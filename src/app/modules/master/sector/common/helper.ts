@@ -1,0 +1,48 @@
+import { FormControl, FormGroup } from "@angular/forms";
+import { IBasicDetailsFM } from "../add-edit/basic-details/utils/helper";
+import { IOrgStructureFM } from "../add-edit/organization-structure/utils/helper";
+import { IShiftConfigFM } from "../add-edit/shift-configurations/utils/formModel";
+import { IPricingModelConfigFM } from "../add-edit/pricing-model-configurations/utils/formModel";
+import { IRateAndFeesConfigFM } from "../add-edit/rates-and-fees-configurations/utils/helper";
+import { ITimeAndExpenseConfigFM } from "../add-edit/time-and-expense-configurations/utils/helper";
+import { IEmailApprovalConfigFM } from "../add-edit/email-approval-configurations/utils/formModel";
+import { IUserDefinedFieldsFM } from "../add-edit/user-defined-fields/utils/helper";
+import { IXrmTimeClockDetailsFM } from "../add-edit/xrm-time-clock/utils/helper";
+import { IBackgroundChecksFM } from "../add-edit/background-checks/utils/helper";
+import { IChargeNumberConfigFM } from "../add-edit/charge-number-configurations/utils/helper";
+import { IRfxConfigFM } from "../add-edit/rfx-configurations/utils/helper";
+import { ITenureConfigFM } from "../add-edit/tenure-configurations/utils/helper";
+import { IAssignmentExtAndOtherConfigFM } from "../add-edit/assignment-extension-and-other-configurations/utils/formModel";
+import { ISubmittalConfigFM } from "../add-edit/submittal-configurations/utils/helper";
+import { IBenefitAdderConfigFM } from "../add-edit/benefit-add-configurations/utils/helper";
+import { IConfigMSPProcessActivityFM } from "../add-edit/configure-msp-process-activity/utils/formModel";
+import { IPerformanceSurveyConfigFM } from "../add-edit/performance-survey-configurations/utils/helper";
+import { IRequisitionConfigFM } from "../add-edit/requisition-configurations/utils/helper";
+
+export interface ISectorFM {
+	UKey: FormControl<string|null>;
+	SectorUkey: FormControl<string|null>;
+	IsCopySector: FormControl<boolean>;
+	BasicDetail: FormGroup<IBasicDetailsFM>;
+	OrgLevelConfigs: FormGroup<IOrgStructureFM>;
+	ShiftConfiguration: FormGroup<IShiftConfigFM>;
+	PricingModelConfiguration: FormGroup<IPricingModelConfigFM>;
+	RatesAndFeesConfiguration: FormGroup<IRateAndFeesConfigFM>;
+	TimeAndExpenseConfiguration: FormGroup<ITimeAndExpenseConfigFM>;
+	AssignmentExtensionAndOtherConfiguration: FormGroup<IAssignmentExtAndOtherConfigFM>;
+	TenureConfiguration: FormGroup<ITenureConfigFM>;
+	RequisitionConfiguration: FormGroup<IRequisitionConfigFM>;
+	SubmittalConfiguration: FormGroup<ISubmittalConfigFM>;
+	BenefitAdderConfiguration: FormGroup<IBenefitAdderConfigFM>;
+	ConfigureMspProcessActivity: FormGroup<IConfigMSPProcessActivityFM>;
+	PerformanceSurveyConfiguration: FormGroup<IPerformanceSurveyConfigFM>;
+	RfxConfiguration: FormGroup<IRfxConfigFM>;
+	ChargeNumberConfiguration: FormGroup<IChargeNumberConfigFM>;
+	BackgroundCheck: FormGroup<IBackgroundChecksFM>;
+	XrmTimeClock: FormGroup<IXrmTimeClockDetailsFM>;
+	UserDefineFields: FormGroup<IUserDefinedFieldsFM>;
+	EmailApprovalConfiguration: FormGroup<IEmailApprovalConfigFM>;
+	StatusCode: FormControl<string>;
+	CopyFromSectorId: FormControl<number|null>;
+	[key: string]: any;
+}

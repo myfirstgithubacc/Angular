@@ -1,0 +1,437 @@
+<!-- Event Log start -->
+<div class="card card__Noborder">
+
+  <div class="audit-log" #auditLog>
+    <kendo-expansionpanel (action)="onAction($event)" title="{{'AuditLog' | translate}}" [expanded]="expanded">
+      <div class="list-view">
+        <div class="row">
+          <div class="col-sm-12">
+            <kendo-grid #grid [kendoGridBinding]="gridView" media="(min-width: 921px)" [kendoGridBinding]="gridView"
+              kendoGridSelectBy="id" [selectedKeys]="mySelection" [pageSize]="20" [pageable]="true" [sortable]="true"
+              [groupable]="false" [reorderable]="true" [resizable]="true" [kendoGridExpandDetailsBy]="expandDetailsBy"
+              [(expandedDetailKeys)]="expandedDetailKeys">
+
+              <kendo-grid-column media="(max-width: 920px)" title="Audit Log List" class="mobile__grid">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                  <!-- Start New Audit in Mobile View -->
+                  <table class="table">
+                    <caption></caption>
+                    <colgroup>
+                      <col class="col-label">
+                      <col class="col-space">
+                      <col class="col-data">
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th scope="col">Label</th>
+                        <th scope="col">Space</th>
+                        <th scope="col">Data</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>{{ "HdrUser" | translate }}</strong></td>
+                        <td>:</td>
+                        <td> {{ dataItem.User | translate }}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>{{ "UserTypes" | translate }}</strong></td>
+                        <td>:</td>
+                        <td>{{ dataItem.UserGroup | translate }}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>{{ "GridAction" | translate }}</strong></td>
+                        <td>:</td>
+                        <td>{{ dataItem.Action | translate}}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>{{ "HdrActionDate" | translate }}</strong></td>
+                        <td>:</td>
+                        <td>{{ dataItem.ActionDate }}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>{{ "HdrDevice" | translate }}</strong></td>
+                        <td>:</td>
+                        <td>
+                          <div *ngIf="dataItem.Device === 'Other' || dataItem.Device === 'Windows'" class="device-icon">
+                            <xrm-icon name="globe" [size]="15" color="black-color"></xrm-icon>
+                          </div>
+                          <div *ngIf="dataItem.Device === 'Android'" class="device-icon device-icon__mobile">
+                            <xrm-icon name="android" [size]="16" color="black-color"></xrm-icon>
+                          </div>
+                          <div *ngIf="dataItem.Device === 'iOS'" class="device-icon device-icon__mobile">
+                            <xrm-icon name="iOS" [size]="17" color="black-color"></xrm-icon>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><strong>{{ "Comments" | translate }}</strong></td>
+                        <td>:</td>
+                        <td>{{ dataItem.ReasonForChange | translate }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <!-- End New Audit in Mobile View -->
+                </ng-template>
+
+                <ng-template kendoGridDetailTemplate let-dataItem>
+                  <table class="table" *ngFor="let data of dataItem.data; let i = index">
+                    <caption></caption>
+                    <colgroup>
+                      <col class="col-label">
+                      <col class="col-space">
+                      <col class="col-data">
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th scope="col">Label</th>
+                        <th scope="col">Space</th>
+                        <th scope="col">Data</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>Section</strong></td>
+                        <td>:</td>
+                        <td>{{ data.tab_name }}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Field</strong></td>
+                        <td>:</td>
+                        <td>{{ data.field }}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Data Category</strong></td>
+                        <td>:</td>
+                        <td>{{ data.tab_name }}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Old Value</strong></td>
+                        <td>:</td>
+                        <td>{{ data.old_val }}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>New Value</strong></td>
+                        <td>:</td>
+                        <td>{{ data.new_val }}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Action</strong></td>
+                        <td>:</td>
+                        <td>{{ data.new_val }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </ng-template>
+
+                <!-- <ng-template kendoGridCellTemplate let-dataItem>
+                  <div class="row grid_mobile-data">
+                    <div class="col-sm-12">
+                      <p>
+                        <strong>{{ "HdrUser" | translate }}: </strong>
+                        {{ dataItem.User | translate }}
+                      </p>
+                    </div>
+  
+                    <div class="col-sm-12">
+                      <p>
+                        <strong>{{ "HdrUserGroup" | translate }}: </strong>
+                        {{ dataItem.UserGroup | translate }}
+                      </p>
+                    </div>
+  
+                    <div class="col-sm-12">
+                      <p>
+                        <strong>{{ "GridAction" | translate }}: </strong>
+                        {{ dataItem.Action  | translate}}
+                      </p>
+                    </div>
+  
+                    <div class="col-sm-12">
+                      <p>
+                        <strong>{{ "hdrActionDate" | translate }}: </strong>
+                        {{ dataItem.ActionDate }}
+                      </p>
+                    </div>
+  
+                    <div class="col-sm-12">
+                      <p>
+                        <strong>{{ "HdrDevice" | translate }}: </strong>
+                        {{ dataItem.Device | translate}}
+                      </p>
+                    </div>
+  
+                    <div class="col-sm-12">
+                      <p>
+                        <strong>{{ "hdrReasonForChange" | translate }}: </strong>
+                        {{ dataItem.ReasonForChange | translate }}
+                      </p>
+                    </div>
+                  </div>
+                </ng-template> -->
+
+              </kendo-grid-column>
+
+              <ng-template kendoGridToolbarTemplate>
+                <kendo-grid-spacer></kendo-grid-spacer>
+                <kendo-textbox [placeholder]="'SearchFor'| translate" (valueChange)="onFilter($event)"
+                  [style.width.px]="180" #searchBox>
+                </kendo-textbox>
+              </ng-template>
+
+              <ng-template media="(min-width: 921px)" kendoGridDetailTemplate let-dataItem>
+                <div class="inline-item desktop-view">
+                  <div class="row audit-sticky-header">
+
+                    <div class="col-sm-2">
+                      <p>
+                        <strong>
+                          {{ "HdrSection" | translate }}
+                        </strong>
+                      </p>
+                    </div>
+
+                    <div class="col-sm-2">
+                      <p>
+                        <strong>
+                          {{ "HdrField" | translate }}
+                        </strong>
+                      </p>
+                    </div>
+
+                    <div class="col-sm-2" *ngIf="hasSubSection(dataItem.AuditLogs)">
+                      <p>
+                        <strong>
+                          {{ "HdrDataCategory" | translate }}
+                        </strong>
+                      </p>
+                    </div>
+
+                    <div class="col-sm-2">
+                      <p>
+                        <strong>
+                          {{ "HdrOldValue" | translate }}
+                        </strong>
+                      </p>
+                    </div>
+
+                    <div class="col-sm-2">
+                      <p>
+                        <strong>
+                          {{ "HdrNewValue" | translate }}
+                        </strong>
+                      </p>
+                    </div>
+
+                    <div class="col-sm-2" style="padding-left:0">
+                      <p style="padding-left: 0px;">
+                        <strong>
+                          {{ "HdrAction" | translate }}
+                        </strong>
+                      </p>
+                    </div>
+                  </div>
+
+                  <section *ngFor="let data of dataItem.AuditLogs; let i = index">
+                    <div class="row">
+
+                      <div class="col-sm-2">
+                        <p field="filter">
+                          {{ data.Section }}
+                        </p>
+                      </div>
+
+                      <div class="col-sm-2">
+                        <p field="filter">
+                          {{ data.Field }}
+                        </p>
+                      </div>
+
+                      <div class="col-sm-2" *ngIf="hasSubSection(dataItem.AuditLogs)">
+                        <ng-container *ngIf="containsHTMLTags(data.SubSection); else translatedContent">
+                          <p field="filter" [innerHTML]="data.SubSection"></p>
+                        </ng-container>
+                        <ng-template #translatedContent>
+                          <p field="filter">
+                            {{ data.SubSection }}
+                          </p>
+                        </ng-template>
+                      </div>
+
+                      <!-- Old Value -->
+                      <div class="col-sm-2">
+                        <p field="filter">
+
+                          <ng-container *ngIf="data.ValueType?.toLowerCase() == 'html' else oldNonHtml">
+                            <p [innerHTML]="data.OldValue"></p>
+                          </ng-container>
+
+                          <ng-template #oldNonHtml>
+                            {{ data.OldValue }}
+                          </ng-template>
+
+                        </p>
+                      </div>
+                      <!-- Old Value End -->
+
+                      <!-- New Value -->
+                      <div class="col-sm-2">
+                        <p field="filter">
+
+                          <ng-container *ngIf="data.ValueType?.toLowerCase() == 'html' else newNonHtml">
+                            <p [innerHTML]="data.NewValue"></p>
+                          </ng-container>
+
+                          <ng-template #newNonHtml>
+                            {{ data.NewValue }}
+                          </ng-template>
+
+                        </p>
+                      </div>
+                      <!-- New Value End -->
+
+                      <div class="col-sm-2">
+                        <p field="filter">{{ data.Action | translate }}</p>
+                      </div>
+
+                    </div>
+                  </section>
+                </div>
+
+                <div class="inline-item mobile-view" *ngFor="let data of dataItem.AuditLogs; let i = index">
+                  <table class="table">
+                    <caption></caption>
+                    <colgroup>
+                      <col class="col-label">
+                      <col class="col-space">
+                      <col class="col-data">
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th scope="col">Label</th>
+                        <th scope="col">Space</th>
+                        <th scope="col">Data</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>{{ "HdrSection" | translate }}</strong></td>
+                        <td>:</td>
+                        <td>{{ data.Section }}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>{{ "HdrField" | translate }}</strong></td>
+                        <td>:</td>
+                        <td>{{ data.Field }}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>{{ "HdrOldValue" | translate }}</strong></td>
+                        <td>:</td>
+
+                        <!-- Old Value -->
+                        <td>
+                          <ng-container *ngIf="data.ValueType?.toLowerCase() == 'html' else oldNonHtml">
+                            <p [innerHTML]="data.OldValue"></p>
+                          </ng-container>
+
+                          <ng-template #oldNonHtml>
+                            {{ data.OldValue }}
+                          </ng-template>
+                        </td>
+                        <!-- Old Value End -->
+
+                      </tr>
+                      <tr>
+                        <td><strong>{{ "HdrNewValue" | translate }}</strong></td>
+                        <td>:</td>
+
+                        <!-- New Value -->
+                        <td>
+
+                          <ng-container *ngIf="data.ValueType?.toLowerCase() == 'html' else newNonHtml">
+                            <p [innerHTML]="data.NewValue"></p>
+                          </ng-container>
+
+                          <ng-template #newNonHtml>
+                            {{ data.NewValue }}
+                          </ng-template>
+
+                        </td>
+                        <!-- New Value End -->
+
+                      </tr>
+                      <tr>
+                        <td><strong>{{ "HdrAction" | translate }}</strong></td>
+                        <td>:</td>
+                        <td>{{ data.Action | translate }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+              </ng-template>
+
+              <kendo-grid-column media="(min-width: 921px)" field="User" title="{{ 'HdrUser' | translate }}">
+              </kendo-grid-column>
+
+              <kendo-grid-column media="(min-width: 921px)" field="UserGroup" title="{{ 'UserTypes' | translate }}">
+              </kendo-grid-column>
+
+              <kendo-grid-column media="(min-width: 921px)" field="Action" title="{{ 'GridAction' | translate }}">
+              </kendo-grid-column>
+
+              <kendo-grid-column media="(min-width: 921px)" title="{{ 'HdrActionDate' | translate }}" field="ActionDate"
+                [width]="150">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                  {{ dataItem.ActionDate }}
+                </ng-template>
+              </kendo-grid-column>
+
+              <kendo-grid-column media="(min-width: 921px)" field="Device" title="{{ 'HdrDevice' | translate }}">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                  <div *ngIf="dataItem.Device === 'Other' || dataItem.Device === 'Windows'" class="device-icon">
+                    <xrm-icon name="globe" [size]="15" color="black-color"></xrm-icon>
+                  </div>
+                  <div *ngIf="dataItem.Device === 'Android'" class="device-icon device-icon__mobile">
+                    <xrm-icon name="android" [size]="16" color="black-color"></xrm-icon>
+                  </div>
+                  <div *ngIf="dataItem.Device === 'iOS'" class="device-icon device-icon__mobile">
+                    <xrm-icon name="iOS" [size]="17" color="black-color"></xrm-icon>
+                  </div>
+                </ng-template>
+              </kendo-grid-column>
+
+              <kendo-grid-column media="(min-width: 921px)" field="ReasonForChange"
+                title="{{ 'Comments' | translate }}">
+              </kendo-grid-column>
+
+              <ng-template kendoPagerTemplate let-totalPages="totalPages" let-currentPage="currentPage">
+                <ng-container>
+                  <kendo-pager-info></kendo-pager-info>
+                  <kendo-pager-prev-buttons></kendo-pager-prev-buttons>
+                  <kendo-pager-numeric-buttons [buttonCount]="buttonCount"></kendo-pager-numeric-buttons>
+                  <kendo-pager-next-buttons></kendo-pager-next-buttons>
+                  <kendo-pager-input></kendo-pager-input>
+                  <kendo-grid-messages pagerItems="{{ 'GridItem' | translate }}"
+                    pagerItemsPerPage="{{ 'GridItemsPerPage' | translate }}" pagerPage="{{ 'Page' | translate }}"
+                    columns="{{ 'Columns' | translate }}" columnsApply="{{ 'Apply' | translate }}"
+                    columnsReset="{{ 'Reset' | translate }}" pagerNextPage="{{ 'GoToNextPage' | translate }}"
+                    pagerLastPage="{{ 'GoToLastPage' | translate }}" pagerFirstPage="{{ 'GoToFirstPage' | translate }}"
+                    pagerPreviousPage="{{ 'GoToPreviousPage' | translate }}">
+                  </kendo-grid-messages>
+
+                  <kendo-pager-page-sizes [pageSizes]="sizes"></kendo-pager-page-sizes>
+                </ng-container>
+              </ng-template>
+              <ng-template kendoGridNoRecordsTemplate>
+                {{ "GridNorecordsavailable" | translate }}
+
+              </ng-template>
+            </kendo-grid>
+          </div>
+        </div>
+      </div>
+    </kendo-expansionpanel>
+  </div>
+</div>
+<!-- End Card Section-->

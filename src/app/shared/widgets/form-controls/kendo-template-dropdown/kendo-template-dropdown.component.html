@@ -1,0 +1,71 @@
+<div *ngIf="dropDownInterFace.isEditMode; then thenTemplateName; else elseTemplateName"></div>
+<ng-template #thenTemplateName>
+  <app-kendo-label *ngIf="dropDownInterFace.isEditMode" [label]="dropDownInterFace.label"
+    [value]="dropDownInterFace.listControlName? dropDownInterFace.listControlName.value?.text : formControl.value?.Text"
+    [tooltipPosition]="" [labelLocalizeParam]="dropDownInterFace.labelLocalizeParam"
+    [tooltipVisible]="dropDownInterFace.tooltipVisible" [tooltipTitle]="dropDownInterFace.tooltipTitle"
+    [tooltipTitleLocalizeParam]="dropDownInterFace.tooltipTitleLocalizeParam"
+    [addOnLabelText]="dropDownInterFace.addOnLabelText ?? ''"
+    [addOnLabelTextLocalizeParam]="dropDownInterFace.addOnLabelTextLocalizeParam ?? []"></app-kendo-label>
+</ng-template>
+<ng-template #elseTemplateName>
+  <kendo-formfield>
+    <tooltip-content [tooltipVisible]="dropDownInterFace.tooltipVisible" [tooltipTitle]="dropDownInterFace.tooltipTitle"
+      [label]="dropDownInterFace.label" [tooltipPosition]=""
+      [tooltipTitleLocalizeParam]="dropDownInterFace.tooltipTitleLocalizeParam"
+      [isHtmlContent]="dropDownInterFace.isHtmlContent" [labelLocalizeParam]="dropDownInterFace.labelLocalizeParam"
+      [addOnLabelText]="dropDownInterFace.addOnLabelText ?? ''" [isRequired]="dropDownInterFace.isRequired"
+      [addOnLabelTextLocalizeParam]="dropDownInterFace.addOnLabelTextLocalizeParam ?? []">
+    </tooltip-content>
+    <kendo-dropdownlist [defaultItem]="defaultItem" [itemDisabled]="itemDisabled"
+      [class]="dropDownInterFace.isDisabled?'k-disabled':''"
+      [formControl]="dropDownInterFace.listControlName ? dropDownInterFace.listControlName : formControl" #dropdownlist
+      [data]="dropDownInterFace.list" textField="Text" valueField="Value" [filterable]="dropDownInterFace.filterable"
+      [valuePrimitive]="dropDownInterFace.isValuePrimitiveAllowed" (valueChange)="OnChange($event)"
+      (selectionChange)="OnSelectChange($event)" [kendoDropDownFilter]="filterSettings">
+      <ng-template kendoDropDownListItemTemplate let-dataItem>
+        <span *ngIf="defaultItem !=null && dataItem.Value==null">{{dataItem.Text}}</span>
+        <span *ngIf="dropDownInterFace.TagVisibility==tagVisibility.All">
+          <span *ngIf="dataItem.Value !=null && dropDownInterFace.tagAlign==tagAlig.left" class="star-color"
+            [innerHTML]="dropDownInterFace.tagName"></span>
+          <span *ngIf="dataItem.Value !=null"
+            [ngStyle]="{'color': dataItem.IsDeactivated ? color.red : color.black}">{{dataItem.Text}}</span>
+          <span *ngIf="dataItem.Value !=null  && dropDownInterFace.tagAlign==tagAlig.right" class="star-color"
+            [innerHTML]="dropDownInterFace.tagName"></span>
+        </span>
+        <span *ngIf="dropDownInterFace.TagVisibility!=tagVisibility.All">
+          <span *ngIf="dataItem.Value !=null && dataItem.TagEnabled==true && dropDownInterFace.tagAlign==tagAlig.left"
+            class="star-color" [innerHTML]="dropDownInterFace.tagName"></span>
+          <span *ngIf="dataItem.Value !=null"
+            [ngStyle]="{'color': dataItem.IsDeactivated ? color.red : color.black}">{{dataItem.Text}}</span>
+          <span *ngIf="dataItem.Value !=null && dataItem.TagEnabled==true && dropDownInterFace.tagAlign==tagAlig.right"
+            class="star-color" [innerHTML]="dropDownInterFace.tagName"></span>
+        </span>
+      </ng-template>
+      <ng-template kendoDropDownListValueTemplate let-dataItem>
+        <span *ngIf="defaultItem !=null && dataItem.Value==null">{{dataItem.Text}}</span>
+        <span *ngIf="dropDownInterFace.TagVisibility==tagVisibility.All">
+          <span *ngIf="dataItem!=null &&dataItem.Value !=null && dropDownInterFace.tagAlign==tagAlig.left"
+            class="star-color" [innerHTML]="dropDownInterFace.tagName"></span>
+          <span *ngIf="dataItem!=null && dataItem.Value !=null"
+            [ngStyle]="{'color': dataItem.IsDeactivated ? color.red : color.black}">{{dataItem.Text}}</span>
+          <span
+            *ngIf="dataItem!=null && dataItem.Value !=null && dataItem.TagEnabled==true && dropDownInterFace.tagAlign==tagAlig.right"
+            class="star-color" [innerHTML]="dropDownInterFace.tagName"></span>
+        </span>
+        <span *ngIf="dropDownInterFace.TagVisibility!=tagVisibility.All">
+          <span
+            *ngIf="dataItem!=null && dataItem.Value !=null && dataItem.TagEnabled==true && dropDownInterFace.tagAlign==tagAlig.left"
+            class="star-color" [innerHTML]="dropDownInterFace.tagName"></span>
+          <span *ngIf="dataItem!=null && dataItem.Value !=null"
+            [ngStyle]="{'color': dataItem.IsDeactivated ? color.red : color.black}">{{dataItem.Text}}</span>
+          <span
+            *ngIf="dataItem!=null && dataItem.Value !=null && dataItem.TagEnabled==true && dropDownInterFace.tagAlign==tagAlig.right"
+            class="star-color" [innerHTML]="dropDownInterFace.tagName"></span>
+        </span>
+      </ng-template>
+    </kendo-dropdownlist>
+    <app-print-error-message
+      [control]="dropDownInterFace.listControlName ? dropDownInterFace.listControlName : formControl"></app-print-error-message>
+  </kendo-formfield>
+</ng-template>

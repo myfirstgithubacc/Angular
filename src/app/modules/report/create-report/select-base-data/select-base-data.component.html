@@ -1,0 +1,145 @@
+<div class="app-content__body app-content__body--li-create  custom_report--page">
+    <form>
+        <div class="card">
+            <div class="card__body report_listView">
+                <div class="list-view report-screen-grid">
+                    <div class="row">
+                        <div class=" col-sm-12 col-md-12">
+                            <ng-template #template let-anchor>
+                                <span>{{ anchor.nativeElement.innerText }}</span>
+                            </ng-template>
+                            <div kendoTooltip [tooltipTemplate]="template" filter=".k-grid td"
+                                (mouseover)="showTooltip($event)">
+                                <div class="report-view__tab">
+                                    <ng-container *ngIf="isCustomReport">
+                                        <kendo-tabstrip (tabSelect)="onTabSelect($event)" class="report__tab-item">
+                                            <kendo-tabstrip-tab *ngIf="showPopularTab" title="Popular"
+                                                [selected]="reportDetails.SelectedTabName == 'Popular' ? true : false">
+                                                <ng-template kendoTabContent let-dataItem="dataItem">
+                                                    <ul class="list-group">
+                                                        <li class="list-group-item"
+                                                            *ngFor="let dataItem of baseDataList">
+                                                            <div class="list-group__data">{{ dataItem.Name }}</div>
+                                                            <div class="list-group__massage">{{ dataItem.Description }}
+                                                            </div>
+                                                            <div class="list-group__action" kendoTooltip>
+                                                                <a href="javascript:;" kendoButton title="Process"
+                                                                    (click)="setBaseData(dataItem)">
+                                                                    <xrm-icon name="chevron-right" [size]="15"
+                                                                        color="dark-blue-color"
+                                                                        class="sw-bolder"></xrm-icon>
+                                                                </a>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </ng-template>
+                                            </kendo-tabstrip-tab>
+                                            <kendo-tabstrip-tab title="All" class="report__tab-item"
+                                                [selected]="reportDetails.SelectedTabName != 'Popular' ? true : false">
+                                                <ng-template kendoTabContent>
+                                                    <div class="col-md-12 master-search__wapper">
+                                                        <div class="master-search__search-box">
+                                                            <div class="custom-search">
+                                                                <kendo-textbox [placeholder]="'SearchFor'| translate"
+                                                                    [clearButton]="true"
+                                                                    (valueChange)="onFilter($event, 293)">
+                                                                </kendo-textbox>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <ng-container *ngIf="baseDataList?.length; else noRecordsTemplate">
+                                                        <ul class="list-group">
+                                                            <div *ngFor="let data of baseDataList" class="mb-3">
+                                                                <li class="list-group-item odd">
+                                                                    <strong>{{data.Name}}</strong>
+                                                                </li>
+                                                                <li class="list-group-item"
+                                                                    *ngFor="let item of data.DataEntities">
+                                                                    <div class="list-group__data">{{ item.Name}}</div>
+                                                                    <div class="list-group__massage">{{ item.Description
+                                                                        }}
+                                                                    </div>
+                                                                    <div class="list-group__action">
+                                                                        <div class="action-item" kendoTooltip>
+                                                                            <a href="javascript:;" kendoButton
+                                                                                title="Process">
+                                                                                <xrm-icon name="chevron-right"
+                                                                                    [size]="15" color="dark-blue-color"
+                                                                                    (click)="setBaseData(item)"
+                                                                                    class="sw-bolder"></xrm-icon>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            </div>
+                                                        </ul>
+                                                    </ng-container>
+                                                    <ng-template #noRecordsTemplate>
+                                                        <p class="under-development-page">{{"GridNoRecordAvailable" |
+                                                            translate}}</p>
+                                                    </ng-template>
+                                                </ng-template>
+                                            </kendo-tabstrip-tab>
+                                        </kendo-tabstrip>
+                                    </ng-container>
+                                    <ng-container *ngIf="!isCustomReport">
+                                        <div class="col-md-6 mb-2">
+                                            <div class="custom-search">
+                                                <div class="custom-search__input-box">
+                                                    <kendo-textbox [placeholder]="'SearchFor'| translate"
+                                                        [clearButton]="true"
+                                                        (valueChange)="onFilter($event, 294)"></kendo-textbox>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <ng-container *ngIf="baseDataList?.length; else noRecordsTemplate">
+                                            <ul class="list-group">
+                                                <div *ngFor="let data of baseDataList" class="mb-3">
+                                                    <li class="list-group-item odd"> <strong>{{data.Name}}</strong>
+                                                    </li>
+                                                    <li class="list-group-item"
+                                                        *ngFor="let item of data.PredefinedReports">
+                                                        <div class="list-group__data">{{ item.Name}}</div>
+                                                        <div class="list-group__massage">{{ item.Description }}
+                                                        </div>
+                                                        <div class="list-group__action">
+                                                            <div class="action-item" kendoTooltip>
+                                                                <a href="javascript:;" kendoButton title="Process">
+                                                                    <xrm-icon name="chevron-right" [size]="15"
+                                                                        color="dark-blue-color"
+                                                                        (click)="setBaseData(item)"
+                                                                        class="sw-bolder"></xrm-icon>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </div>
+                                            </ul>
+                                        </ng-container>
+                                        <ng-template #noRecordsTemplate>
+                                            <p class="under-development-page">{{"GridNoRecordAvailable" | translate}}
+                                            </p>
+                                        </ng-template>
+                                    </ng-container>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!--Basic Details Section end-->
+                    </div>
+                    <!--Basic Details Section end-->
+                </div>
+            </div>
+        </div>
+
+        <div class="page-footer stepper-button">
+            <div class="stepper-button__prev">
+
+            </div>
+            <div class="stepper-button__next">
+                <button type="button" kendoButton href="javascript:;" fillMode="solid" themeColor="primary" (click)="back()">Back
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

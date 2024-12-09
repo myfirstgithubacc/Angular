@@ -1,0 +1,60 @@
+<div class="app-content__body">
+   <form [formGroup]="addEditLocationForm">
+      <app-basic-details [childFormGroup]="addEditLocationForm" [isEditMode]="isEditMode"
+         [sectorDropdownList]="sectorList" [timeZoneDropdown]="timeZoneList"
+         [dropdownListDataBySectorId]="dropdownListDataBySectorId" [sectorDetails]="sectorDetails"
+         [locationDetails]="locationDetails"
+         (handleSectorSelectDeselect)="getLocationAllDropdownListBySectorId($event)"></app-basic-details>
+
+      <app-location-officer [childFormGroup]="addEditLocationForm" [isEditMode]="isEditMode" [isSubmitted]="isSubmitted"
+         [locationDetails]="locationDetails"></app-location-officer>
+
+      <app-time-and-expense-configurations [childFormGroup]="addEditLocationForm" [isEditMode]="isEditMode"
+         [isSubmitted]="isSubmitted" [mealBreakDropdown]="mealBreakList"
+         [dropdownListDataBySectorId]="dropdownListDataBySectorId" [sectorDetails]="sectorDetails"
+         [locationDetails]="locationDetails"></app-time-and-expense-configurations>
+
+      <app-xrm-time-clock [childFormGroup]="addEditLocationForm" [isEditMode]="isEditMode" [isSubmitted]="isSubmitted"
+         [timeClockDropdown]="timeClockDropdownList" [dropdownListDataBySectorId]="dropdownListDataBySectorId"
+         [sectorDetails]="sectorDetails" [locationDetails]="locationDetails" [reloadData]="reloadData"></app-xrm-time-clock>
+
+      <app-requisition-configurations [childFormGroup]="addEditLocationForm" [isEditMode]="isEditMode"
+         [isSubmitted]="isSubmitted" [sectorDetails]="sectorDetails"
+         [locationDetails]="locationDetails"></app-requisition-configurations>
+
+      <app-benefit-adder-configurations [childFormGroup]="addEditLocationForm" [isEditMode]="isEditMode"
+         [isSubmitted]="isSubmitted" [sectorDetails]="sectorDetails" [locationDetails]="locationDetails">
+      </app-benefit-adder-configurations>
+
+      <app-configure-msp-process-activity [childFormGroup]="addEditLocationForm" [isEditMode]="isEditMode"
+         [sectorDetails]="sectorDetails" [locationDetails]="locationDetails"></app-configure-msp-process-activity>
+
+      <app-background-checks [childFormGroup]="addEditLocationForm" [isEditMode]="isEditMode"
+         [isSubmitted]="isSubmitted" [sectorDetails]="sectorDetails"
+         [locationDetails]="locationDetails"></app-background-checks>
+
+      <!-- udf section -->
+      <ng-container *ngIf="sectorIdUDF > 0">
+         <app-udf-implementation [entityId]="entityId" [sectorId]="sectorIdUDF" [recordUKey]="recordUKey"
+            [recordId]="udfRecordID" [parentsInfos]="udfCommonMethods.getParentsInfo()" [actionTypeId]="actionTypeId"
+            (onDataPicked)="getUdfData($event)">
+         </app-udf-implementation>
+      </ng-container>
+      <!-- end udf section -->
+
+      <!--  Page Footer Section-->
+      <div class="page-footer">
+         <div class="btn-box btn-box--center">
+            <button type="button" kendoButton fillMode="outline" themeColor="primary"
+               [routerLink]="navigationPaths.list">Cancel</button>
+
+            <button type="button" (click)="submitForm()" kendoButton themeColor="primary" appFocusOnError
+               [listformName]="[basicDetails, addEditLocationForm]" [innerText]="'Save' | translate"
+               [disabled]="isEditMode ? addEditLocationForm.pristine : false">
+               {{"Save" | translate}}</button>
+         </div>
+      </div>
+      <!-- End Footer Section-->
+   </form>
+
+</div>

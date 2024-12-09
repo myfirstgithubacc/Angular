@@ -1,0 +1,19 @@
+<ng-container>
+    <ng-container *ngIf="showHeader && recordId!=null ">
+        <form [formGroup]="commonForm">
+            <app-common-header [controlName]="'status'"
+             [statusData]="statusData==null?'':statusData"
+             [recordId]="recordId==null?'':recordId"
+                [isStatusEditable]="false"  
+                [recordStatus]="getRoleStatus(role)" 
+                [buttonSet]="buttonSet"
+                [entityId]="entityId==null?'':entityId">
+            </app-common-header>
+        </form>
+    </ng-container>
+    <router-outlet></router-outlet>
+     <ng-container *ngIf="showHeader">
+        <event-log></event-log>
+    </ng-container>
+
+</ng-container>

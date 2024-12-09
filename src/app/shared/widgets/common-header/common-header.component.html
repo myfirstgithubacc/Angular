@@ -1,0 +1,64 @@
+ <div class="card card-status">
+    <div class="card-body">
+        <div class="basic__status-row">
+            <div class="basic__status-colleft">
+                <div class="form-group">
+                    <div class="basic-status-left">
+                        <ul kendoTooltip>
+                        <ng-container *ngIf="!statusData">
+                            <li class="basic-title" [title]="'Name' | translate">{{recordName | translate}}</li>
+                            <li class="basic-code" [title]="'UserRecordID' | translate">{{recordId??'' | translate}}</li>
+                            <li [ngClass]="{
+                                'basic-status': true,
+                                'active': recordStatus === 'Active',
+                                'inactive': recordStatus === 'Inactive',
+                                'probation': recordStatus === 'Probation',
+                                'potential': recordStatus === 'Potential'
+                              }" title="Status">
+                            <div *ngIf="!isStatusEditable; then thenTemplateName; else elseTemplateName"></div>
+                            <ng-template #thenTemplateName>
+                                <span >
+                                    {{recordStatus??'' | translate}}
+                                </span>
+                            </ng-template>
+                            <ng-template #elseTemplateName>
+                                <kendo-dropdownlist [formControl]="formControl" [data]="listOfStatus" textField="Text"
+                                    valueField="Value" (valueChange)="valueChange($event)"></kendo-dropdownlist>
+                            </ng-template>
+                            </li>
+</ng-container>
+<ng-container *ngFor="let item of statusData?.items">
+<li [title]="dynamicParamLocalizaion(item.title, item.titleDynamicParam)" [ngClass]="getStringClasses(item.cssClass)" *ngIf="!item.isLinkable && !item.isStatusEditable">{{dynamicParamLocalizaion(item.item, item.itemDynamicParam)}}</li>
+<li [title]="dynamicParamLocalizaion(item.title, item.titleDynamicParam)" [ngClass]="getStringClasses(item.cssClass)" *ngIf="!item.isLinkable && item.isStatusEditable"> 
+<kendo-dropdownlist [formControl]="formControl" [data]="listOfStatus" textField="Text" valueField="Value" (valueChange)="valueChange($event)">
+</kendo-dropdownlist>
+</li>
+<li [title]="dynamicParamLocalizaion(item.title, item.titleDynamicParam)" [ngClass]="getStringClasses(item.cssClass)" *ngIf="item.isLinkable" (click)="popupAction(item.linkParams)"> 
+<a class="request_id" href="javascript:;" data-bs-toggle="offcanvas" data-bs-target="#assignmentDetails">{{dynamicParamLocalizaion(item.item, item.itemDynamicParam)}}</a>
+</li>
+</ng-container>
+
+                        </ul>
+
+                        
+                    </div>
+            </div>
+            </div>
+            <div class="basic__status-colright m-order-3">
+                <div class="text-end">                    
+                    <ng-container *ngFor="let data1 of buttonSet">
+                        <div class="show-status" *ngIf="data1.status == recordStatus">
+                            <span class="editLabel" kendoTooltip  *ngFor="let action of data1.items"> 
+                                <a href="javascript:;" kendoButton (click)="actionClicked(action.fn,action.title)">
+                                    <xrm-icon [name]="action.icon" [color]="action.color" [size]="18" title="{{ action.title | translate}}" class="sw-bolder"></xrm-icon>
+                                </a>
+                            </span>  
+                        </div>
+                    </ng-container>
+                </div>    
+            </div>
+        </div>
+    </div>
+</div> 
+
+

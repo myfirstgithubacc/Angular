@@ -1,0 +1,13 @@
+<div class="card__header">
+	<h4 class="card__heading">
+		{{ "SecurityClearanceList" | translate}}
+	</h4>
+	<div class="card__header-icon">
+	</div>
+</div>
+<div id="securityClearance" class="card__body">
+	<app-list-view #list (listData)="getSecurityClearanceData($event)" 
+		(formData)="getSecurityClearanceFormStatus($event)" [columnData]="columnSeurityClearance"
+		[columnConfigure]="columnConfigurationSecurityClearance" [populatedData]="prefilledDataSecurityClearance">
+	</app-list-view>
+</div>

@@ -1,0 +1,23 @@
+<div *ngIf="isRendered">
+  <div *ngIf="!isEditMode; then thenTemplateName; else elseTemplateName"></div>
+  <ng-template #thenTemplateName>
+    <app-kendo-label [label]="label"
+      [value]="listControlName ? listControlName.value ? onLabel : offLabel : formControl.value ? onLabel : offLabel"
+      [addOnLabelText]="addOnLabelText" [addOnLabelTextLocalizeParam]="addOnLabelTextLocalizeParam"
+      [tooltipTitle]="tooltipTitle?? '' " [tooltipVisible]="tooltipVisible" [tooltipPosition]=""
+      [tooltipTitleLocalizeParam]="tooltipTitleLocalizeParam"
+      [labelLocalizeParam]="labelLocalizeParam"></app-kendo-label>
+  </ng-template>
+  <ng-template #elseTemplateName>
+    <kendo-formfield>
+      <tooltip-content [tooltipVisible]="tooltipVisible" [tooltipTitle]="tooltipTitle?? '' "  [label]="label"
+        [tooltipPosition]="" [tooltipTitleLocalizeParam]="tooltipTitleLocalizeParam" [addOnLabelText]="addOnLabelText"
+        [addOnLabelTextLocalizeParam]="addOnLabelTextLocalizeParam" [labelLocalizeParam]="labelLocalizeParam"
+        [isHtmlContent]="isHtmlContent">
+      </tooltip-content>
+      <kendo-switch [formControl]="listControlName ? listControlName : formControl" [onLabel]="onLabel | translate"
+        [offLabel]="offLabel | translate" (valueChange)="onChange($event)" [disabled]="isDisable"></kendo-switch>
+      <app-print-error-message [control]="listControlName ? listControlName : formControl"></app-print-error-message>
+    </kendo-formfield>
+  </ng-template>
+</div>

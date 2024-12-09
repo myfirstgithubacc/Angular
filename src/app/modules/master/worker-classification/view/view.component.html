@@ -1,0 +1,54 @@
+<div class="app-content__body floating-layout floating-layout__view-layout">
+
+    <div class="card">
+
+        <div class="card__header">
+            <h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+        </div>
+
+
+        <div class="card__body">
+            <div class="row">
+
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'Sector'" [value]="WorkerClassificationDetails.SectorName">
+                        </app-kendo-label>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'WorkerClassification'" [value]="WorkerClassificationDetails.WorkerClassificationName">
+                        </app-kendo-label>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'AdditionalDetailsRequired'" [value]="WorkerClassificationDetails.IsAdditionalDetailsRequired" [tooltipVisible]="true" [tooltipTitle]="'SubCategoryRequiredToolTip'">
+                        </app-kendo-label>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6" *ngIf="isSubCategoryReq">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'AdditionalDetailsLabel'" [value]="WorkerClassificationDetails.AdditionalDetailsLabel">
+                        </app-kendo-label>
+                    </div>
+                </div>
+                
+            </div>
+
+        </div>
+    </div>
+
+    <div class="page-footer">
+        <div class="btn-box btn-box--center">
+            <button type="button" kendoButton themeColor="primary"
+                (click)="navigateToList()"> {{ "Back" | translate}}
+            </button>
+        </div>
+    </div>
+
+</div>

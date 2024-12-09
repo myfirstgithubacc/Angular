@@ -1,0 +1,40 @@
+<div class="master-search widget-filter__search">
+  <div class="row">
+    <div class="col-md-12 master-search__wapper">
+      <div class="master-search__search-box">
+        <div class="custom-search">
+          <div class="custom-search__input-box">
+            <app-search [isServerSidePagingEnable]="isServerSidePagingEnable" [placeholder]="'SearchFor'" 
+              [buttonNameSearch]="''" (onSearch)="onSearchTriggered($event)"
+                [EntityId]="entityId" [columnOptions]="columnOptions"></app-search>
+            </div>
+            <app-advance-search [apiAddress]="advApiAddress" [isServerSidePagingEnable]="isServerSidePagingEnable" [EntityId]="entityId" [isApiGateway]="true"
+            (selectedFilter)="onFilterTriggered($event)"></app-advance-search>
+          </div>
+
+        <div class="custom-search__applied--Filters mx-2">
+          <div class="custom-search__applied--Filters"><label class="k-label"></label></div>
+        </div>
+      </div>
+
+
+    
+       <div class="master-search__button-box master-search__button-box--right"
+       *ngIf="permissionService.hasPermission(permissionService.Permission.CREATE_EDIT__CREATE)">
+        <app-kendo-button [xrmEntityId]="entityId" [buttonName]="'NewStaffingAgency'" (Click)="navigate()" [buttonIcon]="'plus'"></app-kendo-button>
+      </div> 
+      
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <grid-view [actionItemCategoryField]="'StaffingAgencyStatusId'" [isServerSidePagingEnable]="isServerSidePagingEnable" [apiAddress]="apiAddress" [searchText]="searchText"
+  [advFilterData]="appliedAdvFilters" [columnOptions]="columnOptions" [actionSet]="actionSet" [isApiGateway]="true"
+    [tabOptions]="tabOptions" [fileName]="'Staffing Agency'" [kendoGridSelectedBy]="'UKey'" [multiSelect]="multiselect"
+    (onGroupedAction)="onAllActivateDeactivateAction($event)"
+    [entityId]="entityId" [pageSize]="pageSize">
+  </grid-view>
+ 
+</div>
+

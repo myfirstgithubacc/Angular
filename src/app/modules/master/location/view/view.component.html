@@ -1,0 +1,1020 @@
+<!-- Main Body Section-->
+<div class="app-content__body floating-layout floating-layout__view-layout">
+    <div class="card">
+        <!-- Card Header Section-->
+        <div class="card__header">
+            <h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+        </div>
+        <!-- End Card Header Section-->
+
+        <!-- Card Body Section-->
+        <div class="card__body">
+            <div class="row">
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'Sector'" [value]="locationDetails.SectorName"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'LocationName'"
+                            [value]="locationDetails.LocationName"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'AddressLine1'"
+                            [value]="locationDetails.AddressLine1"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'AddressLine2'"
+                            [value]="locationDetails.AddressLine2"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'CountryId'" [value]="locationDetails.CountryName"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="stateLabel" [value]="locationDetails.StateName"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'City'" [value]="locationDetails.City"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="zipLabel" [value]="locationDetails.PostalCode"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'TimeZoneId'"
+                            [value]="locationDetails.TimezoneName"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- end of input -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <form [formGroup]="showPhoneExt">
+                            <app-kendo-phone [label]="'Phone'" [isEditMode]="false" [phoneControlName]="'phoneControl'"
+                                [phoneExtControlName]="'phoneExt'"
+                                [isExtension]="locationDetails.PhoneExtension ? locationDetails.PhoneExtension.length > 0 : false"></app-kendo-phone>
+                        </form>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- page subheading -->
+                <div class="col-sm-12 col-md-12">
+                    <h4 class="card__body--subheading">{{'BillingDetails' | translate}}</h4>
+                </div>
+                <!-- page subheading -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'BillingAddress1'"
+                            [value]="locationDetails.BillingAddressOne"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'BillingAddress2'"
+                            [value]="locationDetails.BillingAddressTwo"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'BillingCity'"
+                            [value]="locationDetails.BillingCityName"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'BillingState'" [value]="locationDetails.BillingStateName"
+                            [labelLocalizeParam]="localizeParamState"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'BillingZip'" [value]="locationDetails.BillingPostalCode"
+                            [labelLocalizeParam]="localizeParamZip"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'BillingAttention'"
+                            [value]="locationDetails.BillingAttention"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'BillingEmail'"
+                            [value]="locationDetails.BillingEmail"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+
+                <div class="col-sm-12 col-md-12">
+                    <div class="card__body--subheading"></div>
+                </div>
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'MileageRate'" [value]="locationDetails.MileageRate | number:'1.3-3'"
+                            [tooltipVisible]="true" [tooltipTitle]="'MileageRateToolTip'"></app-kendo-label>
+                    </div>
+                </div>
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'PoPercentageNotification'"
+                            [value]="locationDetails.PODepletionPercentage | number:'1.2-2'" [tooltipVisible]="true"
+                            [tooltipTitle]="'PODepletionPercentageForNotificationToolTip'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- end of input -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'MSPProgramManager'"
+                            [value]="locationDetails.MSPProgramMgr"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- end of input -->
+
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'BadgeLength'" [value]="badgeLength"></app-kendo-label>
+                    </div>
+                </div>
+
+                <!-- input box start -->
+
+
+                <div class="col-sm-12 col-md-12">
+                    <div class="card__body--subheading"></div>
+                </div>
+
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'SalesTaxRequired'"
+                            [value]="locationDetails.SalesTaxRequired ? 'Yes' : 'No'" [tooltipVisible]="true"
+                            [tooltipTitle]="'SalesTaxRequiredToolTip'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- end of input -->
+
+                <div class="clearfix"></div>
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6" *ngIf="locationDetails?.SalesTaxRequired">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'StateSalesTaxRate'"
+                            [value]="locationDetails.StateSalesTaxRate | number:'1.2-2'" [tooltipVisible]="true"
+                            [tooltipTitle]="'StateSalesTaxRateToolTip'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- end of input -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6" *ngIf="locationDetails?.SalesTaxRequired">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'TaxableBillRate'"
+                            [value]="locationDetails.TaxablePercentOfBillRate | number:'1.2-2'" [tooltipVisible]="true"
+                            [tooltipTitle]="'TaxablePercentageOfBillRateToolTip'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- end of input -->
+            </div>
+        </div>
+    </div>
+    <!-- End of Location Details -->
+
+    <!-- Card Section AcroTrac Configuration -->
+    <div class="card">
+        <!-- Card Header Section-->
+        <div class="card__header">
+            <h4 class="card__heading">{{'LocationOfficer' | translate}}</h4>
+        </div>
+        <!-- End Card Header Section-->
+
+        <!-- Card Body Section-->
+        <div class="card__body">
+
+
+            <div class="list-view">
+                <div class="col-sm-12 col-md-12 list-view list-view__border">
+                    <app-list-view [columnData]="locationOfficersGridColumns" [columnConfigure]="columnConfiguration"
+                        [populatedData]="locationOfficersGridData"></app-list-view>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card Section AcroTrac Configuration -->
+    <div class="card">
+        <!-- Card Header Section-->
+        <div class="card__header">
+            <h4 class="card__heading">{{'TimeExpenseConfiguration' | translate}}</h4>
+        </div>
+        <!-- End Card Header Section-->
+
+        <!-- Card Body Section-->
+        <div class="card__body">
+
+            <div class="row">
+
+                <!-- Input Box Start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label class="kendo-label__change" [label]="'HourDistributionRules'"
+                            [value]="hourDistributionRuleName"></app-kendo-label>
+                    </div>
+                </div>
+
+                <!-- Datepicker Start -->
+                <div class="col-sm-6 col-md-6" *ngIf="showWeekOne">
+                    <div class="form-group">
+                        <app-kendo-label class="kendo-label__change" [label]="'1Week'"
+                            [value]="locationDetails.NineEightyWeekOne"></app-kendo-label>
+                    </div>
+                </div>
+
+                <!-- Switch Start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'AllowContractorsToAddHolidaysHours'"
+                            [value]="locationDetails.AllowToAddHolidayHours ? 'Yes' : 'No'"></app-kendo-label>
+                    </div>
+                </div>
+
+                <!-- Switch Start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'ApplicableRestMealBreaksConfiguration'"
+                            [value]="locationDetails.RestMealBreakConfig">
+                        </app-kendo-label>
+                    </div>
+                </div>
+
+                <!--Work Schedules Allowed Section End-->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label class="kendo-label__change" [label]="'AllowExpenseEntry'"
+                            [value]="locationDetails.AllowExpenseEntry ? 'Yes' : 'No'" [tooltipVisible]="true"
+                            [tooltipTitle]="'AllowExpenseEntryToolTip'"></app-kendo-label>
+                    </div>
+                </div>
+
+            </div>
+
+            <!--T&E Configurations Section start-->
+
+            <!-- input box start -->
+            <div class="col-sm-12 col-md-12">
+                <div class="form-group">
+                    <app-kendo-label class="kendo-label__change" [label]="'AlternateTEConfiguration'"
+                        [value]="locationDetails.AlternateTAndEConfigurations ? 'Yes' : 'No'" [tooltipVisible]="true"
+                        [tooltipTitle]="'AlternateSectorConfigurationToolTip'" [tooltipPosition]=""></app-kendo-label>
+                </div>
+            </div>
+            <!-- input box End -->
+
+            <div class="row" *ngIf="locationDetails?.AlternateTAndEConfigurations">
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6" *ngIf="!hideCLPJobRotation">
+                    <div class="form-group">
+                        <app-kendo-label class="kendo-label__change" [label]="'IsClpJobRotationAllowed'"
+                            [value]="locationDetails.IsClpJobRotationAllowed ? 'Yes' : 'No'" [tooltipVisible]="true"
+                            [tooltipTitle]="'CLPJobRotationAllowedToolTip'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label class="kendo-label__change" [label]="'IsAllTimeAdjustmentApprovalRequired'"
+                            [value]="locationDetails.IsTimeAdjustApprovalRequired ? 'Yes' : 'No'"
+                            [tooltipVisible]="true"
+                            [tooltipTitle]="'AllTimeAdjustmentsApprovalRequiredToolTip'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label class="kendo-label__change" [label]="'AllowTimeUploadWithStOtDt'"
+                            [value]="locationDetails.AllowTimeUploadWithStOtDt ? 'Yes' : 'No'" [tooltipVisible]="true"
+                            [tooltipTitle]="'AllowTimeUploadWithSTOTDTToolTip'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label class="kendo-label__change" [label]="'ValidateApprovedAmountWithTimeRecords'"
+                            [value]="locationDetails.ValidateApprovedAmtTimeRecords ? 'Yes' : 'No'"
+                            [tooltipVisible]="true"
+                            [tooltipTitle]="'ValidateApprovedAmountWithTimeRecordsToolTip'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label class="kendo-label__change" [label]="'AllowStaffingAgencyInTandEApproval'"
+                            [value]="locationDetails.DisplayStaffingInTandEApproval ? 'Yes' : 'No'"
+                            [tooltipVisible]="true"
+                            [tooltipTitle]="'DisplayStaffingAgencyInTandEApprovalToolTip'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-4 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'SendPoDepletionNoticesTo'" [tooltipVisible]="true"
+                            [tooltipTitle]="'SendPODepletionNoticesToolTip'">
+                        </app-kendo-label>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <app-kendo-label class="kendo-label__change" [label]="'IsPoSentToPm'"
+                                        [value]="locationDetails.SendPODeplNoticeToPrimaryMgr ? 'Yes' : 'No'"></app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <app-kendo-label class="kendo-label__change" [label]="'IsPoSentToPoOwner'"
+                                        [value]="locationDetails.SendPODeplNoticeToPOOwner ? 'Yes' : 'No'"></app-kendo-label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label class="kendo-label__change" [label]="'TimeUploadAsApprovedHours'"
+                            [value]="locationDetails.TimeUploadAsApprovedHours ? 'Yes' : 'No'" [tooltipVisible]="true"
+                            [tooltipTitle]="'TimeUploadAsApprovedHoursToolTip'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6" *ngIf="locationDetails?.TimeUploadAsApprovedHours">
+                    <div class="form-group">
+                        <app-kendo-label class="kendo-label__change" [label]="'IsAutoApprovedAdjustment'"
+                            [value]="locationDetails.AutoApproveHrsAdjAllowed ? 'Yes' : 'No'" [tooltipVisible]="true"
+                            [tooltipTitle]="'AutoApproveHoursAdjustmentAllowedToolTip'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <div class="clearfix"></div>
+
+            </div>
+
+
+            <!--XRM Time Clock Section start-->
+            <div class="col-sm-12 col-md-12">
+                <h4 class="card__body--subheading">{{'XRMTimeClock' | translate}}</h4>
+            </div>
+
+            <!-- input box start -->
+            <div class="col-sm-12 col-md-12">
+                <div class="form-group">
+                    <app-kendo-label class="kendo-label__change" [tooltipVisible]="true"
+                        [tooltipTitle]="'AlternateSectorConfigurationToolTip'" [label]="'XRMTimeClockConfiguration'"
+                        [value]="locationDetails.AltTimeClockConfigurations ? 'Yes' : 'No'" [tooltipVisible]="true"
+                        [tooltipTitle]="'AlternateSectorConfigurationToolTip'"></app-kendo-label>
+                </div>
+            </div>
+            <!-- input box End -->
+
+            <div class="col-sm-12 col-md-12" *ngIf="locationDetails?.AltTimeClockConfigurations">
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label class="kendo-label__change" [label]="'IsXrmTimeClockRequired'"
+                            [value]="locationDetails.EnableXRMTimeClock ? 'Yes' : 'No'" [tooltipVisible]="true"
+                            [tooltipTitle]="'EnableXRMTimeClockToolTip'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <div class="row" *ngIf="locationDetails?.EnableXRMTimeClock">
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="locationDetails?.EnableXRMTimeClock">
+                        <div class="form-group">
+                            <app-kendo-label class="kendo-label__change" [label]="'IsDailyPunchApprovalNeeded'"
+                                [value]="locationDetails.DailyPunchApprovalNeeded ? 'Yes' : 'No'"
+                                [tooltipVisible]="true"
+                                [tooltipTitle]="'DailyPunchApprovalNeededToolTip'"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="locationDetails?.EnableXRMTimeClock">
+                        <div class="form-group">
+                            <app-kendo-label class="kendo-label__change" [label]="'IsAllowManagerAdjustPunchInOut'"
+                                [value]="locationDetails.AllowManagerAdjustPunchInOut ? 'Yes' : 'No'"
+                                [tooltipVisible]="true"
+                                [tooltipTitle]="'AllowManagerAdjustPunchInOutToolTip'"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+
+                    <div class="clearfix"></div>
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="locationDetails?.EnableXRMTimeClock">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'AccrueHoursFromActualPunchIn'"
+                                [value]="locationDetails.AccrueHoursFromActualPunchIn ? 'Yes' : 'No'"
+                                [tooltipVisible]="true"
+                                [tooltipTitle]="'AccrueHoursFromActualPunchInToolTip'"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="locationDetails?.EnableXRMTimeClock">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'AllowManualSelectionDuringPunchFor'" [tooltipVisible]="true"
+                                [tooltipTitle]="'AllowManualSelectionDuringPunchForToolTip'"></app-kendo-label>
+
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <app-kendo-label class="kendo-label__change" [label]="'CostAccountingCode'"
+                                            [value]="locationDetails.IsAllowManualCharge ? 'Yes' : 'No'"></app-kendo-label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <app-kendo-label class="kendo-label__change" [label]="'IsAllowManualShift'"
+                                            [value]="locationDetails.IsAllowManualShift ? 'Yes' : 'No'"></app-kendo-label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <app-kendo-label class="kendo-label__change" [label]="'JobCategory'"
+                                            [value]="locationDetails.IsAllowManualJobCategory ? 'Yes' : 'No'"></app-kendo-label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="locationDetails?.EnableXRMTimeClock">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'XrmUseEmployeeIdTimeClockId'"
+                                [value]="locationDetails.XrmUseEmployeeOrTimeClock"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+                </div>
+                <div class="row">
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="locationDetails?.EnableXRMTimeClock">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'ClockBufferForReportingDate'"
+                                [value]="locationDetails.ClockBufferToSetReportingDate | slice: 0:-3"
+                                [tooltipVisible]="true"
+                                [tooltipTitle]="'ClockBufferToSetReportingDateToolTip'"></app-kendo-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6" *ngIf="locationDetails?.EnableXRMTimeClock">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'ClockBufferForShiftStart'"
+                                [value]="locationDetails.ClockBufferForEarlyShiftStart | slice: 0:-3"
+                                [tooltipVisible]="true"
+                                [tooltipTitle]="'ClockBufferForShowingCLPsEarlyShiftStartToolTip'"></app-kendo-label>
+                        </div>
+                    </div>
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="locationDetails?.EnableXRMTimeClock">
+                        <div class="form-group">
+                            <app-kendo-label class="kendo-label__change" [label]="'IsAutoLunchDeduction'"
+                                [value]="locationDetails.AutoLunchDeductionAllowed ? 'Yes' : 'No'"
+                                [tooltipVisible]="true"
+                                [tooltipTitle]="'AutoLunchDeductionAllowedToolTip'"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="locationDetails?.AutoLunchDeductionAllowed">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'MinimumHourWorkedBeforeLunchDeduction'"
+                                [value]="locationDetails.MinHourWrkBeforeLunchDeduction | number:'1.2-2'"
+                                [tooltipVisible]="true"
+                                [tooltipTitle]="'MinimumHoursToBeWorkedBeforeLunchDeductionToolTip'"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="locationDetails?.AutoLunchDeductionAllowed">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'LunchTimeDeducted'" [value]="locationDetails.LunchTimeDeducted"
+                                [tooltipVisible]="true"
+                                [tooltipTitle]="'LunchTimeToBeDeductedToolTip'"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="locationDetails?.AutoLunchDeductionAllowed">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'EffectiveDateForLunchConfiguration'"
+                                [value]="locationDetails.EffectiveDateForLunchConfig" [tooltipVisible]="true"
+                                [tooltipTitle]="'EffectiveDateForLunchConfigurationToolTip'"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="locationDetails?.EnableXRMTimeClock">
+                        <div class="form-group">
+                            <app-kendo-label class="kendo-label__change" [label]="'IsPunchRoundingNeeded'"
+                                [value]="locationDetails.PunchRoundingNeeded ? 'Yes' : 'No'" [tooltipVisible]="true"
+                                [tooltipTitle]="'PunchRoundingNeededToolTip'"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="locationDetails?.PunchRoundingNeeded">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'PunchInTimeIncrementRounding'"
+                                [value]="locationDetails.PunchInTimeIncrRounding" [tooltipVisible]="true"
+                                [tooltipTitle]="'PunchInTimeIncrementRoundingToolTip'"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="locationDetails?.PunchRoundingNeeded">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'PunchOutTimeIncrementRounding'"
+                                [value]="locationDetails.PunchOutTimeIncrRounding" [tooltipVisible]="true"
+                                [tooltipTitle]="'PunchOutTimeIncrementRoundingToolTip'"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="locationDetails?.PunchRoundingNeeded">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'PunchInTimeRounding'"
+                                [value]="locationDetails.PunchInTimeRounding" [tooltipVisible]="true"
+                                [tooltipTitle]="'PunchInTimeRoundingToolTip'"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="locationDetails?.PunchRoundingNeeded">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'PunchOutTimeRounding'"
+                                [value]="locationDetails.PunchOutTimeRounding" [tooltipVisible]="true"
+                                [tooltipTitle]="'PunchOutTimeRoundingToolTip'"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+
+                </div>
+            </div>
+            <!--XRM Time Clock Section end-->
+
+        </div>
+
+    </div>
+    <!-- End Card Section AcroTrac Configuration -->
+
+    <!--Requisition Configuration Section start-->
+    <div class="card">
+        <!-- Card Header Section-->
+        <div class="card__header">
+            <h4 class="card__heading">{{'RequisitionConfigurations' | translate}}</h4>
+            <div class="card__header-icon">
+            </div>
+        </div>
+        <!-- End Card Header Section-->
+
+        <!-- Card Body Section-->
+        <div class="card__body">
+            <!-- input box start -->
+            <div class="row">
+                <!-- input box start -->
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <app-kendo-label class="kendo-label__change" [label]="'AlternateRequisitionConfigurations'"
+                            [value]="locationDetails.AltRequisitionConfigurations ? 'Yes' : 'No'"
+                            [tooltipVisible]="true"
+                            [tooltipTitle]="'AlternateSectorConfigurationToolTip'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+                <div class="clearfix"></div>
+                <!-- input box start -->
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6" *ngIf="locationDetails?.AltRequisitionConfigurations">
+                    <div class="form-group">
+                        <app-kendo-label class="kendo-label__change" [label]="'IsPositionDetailsEditable'"
+                            [value]="locationDetails.PositionDetailsEditable ? 'Yes' : 'No'" [tooltipVisible]="true"
+                            [tooltipTitle]="'Is_Position_Details_Editable_Tootip'"></app-kendo-label>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row" *ngIf="locationDetails?.AltRequisitionConfigurations">
+                <div class="col-sm-12 col-md-12">
+                    <h4 class="card__body--subheading">{{'AssignmentType' | translate}}</h4>
+                </div>
+
+                <div class="col-sm-12 col-md-12 list-view list-view__border"
+                    *ngIf="locationDetails?.AltRequisitionConfigurations">
+                    <app-list-view [columnData]="assignmentTypesGridColumns" [columnConfigure]="columnConfiguration"
+                        [populatedData]="assignmentTypesGridData">
+                    </app-list-view>
+                </div>
+            </div>
+
+        </div>
+        <!-- End Card Body Section-->
+    </div>
+    <!--Requisition Configuration Section end-->
+
+    <!--Benefit Adder Configuration Section start-->
+    <div class="card">
+        <!-- Card Header Section-->
+        <div class="card__header">
+            <h4 class="card__heading">{{'BenefitAdderConfigurations' | translate}}</h4>
+            <div class="card__header-icon">
+            </div>
+        </div>
+        <!-- End Card Header Section-->
+
+        <!-- Card Body Section-->
+        <div class="card__body">
+            <div class="row">
+                <!-- input box start -->
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <app-kendo-label class="kendo-label__change" [label]="'AlternateBenefitAdderConfiguration'"
+                            [value]="locationDetails.AltBenefitAdderConfigurations ? 'Yes' : 'No'"
+                            [tooltipVisible]="true"
+                            [tooltipTitle]="'AlternateSectorConfigurationToolTip'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box End -->
+            </div>
+
+            <div class="row">
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6" *ngIf="locationDetails?.AltBenefitAdderConfigurations">
+                    <div class="form-group">
+                        <app-kendo-label class="kendo-label__change" [label]="'IsBenefitAdder'"
+                            [value]="locationDetails.RequireBenefitAdders ? 'Yes' : 'No'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+            </div>
+            <div class="row" *ngIf="locationDetails?.RequireBenefitAdders">
+                <!-- input box start -->
+                <div class="col-sm-12 col-md-12 list-view list-view__border">
+                    <app-list-view [columnData]="benifitAdderGridColumns"
+                        [columnConfigure]="benefitAdderColumnConfiguration" [populatedData]="sectorBenefitAdders">
+                    </app-list-view>
+                </div>
+
+                <!-- input box start -->
+            </div>
+        </div>
+        <!-- End Card Body Section-->
+    </div>
+    <!--Benefit Adder Configuration Section end-->
+
+    <!--Configure MSP Process Activity Section start-->
+    <div class="card">
+        <!-- Card Header Section-->
+        <div class="card__header">
+            <h4 class="card__heading">{{'ConfigureMSPProcessActivity' | translate}}</h4>
+            <div class="card__header-icon">
+            </div>
+        </div>
+        <!-- End Card Header Section-->
+
+        <!-- Card Body Section-->
+        <div class="card__body">
+            <div class="row">
+                <!-- input box start -->
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <app-kendo-label class="kendo-label__change"
+                            [label]="'AlternateConfigureMSPProcessActivityConfigurations'"
+                            [value]="locationDetails.AltMSPProcessActivityConfigs ? 'Yes' : 'No'"
+                            [tooltipVisible]="true"
+                            [tooltipTitle]="'AlternateSectorConfigurationToolTip'"></app-kendo-label>
+                    </div>
+                </div>
+            </div>
+            <!-- input box start -->
+            <div class="row" *ngIf="locationDetails?.AltMSPProcessActivityConfigs">
+                <div class="clearfix"></div>
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label class="kendo-label__change" [label]="'IsSkipProcessSubByMsp'"
+                            [value]="locationDetails.SkipProcessSubmittalByMsp ? 'Yes' : 'No'" [tooltipVisible]="true"
+                            [tooltipTitle]="'SkipProcessSubmittalByMspToolTip'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label class="kendo-label__change" [label]="'HideNteRatefromCopyReqLib'"
+                            [value]="locationDetails.HideNTERateFromReqLib ? 'Yes' : 'No'" [tooltipVisible]="true"
+                            [tooltipTitle]="'HideNTERateFromRequisitionLibraryToolTip'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label class="kendo-label__change" [label]="'IsSkipLIRequestProcessByMsp'"
+                            [value]="locationDetails.SkipLIRequestProcessbyMSP ? 'Yes' : 'No'" [tooltipVisible]="true"
+                            [tooltipTitle]="'SkipLIRequestProcessbyMSPToolTip'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6" *ngIf="locationDetails?.SkipLIRequestProcessbyMSP">
+                    <div class="form-group">
+                        <app-kendo-label class="kendo-label__change" [label]="'IsAutoBroadcastForLiRequest'"
+                            [value]="locationDetails.AutoBroadcastForLIRequest ? 'Yes' : 'No'" [tooltipVisible]="true"
+                            [tooltipTitle]="'AutoBroadcastForLIRequestToolTip'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+            </div>
+        </div>
+        <!-- End Card Body Section-->
+    </div>
+    <!--Configure MSP Process Activity Section end-->
+
+    <!--Background Checks Section start-->
+    <div class="card">
+        <!-- Card Header Section-->
+        <div class="card__header">
+            <h4 class="card__heading">{{'OnboardingRequirements' | translate}}</h4>
+            <div class="card__header-icon">
+            </div>
+        </div>
+        <!-- End Card Header Section-->
+
+        <!-- Card Body Section-->
+        <div class="card__body">
+            <div class="row">
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label class="kendo-label__change"
+                            [label]="'Alternate Drugs and Background Checks Configurations'"
+                            [value]="locationDetails.AltDandBChecksConfigurations ? 'Yes' : 'No'"
+                            [tooltipVisible]="true"
+                            [tooltipTitle]="'AlternateSectorConfigurationToolTip'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+            </div>
+
+            <div class="col-sm-12 col-md-12" *ngIf="locationDetails?.AltDandBChecksConfigurations">
+                <h4 class="card__body--subheading">{{'IsDrugScreenItemEditable' | translate}}</h4>
+            </div>
+            <!-- input box start -->
+
+            <div class="row" *ngIf="locationDetails?.AltDandBChecksConfigurations">
+
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'Visible'"
+                            [value]="locationDetails.SectorBackgroundCheck.IsDrugResultVisible ? 'Yes' : 'No'"
+                            [tooltipVisible]="true" [tooltipTitle]="'DrugResultDetailVisibleToolTip'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6" *ngIf="locationDetails?.SectorBackgroundCheck?.IsDrugResultVisible">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'DrugScreenEditable'"
+                            [value]="locationDetails.SectorBackgroundCheck.IsDrugScreenItemEditable ? 'Yes' : 'No'"
+                            [tooltipVisible]="true"
+                            [tooltipTitle]="'IsDrugScreenEditableOnReqCreationToolTip'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6" *ngIf="locationDetails?.SectorBackgroundCheck?.IsDrugResultVisible">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'DefaultValue'"
+                            [value]="locationDetails.SectorBackgroundCheck.DefaultDrugResultValue ? 'Yes' : 'No'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+            </div>
+
+            <div class="col-sm-12 col-md-12" *ngIf="locationDetails?.AltDandBChecksConfigurations">
+                <h4 class="card__body--subheading">{{'IsBackGroundItemEditable' | translate}}</h4>
+            </div>
+
+            <div class="row" *ngIf="locationDetails?.AltDandBChecksConfigurations">
+
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'Visible'"
+                            [value]="locationDetails.SectorBackgroundCheck.IsBackGroundCheckVisible ? 'Yes' : 'No'"
+                            [tooltipVisible]="true"
+                            [tooltipTitle]="'BackgroundCheckDetailVisibleToolTip'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6" *ngIf="locationDetails?.SectorBackgroundCheck?.IsBackGroundCheckVisible">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'BackgroundCheckEditable'"
+                            [value]="locationDetails.SectorBackgroundCheck.IsBackGroundItemEditable ? 'Yes' : 'No'"
+                            [tooltipVisible]="true"
+                            [tooltipTitle]="'IsBackScreenCheckEditableReqCreationToolTip'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6" *ngIf="locationDetails?.SectorBackgroundCheck?.IsBackGroundCheckVisible">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'DefaultValue'"
+                            [value]="locationDetails.SectorBackgroundCheck.DefaultBackGroundCheckValue ? 'Yes' : 'No'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <div class="col-sm-12 col-md-12">
+                    <div class="card__body--subheading"></div>
+                </div>
+            </div>
+
+            <div class="row" *ngIf="locationDetails?.AltDandBChecksConfigurations">
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'AllowToFillCandidateWithPendingCompliance'"
+                            [value]="locationDetails.SectorBackgroundCheck.FillWithPendingCompliance ? 'Yes' : 'No'"
+                            [tooltipVisible]="true"
+                            [tooltipTitle]="'PendingDrugAndBackChecksAllowedLICLPsToolTip'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'AllowAttachPreEmploymentDocToClientEmail'"
+                            [value]="locationDetails.SectorBackgroundCheck.AttachPreEmpDocToClientEmail ? 'Yes' : 'No'"
+                            [tooltipVisible]="true"
+                            [tooltipTitle]="'AttachSelectedCandidatePreEmploymentFormsToClientEmailToolTip'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <div class="col-sm-12 col-md-12 list-view list-view__border">
+                    <app-list-view [columnData]="backgroundCheckGridColumns" [columnConfigure]="columnConfiguration"
+                        [populatedData]="backgroundCheckGridData"></app-list-view>
+                </div>
+
+
+            </div>
+        </div>
+        <!-- End Card Body Section-->
+    </div>
+
+    <!--Background Checks Section end-->
+    <!-- End Card Section For Add new location -->
+
+    <ng-container *ngIf="sectorId > 0">
+        <app-udf-implementation [entityId]="entityId" [sectorId]="sectorId" [recordUKey]="uKey"
+            [parentsInfos]="udfCommonMethods.getParentsInfo()" [actionTypeId]="actionTypeId">
+        </app-udf-implementation>
+
+    </ng-container>
+
+    <!-- Footer Section-->
+    <div class="page-footer">
+        <div class="btn-box btn-box--center">
+            <button type="button" kendoButton themeColor="primary" [routerLink]="navigationPaths.list">
+                Back </button>
+        </div>
+    </div>
+    <!-- End Footer Section-->
+</div>
+<!-- Main Body Section-->

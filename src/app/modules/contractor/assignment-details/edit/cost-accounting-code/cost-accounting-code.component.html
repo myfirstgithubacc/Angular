@@ -1,0 +1,134 @@
+
+<div class="card">
+    <!-- Card Header Section -->
+    <div class="card__header">
+        <h4 class="card__heading">{{'CostAccountingCodeInformation' | translate}}</h4>
+        <div class="card__header-icon"></div>
+    </div>
+    <!-- End Card Header Section -->
+
+    <!-- Card Body Section -->
+    <div class="card__body">
+        <div class="row">
+            <div class="offcanvas offcanvas-end offcanvas-body--mobileview" tabindex="-1" (hidden.bs.offcanvas)="offcanvasHidden()" id="errormessageSidebarsm" aria-labelledby="errormessageSidebarsm" [@slideInOut]>
+                <app-toaster [isOnComponent]="true"></app-toaster>
+                <ng-container>
+                    <div class="offcanvas-header">
+                        <h5>{{!isEditCostAccountCode ? ('AddNewCostAccountingCode' | translate): ('EditCostAccountingCode' | translate)}}</h5>
+                        <button type="button" #gridCAC data-bs-dismiss="offcanvas" class="btn-close"></button>
+                     </div>
+                     <div class="offcanvas-body">
+                       <form [formGroup]="Form">
+                         <div class="clearfix"></div>
+                         <div class="row">
+                          <ng-container *ngIf="isAddCostCenterManuallyAllowed()">
+                             <div class="col-sm-12 col-md-12" *ngFor="let controlName of controlNames; let i = index">
+                                 <div class="form-group">
+                                     <app-textbox [label]="getSegmentName(i)" [controlName]="controlName" [isRequired]="true">
+                                     </app-textbox>
+                                 </div>
+                             </div>
+
+                          </ng-container>
+                         <ng-container *ngIf="!isAddCostCenterManuallyAllowed()">
+                             <div class="col-sm-12 col-md-12">
+                                 <div class="form-group">
+                                     <app-kendo-dropdown [label]="'Cost Accounting Code'" [controlName]="'singleCostAccounting'"
+                                         [list]="listForDropdown" [placeholder]="'Select'">
+                                     </app-kendo-dropdown>
+                                 </div>
+                             </div>
+                             <div class="col-sm-12 col-md-12">
+                                 <div class="form-group">
+                                     <app-kendo-label [label]="'Description'" [value]="Form.get('singleCostAccounting')?.value?.Description">
+                                     </app-kendo-label>
+                                 </div>
+                             </div>
+                         </ng-container>
+                         <div class="col-sm-12 col-md-12" *ngIf="isAddCostCenterManuallyAllowed()">
+                                     <app-kendo-textarea placeholder="" [label]="'Description'" [controlName]="'description'" [maxCharacters]="2000"></app-kendo-textarea>
+                         </div>
+
+                       </div>
+                     </form>
+                 </div>
+                     <div class="offcanvas-footer">
+                       <div class="master-search__button-box">
+                         <div class="col-sm-12">
+                             <div class="button-group">
+                                <app-kendo-button
+                                 [buttonName]="'Add'" (click)="submitCostCenter()"></app-kendo-button>
+                                 <button type="button" data-bs-dismiss="offcanvas" kendoButton fillMode="outline" themeColor="primary" (click)="Form.reset()">Cancel</button>
+
+                             </div>
+                         </div>
+                       </div>
+                   </div>
+                </ng-container>
+
+             </div>
+
+
+            <!-- Grid Box Start -->
+            <div class="col-sm-12 col-md-12 list-view grid-border">
+              <div class="form-group">
+                <ng-template #template let-anchor>
+                  <span>{{ anchor.nativeElement.innerText }}</span>
+                  </ng-template>
+                  <div kendoTooltip [tooltipTemplate]="template" filter=".k-grid td"
+                                                          (mouseover)="showTooltip($event)">
+                  <kendo-grid [data]="gridData">
+                      <kendo-grid-column media="(max-width: 450px)" title="">
+                          <ng-template kendoGridCellTemplate let-dataItem>
+                              <dd><strong>{{'CostAccountingCode' | translate}}</strong></dd>
+                              <dd><strong>{{'Description' | translate}}</strong></dd>
+                              <dl></dl>
+                              <dd *ngIf="isEffectiveDateVisible()"><strong>{{'EffectiveFrom' | date}}:</strong></dd>
+                              <dl *ngIf="isEffectiveDateVisible()"></dl>
+                              <dd *ngIf="isEffectiveDateVisible()"><strong>{{'EffectiveTo' | date}} :</strong></dd>
+                              <dl *ngIf="isEffectiveDateVisible()"></dl>
+                              <dd><strong>{{'Actions'}} :</strong></dd>
+                              <dl></dl>
+                          </ng-template>
+                      </kendo-grid-column>
+                      <kendo-grid-column title="Cost Accounting Code">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                          {{dataItem?.CostAccountingCode}}
+                      </ng-template>
+                      </kendo-grid-column>
+                      <kendo-grid-column field="Description" title="Description">
+                     </kendo-grid-column>
+                      <kendo-grid-column  field="EffectiveFrom" title="Effective From" *ngIf="isEffectiveDateVisible() && !isAddCostCenterManuallyAllowed()"> </kendo-grid-column>
+                      <kendo-grid-column  field="EffectiveTo" title="Effective To" *ngIf="isEffectiveDateVisible() && !isAddCostCenterManuallyAllowed()"> </kendo-grid-column>
+
+                      <kendo-grid-column *ngIf="isFieldVisible('costAccountingAddNew')" media="(min-width: 450px)" field="action" title="Actions" [width]="100" filter="numeric" [includeInChooser]="false" [columnMenu]="false" [sortable]="false">
+                          <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                            <div class="action-item" kendoTooltip  style="text-align: justify;">
+                            <a href="javascript:;" kendoButton title="Edit" *ngIf="isAddCostCenterManuallyAllowed()" (click)="onEdit(dataItem,rowIndex)">
+                                <xrm-icon [name]="'edit-3'" [color]="'orange-color'" [size]="17" class="sw-bold"></xrm-icon>
+                          </a>
+                          <a href="javascript:;" kendoButton title="Delete" *ngIf="!dataItem.Disabled && dataItem.isTempSaved" (click)="removeItem(dataItem)">
+                                <xrm-icon [name]="'trash-2'" [color]="'red-color'" [size]="17" class="sw-bold"></xrm-icon>
+                          </a>
+                          <a href="javascript:;" kendoButton title="Activate" *ngIf="!dataItem.isTempSaved && dataItem.Disabled" (click)="onActiveChange(dataItem)">
+                                <xrm-icon [name]="'check'" [color]="'green-color'" [size]="17" class="sw-bold"></xrm-icon>
+                        </a>
+                        <a href="javascript:;" kendoButton title="Deactivate" *ngIf="!dataItem.isTempSaved && !dataItem.Disabled" (click)="onActiveChange(dataItem)">
+                            <xrm-icon [name]="'x'" [color]="'red-color'" [size]="17" class="sw-bold"></xrm-icon>
+                        </a>
+                      </div>
+                          </ng-template>
+                      </kendo-grid-column>
+                  </kendo-grid>
+                  </div>
+              </div>
+              <span class="data-answere" *ngIf="isFieldVisible('costAccountingAddNew')">
+                <a href="javascript:;" #popupOpen class="ml-auto link-color" data-bs-toggle="offcanvas"
+                  data-bs-target="#errormessageSidebarsm" (click)="openRightPanelCard()"><xrm-icon [name]="'plus'"
+                    [color]="'dark-blue-color'" [size]="14" class="sw-bolder"></xrm-icon> Add New</a>
+              </span>
+          </div>
+            <!-- Grid Box End -->
+        </div>
+    </div>
+</div>

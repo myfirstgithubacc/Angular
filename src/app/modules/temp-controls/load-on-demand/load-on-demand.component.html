@@ -1,0 +1,61 @@
+<form [formGroup]="searchForm">
+
+  <div class="card">
+
+    <div class="card__header">
+      <h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+      <div class="card__header-icon">
+      </div>
+    </div>
+
+
+    <div class="card__body">
+      <div class="row">
+
+        <div class="col-sm-6">
+          <div class="form-group">
+
+            <app-kendo-multiselect-dropdown [controlName]="'LaborCategoryName1'" [isSearchWithStart]="false" [label]="'Labor Category Name'"
+              [placeholder]="'DdlSelect'" [isLoadOnDemand]="true" [apiAddress]="advApiAddress" [columnName]="'LaborCategoryName'">
+            </app-kendo-multiselect-dropdown>
+
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+
+            <app-kendo-multiselect-dropdown [controlName]="'SectorName1'" [isSearchWithStart]="false" [label]="'Sector Name'"
+              [placeholder]="'DdlSelect'" [isLoadOnDemand]="true" [apiAddress]="advApiAddress" [columnName]="'SectorName'">
+            </app-kendo-multiselect-dropdown>
+
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+
+            <app-kendo-dropdown [controlName]="'LaborCategoryName2'" [label]="'Labor Category Name'"
+              [placeholder]="'DdlSelect'" [isLoadOnDemand]="true" [apiAddress]="advApiAddress" [columnName]="'LaborCategoryName'">
+            </app-kendo-dropdown>
+
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+
+            <app-kendo-dropdown [controlName]="'SectorName2'" [label]="'Sector Name'"
+              [placeholder]="'DdlSelect'" [isLoadOnDemand]="true" [apiAddress]="advApiAddress" [columnName]="'SectorName'">
+            </app-kendo-dropdown>
+
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</form>

@@ -1,0 +1,104 @@
+<!-- Main Body Section-->
+<div class="app-content__body floating-layout floating-layout__view-layout">
+
+    <!-- Card Section-->
+
+    <div class="card">
+
+        <!-- Card Header Section-->
+        <div class="card__header">
+            <h4 class="card__heading">{{'BasicDetails' | translate }}</h4>
+            <div class="card__header-icon">
+            </div>
+        </div>
+        <!-- End Card Header Section-->
+
+        <!-- Card Body Section-->
+        <div class="card__body">
+
+            <!--start row Section-->
+            <div class="row">
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'Sector'" [value]="jobCategory.SectorName">
+                        </app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'LaborCategory'" [value]="jobCategory.LCName">
+                        </app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'JobCategory'" [value]="jobCategory.JCName">
+                        </app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'ClientJobCode'" [value]="jobCategory.ClientJCCode">
+                        </app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [tooltipVisible]="true" [tooltipTitle]="'AllowWageRateAdjustmentsToolTip'"
+                            [label]="'AllowWageRateAdjustments'"
+                            [value]="jobCategory.IsWageRateAdj == true || jobCategory.IsWageRateAdj=='Yes' ?'Yes':'No'">
+                        </app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'OvertimeHoursBilledAt'" [isTooltiplableValueVisible]="true"
+                            [tooltipLabelValue]="jobCategory.OTHoursBilledAtId == 61   ? 'StraightTimeToolTip':'OvertimeToolTip' "
+                            [value]="(jobCategory.OTHoursBilledAtId == 61 ? 'StraightTimeExempt' : 'OvertimeNonExempt') | translate ">
+                        </app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+            </div>
+            <!--End row Section-->
+        </div>
+        <!--End Card Body Section-->
+
+    </div>
+    <!-- Card Section-->
+
+    <ng-container *ngIf="sectorId > 0">
+        <app-udf-implementation [entityId]="entityId" [sectorId]="sectorId" [recordUKey]="recordUKey"
+            [parentsInfos]="udfCommonMethods.getParentsInfo()" [actionTypeId]="actionTypeId">
+        </app-udf-implementation>
+    </ng-container>
+
+
+    <div class="page-footer">
+        <div class="btn-box btn-box--center">
+            <button type="button" kendoButton themeColor="primary" (click)="navigateToList()">{{'Back'|
+                translate}}</button>
+        </div>
+    </div>
+
+</div>
+<!-- Main Body Section-->

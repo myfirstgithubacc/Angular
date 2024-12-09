@@ -1,0 +1,27 @@
+.inline-item {
+	section {
+		border-top: #e2e2e2 solid 1px;
+	}
+}
+.inline-item p strong,
+.grid_mobile-data p strong {
+	font-weight: 500;
+	font-size: var(--base-font-size);
+	color: var(--color-black);
+}
+.inline-item p,
+.grid_mobile-data p {
+	padding: 6px 12px;
+}
+.device-icon {
+	width: 44px;
+	text-align: left;
+	font-size: 14px;
+}
+.dropdown__shift-range {
+	.dropdown__shift-range__days {
+		li {
+			cursor: auto;
+		}
+	}
+}

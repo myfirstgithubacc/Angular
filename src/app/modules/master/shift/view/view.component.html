@@ -1,0 +1,108 @@
+<div class="app-content__body floating-layout floating-layout__view-layout">
+   <br>
+
+   <div class="card">
+      <div class="card__header">
+         <h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+         <div class="card__header-icon">
+         </div>
+      </div>
+      <div class="card__body">
+         <div class="row">
+            <div class="clearfix"></div>
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group">
+                  <app-kendo-label [label]="'Sector'" [value]="shift.SectorName"> </app-kendo-label>
+               </div>
+            </div>
+
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group">
+                  <app-kendo-label [label]="'ShiftName'" [value]="shift.ShiftName"> </app-kendo-label>
+               </div>
+            </div>
+
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group">
+                  <app-kendo-label [label]="'ShiftUtilizedSpecificLocation'"
+                     [value]="shift.IsLocationSpecific ? 'Yes' : 'No'" [tooltipVisible]="true"
+                     [tooltipTitle]="'ShiftUtilizedSpecificLocationTooltipMessage'"> </app-kendo-label>
+               </div>
+            </div>
+
+            <div class="col-sm-6 col-md-6" *ngIf="shift.IsLocationSpecific">
+               <div class="form-group">
+                  <app-kendo-label [label]="'Location'" [value]="shift.LocationName"> </app-kendo-label>
+               </div>
+            </div>
+
+            <div class="col-sm-12 col-md-12">
+               <h4 class="card__body--subheading">{{'ShiftConfigurations' | translate}}</h4>
+            </div>
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group">
+                  <app-kendo-label [label]="'ShiftDifferentialMethod'" [value]="shift.ShiftDifferential"
+                     [tooltipVisible]="true" [tooltipTitle]="'ShiftDifferentialMethodTooltipMessage'">
+                  </app-kendo-label>
+               </div>
+            </div>
+
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group" *ngIf="shift.ShiftDifferential.toLowerCase() === 'adder'">
+                  <app-kendo-label [label]="'ShiftDifferentialValue'" [value]="formattedValue" [decimalPlaces]="3"
+                     [isCurrency]="true" [countryId]="countryVal" [tooltipVisible]="true"
+                     [tooltipTitle]="'ShiftDifferentialValueTooltipMessage'">
+                  </app-kendo-label>
+               </div>
+
+               <div class="form-group" *ngIf="shift.ShiftDifferential.toLowerCase() === 'multiplier'">
+                  <app-kendo-label [label]="'ShiftDifferentialValue'" [value]="formattedValue" [decimalPlaces]="4"
+                     [isCurrency]="true" [countryId]="countryVal" [tooltipVisible]="true"
+                     [tooltipTitle]="'ShiftDifferentialValueTooltipMessage'">
+                  </app-kendo-label>
+               </div>
+            </div>
+
+            <div class="col-sm-12 col-md-12" *ngIf="enableXrmTimeClock">
+               <h4 class="card__body--subheading"></h4>
+            </div>
+
+            <div class="col-sm-6 col-md-6" *ngIf="enableXrmTimeClock">
+               <div class="form-group">
+                  <app-kendo-label [label]="'PunchReportingDaySetting'" [value]="shift.ReportingDayType"
+                     [tooltipVisible]="true" [tooltipTitle]="'PunchReportingDaySettingTooltipMessage'">
+                  </app-kendo-label>
+               </div>
+            </div>
+
+            <div class="col-sm-12 col-md-12">
+               <h4 class="card__body--subheading">{{'TimingDetails' | translate}}</h4>
+            </div>
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group">
+                  <app-kendo-label [label]="'StartTime'" [value]="starTime" [tooltipVisible]="true"
+                     [tooltipTitle]="'StartEndTimeTooltipMessage'" [isTime]="true"> </app-kendo-label>
+               </div>
+            </div>
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group">
+                  <app-kendo-label [label]="'EndTime'" [value]="endTime" [isTime]="true" [tooltipVisible]="true"
+                     [tooltipTitle]="'StartEndTimeTooltipMessage'"> </app-kendo-label>
+               </div>
+            </div>
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group">
+                  <app-kendo-label [label]="'CLPWorkingDays'" [value]="shift.CLPWorkingDays" [tooltipVisible]="true"
+                     [tooltipTitle]="'CLPWorkingDaysTooltipMessage'"> </app-kendo-label>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="page-footer">
+      <div class="btn-box btn-box--center">
+         <button type="button" kendoButton themeColor="primary" [routerLink]="navigationPaths.list">
+            {{'Back' | translate}}</button>
+      </div>
+   </div>
+</div>

@@ -1,0 +1,147 @@
+<div class="offcanvas offcanvas-end" tabindex="-1" id="assignmentDetails" aria-labelledby="assignmentDetails">
+    <div class="offcanvas-header">
+        <h5>{{"AssignmentDetails" | translate}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+        </button>
+    </div>
+    <div class="offcanvas-body floating-layout floating-layout__quickview-layout">
+        <div class="card mt-2">
+            <div class="card__header">
+                <h4 class="card__heading">{{"PositionDetails" | translate}}</h4>
+            </div>
+            <div class="card__body">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <div class="view__screen" *ngIf="assignmentMoreData">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'Contractor'"
+                                    [value]="assignmentMoreData.ContractorName"></app-kendo-label>
+                            </div>
+                            <div class="form-group">
+                                <app-kendo-label [label]="'AssignmentID'"
+                                    [value]="assignmentMoreData.AssignmentCode"></app-kendo-label>
+                            </div>
+                            <div class="form-group">
+                                <app-kendo-label [label]="'AssignmentStartDate'"
+                                    [value]="assignmentMoreData.AssignmentStartDate | date:dateFormat"></app-kendo-label>
+                            </div>
+                            <div class="form-group">
+                                <app-kendo-label [label]="'AssignmentEndDate'"
+                                    [value]="assignmentMoreData.AssignmentEndDate | date:dateFormat"></app-kendo-label>
+                            </div>
+                            <div class="form-group" *ngIf="displayStaffingAgencyName">
+                                <app-kendo-label [label]="'StaffingAgency'"
+                                    [value]="assignmentMoreData.StaffingAgencyName"></app-kendo-label>
+                            </div>
+                            <div class="form-group">
+                                <app-kendo-label [label]="'Sector'"
+                                    [value]="assignmentMoreData.SectorName"></app-kendo-label>
+                            </div>
+                            <div class="form-group">
+                                <app-kendo-label [label]="'Location'"
+                                    [value]="assignmentMoreData.WorkLocationName"></app-kendo-label>
+                            </div>
+                            <div class="form-group">
+                                <app-kendo-label [label]="'LaborCategory'"
+                                    [value]="assignmentMoreData.LaborCategoryName"></app-kendo-label>
+                            </div>
+                            <div class="form-group">
+                                <app-kendo-label [label]="'JobCategory'"
+                                    [value]="assignmentMoreData.JobCategoryName"></app-kendo-label>
+                            </div>
+                            <div class="form-group">
+                                <app-kendo-label [label]="'OrgLevel1'"
+                                    [value]="assignmentMoreData.OrgLevel1Name"></app-kendo-label>
+                            </div>
+                            <div class="form-group">
+                                <app-kendo-label [fieldName]="'PONo'" [entityType]="entityType" [xrmEntityId]="entityId"
+                                    [label]="'PONumber'" [value]="assignmentMoreData.PONo"></app-kendo-label>
+                            </div>
+                            <div class="form-group">
+                                <app-kendo-label [fieldName]="'InvoiceNo'" [entityType]="entityType"
+                                    [xrmEntityId]="entityId" [label]="'InvoiceNumber'"
+                                    [value]="assignmentMoreData.InvoiceNo"></app-kendo-label>
+                            </div>
+                            <div class="form-group" *ngIf="POIncurredAmount">
+                                <app-kendo-label [fieldName]="'POIncurredAmount'" [entityType]="entityType"
+                                    [xrmEntityId]="entityId" [label]="labelName"
+                                    [value]="assignmentMoreData.POIncurredAmount.toFixed(magicNumber.two)"></app-kendo-label>
+                            </div>
+                            <div class="form-group">
+                                <app-kendo-label [label]="'IsAllowManualShift'"
+                                    [value]="assignmentMoreData.ShiftName"></app-kendo-label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card" *ngIf="isTimeSheet">
+            <div class="card__header">
+                <h4 class="card__heading">{{"OvertimeCalculationRule" | translate}} </h4>
+            </div>
+            <div class="card__body">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <div class="view__screen">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'OTEligibility'"
+                                    [value]="OtEligibility | yesNo"></app-kendo-label>
+                            </div>
+                            <div class="form-group">
+                                <app-kendo-label [label]="'HourDistributionRule'"
+                                    [value]="hourDistributionRuleName"></app-kendo-label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card__header">
+                <h4 class="card__heading">{{"CostAccountingCodeInformation" | translate}}</h4>
+            </div>
+            <div class="card__body">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 list-view grid__word-wrap">
+                        <ng-template #template let-anchor>
+                            <span>{{ anchor.nativeElement.innerText }}</span>
+                        </ng-template>
+                        <div kendoTooltip [tooltipTemplate]="template" filter=".k-grid td"
+                            (mouseover)="showTooltip($event)">
+                        <kendo-grid *ngIf="assignmentMoreData" [data]="assignmentMoreData.AssignmentTnECostAccCode">
+                            <kendo-grid-column field="SrNo" [title]="'SrNo' | translate" [width]="magicNumber.sixty">
+                                <ng-template let-dataItem kendoGridCellTemplate let-rowIndex="rowIndex">
+                                    <span>{{ rowIndex + 1 }}</span>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column field="CAccountingCode" [title]="'CostAccountingCode' | translate">
+                            </kendo-grid-column>
+                            <ng-template kendoGridNoRecordsTemplate>
+                                <p>{{"GridNoRecordAvailable" | translate}}</p>
+                            </ng-template>
+                        </kendo-grid>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card" *ngIf="(approvalDetails && approvalDetails.length!=0) && roleGroupId!=staffingAgency">
+            <div class="card__header">
+                <h4 class="card__heading">{{"ApproverDetails" | translate}}</h4>
+            </div>
+            <div class="card__body">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <div class="view__screen">
+                            <div *ngFor="let detail of approvalDetails" class="form-group">
+                                <app-kendo-label [label]="detail.ApproverLabel"
+                                    [value]="detail.Items[0].Text"></app-kendo-label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

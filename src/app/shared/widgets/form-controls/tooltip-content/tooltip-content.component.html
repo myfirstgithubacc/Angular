@@ -1,0 +1,27 @@
+<div class="new-view">
+<kendo-label *ngIf="!isHtmlContent" [text]="getLabelText()" kendoTooltip
+  [for]="forProperty" [position]="tooltipPosition ?? 'top' ">
+  <xrm-icon *ngIf="isRequired" name="star" class="required"></xrm-icon>
+  <ng-container *ngIf="tooltipVisible">
+    <div class="info-tooltip info-tooltip--v1">
+      <xrm-icon [title]=" tooltipTitle ?? '' | translate : getObject(tooltipTitleLocalizeParam)" name="info" 
+      class="input-info" ></xrm-icon>
+    </div>
+  </ng-container>
+  <ng-content> </ng-content>
+</kendo-label>
+
+<kendo-label *ngIf="tooltipVisible && isHtmlContent" [text]="getLabelText()"
+  kendoTooltip filter=".input-info" [tooltipTemplate]="htmlTooltipContents" [position]="tooltipPosition ?? 'top' ">
+  <xrm-icon *ngIf="isRequired" name="star" class="required"></xrm-icon>
+  <xrm-icon name="info" class="input-info">
+
+    <ng-template #htmlTooltipContents let-anchor>
+      <div class="info-tooltip info-tooltip--v2" [innerHTML]="(tooltipTitle ?? '' | translate) | safe :'html'"></div>
+    </ng-template>
+</xrm-icon>
+</kendo-label>
+
+<p class="label-answere">{{value??'' | translate}}</p>
+
+</div>

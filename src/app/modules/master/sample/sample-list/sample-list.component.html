@@ -1,0 +1,45 @@
+  <div class="master-search">
+    <div class="row">
+      <div class="col-md-12 master-search__wapper">
+        <div class="master-search__search-box">
+          <div class="custom-search">
+            <div class="custom-search__input-box">
+              <app-search [placeholder]="'Search for...'" [buttonNameSearch]="'Search'"
+                (onSearch)="OnSearch($event)"></app-search>
+            </div>
+          <app-advance-search [JsonData]="JsonData" (selectedFilter)="OnFilter($event)"></app-advance-search>
+          
+          
+          <div class="custom-search__applied--Filters mx-2">
+            <div class="custom-search__applied--Filters"><label class="k-label"></label></div>
+           
+          </div>
+        </div>
+  
+        <div class="master-search__button-box master-search__button-box--right">
+          <button type="button" kendoButton fillmode="outline" themeColor="primary" class="send-button" icon="plus"
+            (click)="navigate()">
+            Add Sample Module
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+      <grid-view 
+      [gridData]="list"
+       [columnOptions]="columnOptions"
+        [actionSet]="actionSet"
+         [tabOptions]="tabOptions"
+        [kendoGridSelectedBy]="'ukey'" 
+        (selectedTab)="selectedTab($event)">
+    </grid-view>
+  </div>
+  
+  
+  
+  
+     
+     
+  

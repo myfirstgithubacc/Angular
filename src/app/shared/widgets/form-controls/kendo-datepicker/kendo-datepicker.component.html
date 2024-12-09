@@ -1,0 +1,24 @@
+<div *ngIf="isEditMode; then thenTemplateName; else elseTemplateName"></div>
+<ng-template #thenTemplateName>
+  <app-kendo-label [label]="label" [value]="listControlName ? listControlName.value : formControl.value"
+    [tooltipPosition]="" [isDate]="true" [labelLocalizeParam]="labelLocalizeParam" [addOnLabelText]="addOnLabelText"
+    [addOnLabelTextLocalizeParam]="addOnLabelTextLocalizeParam" [tooltipVisible]="tooltipVisible"
+    [tooltipTitle]="tooltipTitle" [tooltipTitleLocalizeParam]="tooltipTitleLocalizeParam"></app-kendo-label>
+</ng-template><ng-template #elseTemplateName>
+  <kendo-formfield>
+    <tooltip-content [tooltipVisible]="tooltipVisible" [tooltipTitle]="tooltipTitle" [label]="label"
+      [addOnLabelText]="addOnLabelText" [addOnLabelTextLocalizeParam]="addOnLabelTextLocalizeParam"
+      [isRequired]="isRequired" [tooltipPosition]="" [tooltipTitleLocalizeParam]="tooltipTitleLocalizeParam"
+      [isHtmlContent]="isHtmlContent" [labelLocalizeParam]="labelLocalizeParam">
+    </tooltip-content>
+    <kendo-datepicker calendarType="classic" [formControl]="listControlName ? listControlName : formControl"
+      id="datePicker" [disabled]="isDisabled" [format]="dateFormat"
+      [disabledDates]="disabledDates" [formatPlaceholder]="{ year: placeholderFormat.year, millisecond: 'S', month: placeholderFormat.month, day: placeholderFormat.day, 
+        hour: placeholderFormat.hour, minute: placeholderFormat.minute, second: placeholderFormat.second }"
+      (blur)="onValueBlur()" (valueChange)="OnChange($event)" [ngClass]="customClass"
+      [style.--dynamic-color]="dynamicColor" [min]="minDate1" [max]="maxDate1"
+      >
+    </kendo-datepicker>
+    <app-print-error-message [control]="listControlName ? listControlName : formControl"></app-print-error-message>
+  </kendo-formfield>
+</ng-template>

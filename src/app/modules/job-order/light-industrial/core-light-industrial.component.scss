@@ -1,0 +1,95 @@
+.card__header-icon {
+	display: flex;
+	gap: 24px;
+	cursor: pointer;
+	align-items: center;
+}
+
+.app-content__body--li-create .card .card__header,
+.app-content__body--li-view .card .card__header {
+	cursor: pointer;
+}
+
+.card__header-icon--success {
+	color: var(--green-color);
+	display: none;
+}
+
+.card__header-icon--error {
+	color: var(--red-color);
+	display: none;
+}
+
+.card.card--success .card__header-icon--success,
+.card.card--error .card__header-icon--error {
+	display: block;
+}
+
+.card .card__header-icon .card__header-icon--success i,
+.card .card__header-icon .card__header-icon--error i {
+	font-size: 16px;
+}
+
+.LI-industrial__expansion {
+	.card {
+		.k-expander-content-wrapper {
+			border-top: none;
+
+			li {
+				&.list__data--item {
+					font-size: 12px;
+				}
+			}
+		}
+
+		.k-expander-content {
+			padding: 0;
+		}
+	}
+}
+
+.view__screen {
+	.list__data {
+		.list__data--item {
+			span {
+				app-weekday-picker {
+					span {
+						display: inline !important;
+					}
+				}
+			}
+		}
+	}
+}
+
+
+.app-content__body--li-create .list-view .k-grid .k-grid-content td {
+	vertical-align: top;
+	line-height: 32px;
+}
+
+.LI-industrial__expansion .card__body--inner-wrapper table.table tbody th {
+	padding: .5rem 0;
+}
+
+kendo-expansionpanel .view__screen .list__data .list__data--item app-kendo-label .new-view {
+	padding: .4rem 0;
+	display: flex;
+	column-gap: 15px;
+}
+
+kendo-expansionpanel .view__screen .list__data .list__data--item app-kendo-label .new-view kendo-label {
+	width: 210px;
+}
+
+kendo-expansionpanel .view__screen .list__data .list__data--item app-kendo-label .new-view p.label-answere {
+	width: calc(100% - 210px);
+}
+
+kendo-expansionpanel .view__screen .list__data .list__data--item:last-child {
+	border-bottom: solid 1px #efefef;
+}
+
+.offcanvas kendo-label>.k-label {
+	font-weight: bold;
+}

@@ -1,0 +1,202 @@
+<div class="row advance__search">
+
+  <div class="custom-search__btn-box">
+    <button #anchor type="button" aria-label="filter" kendoButton (click)="openPopup()" fillMode="solid" icon="filter"
+      themeColor="base">
+    </button>
+  </div>
+
+  <kendo-popup id="popupadvance" [animate]="animation" [anchor]="anchor" popupClass="content popup" [margin]="margin"
+    *ngIf="isShowPopup">
+
+
+    <div #popupkendo>
+
+      <div class="offcanvas-header">
+        <h5>{{'AdvanceSearch' | translate}} </h5>
+        <!-- <span type="button" class="btn-close" ></span> -->
+        <xrm-icon name="x" [size]="16" color="black-color" [strokeWidth]="2.5" (click)="closePopup()"></xrm-icon>
+      </div>
+
+      <div class="offcanvas-body">
+
+        <div class="row master-search__filter-box">
+          <form [formGroup]="filterForm">
+
+            <div *ngFor="let item of controlInfo; let i = index">
+
+              <!-- strat datepicker -->
+
+              <div class="col-md-12"
+                *ngIf="item.ApplicableForAdvancedSearch && item.Viewable && item.ControlType === controltype.datePicker">
+                <div class="form-group">
+                  <app-kendo-datepicker [controlName]="item.controlName" [label]="transformLocalizedKey(item)">
+                  </app-kendo-datepicker>
+                </div>
+              </div>
+
+              <!-- end datepicker -->
+
+              <!-- strat dropdowm -->
+
+              <div class="col-md-12"
+                *ngIf="item.ApplicableForAdvancedSearch && item.Viewable &&  item.ControlType === controltype.dropdonwlist">
+                <div class="form-group">
+                  <app-kendo-dropdown [controlName]="item.controlName" [label]="transformLocalizedKey(item)"
+                    [list]="item.IsLoadOnDemand ? [] : item.data" [placeholder]="'DdlSelect'"
+                    [isLoadOnDemand]="item.IsLoadOnDemand" [apiAddress]="apiAddress" [xrmEntityId]="EntityId"
+                    [entityType]="entityType" [pageSize]="item.DataSetSize" [columnName]="item.FieldName"
+                    [isAdvanceSearch]="item.IsLoadOnDemand" [isApiGateway]="isApiGateway"
+                    [version]="item.IsLoadOnDemand ? 'new' : ''">
+                  </app-kendo-dropdown>
+                </div>
+              </div>
+
+              <!-- end dropdowm -->
+
+              <!-- start multiselect dropdown -->
+
+              <div class="col-md-12"
+                *ngIf="item.ApplicableForAdvancedSearch && item.Viewable &&  item.ControlType === controltype.multiselect">
+                <div class="form-group">
+
+                  <app-kendo-multiselect-dropdown [controlName]="item.controlName" [isSearchWithStart]="false"
+                    [label]="transformLocalizedKey(item)" [placeholder]="'DdlSelect'"
+                    [list]="item.IsLoadOnDemand ? [] : item.data" [isLoadOnDemand]="item.IsLoadOnDemand"
+                    [apiAddress]="apiAddress" [xrmEntityId]="EntityId" [entityType]="entityType"
+                    [pageSize]="item.DataSetSize" [columnName]="item.FieldName" [isAdvanceSearch]="item.IsLoadOnDemand"
+                    [isApiGateway]="isApiGateway" [version]="item.IsLoadOnDemand ? 'new' : ''">
+                  </app-kendo-multiselect-dropdown>
+
+                </div>
+              </div>
+
+              <!-- end multiselect dropdown -->
+
+              <!-- start integer range -->
+
+              <div class="col-md-12"
+                *ngIf="item.ApplicableForAdvancedSearch && item.Viewable &&  item.ControlType === controltype.integerrange">
+                <div class="form-group">
+                  <app-kendo-label [label]="transformLocalizedKey(item)"></app-kendo-label>
+                  <div class="row">
+                    <div class="col Search-col-min">
+                      <app-numeric-box [controlName]="item.controlName" [placeholder]="'MinValue'"
+                        [decimals]="item.DecimalPlaces">
+                      </app-numeric-box>
+                    </div>
+                    <div class="col Search-col-max">
+                      <app-numeric-box [controlName]="item.controlName+'S'" [placeholder]="'MaxValue'"
+                        [decimals]="item.DecimalPlaces">
+                      </app-numeric-box>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- end integer range -->
+
+              <!-- start date range -->
+              <div class="col-md-12"
+                *ngIf="item.ApplicableForAdvancedSearch && item.Viewable &&  item.ControlType === controltype.daterange">
+                <div class="form-group">
+                  <app-kendo-daterangepicker #datepicker [startDateControlName]="item.controlName"
+                    [endDateControlName]="item.controlName+'S'" (onChange)="onDateRangeBlur()"
+                    (onOpen)="onDateRangeOpen($event)" (onClose)="onDateRangeClose($event)"
+                    [label]="transformLocalizedKey(item)">
+                  </app-kendo-daterangepicker>
+
+                </div>
+              </div>
+
+              <!-- end date range -->
+
+              <!-- start textbox -->
+              <div class="col-md-12"
+                *ngIf="item.ApplicableForAdvancedSearch && item.Viewable &&  item.ControlType === controltype.input">
+                <div class="form-group">
+                  <app-textbox [controlName]="item.controlName" [label]="transformLocalizedKey(item)"
+                    [isSpecialCharacterAllowed]="true">
+                  </app-textbox>
+                </div>
+              </div>
+
+              <!-- end textbox -->
+
+              <!-- start timepicker -->
+
+              <div class="col-md-12"
+                *ngIf="item.ApplicableForAdvancedSearch && item.Viewable &&  item.ControlType === controltype.timepicker">
+                <div class="form-group">
+                  <app-kendo-timepicker (open)="onTimeRangeOpen()" (close)="onTimeRangeClose($event)"
+                    (valueChange)="blurTimePicker()" (blur)="timeBlur($event)" [controlName]="item.controlName"
+                    [label]="transformLocalizedKey(item)">
+                  </app-kendo-timepicker>
+                </div>
+              </div>
+
+              <!-- end timepicker -->
+
+              <!-- start timerange -->
+
+              <div class="col-md-12"
+                *ngIf="item.ApplicableForAdvancedSearch && item.Viewable && item.ControlType === controltype.timerange">
+                <div class="form-group">
+                  <app-kendo-label [label]="transformLocalizedKey(item)"></app-kendo-label>
+                  <div class="row">
+                    <div class="col Search-col-min">
+                      <label class="k-label">{{'FromLabel' | translate}}</label>
+                      <app-kendo-timepicker (open)="onTimeRangeOpen()" (close)="onTimeRangeClose($event)"
+                        (valueChange)="blurTimePicker()" (blur)="timeBlur($event)" [controlName]="item.controlName">
+                      </app-kendo-timepicker>
+                    </div>
+                    <div class="col Search-col-max">
+                      <label class="k-label">{{'ToLabel' | translate}}</label>
+                      <app-kendo-timepicker (open)="onTimeRangeOpen()" (close)="onTimeRangeClose($event)"
+                        (valueChange)="blurTimePicker()" (blur)="timeBlur($event)" [controlName]="item.controlName+'S'">
+                      </app-kendo-timepicker>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- end timerange -->
+
+
+
+          </form>
+        </div>
+
+      </div>
+
+      <div class="offcanvas-footer">
+        <div class="master-search__button-box">
+          <div class="col-sm-12">
+            <div class="button-group">
+              <button kendoButton appFocusOnError themeColor="primary" type="button" [formName]="filterForm"
+                [disabled]="!filterForm.valid || isDisableApplyBtn" (click)="onApplyBtnClick()">
+                {{'Apply'| translate}}
+              </button>
+
+              <button type="reset" kendoButton themeColor="primary" fillMode="outline" class="mx-2"
+                (click)="onClearBtnClick()">
+                {{'Clear'|translate}}
+              </button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </kendo-popup>
+
+  <div #advToolTip class="custom-search__applied--Filters">
+    <app-advance-filter-tooltip [entityId]="EntityId" [label]="'AppliedFilter'"
+      [AppliedfilterCount]="appliedFilters.length" [SelectedAdvanceFilter]="appliedFilters" [position]="'bottom'"
+      (click)="openPopup()">
+    </app-advance-filter-tooltip>
+  </div>
+
+</div>

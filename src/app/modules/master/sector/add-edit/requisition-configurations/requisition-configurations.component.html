@@ -1,0 +1,237 @@
+<form [formGroup]="requisitionConfigForm">
+    <!--Requisition Configuration Section start-->
+    <div class="card">
+        <!-- Card Header Section-->
+        <div class="card__header">
+            <h4 class="card__heading">{{'RequisitionConfigurations'|translate}}</h4>
+            <div class="card__header-icon">
+            </div>
+        </div>
+        <!-- End Card Header Section-->
+
+        <!-- Card Body Section-->
+        <div class="card__body">
+            <div class="row">
+                <!-- input box start -->
+                <!-- <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'IsExtendedWorkLocationAddress'" [onLabel]="'Yes'"
+                            [tooltipVisible]="true" [tooltipTitle]="'ShowExtendedWorkLocationAddressToolTip'"
+                            [offLabel]="'No'" [label]="'IsExtendedWorkLocationAddress'">
+                        </app-kendo-switch>
+                    </div>
+                </div> -->
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'DisplayCanSupplierContactQusInReq'" [onLabel]="'Yes'"
+                            [offLabel]="'No'" [tooltipVisible]="true"
+                            [tooltipTitle]="'Display_Can_Suppliers_Contact_Question_In_Req_Tootip'"
+                            [label]="'DisplayCanSupplierContactQusInReq'">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'RestrictReqToOnePos'" [onLabel]="'Yes'" [offLabel]="'No'"
+                            [tooltipVisible]="true" [tooltipTitle]="'Restrict_Requisitions_To_One_Position_Tootip'"
+                            [label]="'RestrictReqToOnePos'">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <!-- <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'MaskSubmittedMarkUpAndWageRate'" [onLabel]="'Yes'"
+                            [tooltipVisible]="true" [tooltipTitle]="'Mask_Submitted_Mark_Up_And_Wage_Rate_Tooltip'"
+                            [offLabel]="'No'" [label]="'MaskSubmittedMarkUpAndWageRate'">
+                        </app-kendo-switch>
+                    </div>
+                </div> -->
+                <!-- input box start -->
+
+
+
+                <!-- input box start -->
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'IsSecurityClearance'" [tooltipVisible]="true"
+                            [tooltipTitle]="'Security_Clearance_Item_Selectable_Tooltip'"
+                            [label]="'IsSecurityClearance'" [onLabel]="'Yes'" [offLabel]="'No'">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'QuestionBankRequired'" [onLabel]="'Yes'" [offLabel]="'No'"
+                            [tooltipVisible]="true" [tooltipTitle]="'Question_Bank_Functionality_Required_Tooltip'"
+                            [label]="'QuestionBankRequired'"
+                            (onChangeSwitch)="switchQuestionBankFunctionalityRequired($event)">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6" *ngIf="isswitchQuestionBankFunctionalityRequiredShow">
+                    <div class="form-group">
+                        <app-kendo-dropdown [list]="sectorAllDropdowns.QuestionToBeAnsweredBys"
+                            [label]="'QuestionToBeAnsweredBy'" [controlName]="'QuestionToBeAnsweredBy'"
+                            [tooltipVisible]="true" [tooltipTitle]="'Question_To_Be_Answered_By_Tooltip'"
+                            [placeholder]="'DdlSelect'" [isRequired]="true">
+                        </app-kendo-dropdown>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                
+                <div class="col-sm-6 col-md-6" *ngIf="isswitchQuestionBankFunctionalityRequiredShow">
+                    <div class="form-group">
+                        <app-textbox [controlName]="'QuestionBankLabel'" [label]="'QuestionBankLabel'"
+                            [isSpecialCharacterAllowed]="true" [maxCharacters]="50" [tooltipVisible]="true"
+                            [tooltipTitle]="'Question_Bank_Label_Tooltip'" [isRequired]="true">
+                        </app-textbox>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <span class="textarea__count">{{'Days'|translate}}</span>
+                        <app-numeric-box [label]="'BroadCastInterval'" [maxlength]="2"
+                            [controlName]="'BroadCastInterval'" [tooltipVisible]="true"
+                            [tooltipTitle]="'Broadcast_Interval_Days_Tootip'" [format]="'n0'" [decimals]="0" [min]='0'
+                            [placeholder]="''" [isRequired]="true">
+                        </app-numeric-box>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-numeric-box [label]="'LiFillRateWeekAhead'" [tooltipVisible]="true" [isRequired]="true"
+                            [min]='0' [tooltipTitle]="'Weeks_Ahead_For_Li_Fill_Rate_Plan_Entry_Tooltip'" [maxlength]="2"
+                            [format]="'n0'" [decimals]="0" [controlName]="'LiFillRateWeekAhead'" [placeholder]="''"
+                            [isRequired]="false">
+                        </app-numeric-box>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'IsPositionDetailsEditable'" [tooltipVisible]="true"
+                            [tooltipTitle]="'Is_Position_Details_Editable_Tootip'" [label]="'IsPositionDetailsEditable'"
+                            [onLabel]="'Yes'" [offLabel]="'No'">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'IsRateExceptionAllowed'" [tooltipVisible]="true"
+                            [tooltipTitle]="'Rate_Exception_Allowed_Professional_Request_Tooltip'" [label]="'RateExceptionAllowed'"
+                            [onLabel]="'Yes'" [offLabel]="'No'">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <!-- input box start -->
+                <div class="col-sm-12 col-md-12">
+                    <h4 class="card__body--subheading">{{'CandidateEvaluation'|translate}}</h4>
+                </div>
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'IsSystemRankingFunctionality'" [tooltipVisible]="true"
+                            [tooltipTitle]="'Include_System_Candidate_Ranking_Functionality_Tooltip'"
+                            [label]="'IsSystemRankingFunctionality'" [onLabel]="'Yes'" [offLabel]="'No'"
+                            (onChangeSwitch)="switchIsSystemRankingFunctionality($event)">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="row" *ngIf="isswitchSystemRankingFunctionality">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-switch [controlName]="'IsSystemCandidateRankingMandatory'"
+                                [label]="'IsSystemCandidateRankingMandatory'" [onLabel]="'Yes'" [offLabel]="'No'"
+                                [tooltipVisible]="true" [tooltipTitle]="'System_Candidate_Ranking_Mandatory_Tooltip'">
+                            </app-kendo-switch>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-switch [controlName]="'EnableManagerScoring'" [tooltipVisible]="true"
+                                [tooltipTitle]="'Enable_Manager_Scoring_Tooltip'" [label]="'EnableManagerScoring'"
+                                [onLabel]="'Yes'" [offLabel]="'No'"
+                                (onChangeSwitch)="switchIsEnableManagerScoring($event)">
+                            </app-kendo-switch>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="isswitchEnableManagerScoring">
+                        <div class="form-group">
+                            <app-kendo-switch [controlName]="'IsManagerScoringMandatory'" [tooltipVisible]="true"
+                                [tooltipTitle]="'Manager_Scoring_Mandatory_Tooltip'"
+                                [label]="'IsManagerScoringMandatory'" [onLabel]="'Yes'" [offLabel]="'No'">
+                            </app-kendo-switch>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+                </div>
+
+                <div class="col-sm-12 col-md-12" *ngIf="isswitchSystemRankingFunctionality">
+                    <h4 class="card__body--subheading">{{'EvaluationCriteria'|translate}}</h4>
+                </div>
+                <ng-container *ngIf="listItems && listItems.length > 0 && isswitchSystemRankingFunctionality">
+                    <app-list-view #list (formData)="getFormStatus($event)" [columnData]="columnEvaluationCriteria"
+                        [columnConfigure]="columnEvaluationCriteriaConfiguration"
+                        [populatedData]="prefilledEvaluationCriteriaData">
+                    </app-list-view>
+                </ng-container>
+
+
+                <div class="col-sm-12 col-md-12">
+                    <h4 class="card__body--subheading">{{'AssignmentType'|translate}}</h4>
+                </div>
+
+                <div class="col-sm-12 col-md-12 list-view list-view__border">
+                    <app-list-view #list (formData)="getFormStatus($event)" [columnData]="columnAssignmentType"
+                        [columnConfigure]="columnAssignmentTypeConfiguration" [populatedData]="prefilledData">
+                    </app-list-view>
+
+                </div>
+            </div>
+        </div>
+        <!-- End Card Body Section-->
+        <!-- Card Footer Section-->
+
+        <!--End Card Footer Section-->
+    </div>
+    <!--Requisition Configuration Section end-->
+</form>

@@ -1,0 +1,101 @@
+<div class="app-content__body floating-layout floating-layout__view-layout">
+        <!-- card start -->
+        <div class="card">
+            <!-- Card Header Section-->
+            <div class="card__header">
+                <h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+                <div class="card__header-icon">
+                </div>
+            </div>
+            <!-- End Card Header Section-->
+
+            <!-- Card Body Section-->
+            <div class="card__body">
+
+                <!-- row start -->
+                <div class="row">
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'CountryName'" [value]="currentRecord.CountryName"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box end -->
+            
+                </div>
+                <!-- row end -->
+                <!-- row start -->
+                <div class="row">
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'LabelOfZipCode'" [value]="currentRecord.ZipLabel"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box end -->
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'SeriesOfZipCode'" [value]="currentRecord.ZipLengthSeries"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box end -->
+
+                </div>
+                <!-- row end -->
+                <!-- row start -->
+                <div class="row">
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'FormatOfZipCode'" [value]="(currentRecord.ZipFormat === 'AN' || currentRecord.ZipFormat === 'Alphanumeric' ?'Alphanumeric':'Numeric') | translate" ></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box end -->
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'PhoneExtFormat'" [value]="currentRecord.PhoneFormatWithExtension"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box end -->
+                </div>
+                <!-- row end -->
+                <!-- row start -->
+                <div class="row">
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'LabelOfState'" [value]="currentRecord.StateLabel"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box end -->
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="currentRecord.CurrencyCode !== null">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'CurrencyCode'" [value]="currentRecord.CurrencyCode"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box end -->
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="currentRecord.DateFormat !== null">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'DateFormat'" [value]="currentRecord.DateFormat"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box end -->
+                </div>
+                <!-- row end -->
+            </div>
+
+        </div>
+        <!-- card end -->
+    <!-- Footer Section-->
+    <div class="page-footer">
+        <div class="btn-box btn-box--center">
+            <button type="button" kendoButton  x themeColor="primary" (click)="redirectToList()">{{'Back' | translate}}</button>
+        </div>
+    </div>
+    <!-- End Footer Section-->
+</div>

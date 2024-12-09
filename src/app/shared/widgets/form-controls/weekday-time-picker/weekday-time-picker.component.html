@@ -1,0 +1,24 @@
+<div class="dropdown__shift-range">
+      <tooltip-content [tooltipVisible]="tooltipVisible" [tooltipTitle]="tooltipTitle" [label]="label"
+      [isRequired]="isRequired" 
+      [labelLocalizeParam]="labelLocalizeParam">
+    </tooltip-content>
+      <div>
+      <span [ngClass]="isWeekdayEditMode ? 'achor__text' : 'achor__text--disabled'">
+        <ul class="dropdown__shift-range__days" kendoTooltip>
+          <li *ngFor="let item of dayInfo; let i = index" 
+              (click)="toggleDaySelection(item)"
+              [ngClass]="!isWeekdayEditMode ? (!item.isSelected ? 'disable-day' : 'allDays event-day') 
+              : (item.isSelected ? 'activeDays event-day' : '')"
+              [title]="item.day">
+            <span> {{ item.day[0].toUpperCase() }}</span>
+          </li>
+        </ul>
+        <div *ngIf="!isDaySelectionValid" class="error-message">
+          {{'PleaseSelectData' | translate : getObject(errorMessage)}}
+        </div>
+      </span>
+    </div>
+    <!-- </div> -->
+  </div>
+  

@@ -1,0 +1,51 @@
+<form [formGroup]="AddEditOrganizationLevelForm">
+  <div class="card">
+    <div class="card__header">
+      <h4 class="card__heading">{{'BasicDetails'|translate}}</h4>
+
+    </div>
+
+    <div class="card__body">
+      <div class="row">
+        <div class="clearfix"></div>
+        <div class="col-sm-6 col-md-6">
+          <div class="form-group">
+            <app-kendo-dropdown [list]="SectorList" [label]="SectorLabel" [controlName]="'sectorId'"
+              [placeholder]="'Select'" [isRequired]="true" [isEditMode]="isEditMode"
+              (onChange)="onChangeSector($event)">
+            </app-kendo-dropdown>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-6">
+          <app-textbox [controlName]="'OrganizationName'" [label]="orgLabelName | translate" [isRequired]="true"
+            [isSpecialCharacterAllowed]="true" [maxCharacters]="100"
+            >
+          </app-textbox>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <ng-container *ngIf="sectorId > 0">
+
+    <app-udf-implementation [entityId]="entityId" [sectorId]="sectorId" [recordUKey]="recordUKey"
+      [recordId]="udfRecordId" [parentsInfos]="udfCommonMethods.getParentsInfo()" [actionTypeId]="actionTypeId"
+      (onDataPicked)="getUdfData($event)">
+    </app-udf-implementation>
+
+  </ng-container>
+
+  <div class="page-footer">
+    <div class="btn-box btn-box--center">
+      <button type="button" kendoButton fillMode="outline" themeColor="primary"
+      routerLink="/xrm/master/organization-level3">
+      {{ "Cancel" | translate }}
+    </button>
+      <button type="submit" kendoButton (click)="checkOrgName()" themeColor="primary" translate appFocusOnError
+        [formName]="AddEditOrganizationLevelForm"
+        [disabled]="isEditMode ? AddEditOrganizationLevelForm.pristine : false">
+        {{ "Save" }}
+      </button>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,181 @@
+<div class="app-content__body">
+    <div class="card" *ngIf="!isEditMode">
+        <div class="card__header">
+            <h4 class="card__heading">{{copyFromExistingRestMealBreakText}}</h4>
+        </div>
+        <div class="card__body">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <form [formGroup]="CopyExistingRestMealBreakForm">
+                            <app-kendo-dropdown #CopyValues [list]="restMealBreakCopyDropdown"
+                                [label]="'CopyFromSelectedSector'" [controlName]="'IsCopyRestMealBreak'"
+                                [placeholder]="'DdlSelect'" [labelLocalizeParam]="ruleNameLocalizeParam"
+                                [isEditMode]="isEditMode" (onChange)="onSelectingExistingRule()">
+                            </app-kendo-dropdown>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group" *ngIf="!isEditMode">
+                        <app-kendo-button class="copy__btn" data-bs-toggle="offcanvas"
+                            [buttonName]="'CopyFromSelectedSector'" [buttonIcon]="'copy'"
+                            [buttonLocalizeParam]="labelLocalizeParam" fillMode="outline"
+                            (click)="OnCopyExistingRuleName(CopyValues.formControl.value)">
+                        </app-kendo-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form [formGroup]="AddEditMealBreakForm">
+        <div class="card">
+            <div class="card__header">
+                <h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+            </div>
+            <div class="card__body">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-textbox [controlName]="'RuleName'" [label]="'RuleName'" [isEditMode]="isEditMode"
+                                [isRequired]="true" [tooltipVisible]="isTooltipVisible" [maxCharacters]="magicNumber.hundred"
+                                [tooltipTitle]="'Rule_Tooltip'">
+                            </app-textbox>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <app-kendo-textarea [controlName]="'RuleDescription'" [label]="'RuleDescription'"
+                                [isSpecialCharacterAllowed]="true" [maxCharacters]="magicNumber.twoThousand" [isRequired]="false">
+                            </app-kendo-textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card__header">
+                <h4 class="card__heading">{{'RestOrMealBreakConfiguration'| translate}}</h4>
+            </div>
+            <div class="card__body">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-switch [controlName]="'AllowInOutTimeSheet'"
+                                [label]="'AllowInOutTimeinTimeSheet'" [onLabel]="'Yes'" [offLabel]="'No'"
+                                [isRequired]="false" (onChangeSwitch)="AllowInOutTimeSheet($event)"
+                                [tooltipVisible]="true" [tooltipTitle]="'Allow_In_Out_Time_in_Timsheet_Tooltip'">
+                            </app-kendo-switch>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group" *ngIf="isAllowInOutTimeSheet && !isAllowInOutMealBreak">
+                            <app-numeric-box [controlName]="'DefaultBreakDuration'" [min]="magicNumber.zero" [maxlength]="magicNumber.four"
+                                [label]="'DefaultBreakDurationIfApplied'" [isRequired]="true">
+                            </app-numeric-box>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6" *ngIf="isAllowInOutTimeSheet">
+                        <div class="form-group">
+                            <app-kendo-switch [controlName]="'AllowInOutMealBreak'"
+                                [label]="'AllowToEnterInOutDetailForMeal'" [onLabel]="'Yes'" [offLabel]="'No'"
+                                [isRequired]="false" (onChangeSwitch)="AllowInOutMealBreak($event)"
+                                [tooltipVisible]="true"
+                                [tooltipTitle]="'Allow_to_enter_In_Out_detail_of_Meal_Break_Tooltip'">
+                            </app-kendo-switch>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6" *ngIf="isAllowInOutMealBreak && isAllowInOutTimeSheet">
+                        <app-kendo-dropdown [list]="MealBreakList" [label]="'NoofMealBreakInaDay'"
+                            [controlName]="'NumberOfMealBreak'" [isRequired]="true"
+                            (onChange)="onNumberOfMealBreakInADay($event)">
+                        </app-kendo-dropdown>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card" *ngIf="isAllowInOutMealBreak && isAllowInOutTimeSheet">
+            <div class="card__header">
+                <h4 class="card__heading">{{'MealBreakPenaltyConfiguration' | translate}}</h4>
+            </div>
+            <div class="card__body">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-switch [controlName]="'MealBreakPenalty'" [label]="'MealBreakPenalty'"
+                                [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                                [tooltipTitle]="'Timesheet_be_subjects_to_Penalty_Hours_for_untaken_insufficient_meal_break_Tooltip'"
+                                [isRequired]="false" (onChangeSwitch)="MealBreakPenalty($event)">
+                            </app-kendo-switch>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group" *ngIf="showMealBreakCard">
+                            <app-numeric-box [controlName]="'MealBreakPenaltyHours'" [label]="'PenaltyHours'" [min]="magicNumber.zero"
+                                [maxlength]="magicNumber.five" format="n2" [decimals]="magicNumber.two" [isRequired]="true" [tooltipVisible]="true"
+                                [tooltipTitle]="'Penalty_Hours_Tooltip'">
+                            </app-numeric-box>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 list-view form-group grid-border" *ngIf="showMealBreakCard">
+                        <div class="form-group">
+                            <app-list-view (formData)="getFormStatus($event)"
+                                [labelText]="MealBreakPenaltyHoursFirstColumn"
+                                [columnData]="MealBreakPenaltyHoursColumns"
+                                [columnConfigure]="MealBreakPenaltyHoursGridConfigs"
+                                [populatedData]="MealBreakPenaltyHoursPrefilledData">
+                            </app-list-view>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card" *ngIf="isAllowInOutMealBreak && isAllowInOutTimeSheet ">
+            <div class="card__header">
+                <h4 class="card__heading">{{'RestBreakPenaltyConfiguration' | translate}}</h4>
+            </div>
+            <div class="card__body">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-switch [controlName]="'RestBreakPenalty'" [label]="'RestBreakPenalty'"
+                                [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                                [tooltipTitle]="'Timesheet_be_subjects_to_Penalty_Hours_for_Rest_break_Tooltip'"
+                                [isRequired]="false" (onChangeSwitch)="RestBreakPenalty($event)">
+                            </app-kendo-switch>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="showRestBreakCard">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-numeric-box [controlName]="'RestBreakMinimumHours'" [isRequired]="true" format="n2"
+                                    [decimals]="magicNumber.two" [label]="'MinimumHoursWorked'" [min]="magicNumber.zero" [maxlength]="magicNumber.five"
+                                    [tooltipVisible]="true" [tooltipTitle]="'Minimum_Hours_Worked_Tooltip'">
+                                </app-numeric-box>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-numeric-box [controlName]="'RestBreakPenaltyHours'" [isRequired]="true" format="n2"
+                                    [decimals]="magicNumber.two" [label]="'PenaltyHours'" [min]="magicNumber.zero" [maxlength]="magicNumber.five"
+                                    [tooltipVisible]="true" [tooltipTitle]="'Penalty_Tooltip'">
+                                </app-numeric-box>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-footer">
+            <div class="btn-box btn-box--center">
+                <button type="button" kendoButton fillMode="outline" themeColor="primary"
+                    [innerText]="'Cancel' | translate" (click)="backToList()">
+                </button>
+                <button type="button" kendoButton (click)="submitForm()" themeColor="primary"
+                    [disabled]="(isEditMode ? AddEditMealBreakForm.pristine : false)" appFocusOnError
+                    [formName]="AddEditMealBreakForm" [innerText]="'Save' | translate">
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

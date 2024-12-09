@@ -1,0 +1,68 @@
+.logo-xrm{
+    width: 50px;
+}
+.page {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-pack: center;
+    justify-content: center;
+    min-height: 80vh;
+}
+.right-logo1 {
+    padding: 20px;
+    background-color: #fff;
+}
+.right-logo1 img {
+    width: 130px;
+}
+#page__not--found1 {
+    padding: 150px 0px;
+}
+.err4n-h6 {
+    font-size: 17px;
+    font-weight: normal;
+    color: #000;
+    margin: 8px 0 25px;
+}
+.err4n-h2 {
+    color: #000;
+    font-size: 30px;
+}
+.er-imgs {
+    text-align: center;
+}
+.er-imgs img {
+    width: 200px;
+}
+
+.img-absolute {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.img-absolute img {
+    width: 400px;
+}
+@media (max-width:980px) {
+.er-imgs.img-absolute img { 
+    width: 320px !important;
+}
+}
+@media (max-width:640px) {
+.er-imgs.img-absolute {
+    right: unset !important;
+    top: unset !important;
+    transform: unset !important;
+}
+.er-imgs.img-absolute img { 
+    width: 400px !important;
+}
+}
+@media (max-width:415px) {
+.er-imgs.img-absolute img { 
+    width: 100% !important;
+}
+}

@@ -1,0 +1,26 @@
+<form [formGroup]="benefitAdderConfigForm">
+    <div class="card">
+        <div class="card__header">
+            <h4 class="card__heading">{{ 'BenefitAdderConfigurations' | translate }}</h4>
+            <div class="card__header-icon">
+            </div>
+        </div>
+        <div class="card__body">
+            <div class="row">
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'IsBenefitAdder'" [tooltipVisible]="true"
+                            [tooltipTitle]="'Require_Benefit_Adders_Tooltip'" [label]="'IsBenefitAdder'"
+                            [onLabel]="'Yes'" [offLabel]="'No'" (onChangeSwitch)="switchBenefitAdder($event)">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="isSwitchBenefitAdderShow">
+                <app-list-view #list (formData)="getFormStatus($event)" [columnData]="benefitAddercolumns"
+                    [columnConfigure]="benefitAdderColumnConfigs" [populatedData]="prefilledData">
+                </app-list-view>
+            </div>
+        </div>
+    </div>
+</form>

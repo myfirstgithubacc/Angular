@@ -1,0 +1,141 @@
+<div class="card">
+  <!-- Card Header Section-->
+  <div class="card__header">
+      <h4 class="card__heading">Job Details</h4>
+      <div class="card__header-icon">
+      </div>
+  </div>
+  <!-- End Card Header Section-->
+  <div class="card__body">
+      <div class="row">
+          <div class="col-sm-12 col-md-12">
+            <div class="view__screen">
+              <ul class="list__data">
+                  <li class="list__data--item"> <strong class="kendo-label">{{'Sector' |
+                          translate}}</strong>
+                      <span class="data-answere">{{LIRequestData?.SectorName}}</span>
+                  </li>
+                  <li class="list__data--item"> <strong class="kendo-label">{{'Location' |
+                          translate}}</strong>
+
+                      <span class="data-answere">{{LIRequestData?.WorkLocationName}}</span>
+                  </li>
+                  <li class="list__data--item"> <strong
+                          class="kendo-label">{{'RequestingPrimaryManagerName' |
+                          translate}}</strong>
+                      <span class="data-answere">{{LIRequestData?.RequestingManagerName}}</span>
+                  </li>
+
+                  <ng-container
+                      >
+                      <ng-container *ngIf="getDynamicLabelName('OrganizationLevel1')?.isVisible">
+                          <li class="list__data--item"> <strong
+                                  class="kendo-label">{{getDynamicLabelName('OrganizationLevel1')?.Value! | translate}}
+                              </strong>
+                              <span class="data-answere">{{LIRequestData?.Orglevel1Name}}</span>
+                          </li>
+                      </ng-container>
+                      <ng-container *ngIf="getDynamicLabelName('OrganizationLevel2')?.isVisible">
+                          <li class="list__data--item"> <strong
+                                  class="kendo-label">{{getDynamicLabelName('OrganizationLevel2')?.Value! | translate}}</strong>
+                              <span class="data-answere">{{LIRequestData?.Orglevel2Name}}</span>
+                          </li>
+                      </ng-container>
+                      <ng-container *ngIf="getDynamicLabelName('OrganizationLevel3')?.isVisible">
+                          <li class="list__data--item">
+                              <strong class="kendo-label">{{getDynamicLabelName('OrganizationLevel3')?.Value! | translate}}</strong>
+                              <span class="data-answere">{{LIRequestData?.Orglevel3Name}}</span>
+                          </li>
+                      </ng-container>
+                      <ng-container *ngIf="getDynamicLabelName('OrganizationLevel4')?.isVisible">
+                          <li class="list__data--item"> <strong
+                                  class="kendo-label">{{getDynamicLabelName('OrganizationLevel4')?.Value! | translate}}</strong>
+                              <span class="data-answere">{{LIRequestData?.Orglevel4Name}}</span>
+                          </li>
+                      </ng-container>
+                  </ng-container>
+                  <li class="list__data--item"> <strong class="kendo-label">{{'LaborCategory'
+                          |
+                          translate}}</strong>
+                      <span class="data-answere">{{LIRequestData?.LaborCategoryName}}</span>
+                  </li>
+                  <li class="list__data--item"> <strong class="kendo-label">{{'JobCategory' |
+                          translate}}</strong>
+                      <span class="data-answere">{{LIRequestData?.JobCategoryName}}</span>
+                  </li>
+                  <li class="list__data--item"> <strong class="kendo-label">{{'Shift' |
+                          translate}}</strong>
+                      <span class="data-answere">{{LIRequestData?.RequestShiftDetailGetAllDto?.ShiftName}}
+                      </span>
+                  </li>
+                  <li class="list__data--item"> <strong
+                          class="kendo-label">{{'HourDistribution' |
+                          translate}}</strong>
+                      <span
+                          class="data-answere">{{LIRequestData?.HourDistributionRuleName}}</span>
+                  </li>
+                  <li class="list__data--item cost-accounting-panel-view"> <strong
+                          class="kendo-label">{{'CostAccountingCode' | translate}}</strong>
+                      <span class="data-answere">{{LIRequestData?.CostAccountingCode}}
+                      </span>
+                  </li>
+
+                  <li class="list__data--item"> <strong
+                          class="kendo-label">{{'ReasonForRequest'
+                          | translate}}</strong>
+                      <span class="data-answere">{{LIRequestData?.ReasonForRequestName}}</span>
+                  </li>
+                  <li class="list__data--item"> <strong class="kendo-label">{{'StartDate' |
+                          translate}}</strong>
+                      <span class="data-answere">{{getDateLocalization(LIRequestData?.StartDate??"")}}</span>
+                  </li>
+
+                  <!-- <ng-container *ngIf="isTimeApproverConditionMet()">
+                      <li class="list__data--item" *ngIf="!showControl()"> <strong
+                              class="kendo-label">{{'PrimaryApprover' |
+                              translate}}</strong>
+                          <span
+                              class="data-answere">{{LIRequestData.PrimaryTimeApproverName}}</span>
+                      </li>
+                      <li class="list__data--item" *ngIf="showControl()"> <strong
+                              class="kendo-label">{{'PrimaryApprover' |
+                              translate}}</strong>
+                          <span class="data-answere">Multiple Approver</span>
+                      </li>
+                  </ng-container>
+                  <ng-container *ngIf="isTimeApproverConditionMet()">
+                      <li class="list__data--item" *ngIf="!showControl()"> <strong
+                              class="kendo-label">{{'AlternateApprover' |
+                              translate}}</strong>
+                          <span
+                              class="data-answere">{{LIRequestData.AlternateTimeApproverName}}</span>
+                      </li>
+                      <li class="list__data--item" *ngIf="showControl()"> <strong
+                              class="kendo-label">{{'AlternateApprover' |
+                              translate}}</strong>
+                          <span class="data-answere">Multiple Approver</span>
+                      </li>
+                  </ng-container>
+                  <ng-container *ngIf="showDrugField()">
+                      <li class="list__data--item"> <strong
+                              class="kendo-label">{{'DrugScreenId' |
+                              translate}}</strong>
+                          <span class="data-answere">{{LIRequestData.IsDrugTestRequired ? 'Yes' :
+                              'No'}}</span>
+                      </li>
+                  </ng-container>
+
+                  <ng-container *ngIf="showaBackgroundField()">
+                      <li class="list__data--item"> <strong
+                              class="kendo-label">{{'BackgroundChecksTitle' |
+                              translate}}</strong>
+                          <span class="data-answere">{{LIRequestData.IsBackgrounCheckRequired ?
+                              'Yes' : 'No'}}</span>
+                      </li>
+                  </ng-container> -->
+              </ul>
+          </div>
+          </div>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,218 @@
+<div class="app-content__body">
+    <form [formGroup]="AddEditCandidatePoolForm">
+        <div class="card">
+            <div class="card__header">
+                <h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+            </div>
+            <div class="card__body">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <kendo-label text="Candidate Name"> <xrm-icon name="star" class="required"></xrm-icon>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <app-textbox [controlName]="'CandidateLastName'"
+                                            [maxCharacters]="magicNumber.twenty" [isSpecialCharacterAllowed]="true"
+                                            [placeholder]="'LastName'"></app-textbox>
+                                    </div>
+                                    <div class="col-4">
+                                        <app-textbox [controlName]="'CandidateFirstName'"
+                                            [maxCharacters]="magicNumber.twenty" [isSpecialCharacterAllowed]="true"
+                                            [placeholder]="'FirstName'"></app-textbox>
+                                    </div>
+                                    <div class="col-4">
+                                        <app-textbox [controlName]="'CandidateMiddleInitial'"
+                                            [maxCharacters]="magicNumber.ten" [isSpecialCharacterAllowed]="true"
+                                            [placeholder]="'MiddleInitial'"></app-textbox>
+                                    </div>
+                                </div>
+                            </kendo-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-textbox [isRequired]="false" [label]="'EmailAddress'"
+                                [maxCharacters]="magicNumber.fifty" [isSpecialCharacterAllowed]="true"
+                                [controlName]="'EmailAddress'">
+                            </app-textbox>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-phone [label]="'ContactNumber'" [phoneControlName]="'ContactNumber'"
+                                [isExtension]="true" [phoneExtControlName]="'PhoneNumberExt'" [countryId]="countryId">
+                            </app-kendo-phone>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6" *ngIf="isUID">
+                        <div class="form-group">
+                            <app-textbox [isRequired]="true" [label]="UIDlabel"
+                                [maxCharacters]="UIDlength == magicNumber.zero ? magicNumber.thirty : UIDlength"
+                                [isSpecialCharacterAllowed]="true" [controlName]="'UId'"
+                                [isEditMode]="isUsedInAssignment" (onChangeTextBox)="checkAlphaNumeric($event)">
+                            </app-textbox>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12">
+                        <div class="card__body--subheading"></div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-switch [controlName]="'PreviouslyPlacedAtThisClient'"
+                                [label]="'PreviouslyPlacedAtThisClient'" [onLabel]="'Yes'" [offLabel]="'No'"
+                                (onChangeSwitch)="switchPreviouslyPlacedAtThisClient($event)">
+                            </app-kendo-switch>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-sm-6 col-md-6" *ngIf="isSwitchPreviouslyPlacedAtThisClient">
+                        <div class="form-group">
+                            <app-kendo-textarea [tooltipVisible]="true" [tooltipTitle]="'WorkDetailsToolTip'"
+                                [maxCharacters]="magicNumber.twoThousand" [isSpecialCharacterAllowed]="true"
+                                [controlName]="'WorkDetails'" [label]="'WorkDetails'">
+                            </app-kendo-textarea>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card__header">
+                <h4 class="card__heading">{{'OrganizationPreferences' | translate}}</h4>
+                <div class="card__header-icon">
+                </div>
+            </div>
+            <div class="card__body">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-multiselect-dropdown [list]="candidatePoolDrugScreenResultSectorData"
+                                (onChange)="sectorChange($event)" [label]="'PreferredSector'"
+                                [isSpecialCharacterAllowed]="true" [labelLocalizeParam]="sectorLabelTextParams"
+                                [controlName]="'PreferredSectors'" [placeholder]="'DdlSelect'" [isRequired]="false">
+                            </app-kendo-multiselect-dropdown>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-multiselect-dropdown [isSpecialCharacterAllowed]="true"
+                                [list]="candidatePoolDrugScreenResultAssignmentData" [label]="'PreferredAssignmentType'"
+                                [tooltipVisible]="true" [tooltipTitle]="'PreferredAssignmentTypeToolTip'"
+                                [controlName]="'PreferredAssignmentTypes'"
+                                [placeholder]="'DdlSelect'"></app-kendo-multiselect-dropdown>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-multiselect-dropdown [isSpecialCharacterAllowed]="true"
+                                [list]="multiSelectLocation" [label]="'PreferredLocation'" [tooltipVisible]="true"
+                                [tooltipTitle]="'PreferredLocationToolTip'" [controlName]="'PreferredLocations'"
+                                [placeholder]="'DdlSelect'"></app-kendo-multiselect-dropdown>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-textbox [tooltipVisible]="true" [tooltipTitle]="'PreferredShiftToolTip'"
+                                [label]="'PreferredShift'" [maxCharacters]="magicNumber.oneFifty"
+                                [isSpecialCharacterAllowed]="true" [controlName]="'PreferredShift'"></app-textbox>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card__header">
+                <h4 class="card__heading">{{'VettingDetails' | translate}}</h4>
+                <div class="card__header-icon">
+                </div>
+            </div>
+            <div class="card__body">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-radio-button [controlName]="'DrugScreenId'"
+                                [RadioGroup]="candidatePoolDrugScreenIdData" [name]="'DrugScreenId'"
+                                [label]="'DrugScreenId'" (onChangeRadio)="radioDrugScreenId($event)"
+                                [isEditMode]="isActiveAssignment">
+                            </app-kendo-radio-button>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-radio-button [controlName]="'BackgroundCheckId'"
+                                [RadioGroup]="candidatePoolBackgroundCheckIdData" [name]="'BackgroundCheckId'"
+                                [label]="'BackgroundChecksTitle'" (onChangeRadio)="radioBackgroundCheckId($event)"
+                                [isEditMode]="isActiveAssignment"></app-kendo-radio-button>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group"
+                            *ngIf="(!isradioDrugScreenId && (AddEditCandidatePoolForm.controls['DrugScreenId'].value==drugScreen))">
+                            <app-kendo-label [label]="'DrugScreenResult'"
+                                [value]="'Pending'| translate"></app-kendo-label>
+                        </div>
+                        <div class="form-group" *ngIf="isradioDrugScreenId">
+                            <app-kendo-radio-button [controlName]="'DrugScreenResultId'" [name]="'DrugScreenResultId'"
+                                [RadioGroup]="candidatePoolDrugScreenResultData" [label]="'DrugScreenResult'"
+                                [isRequired]="true" [isEditMode]="isActiveAssignment"></app-kendo-radio-button>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group" *ngIf="isradioBackgroundCheckId">
+                            <app-kendo-datepicker [label]="'BackgroundResultDate'" placeholder=""
+                                [controlName]="'BackgroundResultDate'" [isRequired]="true"
+                                [isEditMode]="isActiveAssignment"></app-kendo-datepicker>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6" *ngIf="isradioDrugScreenId">
+                        <div class="form-group">
+                            <app-kendo-datepicker [label]="'DrugResultDate'" placeholder=""
+                                [controlName]="'DrugResultDate'" [isRequired]="true"
+                                [isEditMode]="isActiveAssignment"></app-kendo-datepicker>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-sm-6 col-md-12">
+                        <div class="form-group">
+                            <app-kendo-switch [controlName]="'IsCandidateEligibleForSecurityClearance'"
+                                [label]="'IsCandidateEligibleForSecurityClearance'" [onLabel]="'Yes'" [offLabel]="'No'"
+                                (onChangeSwitch)="switchExpressLaborCategory($event)">
+                            </app-kendo-switch>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6" *ngIf="isSwitchExpressLaborCategory">
+                        <div class="form-group">
+                            <app-textbox [label]="'CurrentSecurityClearanceLevel'" [isSpecialCharacterAllowed]="true"
+                                [controlName]="'CurrentSecurityClearanceLevel'" [isRequired]="true"></app-textbox>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-udf-implementation [entityId]="entityId" [sectorId]="sectorId" [recordUKey]="recordUKey"
+            [parentsInfos]="udfCommonMethods.getParentsInfo()" [actionTypeId]="actionTypeId"
+            (onDataPicked)="getUdfData($event)">
+        </app-udf-implementation>
+        <ng-container>
+            <app-dms-implementation #dms [workFlowId]="entityId" [userGroupId]="userGroupId" [sectorId]="sectorId"
+                [uploadStageId]="uploadStageId" [actionTypeId]="actionTypeId" [recordId]="candidatePoolId"
+                (gridChange)="onGridChange()" [isTransactionScreen]="false">
+            </app-dms-implementation>
+        </ng-container>
+        <div class="page-footer">
+            <div class="btn-box btn-box--center">
+                <button type="button" kendoButton fillMode="outline" themeColor="primary" (click)="navigateToList()">
+                    {{ "Cancel" }}
+                </button>
+                <button type="button" kendoButton (click)="submitForm()" appFocusOnError
+                    [formName]="AddEditCandidatePoolForm" themeColor="primary"
+                    [disabled]="isEditMode ? (AddEditCandidatePoolForm.pristine && !dmsGridChangeDetected) : false"
+                    [innerText]="'Save'">
+                    {{'Save' | translate }}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

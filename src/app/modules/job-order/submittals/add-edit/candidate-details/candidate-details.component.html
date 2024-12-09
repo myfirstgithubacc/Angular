@@ -1,0 +1,164 @@
+<form [formGroup]="candidateDetailsForm">
+    <kendo-expansionpanel [expanded]="isCardVisible" (expandedChange)="onExpandedCollapse($event)" class="card">
+        <ng-template kendoExpansionPanelTitleDirective>
+            <div (click)="$event.stopPropagation()">
+                <h4 class="card__heading">{{'CandidateDetails'|translate}}</h4>
+            </div>
+            <div class="card__header-icon">
+                <div class="card__header-icon--success">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <div class="card__header-icon--error">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+            </div>
+        </ng-template>
+        <div class="card__body">
+            <div class="row">
+                <!-- Input Box Start -->
+                <div class="col-sm-6 col-md-6" *ngIf="candidateCardData.IsCanDetailsEditable">
+                    <div class="form-group">
+                        <kendo-label text="{{'CandidateName'|translate}}">
+                            <xrm-icon name="star" class="required"></xrm-icon>
+                        </kendo-label>
+                            <div class="row">
+                                <div class="col-4">
+                                    <app-textbox [controlName]="'lastName'" [specialCharactersAllowed]="['.', '\'']"
+                                        [placeholder]="'Last Name'" [isSpecialCharacterAllowed]="true"></app-textbox>
+                                </div>
+                                <div class="col-4">
+                                    <app-textbox [controlName]="'firstName'" [specialCharactersAllowed]="['.', '\'']"
+                                        [placeholder]="'First Name'" [isSpecialCharacterAllowed]="true"></app-textbox>
+                                </div>
+                                <div class="col-4">
+                                    <app-textbox [controlName]="'middleName'" [specialCharactersAllowed]="['.', '\'']"
+                                        [placeholder]="'Middle Initial'" [isSpecialCharacterAllowed]="true"></app-textbox>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- Input Box Start -->
+                <div class="col-sm-6 col-md-6" *ngIf="!candidateCardData.IsCanDetailsEditable">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <app-kendo-label [label]="getLocaliseMessage('CandidateName')" [value]="candidateCardData.FullName"></app-kendo-label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- Input Box Start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <app-textbox [isEditMode]="!candidateCardData.IsCanDetailsEditable" [label]="getLocaliseMessage('UID')" [isRequired] = "true"
+                                [maxCharacters]="uidLength" [controlName]="'uId'" [placeholder]="'UID'"></app-textbox>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-textbox [isRequired]="true" [label]="getLocaliseMessage('Email')"
+                        [xrmEntityId]="entityId" [maxCharacters]="50" [controlName]="'email'"></app-textbox>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-phone [fieldName]="'RecruiterPhoneNumber'"
+                                    [xrmEntityId]="entityId" [label]="getLocaliseMessage('ContactNumber')" [phoneControlName]="'phoneNumber'"
+                                    [isExtension]="true" [countryId]="1" [isMaskValidation] = "false"
+                                    [phoneExtControlName]="'phoneNumberExt'" [isRequired]="true"
+                        ></app-kendo-phone>
+                    </div>
+                </div>
+                <!-- input box end -->
+      
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-dropdown [isRequired]="true"
+                            [label]="getLocaliseMessage('WorkerClassification')"
+                            [list]="workerClassificationList"
+                            [controlName]="'workerClassification'" [placeholder]="'-Select-'">
+                        </app-kendo-dropdown>
+                    </div>
+                </div>
+                <!-- input box end -->
+      
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-textbox [isRequired]="true" [label]="getLocaliseMessage('SubVendorName')"
+                            [controlName]="'subCategory'"></app-textbox>
+                    </div>
+                </div>
+                <!-- input box end -->
+      
+                <!-- input box start -->
+                <div class=" col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <app-kendo-switch
+                            [controlName]="'isPreviouslyWorked'"
+                            [label]="getLocaliseMessage('CandidateAlreadyWorkedForOrganisation')"
+                            [onLabel]="'Yes'" [offLabel]="'No'">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <!-- input box end -->
+      
+                <!-- input box start -->
+                <div class=" col-sm-12 col-md-12" *ngIf="isPreviouslyWorked">
+                    <div class="form-group">
+                        <app-kendo-textarea
+                            [label]="getLocaliseMessage('ProvidePreviousWorkHistory')" [isRequired]="true"
+                            [controlName]="'workHistoryDetails'" [maxCharacters]="2000"></app-kendo-textarea>
+                    </div>
+                </div>
+                <!-- input box end -->
+      
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6" *ngIf="isPreviouslyWorked">
+                    <div class="form-group">
+                        <app-kendo-datepicker
+                            [label]="getLocaliseMessage('CandidateWorkingEnterEndDate')"
+                            [controlName]="'endDate'"></app-kendo-datepicker>
+                    </div>
+                </div>
+                <!-- input box end -->
+      
+                <div class="clearfix"></div>
+      
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-textbox [tooltipVisible]="true"
+                            [tooltipTitle]="'InterviewAvailabilityToolTip'"
+                            [label]="'InterviewAvailability'" [controlName]="'interviewDate'"></app-textbox>
+                    </div>
+                </div>
+                <!-- input box end -->
+      
+                <!-- input box start -->
+                <div class=" col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-textbox [tooltipVisible]="true"
+                            [tooltipTitle]="'StartAvailabilityToolTip'"
+                            [label]="'StartAvailability'" [controlName]="'startDate'"></app-textbox>
+                    </div>
+                </div>
+                <!-- input box end -->
+            </div>
+        </div>
+      </kendo-expansionpanel>
+</form>

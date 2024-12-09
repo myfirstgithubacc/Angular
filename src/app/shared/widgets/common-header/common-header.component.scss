@@ -1,0 +1,141 @@
+.card-status {
+	background: #fff;
+
+	.card-body {
+		padding: 15px 16px 0;
+	}
+
+	.form-group {
+		margin-bottom: 14px;
+	}
+}
+
+.card {
+	&.card-status {
+		&:before {
+			top: 15px;
+		}
+	}
+}
+
+.basic-status-left {
+	ul {
+		padding-left: 0;
+		margin-bottom: 0;
+
+		li {
+			list-style-type: none;
+			display: inline-block;
+			position: relative;
+			white-space: normal;
+			word-break: break-all;
+
+			.request_id {
+				color: var(--color-primary);
+			}
+
+			&:first-child {
+				&:before {
+					display: none;
+					display: none;
+				}
+			}
+
+			&::before {
+				content: "|";
+				color: #9b9b9b;
+				padding: 0 5px;
+			}
+		}
+	}
+
+	.inactive {
+		color: var(--red-color);
+	}
+
+	.active {
+		color: var(--green-color);
+	}
+
+	.probation {
+		color: var(--orange-color);
+	}
+
+	.potential {
+		color: var(--navy-blue-color);
+	}
+}
+
+.basic-title,
+.basic-status-left ul li:first-child {
+	font-weight: 600;
+	font-size: 14px;
+}
+
+.basic-code {
+	font-size: var(--base-font-size);
+}
+
+.basic-status {
+	font-size: 11px;
+}
+
+.show-status {
+	display: inline-flex;
+
+	.editLabel {
+		margin-left: 15px;
+		cursor: pointer;
+		display: block;
+		position: relative;
+		top: 3px;
+
+		.check-approve {
+			color: var(--navy-blue-color);
+		}
+
+		.check-fill-request {
+			color: var(--dark-blue-color);
+		}
+	}
+}
+
+.show-status .editLabel .check-inactive,
+.show-status .editLabel .red-color,
+.show-status .editLabel .check-active,
+.show-status .editLabel .green-color,
+.show-status .editLabel .check-edit,
+.show-status .editLabel .orange-color {
+	text-align: center;
+	font-size: 14px;
+	border-radius: 4px;
+}
+
+.show-status .editLabel .check-inactive,
+.show-status .editLabel .red-color,
+.show-status .editLabel .check-broadcast {
+	color: var(--red-color);
+}
+
+.show-status .editLabel .check-active,
+.show-status .editLabel .green-color {
+	color: var(--green-color);
+}
+
+.show-status .editLabel .check-edit,
+.show-status .editLabel .orange-color,
+.show-status .editLabel .check-pre-screen {
+	color: var(--orange-color);
+}
+
+.basic__status-row {
+	display: flex;
+}
+
+.basic__status-colleft {
+	flex: 1 1 auto;
+}
+
+.basic__status-colright {
+	flex: 0 0 auto;
+}

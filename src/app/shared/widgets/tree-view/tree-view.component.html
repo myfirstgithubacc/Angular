@@ -1,0 +1,16 @@
+<tooltip-content *ngIf="data" [label]="label" [tooltipVisible]="tooltipVisible" [tooltipTitle]="tooltipTitle" [isRequired]="isRequired"
+  [tooltipPosition]="tooltipPosition" [tooltipTitleLocalizeParam]="tooltipTitleLocalizeParam">
+</tooltip-content>
+
+<kendo-formfield>
+  <span *ngIf="data">
+    <kendo-treeview *ngIf="showTreeView" class="tree_view_appearance" [nodes]="data" [textField]="textField" kendoTreeViewHierarchyBinding 
+    [disabledKeys]="disabledKeys"   kendoTreeViewDisable
+      [childrenField]="childrenField" [formControl]="TreeValue" [filterable]="isFiltered" kendoTreeViewExpandable
+      (checkedChange)="onSelectionChange($event)" kendoTreeViewCheckable [(expandedKeys)]="expandedKeys"
+      [(checkedKeys)]="checkedKeys" selectBy="text" [ngStyle]="height ? {'min-height': height} : {'min-height': 'auto'}"
+      [loadOnDemand]="false"  >
+    </kendo-treeview>
+    <app-print-error-message [control]="TreeValue"></app-print-error-message>
+  </span>
+</kendo-formfield>

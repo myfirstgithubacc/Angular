@@ -1,0 +1,235 @@
+<!-- Main Body Section-->
+<div class="app-content__body">
+
+        <!-- Start Card Section-->
+        <div class="card floating-layout floating-layout__view-layout">
+            <!-- Card Header Section-->
+            <div class="card__header">
+                <h4 class="card__heading">{{'BasicDetails'|translate}}</h4>
+            </div>
+            <!-- End Card Header Section-->
+
+            <!-- Card Body Section-->
+            <div class="card__body">
+                <div class="row">
+                </div>
+                <div class="row">
+                    <!-- Text Box Start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'EditTemplateForSpecificSector'" [value]="editTemplateSpecificSector"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- Text Box End -->
+
+                    <!-- Text Box Start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="editTemplateSpecificSector == 'Yes'">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'Sector'" [value]="emailTemplatedetails.SectorName"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- Text Box End -->
+
+                    <!-- Text Box Start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'Language1'" [value]="emailTemplatedetails.TemplateDetailGetAllDto.CultureName"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- Text Box End -->
+
+                    <!-- Text Box Start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'Category'" [value]="emailTemplatedetails.TemplateMasterGetAllDto.MenuCategoryName"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- Text Box End -->
+
+                    <!-- Text Box Start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'Workflow'" [value]="emailTemplatedetails.TemplateMasterGetAllDto.XrmEntityName"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- Text Box End -->
+
+                    <!-- Text Box Start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'Action'" [value]="emailTemplatedetails.TemplateMasterGetAllDto.ActionName"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- Text Box End -->
+
+                    <!-- Text Box Start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'TemplateName'" [value]="emailTemplatedetails.TemplateMasterGetAllDto.TemplateName"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- Text Box End -->
+
+                    <!-- Text Box Start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'Priority'" [value]="emailTemplatedetails.TemplateDetailGetAllDto.PriorityName"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- Text Box End -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'ApprovalViaEmail'" [value]="isReviewLinkValue | yesNo"></app-kendo-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Card Body Section End-->
+
+        </div>
+
+        <div class="card floating-layout floating-layout__view-layout">
+            <!-- Card Header Section-->
+            <div class="card__header">
+                <h4 class="card__heading">{{'RecipientDetails'|translate}}</h4>
+            </div>
+            <!-- End Card Header Section-->
+
+            <!-- Card Body Section-->
+            <div class="card__body">
+                <div class="row">
+                </div>
+                <div class="row">
+
+                    <div class="col-sm-6 col-md-6" *ngIf="toRecipients && toRecipients.length > 0">
+                        <div class="form-group">
+                          <app-kendo-label [label]="'To'" [value]="getRecipientNames(toRecipients)"></app-kendo-label>
+                        </div>
+                      </div>
+                      <!-- Display CC recipients -->
+                      <div class="col-sm-6 col-md-6" *ngIf="ccRecipients && ccRecipients.length > 0">
+                        <div class="form-group">
+                          <app-kendo-label [label]="'Cc'" [value]="getRecipientNames(ccRecipients)"></app-kendo-label>
+                        </div>
+                      </div>
+                      <!-- Display BCC recipients -->
+                      <div class="col-sm-6 col-md-6" *ngIf="bccRecipients && bccRecipients.length > 0">
+                        <div class="form-group">
+                          <app-kendo-label [label]="'Bcc'" [value]="getRecipientNames(bccRecipients)"></app-kendo-label>
+                        </div>
+                      </div>
+                </div>
+            </div>
+            <!-- Card Body Section End-->
+
+        </div>
+
+        <div class="card">
+            <div class="card__header">
+                <h4 class="card__heading">{{"EmailSubjectBody"| translate}}</h4>
+            </div>
+            <div class="card__body">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group email__template-subjectline">
+                                <app-kendo-label [label]="'Subject: '+ subject"></app-kendo-label>
+                        </div>
+                </div>
+                    <!-- Text Box End -->
+                </div>
+
+                    <!-- Text Box Start -->
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group">										
+                                <div *ngIf="body" [innerHTML]="previewTemplate | safe: 'html'"></div>										
+                        </div>
+                    </div>
+                    <!-- Text Box End -->
+            </div>
+        </div>
+
+       <!-- Card Section-->
+       <div class="card">
+        <!-- Card Header Section-->
+        <div class="card__header">
+            <h4 class="card__heading">{{"Attachments"|translate}}</h4>
+        </div>
+        <!-- Card Header Section end-->
+
+        <!-- Card Body Section-->
+        <div class="card__body">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 list-view third-lavel-grid staf-list">
+                         <kendo-grid [data]="emailTemplateGridData">
+                            <kendo-grid-column field="DocumentName" [title]="'DocumentTitle'|translate">
+                                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                  <div class="me-4">
+                                    <span>
+                                      {{ dataItem.DocumentConfigurationName }}
+                                    </span>
+                                  </div>
+                                </ng-template>
+                              </kendo-grid-column>
+                              <kendo-grid-column field="Attachment" [title]="'Attachment'|translate">
+                                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                    <div class="me-4" *ngIf="dataItem.DocumentType=='Static'">
+                                        <div class="attachment-file2">
+                                            <div class="file-icon">
+                                                <img [src]="getIconUrl(dataItem.DocumentExtension|| dataItem.FileExtension)" alt="icon" [height]="22">
+                                            </div>
+                                            <div class="file-type">
+                                                <a href="javascript:void(0)" (click)="downloadRecords(dataItem)">
+                                                    {{ dataItem.DocumentName+'.'+ dataItem.DocumentExtension}}
+                                                </a>
+                                            </div>
+                                        </div>														
+                                      </div>
+                                </ng-template>
+                              </kendo-grid-column>
+                              <kendo-grid-column field="DocumentType" [title]="'AttachmentType'|translate">
+                                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                  <div class="me-4">
+                                    <span>
+                                      {{ dataItem.DocumentType }}
+                                    </span>
+                                  </div>
+                                </ng-template>
+                              </kendo-grid-column>
+                              <kendo-grid-column [title]="'Actions'">
+                                <div class="me-4">
+                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                        <div class="action-item" kendoTooltip *ngIf="dataItem.DocumentType === 'Static'">
+                                            <a href="javascript:;" kendoButton title="Download" (click)="downloadRecords(dataItem)">
+
+                                                <xrm-icon [name]="'download'" [color]="'dark-blue-color'" [size]="16" class="sw-bold"></xrm-icon>
+                                            </a>
+                                        </div>
+                                    </ng-template>
+                                  </div>                           
+                              </kendo-grid-column>
+                              <ng-template kendoGridNoRecordsTemplate>
+                                {{ 'GridNoRecordAvailable' | translate }}
+                              </ng-template>
+                        </kendo-grid>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Card Body Section end-->
+
+       
+        <!--  Page Footer Section-->
+        <div class="page-footer">
+            <div class="btn-box btn-box--center">
+                <button
+                    type="button"
+                    kendoButton
+                    themeColor="primary"
+                    (click)="OnBackBtnClick()">
+                    {{ "Back" |translate}}
+                </button>
+            </div>
+        </div>
+        <!-- End Footer Section-->
+</div>
+

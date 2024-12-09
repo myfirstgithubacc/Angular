@@ -1,0 +1,27 @@
+.k-button-md {
+	padding: 6px 12px;
+	font-weight: 500;
+	font-size: var(--base-font-size);
+}
+.k-button-solid-primary {
+	color: var(--k-button-solid-primary-color);
+	background-color: var(--k-button-solid-primary-bg);
+	font-size: var(--base-font-size);
+	border-color: var(--color-primary);
+	background-image: none;
+}
+app-kendo-button .k-button-md:hover, 
+.k-button-solid-primary:hover {
+	border-color: var(--color-primary-hover) !important;
+	background-image: none !important;
+	background-color: #4158d0 !important;
+}
+app-kendo-button {
+	.k-button-md {
+		font-size: var(--base-font-size);
+		padding: 8px 12px;
+		border-radius: 4px;
+		border-color: var(--color-primary);
+		background-image: linear-gradient(to right, #4a32d4 0%, #1d5cc7 100%);
+	}
+}

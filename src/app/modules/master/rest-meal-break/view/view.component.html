@@ -1,0 +1,177 @@
+<div class="app-content__body floating-layout floating-layout__view-layout">
+    <div class="card">
+        <div class="card__header">
+            <h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+            <div class="card__header-icon">
+            </div>
+        </div>
+        <div class="card__body">
+            <div class="row">
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'RuleName'" [value]="restMealBreakData.RuleName"
+                            [tooltipVisible]="true" [tooltipTitle]="'Rule_Tooltip'"></app-kendo-label>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <pre>
+                        <app-kendo-label class="floating-layout__view-layout--break" [label]="'RuleDescription'"
+                            [value]="restMealBreakData.RuleDescription"></app-kendo-label>
+                        </pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card__header">
+            <h4 class="card__heading">{{'RestOrMealBreakConfiguration'| translate}}</h4>
+            <div class="card__header-icon">
+            </div>
+        </div>
+
+        <div class="card__body">
+            <div class="row">
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'AllowInOutTimeinTimeSheet'"
+                            [value]="restMealBreakData.AllowInOutTimeSheet  | yesNo" [tooltipVisible]="true"
+                            [tooltipTitle]="'Allow_In_Out_Time_in_Timsheet_Tooltip'"></app-kendo-label>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group"
+                        *ngIf="restMealBreakData.AllowInOutTimeSheet && !restMealBreakData.AllowInOutMealBreak">
+                        <app-kendo-label [label]="'DefaultBreakDurationIfApplied'"
+                            [value]="restMealBreakData.DefaultBreakDuration  | number : '1.2-3' "></app-kendo-label>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group" *ngIf="restMealBreakData.AllowInOutTimeSheet">
+                        <app-kendo-label [label]="'AllowToEnterInOutDetailForMeal'"
+                            [value]="restMealBreakData.AllowInOutMealBreak | yesNo" [tooltipVisible]="true"
+                            [tooltipTitle]="'Allow_to_enter_In_Out_detail_of_Meal_Break_Tooltip'"></app-kendo-label>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group"
+                        *ngIf="restMealBreakData.AllowInOutMealBreak && restMealBreakData.AllowInOutTimeSheet">
+                        <app-kendo-label [label]="'NoofMealBreakInaDay'"
+                            [value]="restMealBreakData.NumberOfMealBreak"></app-kendo-label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" *ngIf="restMealBreakData.AllowInOutTimeSheet && restMealBreakData.AllowInOutMealBreak">
+        <div class="card__header">
+            <h4 class="card__heading">{{'MealBreakPenaltyConfiguration' | translate}}</h4>
+            <div class="card__header-icon">
+            </div>
+        </div>
+        <div class="card__body">
+            <div class="row">
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'MealBreakPenalty'"
+                            [value]="restMealBreakData.MealBreakPenalty  | yesNo" [tooltipVisible]="true"
+                            [tooltipTitle]="'Timesheet_be_subjects_to_Penalty_Hours_for_untaken_insufficient_meal_break_Tooltip'"></app-kendo-label>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group" *ngIf="restMealBreakData.MealBreakPenalty">
+                        <app-kendo-label [label]="'PenaltyHours' | translate"
+                            [value]="restMealBreakData.MealBreakPenaltyHours  | number : '1.2-3' "
+                            [tooltipVisible]="true" [tooltipTitle]="'Penalty_Hours_Tooltip'"></app-kendo-label>
+                    </div>
+                </div>
+                <div class="list-view">
+                    <div class="row">
+                        <div class=" col-sm-12 col-md-12" *ngIf="restMealBreakData.MealBreakPenalty">
+                            <ng-template #template let-anchor>
+                                <span>{{ anchor.nativeElement.innerText }}</span>
+                            </ng-template>
+                            <div kendoTooltip [tooltipTemplate]="template" filter=".k-grid td"
+                                (mouseover)="showTooltip($event)">
+                                <kendo-grid [data]="restMealBreakData.MealBreakPenaltyConfigurations"
+                                    [selectable]="selectableSettings" [navigable]="false" [height]="magicNumber.threeHundredFifty">
+                                    <kendo-grid-column field="MealBreakTypeText" title="Rule"></kendo-grid-column>
+                                    <kendo-grid-column field="MinimumHoursWorked"
+                                        [title]="'MinimumHoursWorked' | translate">
+                                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                            <div>
+                                                <div class="d-inline-block">{{dataItem.MinimumHoursWorked | number :
+                                                    '1.2-3'}}</div>
+                                            </div>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                    <kendo-grid-column field="MandatoryBreak" [title]="'MandatoryBreak' | translate">
+                                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                            <div>
+                                                <div class="d-inline-block">{{dataItem.MandatoryBreak}}
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                    <kendo-grid-column field="RestrictWaiveOffHours"
+                                        [title]="'RestrictWaiveOffHours' | translate" [width]="magicNumber.threeHundredSixty">
+                                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                            <div>
+                                                <div class="d-inline-block">{{dataItem.RestrictWaiveOffHours | number :
+                                                    '1.2-3'}}</div>
+                                            </div>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                </kendo-grid>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" *ngIf="restMealBreakData.AllowInOutMealBreak && restMealBreakData.AllowInOutTimeSheet">
+        <div class="card__header">
+            <h4 class="card__heading">{{'RestBreakPenaltyConfiguration' | translate}}</h4>
+            <div class="card__header-icon">
+            </div>
+        </div>
+        <div class="card__body">
+            <div class="row">
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'RestBreakPenalty'"
+                            [value]="restMealBreakData.RestBreakPenalty | yesNo" [tooltipVisible]="true"
+                            [tooltipTitle]="'Timesheet_be_subjects_to_Penalty_Hours_for_Rest_break_Tooltip'"></app-kendo-label>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group" *ngIf="restMealBreakData.RestBreakPenalty">
+                        <app-kendo-label [label]="'MinimumHoursWorked'"
+                            [value]="restMealBreakData.RestBreakMinimumHours | number : '1.2-3' "
+                            [tooltipVisible]="true" [tooltipTitle]="'Minimum_Hours_Worked_Tooltip'"></app-kendo-label>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group" *ngIf="restMealBreakData.RestBreakPenalty">
+                        <app-kendo-label [label]="'PenaltyHours'"
+                            [value]="restMealBreakData.RestBreakPenaltyHours | number : '1.2-3'" [tooltipVisible]="true"
+                            [tooltipTitle]="'Penalty_Tooltip'"></app-kendo-label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-footer">
+        <div class="btn-box btn-box--center">
+            <app-kendo-button [buttonName]="'Back' | translate" (Click)="backToList()">
+            </app-kendo-button>
+        </div>
+    </div>
+</div>

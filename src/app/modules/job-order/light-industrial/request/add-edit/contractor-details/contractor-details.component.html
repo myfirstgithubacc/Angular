@@ -1,0 +1,248 @@
+<div class="col-sm-12 col-md-12 list-view">
+    <div class="form-group">
+        <form [formGroup]="form">
+            <div formArrayName="gridData">
+
+                <!-- tooltip -->
+                <ng-template #template let-anchor>
+                    <span>{{ anchor.nativeElement.innerText }}</span>
+                </ng-template>
+                <div kendoTooltip showOn="none" [tooltipTemplate]="template" filter=".k-grid td"
+                    (mouseover)="showTooltip($event)">
+
+
+                    <kendo-grid [data]="gridDataArray">
+                        <kendo-grid-column media="(max-width: 920px)" title="Items">
+                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                <dl *ngIf="!isEditMode">
+                                    <dt>{{'SerialNo' | translate}}</dt>
+                                    {{ rowIndex + 1 }}
+                                </dl>
+                                <dl *ngIf="isEditMode">
+                                    <dt>{{'CandidatePoolId' | translate}}</dt>
+                                    {{ (dataItem.get('candidatePoolId')?.value) }}
+                                </dl>
+                                <dl *ngIf="!isEditMode">
+                                    <dt>{{'NoOfContractors' | translate}} <xrm-icon name="star" class="required"></xrm-icon></dt>
+                                    <dd>
+                                        <kendo-numerictextbox [autoCorrect]="true" [spinners]="false" [min]="0"
+                                            [max]="999" [decimals]="0" [format]="'n0'" [maxlength]="3"
+                                            [formControl]="dataItem.get('contractorsControl')"
+                                            class="addmore-numericTextbox"></kendo-numerictextbox>
+                                        <app-print-error-message
+                                            [control]="dataItem.get('contractorsControl')"></app-print-error-message>
+                                    </dd>
+                                </dl>
+                                <dl *ngIf="isEditMode">
+                                    <dt>{{'ContractorName' | translate}}</dt>
+                                    {{ dataItem.get('contractorName').value }}
+                                </dl>
+                                <dl *ngIf="isEditMode">
+                                    <dt>{{'StaffingAgency' | translate}}</dt>
+                                    {{ dataItem.get('stafingAgencyName').value }}
+                                </dl>
+                                <dl>
+                                    <dt>{{'TargetStartDate' | translate}} <xrm-icon name="star" class="required"
+                                            *ngIf="!isViewMode && !dataItem.get('clpId').value"></xrm-icon></dt>
+                                    <dd>
+                                        <span *ngIf="isViewMode || dataItem.get('clpId').value">
+                                            {{dataItem.get('startDateControl').value | date:dateFormat}}
+                                        </span>
+                                        <kendo-datepicker *ngIf="!isViewMode && !dataItem.get('clpId').value"
+                                            calendarType="classic" [formControl]="dataItem.get('startDateControl')"
+                                            [format]="dateFormat"
+                                            [formatPlaceholder]="{ year: placeholderFormat.year, month: placeholderFormat.month, day: placeholderFormat.day, hour:'h',minute:'m', second:'s', millisecond: 'S' }"></kendo-datepicker>
+                                        <app-print-error-message
+                                            [control]="dataItem.get('startDateControl')"></app-print-error-message>
+                                    </dd>
+                                </dl>
+                                <dl>
+                                    <dt>{{'TargetEndDate' | translate}} <xrm-icon name="star" class="required"
+                                            *ngIf="!isViewMode && !dataItem.get('clpId').value"></xrm-icon></dt>
+                                    <dd>
+                                        <span *ngIf="isViewMode || dataItem.get('clpId').value">
+                                            {{dataItem.get('endDateControl').value | date:dateFormat}}
+                                        </span>
+                                        <kendo-datepicker *ngIf="!isViewMode && !dataItem.get('clpId').value"
+                                            calendarType="classic" [formControl]="dataItem.get('endDateControl')"
+                                            [format]="dateFormat"
+                                            [formatPlaceholder]="{ year: placeholderFormat.year, millisecond: 'S', month: placeholderFormat.month, day: placeholderFormat.day, hour:'h',minute:'m', second:'s' }"
+                                            (valueChange)="onEndDateChange($event, dataItem)"></kendo-datepicker>
+                                        <app-print-error-message
+                                            [control]="dataItem.get('endDateControl')"></app-print-error-message>
+                                    </dd>
+                                </dl>
+                                <dl>
+                                    <dt>{{actualShiftWageRateLabel}}</dt>
+                                    {{ localizationService.TransformNumber((dataItem.get('actualWage').value), 2, null,
+                                    2) }}
+                                </dl>
+                                <dl *ngIf="isEditMode">
+                                    <dt>{{'SubmittedMarkupPer' | translate}}</dt>
+                                    {{ localizationService.TransformNumber(dataItem.get('submittedMarkup').value, 3,
+                                    null, 3) }}
+                                </dl>
+                                <dl *ngIf="isEditMode && !isStaffUser">
+                                    <dt>{{mspStBillRate}}</dt>
+                                    {{ localizationService.TransformNumber(dataItem.get('mspStBillRate').value, 2, null,
+                                    3)}}
+                                </dl>
+                                <dl *ngIf="isEditMode && isStaffUser">
+                                    <dt>{{vendorStBillRate}}</dt>
+                                    {{ localizationService.TransformNumber(dataItem.get('StaffingAgencyStBillRate').value, 2, null,
+                                    3)}}
+                                </dl>
+                                <dl *ngIf="!isViewMode">
+                                    <dt>
+                                        <a *ngIf="rowIndex !== 0 && !dataItem.get('clpId').value" href="javascript:;"
+                                            kendoButton title="{{'Delete' | translate}}" class="delete"
+                                            (click)="deleteGridRow(rowIndex)">
+                                            <xrm-icon [name]="'trash-2'" [color]="'red-color'" [size]="16"
+                                                class="sw-bold"></xrm-icon>
+                                        </a>
+                                    </dt>
+                                </dl>
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column media="(max-width: 920px)" *ngIf="!isViewMode" [width]="120">
+                            <ng-template kendoGridHeaderTemplate let-rowIndex="rowIndex">
+                                <a (click)="addGridRow()" href="javascript:;" class="add-more__link"> <xrm-icon
+                                        [name]="'plus'" [color]="'dark-blue-color'" [size]="17"
+                                        class="sw-bolder"></xrm-icon>
+                                    {{'AddMore' | translate}}
+                                </a>
+                            </ng-template>
+                        </kendo-grid-column>
+                        <!-- Kendo UI Grid Columns -->
+                        <kendo-grid-column media="(min-width: 921px)" *ngIf="!isEditMode"
+                            title="{{'SerialNo' | translate}}" [width]="45">
+                            <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">
+                                {{ rowIndex + 1 }}
+                            </ng-template>
+                        </kendo-grid-column>
+                        <!-- contractor # label is changes to CandidatePoolId label -->
+                        <kendo-grid-column media="(min-width: 921px)" *ngIf="isEditMode"
+                            title="{{'CandidatePoolId' | translate}}">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                {{ (dataItem.get('candidatePoolId')?.value) }}
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <kendo-grid-column media="(min-width: 921px)" *ngIf="!isEditMode" field="contractorsControl">
+                            <ng-template kendoGridHeaderTemplate>
+                                {{'NoOfContractors' | translate}}
+                                <xrm-icon name="star" class="required"></xrm-icon>
+                            </ng-template>
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <kendo-numerictextbox [autoCorrect]="true" [spinners]="false" [min]="0" [max]="999"
+                                    [decimals]="0" [format]="'n0'" [maxlength]="3"
+                                    [formControl]="dataItem.get('contractorsControl')"
+                                    class="addmore-numericTextbox"></kendo-numerictextbox>
+                                <app-print-error-message
+                                    [control]="dataItem.get('contractorsControl')"></app-print-error-message>
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <kendo-grid-column media="(min-width: 921px)" *ngIf="isEditMode" field="Contractor Name"
+                            title="{{'ContractorName' | translate}}">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                {{ dataItem.get('contractorName').value }}
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column media="(min-width: 921px)" *ngIf="isEditMode" field="Staffing Agency"
+                            title="{{'StaffingAgency' | translate}}">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                {{ dataItem.get('stafingAgencyName').value }}
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <kendo-grid-column media="(min-width: 921px)" field="startDateControl" [width]="160">
+                            <ng-template kendoGridHeaderTemplate>
+                                {{ 'TargetStartDate' | translate }}
+                                <xrm-icon name="star" class="required" *ngIf="!isViewMode"></xrm-icon>
+                            </ng-template>
+                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                <span *ngIf="isViewMode || dataItem.get('clpId').value">
+                                    {{dataItem.get('startDateControl').value | date:dateFormat}}
+                                </span>
+                                <kendo-datepicker *ngIf="!isViewMode && !dataItem.get('clpId').value"
+                                    calendarType="classic" [formControl]="dataItem.get('startDateControl')"
+                                    [format]="dateFormat"
+                                    [formatPlaceholder]="{ year: placeholderFormat.year, millisecond: 'S', month: placeholderFormat.month, day: placeholderFormat.day, hour:'h',minute:'m', second:'s' }"></kendo-datepicker>
+                                <app-print-error-message
+                                    [control]="dataItem.get('startDateControl')"></app-print-error-message>
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <kendo-grid-column media="(min-width: 921px)" field="endDateControl" [width]="160">
+                            <ng-template kendoGridHeaderTemplate>
+                                {{ 'TargetEndDate' | translate }}
+                                <xrm-icon name="star" class="required" *ngIf="!isViewMode"></xrm-icon>
+                            </ng-template>
+                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                <span *ngIf="isViewMode || dataItem.get('clpId').value">
+                                    {{dataItem.get('endDateControl').value | date:dateFormat}}
+                                </span>
+                                <kendo-datepicker *ngIf="!isViewMode && !dataItem.get('clpId').value"
+                                    calendarType="classic" [formControl]="dataItem.get('endDateControl')"
+                                    [format]="dateFormat"
+                                    [formatPlaceholder]="{ year: placeholderFormat.year, millisecond: 'S', month: placeholderFormat.month, day: placeholderFormat.day, hour:'h',minute:'m', second:'s' }"
+                                    (valueChange)="onEndDateChange($event, dataItem)"></kendo-datepicker>
+                                <app-print-error-message
+                                    [control]="dataItem.get('endDateControl')"></app-print-error-message>
+                            </ng-template>
+                        </kendo-grid-column>
+                        <!--  -->
+
+                        <kendo-grid-column media="(min-width: 921px)" field="actualWage"
+                            title="{{actualShiftWageRateLabel}}">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                {{ localizationService.TransformNumber((dataItem.get('actualWage').value), 2, null, 2)}}
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column media="(min-width: 921px)" *ngIf="isEditMode" field="Submitted Markup %"
+                            title="{{'SubmittedMarkupPer' | translate}}">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                {{ localizationService.TransformNumber(dataItem.get('submittedMarkup').value, 3, null,
+                                3) }}
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column media="(min-width: 921px)" *ngIf="isEditMode && !isStaffUser" field="MSP ST Bill Rate (USD)"
+                            title="{{mspStBillRate}}">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                {{ localizationService.TransformNumber(dataItem.get('mspStBillRate').value, 2, null, 2)
+                                }}
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column media="(min-width: 921px)" *ngIf="isEditMode && isStaffUser" field="Vendor ST Bill Rate (USD)"
+                            title="{{vendorStBillRate}}">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                {{ localizationService.TransformNumber(dataItem.get('StaffingAgencyStBillRate').value, 2, null, 2)
+                                }}
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <kendo-grid-column media="(min-width: 921px)" *ngIf="!isViewMode" [width]="120">
+                            <ng-template kendoGridHeaderTemplate let-rowIndex="rowIndex">
+                                <a (click)="addGridRow()" href="javascript:;" class="add-more__link">
+                                    <xrm-icon [name]="'plus'" [color]="'dark-blue-color'" [size]="17"
+                                        class="sw-bolder"></xrm-icon>
+                                    {{'AddMore' | translate}}
+                                </a>
+                            </ng-template>
+                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                <a *ngIf="rowIndex !== 0 && !dataItem.get('clpId').value" href="javascript:;"
+                                    kendoButton title="{{'Delete' | translate}}" class="delete"
+                                    (click)="deleteGridRow(rowIndex)">
+                                    <xrm-icon [name]="'trash-2'" [color]="'red-color'" [size]="16"
+                                        class="sw-bold"></xrm-icon>
+                                </a>
+                            </ng-template>
+
+                        </kendo-grid-column>
+                    </kendo-grid>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

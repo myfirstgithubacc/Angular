@@ -1,0 +1,25 @@
+.k-button {
+	&.copy__btn {
+		margin-top: 18px;
+		font-size: var(--base-font-size);
+	}
+}
+.offcanvas {
+	--bs-offcanvas-width: 34%;
+}
+.no-previous-records {
+	font-size: 18px;
+	transform: translate(-50%, -50%);
+	display: block;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 100%;
+	text-align: center;
+	color: #9b9b9b;
+  }
+  .offcanvas-body {
+    padding: 0;
+    overflow-y: unset;
+    height: auto;
+}

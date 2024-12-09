@@ -1,0 +1,171 @@
+.dropdown__shift-range {
+	.dropdown__shift-range--input {
+		margin-top: 10px;
+
+		.timeRange__inline {
+			display: inline-flex;
+			gap: 6px;
+			margin-left: 10px;
+			vertical-align: baseline;
+
+			span {
+				line-height: 2;
+			}
+
+			.green-color {
+				color: var(--green-color) !important;
+			}
+
+			.red-color {
+				color: var(--red-color) !important;
+			}
+
+			.k-timepicker {
+				width: 120px;
+				box-shadow: none;
+
+				.k-input-inner {
+					padding: 4px 6px !important;
+					color: var(--color-default);
+					text-transform: capitalize;
+					line-height: normal;
+				}
+
+				.k-button-md {
+					padding: 0 6px !important;
+					width: auto;
+					background-color: transparent;
+					background-image: none;
+				}
+			}
+		}
+	}
+
+	.dropdown__shift-range__days {
+		display: inline-block;
+		margin: 0 5px 0 0;
+		padding: 0;
+	}
+}
+
+.achor__text {
+	.dropdown__shift-range__days {
+		li {
+			position: relative;
+			display: inline-block;
+			margin: 0 5px;
+			width: 24px;
+			cursor: pointer;
+			line-height: 22px;
+			text-align: center;
+			border-radius: 40px;
+			color: var(--color-black);
+			border: var(--color-primary) solid 1px;
+
+			&.disable-day {
+				background-color: #e9e9e9;
+				border-color: #aeaeae;
+				color: #aeaeae;
+				cursor: default;
+			}
+
+			&.event-day {
+				&::after {
+					content: "";
+					background-image: url(../../../../../assets/icon/xrm-icons/circle-check.svg);
+					background-size: 12px;
+					background-repeat: no-repeat;
+					width: 13px;
+					height: 13px;
+					position: absolute;
+					right: -4px;
+					bottom: -4px;
+					line-height: 1;
+				}
+			}
+
+			span {
+				white-space: normal;
+			}
+		}
+	}
+}
+
+.timeRange__inline {
+	button {
+		&.editDaysBtn {
+			&.k-button {
+				margin: unset;
+				margin-left: 5px;
+				margin-top: -3px;
+				padding: 0;
+				border: none;
+				background-color: transparent;
+				background-image: none;
+			}
+		}
+	}
+}
+
+.form-group .editDaysBtn {
+	border: none;
+	padding: 0 2px !important;
+	margin-left: 5px;
+	margin-top: 4px;
+}
+
+.editDaysBtn:focus {
+	outline: none !important;
+	box-shadow: none !important;
+}
+
+.editDaysBtn.k-focus:hover {
+	border: none !important;
+}
+
+.dropdown__shift-range__days {
+	li {
+	  position: relative;
+	  display: inline-block;
+	  margin: 0 5px;
+	  width: 24px;
+	  cursor: pointer;
+	  line-height: 22px;
+	  text-align: center;
+	  border-radius: 40px;
+	  border: var(--color-primary) solid 1px;
+
+	  &.disable-day {
+		background-color: #e9e9e9;   
+		border-color: #aeaeae;       
+		color: #aeaeae;              
+		cursor: default;            
+	  }
+
+	  &.event-day {
+		position: relative;
+  
+		&::after {
+		  content: "";
+		  background-image: url(../../../../../assets/icon/xrm-icons/circle-check.svg);
+		  background-size: 12px;
+		  background-repeat: no-repeat;
+		  width: 13px;
+		  height: 13px;
+		  position: absolute;
+		  right: -4px;
+		  bottom: -4px;
+		  background-color: transparent;
+		}
+	  }
+  
+	  span {
+		white-space: normal;
+	  }
+	}
+  }
+  .error-message {
+	color: var(--color-inactive);
+	font-weight: 400;
+  }
+  

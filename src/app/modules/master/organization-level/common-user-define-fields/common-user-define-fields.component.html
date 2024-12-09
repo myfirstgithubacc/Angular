@@ -1,0 +1,92 @@
+<form>
+    <div class="card">
+        <!-- Card Header Section-->
+        <div class="card__header d-block">
+            <h4 class="card__heading">User Define Fields</h4>
+            <p><b>Note:</b> The following fields are coming from User Defined Field Configuration. This note will be removed in development version.</p>
+        </div>
+        <!-- End Card Header Section-->
+
+        <!-- Card Body Section-->
+        <div class="card__body">
+            <div class="row">
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-textbox
+                        [controlName]="'MSPOrganizationName'"
+                        [label]="'MSP Organization Name'"
+                        [isRequired]="true"
+                        >
+                        </app-textbox>
+                    </div>
+                </div>
+                <!-- input box start -->
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-textbox
+                        [controlName]="'DefaultCustomer'"
+                        [label]="'Default Customer #'"
+                        [isRequired]="true"
+                        >
+                        </app-textbox>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                 <!-- Textarea start -->
+                 <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <app-kendo-textarea 
+                        [controlName]="'MSPContractDetail'"
+                        [label]="'MSP Contract Detail'"
+                        [isRequired]="true"
+                        >
+                        </app-kendo-textarea>
+                    </div>
+                </div>
+                <!-- Textarea End -->
+
+                 <!-- Textarea start -->
+                 <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <app-kendo-textarea 
+                        [controlName]="'ContractTermDetail'"
+                        [label]="'Contract & Term Detail'"
+                        >
+                        </app-kendo-textarea>
+                    </div>
+                </div>
+                <!-- Textarea End -->
+
+                <!-- Textarea start -->
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <app-kendo-textarea 
+                        [controlName]="'ClientDetail'"
+                        [label]="'Client Detail'"
+                        >
+                        </app-kendo-textarea>
+                    </div>
+                </div>
+                <!-- Textarea End -->
+
+                <!-- Textarea start -->
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <app-kendo-textarea 
+                        [controlName]="'DueDays'"
+                        [label]="'Due Days'"
+                        >
+                        </app-kendo-textarea>
+                    </div>
+                </div>
+                <!-- Textarea End -->
+
+
+            </div>
+        </div>
+        <!-- End Card Body Section-->
+    </div>
+</form>

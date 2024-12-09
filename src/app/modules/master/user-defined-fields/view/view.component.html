@@ -1,0 +1,396 @@
+<!-- Main Body Section-->
+<div class="app-content__body floating-layout floating-layout__view-layout">
+    <!-- Start Card Section-->
+    <div class="card">
+        <!-- Card Header Section-->
+        <div class="card__header">
+            <h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+        </div>
+        <!-- End Card Header Section-->
+
+        <!-- Card Body Section-->
+        <div class="card__body">
+            <div class="row">
+
+                <!-- Text Box Start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'ComplianceFieldName'" [value]="udfData.FieldType.StandardFieldName"
+                            [tooltipVisible]="true" [tooltipTitle]="'UDFAutoGenerateValueToolTip'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- Text Box End -->
+
+                <!-- Text Box Start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'DisplayName'" [value]="udfData.FieldType.LabelText"
+                            [tooltipVisible]="true"
+                            [tooltipTitle]="'UserCanSetLabelTextForThisField'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- Text Box End -->
+
+            </div>
+        </div>
+        <!--End Card Body Section-->
+    </div>
+    <!-- End Card Section-->
+
+
+    <!-- Start Card Section-->
+    <div class="card">
+        <!-- Card Header Section-->
+        <div class="card__header">
+            <h4 class="card__heading">{{'FieldConfiguration' | translate}}</h4>
+            <div class="card__header-icon">
+                <a class="link-color" (click)="onPreviewClick()"><span class="icon-group"><xrm-icon name="eye" [size]="18" color="dark-blue-color"></xrm-icon></span>
+                    Preview</a>
+            </div>
+        </div>
+        <!-- End Card Header Section-->
+
+        <!-- Card Body Section-->
+        <div class="card__body">
+            <div class="row">
+
+                <!-- Dropdown Box Start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'FieldType'"
+                            [value]="udfData.FieldType.FieldTypeName"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- Dropdown Box End -->
+
+                <!-- Switch Start -->
+                <div class="col-sm-6 col-md-6" *ngIf="udfData.FieldTypeId === 1">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'IsNumeric'" [value]="udfData.FieldType.IsNumeric ? 'Yes' : 'No' "
+                            [tooltipVisible]="true" [tooltipTitle]="'UDFFieldNumericValidation'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- Switch End -->
+
+
+                <!-- Numericbox Start -->
+                <div class="col-sm-6 col-md-6" *ngIf="udfData.FieldTypeId === 1 || udfData.FieldTypeId === 2">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'SegmentMinLength'" [value]="udfData.FieldType.MinLength"
+                            [tooltipVisible]="true"
+                            [tooltipTitle]="'MinimumLengthCharacterValidation'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- Numericbox End -->
+
+                <!-- Numericbox Start -->
+                <div class="col-sm-6 col-md-6" *ngIf="udfData?.FieldTypeId === 1 || udfData?.FieldTypeId === 2">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'MaxLength'" [value]="udfData.FieldType.MaxLength"
+                            [tooltipVisible]="true"
+                            [tooltipTitle]="'MaximumLengthCharacterValidation'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- Numericbox End -->
+
+                <!-- Numericbox Start -->
+                <div class="col-sm-6 col-md-6" *ngIf="udfData?.FieldTypeId === 4">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'MinDate'" [value]="fieldtype.MinDate"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- Numericbox End -->
+
+                <!-- Numericbox Start -->
+                <div class="col-sm-6 col-md-6" *ngIf="udfData?.FieldTypeId === 4">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'MaxDate'" [value]="fieldtype.MaxDate"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- Numericbox End -->
+
+                <!-- Numericbox Start -->
+                <div class="col-sm-6 col-md-6" *ngIf="udfData?.FieldTypeId === 3">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'PredefinedList'"
+                            [value]="udfData.FieldType.PredefinedList?.[0]?.Name" [tooltipVisible]="true"
+                            [tooltipTitle]="'Text not available'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- Numericbox End -->
+                <!-- Textbox Start -->
+                <div class="col-sm-6 col-md-6" *ngIf="udfData?.FieldTypeId === 3">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'DefaultValue'" [value]="getDropdownDefaultValue()"
+                            [tooltipVisible]="true" [tooltipTitle]="'AllowDefaultValuesForUDF'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- Textbox End -->
+                <!-- Textbox Start -->
+                <div class="col-sm-6 col-md-6" *ngIf="udfData?.FieldTypeId === 1 || udfData?.FieldTypeId === 2 ">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'DefaultValue'" [value]="udfData.FieldType.DefaultValue"
+                            [tooltipVisible]="true" [tooltipTitle]="'AllowDefaultValuesForUDF'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- Textbox End -->
+
+                <!-- Switch Start -->
+                <div class="col-sm-6 col-md-6" *ngIf="udfData?.FieldType?.IsAppliesToAllSector">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'AppliesToSector'"
+                            [value]="udfData.FieldType.IsAppliesToAllSector ? 'All' : ''"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- Switch End -->
+
+                <!-- Switch Start -->
+                <div class="col-sm-6 col-md-6" *ngIf="!udfData?.FieldType?.IsAppliesToAllSector ">
+                    <div class="form-group no-dropdown-tree">
+                        <app-kendo-label [label]="'AppliesToSector'" [tooltipVisible]="true"
+                            [tooltipTitle]="'UDFSelectDropdownConfirmation'"></app-kendo-label>
+                        <div class="tree-bxs">
+                            <kendo-treeview class="tree_view_appearance" [nodes]="sectordata" [textField]="'Text'"
+                                kendoTreeViewHierarchyBinding kendoTreeViewExpandable [childrenField]="'items'">
+                            </kendo-treeview>
+                        </div>
+                    </div>
+                </div>
+                <!-- Switch End -->
+
+                <!-- Switch Start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'StoreAsEncrypted'"
+                            [value]="udfData.FieldType.IsStoreAsEncrypeted ? 'Yes' : 'No'" [tooltipVisible]="true"
+                            [tooltipTitle]="'UDFStoreDataAsEncryptedForm'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- Switch End -->
+                <!-- Multi Dropdown Start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'VisibleTo'" [value]="getVisibleTo()"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- Multi Dropdown End -->
+
+                <!-- Switch Start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'ViewOnly'"
+                            [value]="udfData.FieldType.IsViewOnly ? 'Yes' : 'No'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- Switch End -->
+
+                <!-- Multi Dropdown Start -->
+                <div class="col-sm-6 col-md-6" *ngIf="!udfData.FieldType.IsViewOnly">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'EditingAllowedBy'" [value]="getEditingAllowedBy()"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- Multi Dropdown End -->
+
+                <!-- Switch Start -->
+                <div class="col-sm-6 col-md-6" *ngIf="!udfData.FieldType.IsViewOnly">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'Mandatory'"
+                            [value]="udfData.FieldType.IsMandatory ? 'Yes' : 'No'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- Switch End -->
+
+                <!-- Textarea Start -->
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'TooltipText'" [allowMultilineText]="true"
+                            [value]="udfData.FieldType.TooltipText"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- Textarea End -->
+
+            </div>
+        </div>
+        <!-- End Card Section-->
+    </div>
+
+    <!-- Start Card Section-->
+    <div class="card">
+        <div class="card__header">
+            <h4 class="card__heading">Screen</h4>
+        </div>
+
+        <div class="card__body">
+            <div class="row">
+
+                <!-- Dropdown Start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'BaseScreen'" [value]="udfData.FieldType.BaseScreenName"
+                            [tooltipVisible]="true" [tooltipTitle]="'ReturnValueOfUDFToUser'"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- Dropdown End -->
+
+                <div class="col-sm-12 col-md-12 list-view list-view__border" *ngIf="linkedScreenGridRows.length>0">
+                    <app-udf-list-view [rows]="linkedScreenGridRows"
+                        [columnsInfo]="listViewColumnInfo"></app-udf-list-view>
+
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+    <!-- End Card Section -->
+
+
+    <div class="page-footer">
+        <div class="btn-box btn-box--center">
+            <button type="button" kendoButton themeColor="primary"
+                routerLink="/xrm/master/user-defined-fields/list">{{'Back' | translate}}</button>
+        </div>
+    </div>
+
+</div>
+<!-- End Card Section-->
+
+<!-- Preview Dialog Start -->
+<kendo-dialog class="preview-dialog-popup dailog dailog-center" (close)="onDecline()" *ngIf="previewDialogOpen"
+    [width]="420">
+    <a href="javascript:;" class="close-dailog" (click)="onPreviewAccept()"><xrm-icon name="x" color="black-color" [size]="18" [strokeWidth]="2.5"></xrm-icon></a>
+    <h3 class="dailog__title">Field Preview</h3>
+    <div class="card">
+        <div class="card__header">
+            <h4 class="card__heading">Basic Details</h4>
+            <div class="card__header-icon"></div>
+        </div>
+        <div class="card__body">
+            <div class="row">
+
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <div class="skeleton skeleton__field-preview">
+                            <kendo-skeleton shape="text" animation="wave" width="40%"
+                                [ngStyle]="{ marginBottom: '4px' }">
+                            </kendo-skeleton>
+
+                            <kendo-skeleton shape="rectangle" animation="wave" width="100%" height="35px">
+                            </kendo-skeleton>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <div class="skeleton skeleton__field-preview">
+                            <kendo-skeleton shape="text" animation="wave" width="40%"
+                                [ngStyle]="{ marginBottom: '4px' }">
+                            </kendo-skeleton>
+
+                            <kendo-skeleton shape="rectangle" animation="wave" width="100%" height="35px">
+                            </kendo-skeleton>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <div class="skeleton skeleton__field-preview">
+                            <kendo-skeleton shape="text" animation="wave" width="40%"
+                                [ngStyle]="{ marginBottom: '4px' }">
+                            </kendo-skeleton>
+
+                            <kendo-skeleton shape="rectangle" animation="wave" width="100%" height="35px">
+                            </kendo-skeleton>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <div class="skeleton skeleton__field-preview">
+                            <kendo-skeleton shape="text" animation="wave" width="40%"
+                                [ngStyle]="{ marginBottom: '4px' }">
+                            </kendo-skeleton>
+
+                            <kendo-skeleton shape="rectangle" animation="wave" width="100%" height="35px">
+                            </kendo-skeleton>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card__header">
+            <h4 class="card__heading">User Defined Fields</h4>
+            <div class="card__header-icon"></div>
+        </div>
+        <div class="card__body">
+            <div class="row">
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <div class="skeleton skeleton__field-preview">
+                            <kendo-skeleton shape="text" animation="wave" width="40%"
+                                [ngStyle]="{ marginBottom: '4px' }">
+                            </kendo-skeleton>
+
+                            <kendo-skeleton shape="rectangle" animation="wave" width="100%" height="35px">
+                            </kendo-skeleton>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <div class="skeleton skeleton__field-preview">
+                            <kendo-skeleton shape="text" animation="wave" width="40%"
+                                [ngStyle]="{ marginBottom: '4px' }">
+                            </kendo-skeleton>
+
+                            <kendo-skeleton shape="rectangle" animation="wave" width="100%" height="35px">
+                            </kendo-skeleton>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6 col-md-6">
+                    <form [formGroup]="previewForm">
+                        <div class="form-group">
+                            <app-textbox *ngIf="udfData.FieldTypeId === 1" [controlName]="'TextBox'"
+                                [label]="udfData.FieldType.LabelLocalizedKey" [isRequired]="udfData.FieldType.IsMandatory"
+                                [tooltipVisible]="true" [tooltipTitle]="udfData.FieldType.HelpTextLocalizedKey"></app-textbox>
+
+                            <app-kendo-textarea *ngIf="udfData.FieldTypeId === 2" [controlName]="'TextArea'"
+                                [label]="udfData.FieldType.LabelLocalizedKey" [isRequired]="udfData.FieldType.IsMandatory"
+                                [tooltipVisible]="true" [allowBullets]="true"
+                                [tooltipTitle]="udfData.FieldType.HelpTextLocalizedKey"></app-kendo-textarea>
+
+                            <app-kendo-dropdown *ngIf="udfData.FieldTypeId === 3" [controlName]="'DropDown'"
+                                [list]="pickList" [placeholder]="'DdlSelect'" [label]="udfData.FieldType.LabelLocalizedKey"
+                                [tooltipVisible]="true" [isRequired]="udfData.FieldType.IsMandatory"
+                                [tooltipTitle]="udfData.FieldType.HelpTextLocalizedKey"></app-kendo-dropdown>
+
+                            <app-kendo-datepicker *ngIf="udfData.FieldTypeId === 4" [controlName]="'DatePicker'"
+                                [label]="udfData.FieldType.LabelLocalizedKey" [isRequired]="udfData.FieldType.IsMandatory"
+                                [tooltipVisible]="true" [tooltipTitle]="udfData.FieldType.HelpTextLocalizedKey"
+                                [minDate]="udfData.FieldType.MinDate"
+                                [maxDate]="udfData.FieldType.MaxDate"></app-kendo-datepicker>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</kendo-dialog>
+<!-- Preview Dialog End -->

@@ -1,0 +1,146 @@
+
+
+<div class="offcanvas offcanvas-end time-details-popup show" tabindex="-1" *ngIf="isExpandedDetails" style="visibility: visible;">
+        <div class="offcanvas-header">
+         <h5>{{'ExpandedTimesheetDetails' | translate}}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" (click)="closed()" aria-label="Close">
+            </button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="card mt-3">
+                <div class="card__header">
+                    <h4 class="card__heading">{{periodHeading}}</h4>
+                    <div class="card__header-icon">
+                        <div class="form-group text-end mb-1">
+                            <kendo-label class="kendo-label__change kendo-label__change--all"
+                            [text]="getCurrencyValue('ShowBillingRates')">
+                                <kendo-switch [onLabel]="'Yes'" [offLabel]="'No'"
+                                    [(ngModel)]="isDisabled"></kendo-switch>
+                            </kendo-label>
+                        </div>
+                    </div>
+                </div>
+                <div class="card__body">
+                    <div class="list-view audit-log">
+                        <kendo-grid class="gridView2" [kendoGridBinding]="expandedObjList" 
+                            [kendoGridExpandDetailsBy]="expandDetailsBy">
+                            <kendo-grid-column media="(max-width: 920px)" title="Item">
+                            </kendo-grid-column>
+                            <kendo-grid-column media="(min-width: 921px)" field="Date" [title]="'Date' | translate" [width]="90">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    {{ dataItem.Date | date: 'EEE, M/d' }}
+                                  </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column media="(min-width: 921px)" field="CostAccountingName"
+                                [title]="'CostAccountingCode' | translate" [width]="200">
+                            </kendo-grid-column>
+                            <kendo-grid-column media="(min-width: 921px)" field="ShiftName" [title]="'IsAllowManualShift' | translate" [width]="100">
+                                <ng-template kendoGridFooterTemplate>
+                                    <div class="text-end total-amount">
+                                        <strong> {{'Total' | translate}} </strong>
+                                        <span class="amount-divider">|</span>
+                                    </div>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column media="(min-width: 921px)" field="St" [title]="'StHours' | translate" [width]="60" format="n2">
+                                <ng-template kendoGridFooterTemplate>
+                                    <strong>{{totalSt.toFixed(2)}} </strong>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column media="(min-width: 921px)" field="Ot" [title]="'OtHours' | translate" [width]="60" format="n2">
+                                <ng-template kendoGridFooterTemplate>
+                                    <strong>{{totalOt.toFixed(2)}}</strong>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column media="(min-width: 921px)" field="Dt" [title]="'DtHours' | translate" [width]="60" format="n2">
+                                <ng-template kendoGridFooterTemplate>
+                                    <strong> {{totalDt.toFixed(2)}}</strong>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column *ngIf="isPenaltyEnable" media="(min-width: 921px)" field="Pt" [title]="'PtHours' | translate" [width]="60" format="n2">
+                                <ng-template kendoGridFooterTemplate>
+                                    <strong> {{totalPt.toFixed(2)}}</strong>
+                                </ng-template>
+                            </kendo-grid-column>
+
+                            <kendo-grid-column media="(min-width: 921px)" field="TotalHours" [title]="'TotalHours' | translate" format="n2"
+                                [width]="100">
+                                <ng-template kendoGridFooterTemplate>
+                                    <strong>{{totalTotalHours.toFixed(2)}} </strong>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column media="(min-width: 921px)" field="EstimatedCost" format="n2"
+                                [title]="getCurrencyValue('EstimatedCostCurrency')" [width]="100">
+                                <ng-template kendoGridFooterTemplate>
+                                    <strong> {{totalEstimatedCost.toFixed(2)}}</strong>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <ng-template kendoGridDetailTemplate let-dataitemgrid >
+                                <kendo-grid [kendoGridBinding]="dataitemgrid?.entryTypeData" class="gridView3">
+                                    <kendo-grid-column media="(max-width: 920px)" title="Item">
+                            
+                                    </kendo-grid-column>
+                                    <kendo-grid-column media="(min-width: 921px)" field="EntryType" [title]="'Type' | translate"
+                                        [width]="80">
+                                    </kendo-grid-column>
+                                    <kendo-grid-column media="(min-width: 921px)" field="SubmittedBy"
+                                        [title]="'SubmittedBy' | translate" [width]="135">
+                                    </kendo-grid-column>
+                                    <kendo-grid-column media="(min-width: 921px)" field="SubmittedOn"
+                                        [title]="'SubmittedDate' | translate" [width]="135">
+                                        <ng-template kendoGridCellTemplate let-dataItem>
+                                            {{ dataItem.SubmittedOn | date: 'EEE, M/d' }}
+                                          </ng-template>
+                                    </kendo-grid-column>
+                                    <kendo-grid-column-group title="ST">
+                                        <kendo-grid-column media="(min-width: 921px)" field="StHours" [title]="'Hours' | translate" format="n2"
+                                            [width]="60">
+                                        </kendo-grid-column>
+                                        <kendo-grid-column media="(min-width: 921px)" field="StRates" [title]="'ShowRate' | translate" format="n2"
+                                            headerClass="rateClass" [width]="60" *ngIf="isDisabled">
+                                        </kendo-grid-column>
+
+                                    </kendo-grid-column-group>
+                                    <kendo-grid-column-group title="OT">
+                                        <kendo-grid-column media="(min-width: 921px)" field="OtHours" [title]="'Hours' | translate" format="n2"
+                                            [width]="60">
+                                        </kendo-grid-column>
+                                        <kendo-grid-column media="(min-width: 921px)" field="OtRates" [title]="'ShowRate' | translate" format="n2"
+                                            headerClass="rateClass" [width]="60" *ngIf="isDisabled">
+                                        </kendo-grid-column>
+
+                                    </kendo-grid-column-group>
+                                    <kendo-grid-column-group title="DT">
+                                        <kendo-grid-column media="(min-width: 921px)" field="DtHours" [title]="'Hours' | translate" format="n2"
+                                            [width]="60">
+                                        </kendo-grid-column>
+                                        <kendo-grid-column media="(min-width: 921px)" field="DtRates" [title]="'ShowRate' | translate" format="n2"
+                                            headerClass="rateClass" [width]="60" *ngIf="isDisabled">
+                                        </kendo-grid-column>
+
+                                    </kendo-grid-column-group>
+                                    <kendo-grid-column-group title="PT" *ngIf="isPenaltyEnable">
+                                        <kendo-grid-column media="(min-width: 921px)" field="PtHours" [title]="'Hours' | translate" format="n2"
+                                            [width]="60">
+                                        </kendo-grid-column>
+                                        <kendo-grid-column media="(min-width: 921px)" field="PtRates" [title]="'ShowRate' | translate" format="n2"
+                                            headerClass="rateClass" [width]="60" *ngIf="isDisabled">
+                                        </kendo-grid-column>
+                                    </kendo-grid-column-group>
+                                    <kendo-grid-column media="(min-width: 921px)" field="TotalHours" [title]="'TotalHours' | translate" format="n2"
+                                        [width]="100">
+                                    </kendo-grid-column>
+                                    <kendo-grid-column media="(min-width: 921px)" field="EstimatedCost" format="n2"
+                                        [title]="getCurrencyValue('EstimatedCostCurrency')" [width]="100">
+                                    </kendo-grid-column>
+                                </kendo-grid>
+                            </ng-template>
+                        </kendo-grid>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div> 
+    <div class="offcanvas-backdrop fade show"></div>
+ 

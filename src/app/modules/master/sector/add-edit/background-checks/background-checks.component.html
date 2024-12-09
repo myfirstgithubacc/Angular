@@ -1,0 +1,95 @@
+<form [formGroup]="backgroundChecksForm">
+    <div class="card">
+        <div class="card__header">
+            <h4 class="card__heading">{{'OnboardingRequirements'|translate}}</h4>
+        </div>
+        <div class="card__body">
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                    <h4 class="card__body--subheading">{{'IsDrugScreenItemEditable'|translate}}
+                    </h4>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'IsDrugResultVisible'" [label]="'Visible'" [offLabel]="'No'"
+                            [onLabel]="'Yes'" [tooltipTitle]="'DrugResultDetailVisibleToolTip'" [tooltipVisible]="true"
+                            (onChangeSwitch)="switchIsDrugResultVisible($event)">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6" *ngIf="isDrugResultVisible">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'IsDrugScreenItemEditable'" [tooltipVisible]="true"
+                            [offLabel]="'No'" [onLabel]="'Yes'"
+                            [tooltipTitle]="'Drug_Screen_Required_Field_Is_Editable_Tooltip'"
+                            [label]="'DrugScreenEditable'">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4" *ngIf="isDrugResultVisible">
+                    <div class="form-group">
+                        <app-kendo-radio-button [controlName]="'DefaultDrugResultValue'"
+                            [RadioGroup]="sectorAllDropdowns.YesNo" [name]="'DefaultDrugResultValue'"
+                            [label]="'DefaultValue'" [isRequired]="false">
+                        </app-kendo-radio-button>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12">
+                    <h4 class="card__body--subheading">{{'IsBackGroundItemEditable'|translate}}
+                    </h4>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'IsBackGroundCheckVisible'" [label]="'Visible'"
+                            [offLabel]="'No'" [onLabel]="'Yes'" [tooltipTitle]="'BackgroundCheckDetailVisibleToolTip'"
+                            [tooltipVisible]="true" (onChangeSwitch)="switchIsBackGroundCheckVisible($event)">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6" *ngIf="isBackGroundCheckVisible">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'IsBackGroundItemEditable'" [tooltipVisible]="true"
+                            [offLabel]="'No'" [onLabel]="'Yes'"
+                            [tooltipTitle]="'Background_Check_Field_Is_Editable_Tooltip'"
+                            [label]="'BackgroundCheckEditable'">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6" *ngIf="isBackGroundCheckVisible">
+                    <div class="form-group">
+                        <app-kendo-radio-button [controlName]="'DefaultBackGroundCheckValue'"
+                            [RadioGroup]="sectorAllDropdowns.YesNo" [name]="'DefaultBackGroundCheckValue'"
+                            [label]="'DefaultValue'" [isRequired]="false">
+                        </app-kendo-radio-button>
+                    </div>
+                </div>
+                <div class="card__body--subheading"></div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'AllowToFillCandidateWithPendingCompliance'"
+                            [tooltipVisible]="true" [offLabel]="'No'" [onLabel]="'Yes'"
+                            [tooltipTitle]="'PendingDrugAndBackChecksAllowedLICLPsToolTip'"
+                            [label]="'AllowToFillCandidateWithPendingCompliance'">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'AllowAttachPreEmploymentDocToClientEmail'"
+                            [tooltipVisible]="true"
+                            [tooltipTitle]="'AttachSelectedCandidatePreEmploymentFormsToClientEmailToolTip'"
+                            [label]="'AllowAttachPreEmploymentDocToClientEmail'" [onLabel]="'Yes'" [offLabel]="'No'">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <div class="card__onboarding-requirements--onboarding-grid">
+                    <app-list-view #BackGroundCheckslist [columnData]="columnBackgroundDetails"
+                        (onChangeSwitch)="arraySwitchChange($event)" [labelText]="['']"
+                        [columnConfigure]="columnBackgroundDetailsConfiguration" (formData)="getFormStatus($event)"
+                        [populatedData]="prefilledBackgroundDetails">
+                    </app-list-view>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

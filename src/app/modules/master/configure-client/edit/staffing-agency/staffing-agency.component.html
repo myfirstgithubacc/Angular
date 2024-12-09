@@ -1,0 +1,12 @@
+<div class="card__header">
+	<h4 class="card__heading">{{ "StaffingAgencyTiers" | translate }}</h4>
+	<div class="card__header-icon">
+	</div>
+</div>
+
+<div class="card__body">
+			<app-list-view #list [labelText]="label"
+				(formData)="getStaffingAgencyFormStatus($event)" [columnData]="columnStaffingAency" (listData)="getStaffingAgencyData($event)" 
+				[columnConfigure]="columnConfigurationStaffingAgency" [populatedData]="prefilledStaffingAgencyDetails">
+			</app-list-view>  
+</div>

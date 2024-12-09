@@ -1,0 +1,36 @@
+.info-tooltip {
+  display: inline-block;
+}
+
+.k-tooltip-wrapper .info-tooltip--v2 {
+  font-size: 12px !important;
+}
+
+.k-tooltip-wrapper .info-tooltip--v2 ol {
+  text-align: left;
+  max-height: 240px !important;
+  overflow: auto;
+  margin: 0;
+  padding: 5px 5px 5px 15px;
+}
+
+.k-tooltip {
+  font-size: 11px;
+  text-align: left;
+  line-height: 20px;
+}
+
+.required {
+  position: relative;
+  bottom: 4px;
+
+  &>svg {
+    height: 16px !important;
+    width: 16px !important;
+
+    &>path {
+      stroke: var(--color-inactive);
+      stroke-width: 2px;
+    }
+  }
+}

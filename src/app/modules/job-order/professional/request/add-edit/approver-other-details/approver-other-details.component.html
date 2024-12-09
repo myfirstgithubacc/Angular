@@ -1,0 +1,66 @@
+<kendo-expansionpanel [hidden]="!hasUDFLength" [expanded]="true" class="card">
+    <ng-template kendoExpansionPanelTitleDirective>
+        <div (click)="$event.stopPropagation()">
+            <h4 class="card__heading">{{'OtherDetailsUDFs' | translate}}</h4>
+        </div>
+    </ng-template>
+    <ng-container>
+        <app-udf-implementation [entityId]="entityId" [sectorId]="sectorId" [recordId]="recordId" [showTitle]="false"
+            [recordUKey]="recordUKey" [isDataPersist]="true" [parentsInfos]="udfCommonMethods.getParentsInfo()" [showNewUdfConfigs]="isDraft && isEditMode"
+            [isDraft]="isDraft" [actionTypeId]="isEditMode ? actionTypeIdEdit : actionTypeIdAdd" (onDataPicked)="getUdfData($event)"
+            (hasUDFLength)="getUdfLength($event)">
+        </app-udf-implementation>
+    </ng-container>
+</kendo-expansionpanel>
+
+<kendo-expansionpanel [hidden]="hasApproverData" [expanded]="true" class="card">
+    <ng-template kendoExpansionPanelTitleDirective>
+        <div (click)="$event.stopPropagation()">
+            <h4 class="card__heading">{{'RequisitionApprovers' | translate}}</h4>
+        </div>
+    </ng-template>
+    <app-approval-widget-v2 [entityId]="entityId" [isEdit]="isNeedToReloadLatestApprovers" [isRecordId]="recordId"
+        [isheading]="false" [heading]="'ApproverDetails'" [sector]="sectorId" [orgLevel1Id]="orgLevel1Id"
+        [approvalInfo]="approvalConfigWidgetObj" [isDraft]="isDraft"
+        (onApproverSubmitReq)="onApproverSubmit($event)"></app-approval-widget-v2>
+</kendo-expansionpanel>
+
+<kendo-expansionpanel [expanded]="true" class="card">
+    <ng-template kendoExpansionPanelTitleDirective>
+        <div (click)="$event.stopPropagation()">
+            <h4 class="card__heading">{{'Comments' | translate}}</h4>
+        </div>
+    </ng-template>
+    <form [formGroup]="commentDetailsForm">
+        <div class="card__body">
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <app-kendo-textarea [controlName]="'ClientComments'"
+                            [label]="'Manager Comments to Staffing Agency'" [maxCharacters]="2000"></app-kendo-textarea>
+                    </div>
+                </div>
+                <div class=" col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <app-kendo-textarea [controlName]="'ClientCommentsToStaffingAgency'"
+                            [label]="'Manager Comments (Not Viewable by Staffing Agency)'"
+                            [maxCharacters]="2000"></app-kendo-textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</kendo-expansionpanel>
+
+<kendo-expansionpanel [hidden]="!hasDMSLength" [expanded]="true" class="card">
+    <ng-template kendoExpansionPanelTitleDirective>
+        <div (click)="$event.stopPropagation()">
+            <h4 class="card__heading">{{'DocumentUpload' | translate}}</h4>
+        </div>
+    </ng-template>
+    <app-dms-implementation #dms [workFlowId]="entityId" [sectorId]="sectorId" [uploadStageId]="uploadStageId"
+        [actionTypeId]="isEditMode ? actionTypeIdEdit : actionTypeIdAdd" [recordId]="recordId" [showTitle]="false" [processingId]="processingId"
+        [isTransactionScreen]="true" (hasDMSLength)="getDmsLength($event)" [isDraft]="isDraft"
+        (gridChange)="onGridChange()">
+    </app-dms-implementation>
+</kendo-expansionpanel>

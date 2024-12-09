@@ -1,0 +1,7 @@
+<div class="form-group">
+<app-kendo-label [label]="'ReviewerComment'"></app-kendo-label>
+<div *ngFor="let detail of CommentArray" class="reviews__signature">
+    <p>{{ detail?.ReviewedOnDate | date: dateFormat }}</p>
+    <p>{{ detail?.ApproverComments }} <span> - {{ detail?.ApproverLabel }} </span></p>
+</div>
+</div>

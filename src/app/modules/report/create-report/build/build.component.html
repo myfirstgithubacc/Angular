@@ -1,0 +1,267 @@
+<div class="app-content__body app-content__body--li-create  custom_report--page custom_report--build">
+    <form [formGroup]="commonHeader">
+        <ng-container *ngIf="(reportDetails.IsCopyOfPredefined || reportDetails.UKey != '') && reportDetails.ReportName != '' && reportDetails.ReportName != null">
+            <app-common-header [recordName]="'Report'" [recordId]="'ABC'"
+        [entityId]="entityId" [recordIdTitle]="'AssignmentID'" [recordStatus]="'Active'"
+        [recordStatusTitle]="'Status'| translate" [isStatusEditable]="false"
+        [statusData]="statusData"></app-common-header>
+        </ng-container>
+
+        </form>
+        <div class="demo-container drag_data">
+            <div class="row g-3">
+                <div class="col-sm-3">
+                    <div class="build__page-main">
+                        <div class="row">
+                            <div class="contractors_heading">
+                                <h4 class="card__heading">{{'DataEntity' | translate}} : <span>{{gridData[0]?.entity?.Name}}</span></h4>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <h4 class="card__heading">{{'VisualizationType' | translate}}</h4>
+                            <div class="visualization_select"> 
+                                <ul>
+                                    <li [class.disabled] ="reportDetails.UKey != '' && !reportDetails.CopyMode && !reportDetails.IsCopyOfPredefined ? true : false">
+                                        <a href="javascript:;" (click)="toggleActive('list')"
+                                            [class.active]="isActive('list')" (click)="isDisabled = false">
+                                            <xrm-icon name="list2"  [size]="18" color="dark-blue-color" class="sw-bolder"></xrm-icon>
+                                            <p>{{'List' | translate}}</p>
+                                        </a>
+                                    </li>
+                                    <li [class.disabled] ="reportDetails.UKey != '' && !reportDetails.CopyMode && !reportDetails.IsCopyOfPredefined ? true : false">
+                                        <a href="javascript:;" (click)="toggleActive('summary')"
+                                            [class.active]="isActive('summary')" (click)="isDisabled = true">
+                                            <xrm-icon name="summary"  [size]="18" color="dark-blue-color" class="sw-bolder"></xrm-icon>
+                                            <p>{{'Summary' | translate}}</p>
+                                        </a>
+                                    </li>
+                                    <li [class.disabled] ="true">
+                                        <a href="javascript:;" (click)="toggleActive('line')"
+                                            [class.active]="isActive('line')" aria-disabled="true" (click)="isDisabled = true">
+                                            <xrm-icon name="line"  [size]="18" color="dark-blue-color" class="sw-bolder"></xrm-icon>
+                                            <p>{{'Line' | translate}}</p>
+                                        </a>
+                                    </li>
+                                    <li [class.disabled] ="true">
+                                        <a href="javascript:;" (click)="toggleActive('column')"
+                                            [class.active]="isActive('column')" (click)="isDisabled = true">
+                                            <xrm-icon name="bar"  [size]="18" color="dark-blue-color" class="sw-bolder"></xrm-icon>
+                                            <p>{{'Bar' | translate}}</p>
+                                        </a>
+                                    </li>
+                                    <li [class.disabled] ="true">
+                                        <a href="javascript:;"  (click)="toggleActive('pie')"
+                                            [class.active]="isActive('pie')" (click)="isDisabled = true">
+                                            <xrm-icon name="pie"  [size]="18" color="dark-blue-color" class="sw-bolder"></xrm-icon>
+                                            <p>{{'Pie' | translate}}</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <form [formGroup]="includeLinkedData">
+                                <div class="card__header">
+                                    <h4 class="card__heading">{{'DataEntityFields' | translate}}</h4>
+                                    <div class="card__header-icon"></div>
+                                </div>
+                                <div *ngIf="reportDetails.LinkedDataAvailable" class="form-group inline-switch mt-0 mb-0" style="padding: 0 17px;">
+                                    <app-kendo-switch [label]="'Include Linked Data Fields'" [onLabel]="'Yes'"
+                                        [offLabel]="'No'" [controlName]="'linkedData'"
+                                        (onChangeSwitch)="onChangeIncludeLinkedData($event)"></app-kendo-switch>
+                                </div>
+                            </form>
+                           
+                            <div class="card__body">
+                                <!-- input box start -->
+                                <div class="col-sm-12 col-md-12 mb-2">
+                                    <div class="custom-search">
+                                        <div class="custom-search__input-box">
+                                        <kendo-textbox [placeholder]="'SearchFor'| translate" [clearButton]="true" (valueChange)="onFilter($event)">
+                                            <!-- <ng-template kendoTextBoxSuffixTemplate>
+                                                <button type="button" kendoButton fillmode="solid" themecolor="primary"
+                                                    class="send-button">
+                                                    <span class="k-button-text"><i class="zoom"></i></span>
+                                                </button>
+                                            </ng-template> -->
+                                        </kendo-textbox>
+                                    </div>
+                                    </div>
+                                </div>
+                                <!-- input box end -->
+                                <div class="dynamicFields sticky-panel">
+                                    <div *ngFor="let data of gridData; let index=index">
+                                        <kendo-panelbar>
+                                            <kendo-panelbar-item [title]="data.entity.Name" [expanded]="true">
+                                                 <kendo-panelbar-item *ngFor="let entity of data.tables;let ind = index" [title]="entity.tableName" [expanded]="isExpanedeField">
+                                                            <ng-template kendoPanelBarContent>
+                                                                <kendo-listview class="demo-listview" [data]="entity.fields" [itemClass]="{ 'item-border': true }"
+                                                                    data-kendo-listview-index="0">
+                                                                    <ng-template kendoListViewItemTemplate let-dataItem="dataItem">
+                                                                        <div class="item" [draggable]="true" (dragstart)="onDragStart(dataItem, entity.tableName)" (dragend)="onDragEndFields()" [ngClass]="dataItem.isSelected ? 'field-selected' : ''">
+                                                                            <xrm-icon name="list2"  [size]="14" color="black-color" class="sw-bolder drag__Drop-icon"></xrm-icon>
+                                                                            <span>{{ dataItem.fieldName }}</span>
+                                                                        </div>
+                                                                    </ng-template>
+                                                                </kendo-listview>
+                                                            </ng-template>
+                                                        </kendo-panelbar-item>
+                                            </kendo-panelbar-item>
+                                        </kendo-panelbar>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-9">
+                    <div class="card">
+                        <div class="card__header" id="system-messages">
+                            <h4 class="card__heading">{{'ColumnsAndLayout' | translate}}</h4>
+                        </div>
+                        <div class="card__body">
+                            <div class="list-view list-screen-grid report-columns__grid" id="drop_Target" style="position:relative">
+                                <div id="drag-status">
+                                    <table class="rowDrag">
+                                        <tr><td> <xrm-icon name="list2"  [size]="14" color="black-color" class="sw-bolder drag__Drop-icon"></xrm-icon></td>
+                                        <td>{{selectedFields[indexRow]?.tableName}}</td>
+                                        <td>{{selectedFields[indexRow]?.fieldName}}</td>
+                                        <td *ngIf="activeItem == 'summary'">
+                                            <kendo-dropdownlist *ngIf="selectedFields[indexRow]?.selectedfieldAggregate != null"
+                                            [data]="selectedFields[indexRow]?.fieldAggregate" placeholder=""
+                                            [value]="selectedFields[indexRow]?.selectedfieldAggregate">
+                                        </kendo-dropdownlist>
+                                        <kendo-dropdownlist *ngIf="selectedFields[indexRow]?.selectedfieldAggregate === null || selectedFields[indexRow]?.selectedfieldAggregate === undefined" [data]="selectedFields[indexRow]?.fieldAggregate"
+                                            placeholder="">
+                                        </kendo-dropdownlist>
+                                        </td>
+                                        <td>
+                                            <ng-container *ngIf="selectedFields[indexRow]?.selectedSorts != null">
+                                                <kendo-combobox [data]="sorts" [popupSettings]="{ popupClass: 'sorting-popup' }"
+                                                 [value]="selectedFields[indexRow]?.selectedSorts" [allowCustom]="false"></kendo-combobox>
+                                            </ng-container>
+                                            <ng-container *ngIf="selectedFields[indexRow]?.selectedSorts == null || selectedFields[indexRow]?.selectedSorts == undefined">
+                                            <kendo-combobox [data]="sorts" [popupSettings]="{ popupClass: 'sorting-popup' }"
+                                                 [allowCustom]="false">
+                                                </kendo-combobox>
+                                            </ng-container>
+                                        </td>
+                                        <td><div class="action-item" kendoTooltip>
+                                        <a href="javascript:;" kendoButton title="Do Not Include In Report">
+                                        <xrm-icon [name]="'x'" [color]="'red-color'"title="Remove Field" [size]="18" [strokeWidth]="2.5"></xrm-icon>
+                                        </a></div></td></tr></table>
+                                </div>
+                               <kendo-grid id="drop_TargetRow" class="grid__column-break" [data]="selectedFields" data-kendo-grid-index="0">
+                                    <kendo-grid-column [width]="30" [class]="'grid-icon'">
+                                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                        <span [draggable]="true" (drag)="onDragRow($event)"
+
+                                        (dragstart)="onDragStartGridRow($event,rowIndex)" (dragover)="ondragOver($event, rowIndex)"
+                                        (dragenter)="onDragEnter($event)" (dragend)="onDragEnd()"
+                                        (drop)="ondropRow($event, rowIndex)" (drop)="onnddrop($event, rowIndex)">
+                                            <xrm-icon name="list2"  [size]="14" color="black-color" class="sw-bolder drag__Drop-icon" ></xrm-icon>
+                                        </span>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                    <kendo-grid-column [title]="'DataEntity' | translate" [width]="140">
+                                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                             <span (dragover)="ondragOver($event, rowIndex)" (drop)="ondropRow($event, rowIndex)" (drop)="onnddrop($event, rowIndex)">{{ dataItem.tableName }}</span>
+                                            </ng-template>
+                                    </kendo-grid-column>
+                                    <kendo-grid-column [title]="'FieldName' | translate" [width]="170">
+                                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                              <span (dragover)="ondragOver($event, rowIndex)" (drop)="ondropRow($event, rowIndex)" (drop)="onnddrop($event, rowIndex)">{{ dataItem.fieldName }}</span>
+                                            </ng-template>
+                                    </kendo-grid-column>
+                                    <kendo-grid-column [width]="110" *ngIf="activeItem == 'summary'" [title]="'AggregationOptions' | translate"  [headerClass]="'required'">
+                                        <ng-template kendoGridHeaderTemplate>
+                                            <span class="k-cell-inner">
+                                                <span  > {{'AggregationOptions' | translate}} 
+                                                <xrm-icon name="star"  [size]="14" color="black-inactive" class="sw-bolder required"></xrm-icon>
+                                                </span>
+                                            </span>
+                                        </ng-template>
+                                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                            <span  (dragover)="ondragOver($event, rowIndex)" (drop)="ondropRow($event, rowIndex)" (drop)="onnddrop($event, rowIndex)">
+                                            <kendo-dropdownlist *ngIf="dataItem.selectedfieldAggregate != null"
+                                                [data]="dataItem.fieldAggregate" placeholder="" (valueChange)="onChangeAggregationOption($event, rowIndex)"
+                                                [value]="dataItem.selectedfieldAggregate" (dragover)="ondragOver($event, rowIndex)" (drop)="ondropRow($event, rowIndex)" (drop)="onnddrop($event, rowIndex)">
+                                            </kendo-dropdownlist>
+                                            <kendo-dropdownlist *ngIf="dataItem.selectedfieldAggregate === null || dataItem.selectedfieldAggregate === undefined" [data]="dataItem.fieldAggregate"
+                                                placeholder="" (valueChange)="onChangeAggregationOption($event, rowIndex)" (dragover)="ondragOver($event, rowIndex)" (drop)="ondropRow($event, rowIndex)" (drop)="onnddrop($event, rowIndex)">
+                                            </kendo-dropdownlist>
+                                        </span>
+                                        </ng-template>
+                                    </kendo-grid-column> 
+                                    <kendo-grid-column [title]="'Sort' | translate" [width]="80">
+                                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                            <span  (dragover)="ondragOver($event, rowIndex)" (drop)="ondropRow($event, rowIndex)" (drop)="onnddrop($event, rowIndex)">
+                                            <ng-container *ngIf="dataItem.selectedSorts != null">
+                                                <kendo-combobox [data]="sorts" [popupSettings]="{ popupClass: 'sorting-popup' }"
+                                                (valueChange)="onChangeSortingOption($event, rowIndex)" [value]="dataItem.selectedSorts" (drop)="ondropRow($event, rowIndex)" (drop)="onnddrop($event, rowIndex)" (dragover)="ondragOver($event, rowIndex)" [allowCustom]="false"></kendo-combobox>
+                                            </ng-container>
+                                            <ng-container *ngIf="dataItem.selectedSorts == null || dataItem.selectedSorts == undefined">
+                                            <kendo-combobox [data]="sorts" [popupSettings]="{ popupClass: 'sorting-popup' }"
+                                            (valueChange)="onChangeSortingOption($event, rowIndex)" (drop)="ondropRow($event, rowIndex)" (drop)="onnddrop($event, rowIndex)" (dragover)="ondragOver($event, rowIndex)" [allowCustom]="false">
+                                                </kendo-combobox>
+                                            </ng-container>
+                                        </span>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                    <kendo-grid-column field="Remove_Field" title="" [width]="40">
+                                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">
+                                            <span  (dragover)="ondragOver($event, rowIndex)" (drop)="ondropRow($event, rowIndex)" (drop)="onnddrop($event, rowIndex)">
+                                            <div class="action-item" kendoTooltip (dragover)="ondragOver($event, rowIndex)" (drop)="ondropRow($event, rowIndex)" (drop)="onnddrop($event, rowIndex)">
+                                                <a href="javascript:;" kendoButton>
+                                                    <xrm-icon [name]="'x'" [color]="'red-color'" [title]="'RemoveField' | translate" [size]="12" [strokeWidth]="2.5"
+                                                        (click)="removeSelectedFields(rowIndex)"></xrm-icon>
+                                                </a>
+                                            </div>
+                                            </span>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                    <ng-template kendoGridNoRecordsTemplate>
+                                        <span (dragover)="onDragOverGrid($event)" (dragenter)="onDragEnter($event)" (drop)="ondropGridEmpty()">{{ 'GridNoRecordAvailable' | translate }}</span>
+                                      </ng-template>
+                                </kendo-grid>
+                            </div>
+                        </div>
+                    </div>
+
+                  <!-- <div class="row report__filters" *ngIf="selectedFields.length > 0">
+                    <app-fiter-report class="filter_block" [fieldList]="selectedFields" [value]="value" [reportId]="reportId" (selectedFilters)="selectedFilters($event)" (isInvalidFilter)="isInvalidFilter($event)"></app-fiter-report>
+                </div> -->
+                <kendo-expansionpanel class="card mt-3" [expanded]="true" *ngIf="selectedFields.length > 0">
+                    <ng-template kendoExpansionPanelTitleDirective>
+                        <div class="card__header">
+                            <h4 class="card__heading">{{'FiltersAndParameters' | translate}}</h4>
+                        </div>
+                    </ng-template>
+                    <div class="card__body">
+                        <app-fiter-report class="filter_block" [fieldList]="selectedFields" [value]="value" [reportId]="reportId"
+                            (selectedFilters)="selectedFilters($event)" (isInvalidFilter)="isInvalidFilter($event)"></app-fiter-report>
+                    </div>
+                </kendo-expansionpanel>
+                </div>
+            </div>
+        </div>
+    
+    
+    
+  <div class="page-footer stepper-button" *ngIf="!resetStep">
+            <div class="stepper-button__prev">
+                <button kendoButton href="javascript:;" fillMode="outline" themeColor="primary"
+                     (click)="back()"><i class="fa-solid fa-chevron-left"></i>
+                    {{'Previous' | translate}}</button>
+            </div>
+            <div class="stepper-button__next">
+                <button type="button" kendoButton themeColor="primary" fillMode="outline"
+                (click)="cancel()">{{'Cancel' | translate}}</button>
+                <button kendoButton href="javascript:;" themeColor="primary" (click)="setBuildData()"
+                    >{{'Next' | translate}} <i
+                        class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+   
+</div>

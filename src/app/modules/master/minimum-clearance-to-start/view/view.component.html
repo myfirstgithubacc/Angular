@@ -1,0 +1,70 @@
+<div class="app-content__body floating-layout floating-layout__view-layout">
+  <div class="card">
+    <div class="card__header">
+      <h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+      <div class="card__header-icon">
+      </div>
+    </div>
+    <div class="card__body">
+      <div class="row">
+
+        <div class="clearfix"></div>
+        <div class="col-sm-6 col-md-6">
+          <div class="form-group">
+            <app-kendo-label [label]="'Sector'" [value]="minimumClearanceToStart.SectorName"></app-kendo-label>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-6">
+          <div class="form-group">
+            <app-kendo-label [label]="'ClearanceLevel'"
+              [value]="minimumClearanceToStart.ClearanceLevelName"></app-kendo-label>
+          </div>
+        </div>
+
+        <div class="col-sm-12 col-md-12">
+          <h4 class="card__body--subheading">{{'ApplicableIn'|translate}}</h4>
+        </div>
+
+        <div class="col-sm-6 col-md-6">
+          <div class="form-group">
+            <app-kendo-label [tooltipVisible]="true" [tooltipTitle]="'MinimumClearanceProffRequestToolTip'"
+              [label]="'ProfessionalPsrRequest'" [value]="minimumClearanceToStart.ProfessionalRequest ? 'Yes':'No'"
+              [tooltipPosition]="">
+            </app-kendo-label>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-6">
+          <div class="form-group">
+            <app-kendo-label [tooltipVisible]="true" [tooltipTitle]="'MinimumClearanceSubmittaToolTip'"
+              [label]="'SubmittalRecord'" [value]="minimumClearanceToStart.Candidates ? 'Yes':'No'"
+              [tooltipPosition]="">
+            </app-kendo-label>
+          </div>
+        </div>
+        <div *ngIf="isRfxSowRequired" class="col-sm-6 col-md-6">
+          <div class="form-group">
+            <app-kendo-label [tooltipVisible]="true" [tooltipTitle]="'MinimumClearanceRFxRequestToolTip'"
+              [label]="'RfxSowRequest'" [value]="minimumClearanceToStart.RfxSowRequest ? 'Yes':'No'"
+              [tooltipPosition]="">
+            </app-kendo-label>
+          </div>
+        </div>
+        <div *ngIf="isRfxSowRequired" class="col-sm-6 col-md-6">
+          <div class="form-group">
+            <app-kendo-label [tooltipVisible]="true" [tooltipTitle]="'MinimumClearanceSOWResourcesToolTip'"
+              [label]="'SowResources'" [value]="minimumClearanceToStart.SowResources ? 'Yes':'No'" [tooltipPosition]="">
+            </app-kendo-label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <div class="btn-box btn-box--center">
+      <button type="button" kendoButton themeColor="primary" [routerLink]="navigationPaths.list">
+        {{'Back' | translate}} </button>
+    </div>
+  </div>
+</div>

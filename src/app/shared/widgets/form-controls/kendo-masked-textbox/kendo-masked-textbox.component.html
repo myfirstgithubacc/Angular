@@ -1,0 +1,25 @@
+<div *ngIf="isEditMode; then thenTemplateName; else elseTemplateName"></div>
+<ng-template #thenTemplateName>
+  <kendo-formfield>
+    <tooltip-content [tooltipVisible]="tooltipVisible" [tooltipTitle]="tooltipTitle" [label]="label"
+      [tooltipPosition]="" [tooltipTitleLocalizeParam]="tooltipTitleLocalizeParam" [isRequired]="isRequired"
+      [addOnLabelText]="addOnLabelText" [addOnLabelTextLocalizeParam]="addOnLabelTextLocalizeParam"
+      [labelLocalizeParam]="labelLocalizeParam" [isHtmlContent]="isHtmlContent">
+    </tooltip-content>
+    <kendo-maskedtextbox id="kendoMaskInput" [formControl]="listControlName ? listControlName : formControl"
+      [mask]="maskFormat" (blur)="onBlur($event)" (focus)="onFocus($event)" [maskValidation]="maskValidation"
+      [disabled]="isDisabled">
+    </kendo-maskedtextbox>
+    <app-print-error-message [control]=" listControlName ? listControlName :
+            formControl"></app-print-error-message>
+  </kendo-formfield>
+</ng-template>
+
+<ng-template #elseTemplateName>
+  <app-kendo-label [label]="label"
+    [value]="(listControlName ? listControlName.value : formControl.value) | maskFormat : maskFormat"
+    [tooltipPosition]="" [labelLocalizeParam]="labelLocalizeParam" 
+    [addOnLabelText]="addOnLabelText" [addOnLabelTextLocalizeParam]="addOnLabelTextLocalizeParam"
+    [tooltipVisible]="tooltipVisible" [tooltipTitle]="tooltipTitle" [tooltipTitleLocalizeParam]="tooltipTitleLocalizeParam">
+  </app-kendo-label>
+</ng-template>

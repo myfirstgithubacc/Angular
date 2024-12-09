@@ -1,0 +1,170 @@
+<!-- Main Body Section-->
+<div class="app-content__body">
+    <!-- Start of Add functionality Card Section -->
+
+    <form [formGroup]="AddEditEventReasonForm">
+        <div class="card">
+            <!-- Card Header Section-->
+            <div class="card__header">
+                <h4 class="card__heading">{{'EventDetails'| translate}}</h4>
+                <div class="card__header-icon">
+
+                </div>
+            </div>
+            <!-- End Card Header Section-->
+
+            <!-- Card Body Section-->
+            <div class="card__body">
+                <div class="row">
+
+                    <!-- Input Box Start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+
+                            <app-kendo-dropdown *ngIf="sectorDropDownList.length != magicNumber.one"
+                                [list]="sectorDropDownList" [label]="'Sector'" [controlName]="'sectorId'"
+                                [placeholder]="'Select'" [isRequired]="true" (onChange)="changeSectorName($event)">
+                            </app-kendo-dropdown>
+                            <app-kendo-label *ngIf="sectorDropDownList.length == magicNumber.one" [label]="'Sector'"
+                                [value]="sectorDropDownList[0].Text"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- Input Box End -->
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-dropdown *ngIf="assignmentIdList.length != magicNumber.one"
+                                [list]="assignmentIdList" [label]="'AssignmentID'"
+                                (onChange)="changeAssignement($event)" [controlName]="'assignmentId'"
+                                [placeholder]="'Select'" [isRequired]="true">
+                            </app-kendo-dropdown>
+                            <app-kendo-label *ngIf="assignmentIdList.length == magicNumber.one" [label]="'AssignmentID'"
+                                [value]="assignmentIdList[0].Text"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box end -->
+
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-dropdown *ngIf="eventNameList.length != magicNumber.one" [list]="eventNameList"
+                                [label]="'Event'" [controlName]="'eventConfigId'" [placeholder]="'Select'"
+                                [isRequired]="true" (onChange)="changeEventName($event)">
+                            </app-kendo-dropdown>
+                            <app-kendo-label *ngIf="eventNameList.length == magicNumber.one" [label]="'Event'"
+                                [value]="eventNameList[0].Text"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box end -->
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-dropdown *ngIf="eventReasonList.length != magicNumber.one"
+                                [list]="eventReasonList" [label]="'EventReason'" [controlName]="'eventReasonId'"
+                                [placeholder]="'Select'" [isRequired]="eventConfigData.RequiresEventReason">
+                            </app-kendo-dropdown>
+                            <app-kendo-label *ngIf="eventReasonList.length == magicNumber.one" [label]="'EventReason'"
+                                [value]="eventReasonList[0].Text"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box end -->
+                    <!-- Input Box Start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="eventConfigData.DateTypeId">
+                        <div class="form-group">
+                            <app-kendo-datepicker
+                                [controlName]="eventConfigData.DateTypeId == DateTypeId ? 'fromDate' : 'incurredDate'"
+                                [label]="eventConfigData.DateTypeId == DateTypeId ? 'FromDate' : 'IncurredDate'"
+                                [isRequired]="true" (onChange)="onChangeFromDate()" >
+                            </app-kendo-datepicker>
+                        </div>
+                    </div>
+                    <!-- Input Box End -->
+                    <!-- Input Box Start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="eventConfigData.DateTypeId == DateTypeId">
+                        <div class="form-group">
+                            <app-kendo-datepicker [controlName]="'toDate'" [label]="'ThroughDate'"
+                                [disabledDates]="disableDates" [isRequired]="true" (onChange)="onChangeThroughDate()">
+                            </app-kendo-datepicker>
+                        </div>
+                    </div>
+
+                    <!-- Page Subheading -->
+                    <div class="col-sm-12 col-md-12" *ngIf="eventConfigData.RequiresBackfill">
+                        <h4 class="card__body--subheading">{{'BackfillDetails' | translate}}</h4>
+                    </div>
+                    <!-- Page Subheading -->
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="eventConfigData.RequiresBackfill">
+                        <div class="form-group">
+                            <app-kendo-switch [label]="'RequiresBackfill'" [controlName]="'backfillRequired'"
+                                [onLabel]="'Yes'" [offLabel]="'No'"
+                                (onChangeSwitch)="needBackFillChange($event)"></app-kendo-switch>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <div class="clearfix"></div>
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="AddEditEventReasonForm?.get('backfillRequired')?.value">
+                        <div class="form-group">
+                            <app-kendo-datepicker [label]="'BackfillStartDate'" [controlName]="'backfillStartDate'"
+                                [isRequired]="true" [disabledDates]="disableDateBefore" (onChange)="addValidationStartEndDate()" >
+                            </app-kendo-datepicker>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="AddEditEventReasonForm?.get('backfillRequired')?.value">
+                        <div class="form-group">
+                            <app-kendo-datepicker [label]="'BackfillEndDate'" [controlName]="'backfillEndDate'"
+                            [isRequired]="true" [disabledDates]="disableBackfillDates" (onChange)="addValidationStartEndDate()" ></app-kendo-datepicker>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <!-- input box start -->
+                    <div class="col-sm-12 col-md-12" *ngIf="AddEditEventReasonForm?.get('backfillRequired')?.value">
+                        <div class="form-group">
+                            <app-kendo-radio-button [label]="'BroadcastBackfillto'" [controlName]="'broadcastType'"
+                                [RadioGroup]="choosestaffing" [tooltipVisible]="true" [tooltipTitle]="'BroadcastBackfilltoTooltipMsg'"
+                                (onChangeRadio)="broadCastChange($event)"></app-kendo-radio-button>
+                            <div class="col-sm-12 col-md-12 halfGridCol2 tree-bxs">
+                                <app-tree-view [data]="staffingAgencyList" [isFiltered]="false"
+                                    *ngIf="AddEditEventReasonForm?.get('broadcastType')?.value === 3"
+                                    [textField]="'text'" (onCheckedTree)="selectedStaffingAgency($event)"
+                                    [checkedKeys]="checkedKeys" [childrenField]="'items'"
+                                    [isViewApprovalCase]="true" [treeViewType]="'multileveltreeview'"></app-tree-view>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Input Box Start -->
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <app-kendo-textarea [label]="'Comment'" [controlName]="'comment'" [maxCharacters] = "2000"
+                                [isRequired]="eventConfigData.RequiresComment"></app-kendo-textarea>
+                        </div>
+                    </div>
+                    <!-- Input Box End -->
+                </div>
+            </div>
+
+        </div>
+        <!-- Footer Section-->
+        <div class="page-footer">
+            <div class="btn-box btn-box--center">
+                <button type="button" kendoButton fillMode="outline" themeColor="primary" (click)="cancelForm()">{{'Cancel'
+                    | translate}} </button>
+                <button type="button" kendoButton (click)="submitForm()" themeColor="primary">{{'Submit'|
+                    translate}}</button>
+
+            </div>
+        </div>
+        <!-- End Footer Section-->
+    </form>
+</div>

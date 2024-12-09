@@ -1,0 +1,179 @@
+<form [formGroup]="inputProperties.editAssingmentForm">
+    <div class="card">
+        <!-- Card Header Section -->
+        <div class="card__header">
+            <h4 class="card__heading">{{'TimeAndExpenseConfigurations' | translate}}</h4>
+        </div>
+        <!-- End Card Header Section -->
+
+
+
+
+        <div class="card__body">
+            <div class="row">
+                <!-- Allow  to Enter Time Entry start Here -->
+                <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('isTimeEntryAllowed')">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'isTimeEntryAllowed'" [label]="'AllowtoEnterTimeEntry'"
+                            [onLabel]="'Yes'" [offLabel]="'No'" [isEditMode]="!isReadOnly('isTimeEntryAllowed')"
+                            (onChangeSwitch)="onAllowTimeEntrySwitch($event)"
+                            >
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <!-- Allow  to Enter Time Entry Ends Here -->
+
+
+                <ng-container *ngIf="inputProperties.assignmentDetails?.UnitType == '9'">
+
+                    <!-- Estimated Regular Hours per Week start here -->
+                    <div class="clearfix"></div>
+                    <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('estimatedRegularHoursPerWeek')">
+                        <div class="form-group">
+
+                            <app-numeric-box [label]="'EstimatedRegularHoursperWeek'"
+                                [controlName]="'estimatedRegularHoursPerWeek'"
+                                [isEditMode]="isReadOnly('estimatedRegularHoursPerWeek')" [min]="0" [decimals]="2"
+                                [isRequired]="true" (onNumericChange)="onChangeNumericBox($event)">
+                            </app-numeric-box>
+                        </div>
+                    </div>
+                    <!-- Estimated Regular Hours per Week ends here -->
+
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'otallowed'" [label]="'OTAllowed'" [onLabel]="'Yes'" [offLabel]="'No'" [isEditMode]="!isReadOnly('otallowed')"> </app-kendo-switch>
+                    </div>
+                </div>
+                <!-- Hour Distribution start here -->
+                <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('hourDistribution')" [ngClass]="inputProperties.isControlRevision['hourDistribution'] ? 'revision-workflow-two' : ''">
+                    <div class="form-group">
+                        <app-kendo-dropdown
+                            [label]="'HourDistributionRule'"
+                            [list]="inputProperties.hourDistributionList"
+                            [placeholder]="'Select'"
+                            [controlName]="'hourDistribution'"
+                            [isAppend]="isAppendModeForDropdown"
+                            [isEditMode]="isReadOnly('HourDistributionRuleName') || inputProperties.IsRevisionPending"
+                            [singleItemautoLable]="false"
+                            [isRequired]="true"
+                            (onChange)="onHourDistributionRuleChange('hourDistribution')"
+                        >
+                        </app-kendo-dropdown>
+                        <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision['hourDistribution']">
+                          <xrm-icon name="alert-triangle" color="orange-color" [size]="18"
+                          title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                        </div>
+                    </div>
+                </div>
+                <!-- Hour Distribution ends here -->
+
+                <!-- Hour Distribution Effective Date start Here -->
+                <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('hourDistributionEffectiveDate')" [ngClass]="inputProperties.isControlRevision['hourDistributionEffectiveDate'] ? 'revision-workflow-two' : ''">
+                    <div class="form-group">
+                        <app-kendo-dropdown
+                            [label]="'HourDistributionRuleEffectiveDate'"
+                            [list]="inputProperties.hourDistributionEffectiveDateList"
+                            [placeholder]="'Select'"
+                            [controlName]="'hourDistributionEffectiveDate'"
+                            [isEditMode]="isReadOnly('hourDistributionEffectiveDate') || inputProperties.IsRevisionPending || isDisabled('hourDistributionEffectiveDate')"
+                            [isRequired]="true"
+                            [isAppend]="true"
+                            (onChange)="onHourDistributionRuleEffectiveDateChange('hourDistributionEffectiveDate')"
+                        >
+                        </app-kendo-dropdown>
+                        <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision['hourDistributionEffectiveDate']">
+                          <xrm-icon name="alert-triangle" color="orange-color" [size]="18"
+                          title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                         </div>
+                    </div>
+                </div>
+                <!-- Hour Distribution Effective Date ends Here -->
+
+
+
+
+                <!-- Rest/Meal Break Configuration start Here -->
+                <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('restMealBreak')" [ngClass]="inputProperties.isControlRevision['restMealBreak'] ? 'revision-workflow-two' : ''">
+                    <div class="form-group">
+                        <app-kendo-dropdown
+                            [label]="'RestOrMealBreakConfiguration'"
+                            [list]="inputProperties.restMealBreakList"
+                            [controlName]="'restMealBreak'"
+                            [placeholder]="'Select'"
+                            [isEditMode]="true"
+                            [isAppend]="isAppendModeForDropdown"
+                            [singleItemautoLable]="false"
+                            [isDisabled]="true"
+                            [isRequired]="true"
+                        >
+                        <!-- [isEditMode]="isReadOnly('restMealBreak')" -->
+                        </app-kendo-dropdown>
+                        <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision.restMealBreak">
+                          <xrm-icon name="alert-triangle" color="orange-color" [size]="18"
+                          title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                         </div>
+                    </div>
+                </div>
+                <!-- Rest/Meal Break Configuration ends Here -->
+
+
+
+
+                <!-- Rest/Meal Break Configuration Effective Date start here -->
+                <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('restBreakEffectiveDate')" [ngClass]="inputProperties.isControlRevision['restBreakEffectiveDate'] ? 'revision-workflow-two' : ''">
+                    <div class="form-group">
+                        <app-kendo-dropdown
+                            [label]="'RestMealEffectiveDate'"
+                            [list]="inputProperties.restBreakEffectiveDateList"
+                            [placeholder]="'Select'"
+                            [controlName]="'restBreakEffectiveDate'"
+                            [isEditMode]="isReadOnly('restBreakEffectiveDate')|| inputProperties.IsRevisionPending || isDisabled('restBreakEffectiveDate')"
+                            [isRequired]="true"
+                            (onChange)="onRestMealBreakRuleEffectiveDateChange('restBreakEffectiveDate')"
+                            [isAppend]="true"
+                        >
+                        </app-kendo-dropdown>
+                        <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision['restBreakEffectiveDate']">
+                          <xrm-icon name="alert-triangle" color="orange-color" [size]="18"
+                          title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                         </div>
+                    </div>
+                </div>
+                <!-- Rest/Meal Break Configuration Effective Date ends here -->
+
+                </ng-container>
+
+
+                <!-- Page Subheading -->
+                <div class="col-sm-12 col-md-12">
+                    <h4 class="card__body--subheading">{{'IncurredTimesheetDetail' | translate}}</h4>
+                </div>
+                <!-- Page Subheading -->
+                <!-- Hours Year Till Date start here -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <!-- <app-kendo-label
+                            [label]="'HoursYearTillDate'"
+                            [value]="inputProperties.assignmentDetails?.HoursYTD??''"
+                        >
+                        </app-kendo-label> -->
+                        <app-kendo-label [label]="getRateUnitLabelYearTillDate('YearTillDate')"
+                            [value]="inputProperties.assignmentDetails.HoursYTD!.toFixed(2)">
+                        </app-kendo-label>
+                    </div>
+                </div>
+                <!-- Hours Year Till Date ends here -->
+                <!-- Wages Year Till Date (USD) start here -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group" *ngIf="isFieldVisible('WagesYearTillDate')">
+                        <app-kendo-label [label]="'WagesYearTillDate'"
+                            [value]="inputProperties.assignmentDetails.WagesYTD!" [isCurrency]="true">
+                        </app-kendo-label>
+                    </div>
+                </div>
+                <!-- Wages Year Till Date (USD) ends here -->
+            </div>
+        </div>
+    </div>
+</form>

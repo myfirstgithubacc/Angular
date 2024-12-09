@@ -1,0 +1,566 @@
+<div class="app-content__body timesheet__page">
+    <form [formGroup]="timeEntryForm">
+        <div class="row arrow-row">
+            <div class="col-sm-12 arrow-btn-div">
+                <app-weekending-dropdown (OnWeekendingDropdownChange)="onWeekendingDropdownChange($event)"
+                [entityId]="entityId" [ScreenId]="screenId" [AssignmentId]="assignmentId">
+            </app-weekending-dropdown>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card__header">
+                <h4 class="card__heading">{{ periodHeading }} <br>
+                    <span *ngIf="isInOutEnable" class="card__heading-timeinfo">( <xrm-icon [name]="'clock-in-out'" class="sw-bold"
+                        [color]="'dark-blue-color'" [size]="16"></xrm-icon> {{'ClickIconAdjustBillableHoursForDay' | translate}} )</span>
+                </h4>
+                <div class="card__header-icon">
+                    <a class="color-primary" *ngIf="dataWithInlineViewTrue?.length" href="javascript:;"
+                        data-bs-toggle="offcanvas" data-bs-target="#approversItems">{{"ViewOtherApproversItems" |
+                        translate}}
+                    </a>
+                </div>
+            </div>
+            <div class="card__body">
+                <div class="row">
+                    <div class="list-view time-adjustment">
+                        <div class="row">
+                            <div class=" col-sm-12 col-md-12">
+                                <ng-template #template let-anchor>
+                                    <span>{{ anchor.nativeElement.innerText }}</span>
+                                </ng-template>
+                                <div kendoTooltip [tooltipTemplate]="template" filter=".k-grid td"
+                                    (mouseover)="showTooltip($event)">
+                                    <kendo-grid [data]="dataWithInlineViewFalse" [rowClass]="rowCallback"
+                                        [resizable]="true" [navigable]="false">
+                                        <kendo-grid-column media="(max-width: 920px)" title="Items">
+                                            <ng-template kendoGridHeaderTemplate>
+                                                <div class="grid_total_ammount"
+                                                    *ngIf="days?.TotalHour != magicNumber.zero">
+                                                    <a href="javascript:;" kendobutton (click)="openExpandedTimesheet()"
+                                                        [title]="'ExpandedTimesheetDetails'  | translate"
+                                                        data-bs-toggle="offcanvas" data-bs-target="#viewDetails">
+                                                        <xrm-icon [name]="'clipboard-clock'" [color]="'dark-blue-color'"
+                                                            [size]="magicNumber.sixteen" class="sw-bold"></xrm-icon>
+                                                        {{ 'ExpandedTimesheetDetails' | translate }}
+                                                    </a>
+                                                </div>
+                                            </ng-template>
+                                            <ng-template kendoGridCellTemplate let-dataItem>
+                                                <dl>
+                                                    <dt>{{'CostAccountingCode' | translate}}</dt>
+                                                    <dd>
+                                                        {{dataItem?.CostAccountingCodeName}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{'IsAllowManualShift' | translate}}</dt>
+                                                    <dd>
+                                                        {{dataItem?.ShiftName}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{'HoursType' | translate}}</dt>
+                                                    <dd>
+                                                        {{dataItem?.HoursTypeName}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{headerValue.Sunday | date: 'EEE, MMM d'}}</dt>
+                                                    <dd>
+                                                        {{dataItem?.Sunday?.toFixed(magicNumber.two)}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{headerValue.Monday | date: 'EEE, MMM d'}}</dt>
+                                                    <dd>
+                                                        {{dataItem?.Monday?.toFixed(magicNumber.two)}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{headerValue.Tuesday| date: 'EEE, MMM d'}}</dt>
+                                                    <dd>
+                                                        {{dataItem?.Tuesday?.toFixed(magicNumber.two)}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{headerValue.Wednesday| date: 'EEE, MMM d'}}</dt>
+                                                    <dd>
+                                                        {{dataItem?.Wednesday?.toFixed(magicNumber.two)}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{headerValue.Thursday| date: 'EEE, MMM d'}}</dt>
+                                                    <dd>
+                                                        {{dataItem?.Thursday?.toFixed(magicNumber.two)}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{headerValue.Friday| date: 'EEE, MMM d'}}</dt>
+                                                    <dd>
+                                                        {{dataItem?.Friday?.toFixed(magicNumber.two)}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{headerValue.Saturday| date: 'EEE, MMM d'}}</dt>
+                                                    <dd>
+                                                        {{dataItem?.Saturday?.toFixed(magicNumber.two)}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{dataItem?.TotalHour?.toFixed(magicNumber.two)}}</dt>
+                                                </dl>
+                                            </ng-template>
+                                            <ng-template kendoGridFooterTemplate>
+                                                <dl>
+                                                    <dd>
+                                                        {{headerValue.Sunday | date: 'EEE, MMM d'}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dd>
+                                                        {{headerValue.Monday | date: 'EEE, MMM d'}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dd>
+                                                        {{headerValue.Tuesday | date: 'EEE, MMM d'}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dd>
+                                                        {{headerValue.Wednesday | date: 'EEE, MMM d'}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dd>
+                                                        {{headerValue.Thursday | date: 'EEE, MMM d'}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dd>
+                                                        {{headerValue.Friday | date: 'EEE, MMM d'}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dd>
+                                                        {{headerValue.Saturday | date: 'EEE, MMM d'}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{'TotalHours'}} : {{days.TotalHour.toFixed(magicNumber.two)}}
+                                                    </dt>
+                                                </dl>
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                        <kendo-grid-column [title]="'CostAccountingCode'  | translate"
+                                            [field]="'CostAccountingCodeName'" [width]="magicNumber.twoHundred"
+                                            media="(min-width: 921px)">
+                                        </kendo-grid-column>
+                                        <kendo-grid-column field="ShiftName" [title]="'IsAllowManualShift'  | translate"
+                                            [width]="magicNumber.hundred" media="(min-width: 921px)">
+                                        </kendo-grid-column>
+                                        <kendo-grid-column *ngIf="!manualOTDtEnabled" field="HoursTypeName" title="" [width]="100"
+                                            media="(min-width: 921px)">
+                                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                                <div *ngIf="isInOutEnable && rowIndex === 0">
+                                                    <strong>
+                                                        {{ 'WorkedHours' | translate }}
+                                                    </strong>
+                                                </div>
+                                                <div *ngIf="isInOutEnable && rowIndex === dataWithInlineViewFalse.length - 1 && (mealBreakData?.MealBreakPenalty || mealBreakData?.RestBreakPenalty)">
+                                                        {{ 'PT' | translate }}
+                                                </div>
+                                            </ng-template>
+                                            <ng-template kendoGridFooterTemplate>
+                                                <div class="text-end total-amount">
+                                                    <strong> {{'Total'| translate}} </strong>
+                                                </div>
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                        <kendo-grid-column *ngIf="manualOTDtEnabled" field="HoursTypeName"
+                                            [title]="'HoursType' | translate" [width]="magicNumber.Ninety" media="(min-width: 921px)">
+                                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                                <div *ngIf="isInOutEnable && rowIndex === 0">
+                                                    <strong>
+                                                        {{ 'WorkedHours' | translate }}
+                                                    </strong>
+                                                </div>
+                                                {{ dataItem.HoursTypeName }}
+                                                <div *ngIf="isInOutEnable && rowIndex === dataWithInlineViewFalse.length - 1 && (mealBreakData?.MealBreakPenalty || mealBreakData?.RestBreakPenalty)">
+                                                    {{ 'PT' | translate }}
+                                                </div>
+                                            </ng-template>
+
+                                            <ng-template kendoGridFooterTemplate>
+                                                <div class="text-end total-amount">
+                                                    <strong>{{ 'Total' | translate }}</strong>
+                                                </div>
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                        <kendo-grid-column *ngFor="let headerdata of dayOrder; let i=index"
+                                            [field]="headerdata" media="(min-width: 921px)">
+                                            <ng-template kendoGridHeaderTemplate>
+                                                <div class="day-header">
+                                                    <div class="grid__header-th">
+                                                        {{ headerValue[headerdata] | date:"EEE" }}
+                                                        <p>{{ headerValue[headerdata] | date:"MMM d" }}</p>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                                <div>{{ dataItem[headerdata]?.toFixed(magicNumber.two) }} <a
+                                                        class="ms-1" href="javascript:;" kendobutton
+                                                        *ngIf="isInOutEnable && rowIndex ==0 && dataItem[headerdata] > 0"
+                                                        (click)="clickForAdjustIcon( headerValue[headerdata])"
+                                                        kendoTooltip class="dayDetails_popup">
+                                                        <xrm-icon [name]="'clock-in-out'" class="sw-bold"
+                                                            [color]="'dark-blue-color'" [size]="16"
+                                                            title="{{'InOutDetails' | translate}}"></xrm-icon>
+                                                    </a></div>
+                                            </ng-template>
+                                            <ng-template kendoGridFooterTemplate>
+                                                <div><strong>{{days[headerdata].toFixed(magicNumber.two)}}</strong>
+                                                </div>
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                        <kendo-grid-column field="TotalHour" [title]="'Total' | translate"
+                                            [width]="magicNumber.hundred" media="(min-width: 921px)">
+                                            <ng-template kendoGridFooterTemplate>
+                                                <div class="grid_total_ammount">
+                                                    <strong> {{days.TotalHour.toFixed(magicNumber.two)}}</strong> <span
+                                                        *ngIf="days?.TotalHour != magicNumber.zero">|</span>
+                                                    <a *ngIf="days?.TotalHour != magicNumber.zero" href="javascript:;"
+                                                        kendobutton kendoTooltip data-bs-toggle="offcanvas"
+                                                        (click)="openExpandedTimesheet()" data-bs-target="#viewDetails">
+                                                        <xrm-icon [name]="'clipboard-clock'" [color]="'dark-blue-color'"
+                                                            [size]="magicNumber.sixteen"
+                                                            title="{{ 'ExpandedTimesheetDetails' | translate }}"
+                                                            class="sw-bold"></xrm-icon>
+                                                    </a>
+                                                </div>
+                                            </ng-template>
+                                            <ng-template kendoGridCellTemplate let-dataItem>
+                                                <div>{{ dataItem?.TotalHour?.toFixed(magicNumber.two) }}</div>
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                        <ng-template kendoGridNoRecordsTemplate>
+                                            <p>{{ 'GridNoRecordAvailable' | translate }}</p>
+                                        </ng-template>
+                                    </kendo-grid>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card__header">
+                <h4 class="card__heading">{{'Comments' | translate}}</h4>
+            </div>
+            <div class="card__body pt-0">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12" *ngIf="!(statusId == draftId || statusId == submittedId)">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'ReviewerComment'"></app-kendo-label>
+                            <div *ngFor="let detail of getByUkeyData.ReviewerComment" class="reviews__signature">
+                                <p>{{ detail.ReviewedOnDate | date: dateFormat }}</p>
+                                <p>{{ detail.ApproverComments }} <span> - {{ detail.ApproverLabel }} </span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'ContractorComment'" 
+                                [value]="getByUkeyData.ContractorComments"></app-kendo-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12" *ngIf="isReview && condition()">
+                        <div class="form-group">
+                            <app-kendo-textarea [maxCharacters]="magicNumber.twoThousand" [isRequired]="isContractorRequired" [label]="'Comment'"
+                                [controlName]="'ApproverComment'">
+                            </app-kendo-textarea>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="page-footer" *ngIf="!isReview || (isReview && !condition())">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="ms-2 first-button-set">
+
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="btn-box btn-box--center">
+                        <button type="button" kendoButton themeColor="primary" (click)="backToList()">
+                            {{ "Back" | translate }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-footer" *ngIf="isReview && condition()">
+            <div class="btn-box btn-box--center">
+                <button type="button" kendoButton fillMode="outline" themeColor="primary" (click)="backToList()">
+                    {{ "Cancel" | translate }}
+                </button>
+                <button type="button" kendoButton themeColor="primary" fillMode="outline" [disabled]="!IsPendingApproval"
+                    (click)="successStaff('Decline')">
+                    {{"Decline" | translate}}
+                </button>
+                <button type="button" kendoButton themeColor="primary" [disabled]="!IsPendingApproval" (click)="successStaff('Approve')">
+                    {{"Approve" | translate}}
+                </button>
+                <kendo-dialog class="dailog dailog-center" *ngIf="successFullySaved" [width]="magicNumber.sixHundred">
+                    <a href="javascript:;" class="close-dailog" (click)="closeDialog()"><i
+                            class="fa-solid fa-xmark"></i></a>
+                    <i class="fa-solid fa-circle-question text-primary dailog__icon"></i>
+                    <p>{{'TimeExpenseApproverMessage' | translate}}</p>
+                    <div class="dailog__button">
+                        <button type="button" kendoButton fillMode="solid" themeColor="primary" (click)="openDialog()">
+                            {{ "Ok" | translate }}
+                        </button>
+                        <button type="button" kendoButton fillMode="outline" themeColor="primary" (click)="closeDialog()">
+                            {{ "Cancel" | translate }}
+                        </button>
+                    </div>
+                </kendo-dialog>
+            </div>
+        </div>
+    </form>
+
+    <app-assignment-more-details [assignmentId]="assignmentId" [recordId]="recordId" [isTimeSheet]="true"
+        [entityId]="entityId" (assignmentMoreDataEmitter)="bindingTimeSheetDetails($event)"
+        [hourDistributionRuleName]="hourDistributionRuleName"
+        [OtEligibility]="OtEligibility" [weekendingDate]="weekendingDate" [POIncurredAmount]="isReview"></app-assignment-more-details>
+    @if(isExpandedDetails) {
+    <app-expended-timesheet-details (changeIsExpandedDetails)="changeIsExpandedDetails()" [isPenaltyApplied]="penaltyApplied"
+        [isExpandedDetails]="isExpandedDetails" [TimesheetPeriodRange]="periodHeading" [Ukey]="ukey" [isView]="true"
+        [currencyCode]="currencyCode">
+    </app-expended-timesheet-details>
+    }
+</div>
+
+<div class="offcanvas offcanvas-end time-details-popup" tabindex="-1" id="approversItems"
+    aria-labelledby="approversItems">
+    <div class="offcanvas-header">
+        <h5>{{'OtherApproverLineItem' | translate}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+        </button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="card">
+            <div class="card__header">
+                <h4 class="card__heading">{{'TimesheetReportDetails'| translate}}</h4>
+            </div>
+            <div class="card__body">
+                <div class="row">
+                    <div class="list-view">
+                        <div class="row">
+                            <div class=" col-sm-12 col-md-12">
+                                <ng-template #template let-anchor>
+                                    <span>{{ anchor.nativeElement.innerText }}</span>
+                                </ng-template>
+                                <div kendoTooltip [tooltipTemplate]="template" filter=".k-grid td"
+                                    (mouseover)="showTooltip($event)">
+                                    <kendo-grid [data]="dataWithInlineViewTrue" [resizable]="true"
+                                        [rowClass]="rowCallback" [navigable]="false">
+                                        <kendo-grid-column media="(max-width: 920px)" title="Items">
+                                            <ng-template *ngIf="days?.TotalHour!= magicNumber.zero"
+                                                kendoGridHeaderTemplate>
+                                                <div class="grid_total_ammount"
+                                                    *ngIf="days?.TotalHour!= magicNumber.zero">
+                                                    <a href="javascript:;" kendobutton (click)="openExpandedTimesheet()"
+                                                        [title]="'ExpandedTimesheetDetails3'  | translate"
+                                                        data-bs-toggle="offcanvas" data-bs-target="#viewDetails">
+                                                        <xrm-icon [name]="'clipboard-clock'" [color]="'dark-blue-color'"
+                                                            [size]="magicNumber.sixteen" class="sw-bold"></xrm-icon>
+                                                    </a>
+                                                </div>
+                                            </ng-template>
+                                            <ng-template kendoGridCellTemplate let-dataItem>
+                                                <dl>
+                                                    <dt>{{'CostAccountingCode' | translate}}</dt>
+                                                    <dd>
+                                                        {{dataItem?.CostAccountingCodeName}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{'ApproverName' | translate}}</dt>
+                                                    <dd>
+                                                        {{dataItem?.ApproverName}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{'IsAllowManualShift' | translate}}</dt>
+                                                    <dd>
+                                                        {{dataItem?.ShiftName}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{'HoursType' | translate}}</dt>
+                                                    <dd>
+                                                        {{dataItem?.HoursTypeName}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{headerValue.Sunday | date: 'EEE, MMM d'}}</dt>
+                                                    <dd>
+                                                        {{dataItem?.Sunday?.toFixed(magicNumber.two)}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{headerValue.Monday | date: 'EEE, MMM d'}}</dt>
+                                                    <dd>
+                                                        {{dataItem?.Monday?.toFixed(magicNumber.two)}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{headerValue.Tuesday| date: 'EEE, MMM d'}}</dt>
+                                                    <dd>
+                                                        {{dataItem?.Tuesday?.toFixed(magicNumber.two)}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{headerValue.Wednesday| date: 'EEE, MMM d'}}</dt>
+                                                    <dd>
+                                                        {{dataItem?.Wednesday?.toFixed(magicNumber.two)}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{headerValue.Thursday| date: 'EEE, MMM d'}}</dt>
+                                                    <dd>
+                                                        {{dataItem?.Thursday?.toFixed(magicNumber.two)}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{headerValue.Friday| date: 'EEE, MMM d'}}</dt>
+                                                    <dd>
+                                                        {{dataItem?.Friday?.toFixed(magicNumber.two)}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{headerValue.Saturday| date: 'EEE, MMM d'}}</dt>
+                                                    <dd>
+                                                        {{dataItem?.Saturday?.toFixed(magicNumber.two)}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{dataItem?.TotalHour?.toFixed(magicNumber.two)}}</dt>
+                                                </dl>
+                                            </ng-template>
+                                            <ng-template kendoGridFooterTemplate>
+                                                <dl>
+                                                    <dd>
+                                                        {{headerValue.Sunday | date: 'EEE, MMM d'}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dd>
+                                                        {{headerValue.Monday | date: 'EEE, MMM d'}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dd>
+                                                        {{headerValue.Tuesday | date: 'EEE, MMM d'}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dd>
+                                                        {{headerValue.Wednesday | date: 'EEE, MMM d'}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dd>
+                                                        {{headerValue.Thursday | date: 'EEE, MMM d'}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dd>
+                                                        {{headerValue.Friday | date: 'EEE, MMM d'}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dd>
+                                                        {{headerValue.Saturday | date: 'EEE, MMM d'}}
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{'TotalHours'}} : {{days.TotalHour.toFixed(magicNumber.two)}}
+                                                    </dt>
+                                                </dl>
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                        <kendo-grid-column [title]="'CostAccountingCode'  | translate"
+                                            [field]="'CostAccountingCodeName'" [width]="magicNumber.twoHundred"
+                                            media="(min-width: 921px)">
+                                        </kendo-grid-column>
+                                        <kendo-grid-column [title]="'ApproverName'  | translate"
+                                            [field]="'ApproverName'" [width]="magicNumber.oneHundredTen"
+                                            media="(min-width: 921px)">
+                                        </kendo-grid-column>
+                                        <kendo-grid-column field="ShiftName" [title]="'IsAllowManualShift'  | translate"
+                                            [width]="magicNumber.hundred" media="(min-width: 921px)">
+                                        </kendo-grid-column>
+                                        <kendo-grid-column *ngIf="manualOTDtEnabled" field="HoursTypeName"
+                                            [title]="'HoursType' | translate" [width]="magicNumber.Ninety"
+                                            media="(min-width: 921px)">
+                                            <ng-template kendoGridFooterTemplate>
+                                                <div class="text-end total-amount">
+                                                    <strong> {{'Total'| translate}} </strong>
+                                                </div>
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                        <kendo-grid-column *ngFor="let headerdata of dayOrder" [field]="headerdata"
+                                            media="(min-width: 921px)">
+                                            <ng-template kendoGridHeaderTemplate>
+                                                <div class="day-header">
+                                                    <div class="grid__header-th">
+                                                        {{ headerValue[headerdata] | date:"EEE" }}
+                                                        <p>{{ headerValue[headerdata] | date:"MMM d" }}</p>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                            <ng-template kendoGridCellTemplate let-dataItem>
+                                                <p>{{dataItem[headerdata].toFixed(magicNumber.two)}}</p>
+                                            </ng-template>
+                                            <ng-template kendoGridFooterTemplate>
+                                                <div>
+                                                    <strong>{{daysForAnotherApproverLine[headerdata].toFixed(magicNumber.two)}}</strong>
+                                                </div>
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                        <kendo-grid-column field="TotalHour" [title]="'Total' | translate"
+                                            [width]="magicNumber.hundred" media="(min-width: 921px)">
+                                            <ng-template kendoGridFooterTemplate>
+                                                <div class="grid_total_ammount">
+                                                    <strong>
+                                                        {{daysForAnotherApproverLine.TotalHour.toFixed(magicNumber.two)}}</strong>
+                                                </div>
+                                            </ng-template>
+                                            <ng-template kendoGridCellTemplate let-dataItem>
+                                                <div>{{ dataItem?.TotalHour?.toFixed(magicNumber.two) }}</div>
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                        <ng-template kendoGridNoRecordsTemplate>
+                                            <p>{{ 'GridNoRecordAvailable' | translate }}</p>
+                                        </ng-template>
+                                    </kendo-grid>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-in-out-view [isShow]="isClickBox" [selectedDate]="selectedDate" [timeId]="getByUkeyData.Id" *ngIf="isClickBox"  [mealBreakConfigurationData]="mealBreakData"
+    [weekEndingDate]="getByUkeyData.WeekendingDate"></app-in-out-view>
+  

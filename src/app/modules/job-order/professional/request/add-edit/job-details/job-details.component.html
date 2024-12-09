@@ -1,0 +1,334 @@
+<kendo-expansionpanel [attr.id]='steps' [expanded]="true" class="card">
+    <ng-template kendoExpansionPanelTitleDirective>
+        <div (click)="$event.stopPropagation()">
+            <h4 class="card__heading">{{'RequestDetails' | translate}}</h4>
+        </div>
+    </ng-template>
+    <form [formGroup]="requestDetailsFrom">
+        <div class="card__body">
+            <div class="row">
+                <!-- Input Box Start -->
+                <div class=" col-sm-12 col-md-12" *ngIf="isEditMode">
+                    <div class="form-group">
+                        <app-kendo-label label="Request ID" [value]="getRequestCode()"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <div class=" col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [label]="'IsPreIdentifiedRequest'" [controlName]="'IsPreIdentifiedRequest'"
+                            [onLabel]="'Yes'" [offLabel]="'No'" [isEditMode]="!(isEditMode && (statusId !== 235))"
+                            (onChangeSwitch)="onPreIdentifiedRequestChange($event)"></app-kendo-switch>
+                    </div>
+                </div>
+
+                <!-- Input Box Start -->
+                <div class=" col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <app-kendo-dropdown *ngIf="sectorList?.length !== 1" [list]="sectorList" [label]="'Sector'"
+                            [controlName]="'SectorId'" [isEditMode]="isEditMode" [placeholder]="'DdlSelect'"
+                            [isRequired]="true" (onChange)="onSectorChange($event)">
+                        </app-kendo-dropdown>
+                        <app-kendo-dropdown *ngIf="sectorList?.length === 1" [list]="sectorList" [label]="'Sector'"
+                            [controlName]="'SectorId'" [isEditMode]="true" [placeholder]="'DdlSelect'"
+                            (onChange)="onSectorChange($event)">
+                        </app-kendo-dropdown>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start -->
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <ng-container>
+                                    <app-kendo-dropdown [list]="locationList" [label]="'ContractorsWorkLocation'"
+                                        [controlName]="'WorkLocationId'" [placeholder]="'DdlSelect'"
+                                        (onChange)="onLocationChange($event)" [isRequired]="true"
+                                        [helpTexts]="[locationDetails?.LocationAddress ?? '']"></app-kendo-dropdown>
+                                </ng-container>
+                            </div>
+                            <div class="col-md-5" *ngIf="!isEditMode">
+                                <app-load-more [uniqueId]="'reqLib'" [buttonLabel]="'CopyFromRequisitionLibrary'"
+                                    [headerTitle]="'Requestion Library Template'"
+                                    [columnOptions]="loadMoreColumnOptions" [dataSource]="loadMoreDataSource"
+                                    [isSearch]="isSearchLoadMore" (search)="searchPreviousData($event)"
+                                    (loadMoreData)="loadMoreData()" (copyData)="getCopyData($event)"
+                                    (onOpenPopup)="openPopupLoadMore('ReqLib')"></app-load-more>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start -->
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <app-kendo-dropdown *ngIf="requestingManagerList?.length !== 1"
+                                    [list]="requestingManagerList"
+                                    [isEditMode]="userDetails?.DataAccessRight == 218 || nonEditableField"
+                                    [isRequired]="true" [label]="'RequestingPrimaryManagerName'"
+                                    [controlName]="'RequestingManagerId'" [placeholder]="'DdlSelect'"
+                                    (onChange)="onRequestingManagerChange($event)">
+                                </app-kendo-dropdown>
+                                <app-kendo-dropdown *ngIf="requestingManagerList?.length === 1"
+                                    [list]="requestingManagerList" [isEditMode]="true"
+                                    [label]="'RequestingPrimaryManagerName'" [controlName]="'RequestingManagerId'"
+                                    [placeholder]="'DdlSelect'" (onChange)="onRequestingManagerChange($event)">
+                                </app-kendo-dropdown>
+                                <!-- <app-kendo-dropdown [list]="requestingManagerList" [isRequired]="true"
+                                    [label]="'RequestingPrimaryManagerName'" [controlName]="'RequestingManagerId'"
+                                    [placeholder]="'DdlSelect'" [isEditMode]="isEditMode"
+                                    (onChange)="onRequestingManagerChange($event)">
+                                </app-kendo-dropdown> -->
+                            </div>
+
+                            <div class="col-md-5" *ngIf="!isEditMode">
+                                <app-load-more [uniqueId]="'prevProf'" [buttonLabel]="'CopyFromPreviousRequest'"
+                                    [headerTitle]="'Previous Professional Request'"
+                                    [columnOptions]="loadMoreColumnOptions" [dataSource]="loadMoreDataSource"
+                                    [isSearch]="isSearchLoadMore" (search)="searchPreviousData($event)"
+                                    (loadMoreData)="loadMoreData()" (copyData)="getCopyData($event)"
+                                    (onOpenPopup)="openPopupLoadMore('PrevProf')"></app-load-more>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- Input Box Start -->
+                <div class=" col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <app-kendo-dropdown [list]="orgLevel1List" [label]="orgType1Data.OrgName || 'OrgLevel1'"
+                            [controlName]="'OrgLevel1Id'" [placeholder]="'DdlSelect'" [isRequired]="true"
+                            (onChange)="onOrgLevel1Change($event)"></app-kendo-dropdown>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- Input Box Start -->
+                <div class="col-sm-12 col-md-12" *ngIf="orgType2Data?.IsVisible">
+                    <div class="form-group">
+                        <app-kendo-dropdown [list]="orgLevel2List" [label]="orgType2Data.OrgName"
+                            [isRequired]="(orgType2Data.IsMandatory) ? true : false" [controlName]="'OrgLevel2Id'"
+                            [placeholder]="'DdlSelect'" (onChange)="onOrgLevel2Change($event)"></app-kendo-dropdown>
+                    </div>
+                </div>
+
+                <!-- Input Box Start -->
+                <div class=" col-sm-12 col-md-12" *ngIf="orgType3Data?.IsVisible">
+                    <div class="form-group">
+                        <app-kendo-dropdown [list]="orgLevel3List" [label]="orgType3Data.OrgName"
+                            [isRequired]="(orgType3Data.IsMandatory) ? true : false" [controlName]="'OrgLevel3Id'"
+                            [placeholder]="'DdlSelect'" (onChange)="onOrgLevel3Change($event)"></app-kendo-dropdown>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- Input Box Start -->
+                <div class="col-sm-12 col-md-12" *ngIf="orgType4Data?.IsVisible">
+                    <div class="form-group">
+                        <app-kendo-dropdown [list]="orgLevel4List" [label]="orgType4Data.OrgName"
+                            [isRequired]="(orgType4Data.IsMandatory) ? true : false" [controlName]="'OrgLevel4Id'"
+                            [placeholder]="'DdlSelect'" (onChange)="onOrgLevel4Change($event)"></app-kendo-dropdown>
+                    </div>
+                </div>
+
+                <!-- input box start -->
+                <div *ngIf="isCostAccountingCodeVisible" class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <app-kendo-dropdown [list]="costAccountingCodeList" [label]="'CostAccountingCode'"
+                            [controlName]="'CostAccountingId'" [placeholder]="'DdlSelect'"
+                            [helpTexts]="[costAccountingCodeHelpText]" [isRequired]="true"
+                            (onChange)="onCostAccountingCodeChange($event)"></app-kendo-dropdown>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start -->
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <app-kendo-dropdown [list]="reasonForRequestList" [label]="'ReasonForRequest'"
+                            [controlName]="'ReasonForRequestId'" [placeholder]="'DdlSelect'"
+                            (onChange)="onReasonForRequestChange($event)"></app-kendo-dropdown>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start -->
+                <div class=" col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-numeric-box [controlName]="'SubmittalAllowedPerStaffing'"
+                            [label]="'SubmittalsAllowedPerStaffingAgency'" [isRequired]="true" [maxlength]="4"
+                            appRestrictInput [isSpecialCharacterAllowed]="false" [min]="1"
+                            [isEditMode]="isFieldReadonlyForPSR">
+                        </app-numeric-box>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start -->
+                <div class=" col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-numeric-box [controlName]="'SubmittalAllowedForThisRequest'"
+                            [label]="'SubmittalsAllowedForThisRequisition'" [isRequired]="true" [min]="1"
+                            [maxlength]="4" appRestrictInput [isSpecialCharacterAllowed]="false"
+                            [isEditMode]="isFieldReadonlyForPSR">
+                        </app-numeric-box>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start -->
+                <div *ngIf="isAllowStaffingToContactVisible" class=" col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [label]="'AllowtheStaffingAgencyContactRegardingThisRequest'"
+                            [controlName]="'IsAllowStaffingToContact'" [onLabel]="'Yes'" [offLabel]="'No'"
+                            [isEditMode]="!isFieldReadonlyForPSR"></app-kendo-switch>
+                    </div>
+                </div>
+                <!-- input box end -->
+            </div>
+        </div>
+    </form>
+
+</kendo-expansionpanel>
+
+<kendo-expansionpanel [attr.id]='steps' [expanded]="true" class="card">
+    <ng-template kendoExpansionPanelTitleDirective>
+        <div (click)="$event.stopPropagation()">
+            <h4 class="card__heading">{{'PositionDetails' | translate}}</h4>
+        </div>
+    </ng-template>
+
+    <form [formGroup]="positionDetailsFrom">
+        <div class="card__body">
+            <div class="row">
+                <!-- Input Box Start -->
+                <div class=" col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <app-textbox [controlName]="'PositionTitle'" [label]="'PositionTitle'"
+                            [maxCharacters]="500"></app-textbox>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-dropdown [list]="laborCategoryList" [label]="'LaborCategory'"
+                            [controlName]="'LaborCategoryId'" [placeholder]="'DdlSelect'"
+                            [isEditMode]="nonEditableField" [isRequired]="true"
+                            (onChange)="onLaborCategoryChange($event)"></app-kendo-dropdown>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-dropdown [list]="jobCategoryList" [label]="'JobCategory'"
+                            [controlName]="'JobCategoryId'" [placeholder]="'DdlSelect'" [isEditMode]="nonEditableField"
+                            [isRequired]="true" (onChange)="onJobCategoryChange($event)"></app-kendo-dropdown>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start -->
+                <div *ngIf="assignmentTypeList.length" class=" col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-dropdown [label]="'AssignmentType'" [controlName]="'AssignmentTypeId'"
+                            [placeholder]="'DdlSelect'" [list]="assignmentTypeList"></app-kendo-dropdown>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <div class="clearfix"></div>
+
+                <!-- input box start -->
+                <div class=" col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-dropdown [isRequired]="true" [label]="'SecurityClearance'"
+                            [controlName]="'SecurityClearanceId'" [placeholder]="'DdlSelect'"
+                            [list]="securityClearanceList" [isEditMode]="isSecurityClrFieldEditable"
+                            (onChange)="onSecurityClearanceChange($event)"></app-kendo-dropdown>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start -->
+                <div *ngIf="isMinimumClearanceToStartVisible" class=" col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-dropdown [isRequired]="true" [label]="'MinimumRequirementToStart'"
+                            [controlName]="'MinimumClearanceToStartId'" [placeholder]="'DdlSelect'"
+                            [list]="minimumClearanceToStartList"></app-kendo-dropdown>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+            </div>
+        </div>
+    </form>
+</kendo-expansionpanel>
+
+<ng-container *ngIf="isCandidateSectionVisible">
+    <kendo-expansionpanel [attr.id]='steps' [expanded]="true" class="card">
+        <ng-template kendoExpansionPanelTitleDirective>
+            <div (click)="$event.stopPropagation()">
+                <h4 class="card__heading">{{'CandidateDetails' | translate}}</h4>
+            </div>
+        </ng-template>
+
+        <form [formGroup]="candidateDetailsFrom">
+            <div class="card__body">
+                <div class="row">
+
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <kendo-label [text]="'CandidateName' | translate"> <xrm-icon name="star"
+                                    class="required"></xrm-icon>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <app-textbox [controlName]="'LastName'" [placeholder]="'LastName'"
+                                            [maxCharacters]="magicNumber.fifty"
+                                            [isSpecialCharacterAllowed]="true"></app-textbox>
+                                    </div>
+                                    <div class="col-4">
+                                        <app-textbox [controlName]="'FirstName'" [placeholder]="'FirstName'"
+                                            [maxCharacters]="magicNumber.fifty"
+                                            [isSpecialCharacterAllowed]="true"></app-textbox>
+                                    </div>
+                                    <div class="col-4">
+                                        <app-textbox [controlName]="'MiddleName'" [placeholder]="'MiddleInitial'"
+                                            [maxCharacters]="magicNumber.fifty"
+                                            [isSpecialCharacterAllowed]="true"></app-textbox>
+                                    </div>
+                                </div>
+                            </kendo-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-textbox [label]="'EmailAddress'" [controlName]="'Email'"
+                                [isSpecialCharacterAllowed]="true" [specialCharactersAllowed]="['-','_','.',',','@']"
+                                [maxCharacters]="magicNumber.fifty">
+                            </app-textbox>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-phone [label]="'ContactNumber'" [phoneControlName]="'PhoneNumber'"
+                                [isExtension]="true" [phoneExtControlName]="'PhoneExt'" [countryId]="countryId"
+                                [isRequired]="true">
+                            </app-kendo-phone>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </kendo-expansionpanel>
+</ng-container>

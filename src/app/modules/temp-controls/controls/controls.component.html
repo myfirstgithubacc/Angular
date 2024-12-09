@@ -1,0 +1,147 @@
+<div class="card" [formGroup]="TestReactiveForm">
+  <div class="row">
+    <div class="col-6">
+      <button class="btn" (click)="showPopup1()">cksjdgu</button>
+    </div>
+
+  </div>
+  <div class="card__body">
+    <div class="row">
+      <div class="col-4">
+
+        <app-kendo-timerange [timeRangeProperties]="timeRange" (startTimeValueChange)="startTimeValueChange1($event)"
+          (getTime)="getTime($event)" [endTimeControlName]="'endtimeRange'"
+          [startTimeControlName]="'time'"></app-kendo-timerange>
+
+      </div>
+      <div class="col-4">
+
+        <app-textbox [isRequired]="true" [isEditMode]="false" [controlName]="'email'" [label]="'Email => '"
+          [tooltipVisible]="true" [isHtmlContent]="true" [tooltipTitle]="htmlTootipValue" [placeholder]="'Enter email'"
+          [isSpecialCharacterAllowed]="true" [specialCharactersAllowed]="['@']">
+        </app-textbox>
+
+
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+          <app-kendo-radio-button [controlName]="'gender'" [RadioGroup]="RadioGroup" [label]="'Radio button'"
+            [tooltipVisible]="true" [tooltipTitle]="'ExpressLaborCategoryTooltipMessage'"></app-kendo-radio-button>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+          <app-kendo-multiselect-dropdown [isEditMode]="false" [isDisabled]="true" [controlName]="'language'"
+            [label]="'Multi-select dropdown'" [list]="multiselectdropdown"
+            [placeholder]="'Select'"></app-kendo-multiselect-dropdown>
+        </div>
+
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+          <app-numeric-box [isEditMode]="true" [controlName]="'phone'" [placeholder]="'Enter number'"
+            [isCurrency]="true" [label]="'Phone number'"></app-numeric-box>
+        </div>
+
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+          <app-kendo-datepicker [isEditMode]="false" [isDisabled]="true" [controlName]="'Date'" [label]="'Date picker'"
+            [minDate]="minDate" [maxDate]="maxDate"></app-kendo-datepicker>
+
+        </div>
+
+      </div>
+      <div class=" col-4">
+        <div class="form-group">
+
+          <app-kendo-daterangepicker [isDisable]="false" [fromLabel]="'Start'" [range]="Dtrange" [maxDate]="maxDate"
+            [isEditMode]="false" [minDate]="minDate" [toLabel]="'End'" (onChange)="dateChangeValue($event)">
+          </app-kendo-daterangepicker>
+
+        </div>
+
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+
+        </div>
+
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+          <app-kendo-textarea [isDisable]="true" [isEditMode]="false" [controlName]="'asdasdasd'"
+            [placeholder]="'Enter text'" [label]="'Text area'" [maxCharacters]="15">
+          </app-kendo-textarea>
+          <div class="col-4">
+            <div class="form-group">
+
+              <app-kendo-checkbox [isEditMode]="true" [controlName]="'isChecked'" [label]="'Checkbox'">
+              </app-kendo-checkbox>
+
+            </div>
+
+          </div>
+
+          <div class="col-4">
+            <div class="form-group">
+              <app-kendo-switch [isEditMode]="true" [isDiable]="true" [controlName]="'isSwitched'" [label]="'Switch'"
+                [offLabel]="'No'" [onLabel]="'Yes'"></app-kendo-switch>
+            </div>
+
+          </div>
+          <div class="col-4">
+            <div class="form-group">
+              <app-numeric-box [label]="'Number disabled'" [controlName]="'numberic'"
+                [isDisable]="true"></app-numeric-box>
+            </div>
+          </div>
+          <div class="col-4">=
+            <div class="form-group">
+              <app-textbox [label]="'Textbox disabled check'" [controlName]="'textBoxDisable'"></app-textbox>
+            </div>
+          </div>
+          <div class="col-4">=
+            <div class="form-group">
+
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group">
+              <app-advance-search></app-advance-search>
+            </div>
+
+          </div>
+          <hr>
+          <div class="col-4">
+            <div class="form-group">
+              <app-kendo-checkbox [label]="'Check Box '"></app-kendo-checkbox>
+            </div>
+          </div>
+          <div class="col-4">
+            <app-kendo-label [label]="'Demo'" [value]="'lbl Value'" [tooltipVisible]="true"
+              [isTooltiplableValueVisible]="true" [tooltipLabelValue]="'Tooltip label value'"
+              [tooltipTitle]="'tool tip with value'"></app-kendo-label>
+          </div>
+        </div>
+
+        <div class="page-footer">
+          <div class="btn-box btn-box--center">
+            <app-kendo-button [buttonName]="'Demo'" [isDisable]="true"></app-kendo-button>
+            <button type="button" kendoButton (click)="save()" x themeColor="primary">
+              {{ isEdit ? "Update" : "Save" }}
+            </button>
+            <button type="button" kendoButton fillMode="outline" themeColor="primary"
+              routerLink="/administration/job-category">
+              Cancel
+            </button>
+            <button (click)="confirmMessagePopup()">Confirm Popup</button>
+          </div>
+        </div>
+        <div class="row">
+          <h2>{{ TestReactiveForm.value | json }}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

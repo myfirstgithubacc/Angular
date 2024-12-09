@@ -1,0 +1,120 @@
+<ng-container *ngIf="(dmsControlConfig.length > 0 && actionTypeId === 1) || (gridListData.length > 0 && actionTypeId > 1)">
+    <form [formGroup]="dmsForm">
+        <div [ngClass]="{'card': showTitle}" class="card">
+            <div class="card__header" *ngIf="showTitle">
+                <h4 class="card__heading">{{docTitle | translate}}
+                </h4>
+            </div>
+            <div class="card__body">
+                <div class="row">
+
+                    <div *ngIf="actionTypeId != 3 && dmsControlConfig.length" class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-template-dropdown [dropDownInterFace]="dropDownInterFaceWithSource"
+                                [controlName]="'documentTitle'" (onChange)="loadFieldTypeConfig($event)">
+                            </app-kendo-template-dropdown>
+
+                            <div class="mt-1 file-caption">
+                                <span *ngIf="dmsForm?.get('documentTitle')?.value" class="alert-text">
+                                    {{uploadingInfoMsg}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="actionTypeId != 3 && dmsControlConfig.length"
+                        class="disabled-btn-color col custom__file__upload ps-0 hide-tooltip-content">
+                        <app-kendo-fileselect [fileSelectTheme]="'primary'" [multiple]="multipleDocumentAllowed"
+                            [isDisabled]="isDisable" [fileselectMessage]="chooseFileBtnText"
+                            [fileExtAllow]="extensionsAllow" (onSelect)="onFileSelect($event)"></app-kendo-fileselect>
+                    </div>
+
+                    <div *ngIf="gridListData.length"
+                        class="col-sm-12 col-md-12 list-view third-lavel-grid staf-list custom__file__list">
+                        <div class="form-group border-bottom-0">
+                            <kendo-grid [data]="filteredGridListData()">
+                                <kendo-grid-column field="docTitle" title="{{'DocumentType' | translate}}"
+                                    media="(min-width: 921px)">
+                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                        <span>{{dataItem?.documentTitle}}
+                                            <span>
+                                                <sup class="orange-color-text">{{(dataItem.id > 0) ? '' : 'New'}}</sup>
+                                            </span>
+                                        </span>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column title="{{'Document' | translate}}" media="(min-width: 921px)">
+                                    <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                        <div class="col-sm-12">
+                                            <div class="attachment-file2" kendoTooltip>
+                                                <div class="file-icon">
+                                                    <img *ngIf="dataItem.documentExtension == 'pdf'"
+                                                        src="./assets/images/pdf.png" alt="" height="22">
+                                                    <img *ngIf="dataItem.documentExtension == 'doc'"
+                                                        src="./assets/images/doc.png" alt="" height="22">
+                                                    <img *ngIf="dataItem.documentExtension == 'docx'"
+                                                        src="./assets/images/docx.png" alt="" height="22">
+                                                    <img *ngIf="dataItem.documentExtension == 'mp4'"
+                                                        src="./assets/images/mp4.png" alt="" height="22">
+                                                </div>
+                                                <div class="file-type">
+                                                    <a href="javascript:;" title="{{dataItem?.fileNameWithExtension}}"
+                                                        (click)="downloadFile(dataItem)">{{dataItem?.fileNameWithExtension}}</a>
+                                                    <p>{{getFileSizeWithUnit(dataItem.documentSize)}}</p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </kendo-grid-column>
+
+                                <kendo-grid-column field="uploadedBy" title="{{'UploadedBy' | translate}}"
+                                    media="(min-width: 921px)">
+                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                        <span kendoTooltip>
+                                            <span [title]="dataItem?.uploadedBy">{{ dataItem?.uploadedBy }}</span>
+                                        </span>
+                                    </ng-template>
+                                </kendo-grid-column>
+
+                                <kendo-grid-column field="uploadedOn" title="{{'UploadedOn' | translate}}"
+                                    media="(min-width: 921px)">
+                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                        <span>{{ dataItem?.uploadedOn }}</span>
+                                    </ng-template>
+                                </kendo-grid-column>
+
+                                <kendo-grid-column media="(min-width: 921px)" field="action"
+                                    title="{{gridTitle | translate}}" filter="numeric" [includeInChooser]="false"
+                                    [columnMenu]="false" [sortable]="false">
+                                    <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                        <div class="action-item" kendoTooltip>
+                                            <a href="javascript:;" kendoButton title="{{'Download' | translate}}"
+                                                (click)="downloadFile(dataItem)">
+                                                <xrm-icon [name]="'download'" [color]="'dark-blue-color'" [size]="17" class="sw-bold"></xrm-icon>
+                                            </a>
+                                            <a *ngIf="(actionTypeId != 3) && (dataItem.isDeleteAllowed)"
+                                                href="javascript:;" kendoButton title="{{'Delete' | translate}}"
+                                                (click)="deleteDocument(dataItem)">
+                                                <xrm-icon [name]="'trash-2'" [color]="'red-color'" [size]="17" class="sw-bold"></xrm-icon>
+                                            </a>
+                                        </div>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <ng-template kendoGridNoRecordsTemplate>
+                                    <p>{{"GridNoRecordAvailable" | translate}}</p>
+                                </ng-template>
+                            </kendo-grid>
+                            <div class="mt-1 file-caption">
+                                <span *ngIf="isNewFileUploaded()" class="alert-text"
+                                    [innerHtml]="newFileUploadedMessage">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</ng-container>

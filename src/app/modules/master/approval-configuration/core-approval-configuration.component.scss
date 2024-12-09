@@ -1,0 +1,179 @@
+.approval__config-main .approval__card .and__or-section::before,
+.approval__config-main .approval__card .and__or-section::after {
+	content: '';
+	position: absolute;
+	top: -12px;
+	left: 50%;
+	width: 1px;
+	height: 12px;
+	border-left: 1px solid #CCC;
+}
+.approval__config-main {
+	.approval__card {
+		margin-bottom: 16px;
+		border-color: var(--light-border-color);
+		overflow: inherit;
+		.k-expander-header {
+			position: relative;
+			padding-block: 10px;
+			.card__heading {
+				font-size: 13px;
+			}
+			&:hover {
+				background-color: transparent;
+			}
+		}
+		.k-expander-content-wrapper {
+			border: none;
+		}
+		.subapproval__section {
+			margin-top: 18px !important;
+			justify-content: space-between;
+			align-items: center;
+			position: relative;
+		}
+		.card__header-icon {
+			button {
+				&.remove__subapproval-btn {
+					right: 24px !important;
+					margin-top: -15px !important;
+					top: 0px !important;
+				}
+				&.remove__approvalLevel-btn {
+					right: 42px !important;
+					top: 8px !important;
+				}
+			}
+		}
+		.and__or-section {
+			position: relative;
+			top: 6px;
+			display: table;
+			background: #f0efef;
+			border-radius: 4px;
+			margin-top: 6px;
+			padding: 3px 10px;
+			&::after {
+				top: 26px;
+			}
+			.k-form-error {
+				position: absolute;
+				left: 140px;
+				bottom: 6px;
+				width: max-content;
+			}
+		}
+		&.k-expander {
+			&.k-focus {
+				box-shadow: none;
+			}
+			&:not(.k-expanded) {
+				& + .k-expander {
+					&:not(.k-expanded) {
+						border-top-width: 1px;
+					}
+				}
+			}
+		}
+	}
+	.card__footer {
+		.k-button {
+			border-radius: 4px;
+		}
+	}
+	.subapproval__section {
+		.and__or-section {
+			& + button {
+				background-color: var(--color-white);
+				padding: 5px 10px;
+				font-size: 11px;
+			}
+		}
+	}
+	.addmore__approval-lvl {
+		background-color: var(--color-white);
+		margin-bottom: 8px;
+	}
+	.addmore__approval-lvl-main {
+		&::before {
+			content: '';
+			position: absolute;
+			top: -20px;
+			left: 15px;
+			width: 1px;
+			height: 20px;
+			border-left: 1px solid #CCC;
+		}
+	}
+}
+.approval__config-main .approval__card .approval__section,
+.approval__config-main .approval__card .subapproval__section {
+	display: block;
+	border: 1px solid var(--light-border-color);
+	padding: 14px 16px 7px;
+	border-radius: 4px;
+	margin-top: 1px;
+}
+.approval__config-main .approval__card .card__header-icon button.add__subapproval-btn,
+.approval__config-main .approval__card .card__header-icon button.remove__subapproval-btn,
+.approval__config-main .approval__card .card__header-icon button.remove__approvalLevel-btn {
+	position: absolute;
+	right: 41px;
+	top: -15px;
+	padding: 5px 10px;
+	font-size: 11px;
+	background-color: var(--color-white);
+}
+.approval__config-main .approval__card .card__header-icon button.add__subapproval-btn:hover,
+.approval__config-main .approval__card .card__header-icon button.remove__subapproval-btn:hover,
+.approval__config-main .approval__card .card__header-icon button.remove__approvalLevel-btn:hover {
+	background-color: var(--color-primary);
+}
+.approval__config-main .subapproval__section .and__or-section,
+.approval__config-main .subapproval__section .and__or-section+button {
+	position: relative;
+	z-index: 1;
+}
+.addmore__approval-lvl-main {
+	position: relative;
+}
+.approval__config-main .subapproval__section .and__or-section+button:hover,
+.approval__config-main .addmore__approval-lvl:hover {
+	background-color: var(--color-primary);
+}
+.approval__StepProgress {
+	position: relative;
+	padding-left: 45px;
+	list-style: none;
+	&::before {
+		display: inline-block;
+		content: counter(list);
+		position: absolute;
+		top: 0;
+		left: 15px;
+		width: 10px;
+		height: 100%;
+		border-left: 1px solid #CCC;
+	}
+	.is-stepcount {
+		position: relative;
+		counter-increment: list;
+		&::after {
+			display: inline-block;
+			position: absolute;
+			border-radius: 100px;
+			content: counter(list);
+			line-height: 21px;
+			width: 24px;
+			height: 24px;
+			top: 0px;
+			left: -42px;
+			font-size: 11px;
+			font-weight: 700;
+			text-align: center;
+			color: var(--color-primary);
+			border: 2px solid var(--color-primary);
+			background-color: white;
+		}
+	}
+}

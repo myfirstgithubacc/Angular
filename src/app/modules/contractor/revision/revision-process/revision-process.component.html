@@ -1,0 +1,10 @@
+<app-revision-shared-view [revisionObject]="revisionObject" [statusData]="statusData" [revisionForm]="revisionForm" [isCommentRequired]="true" [isCommentAsterik]="isCommentRequired" [isRevisionRequired]="true"></app-revision-shared-view>
+<div class="page-footer">
+  <div class="btn-box btn-box--center">
+    <button type="button" kendoButton fillMode="outline" themeColor="primary" (click)="navigate()">{{"Cancel" | translate}}</button>
+    <button type="button" kendoButton fillMode="outline" (click)="declineRevision()"
+      themeColor="primary">{{"Decline" | translate}}</button>
+    <button type="button" kendoButton (click)="processRevision()" themeColor="primary">{{"Process" | translate}}</button>
+  </div>
+</div>
+<event-log [entityId]="entityId"></event-log>

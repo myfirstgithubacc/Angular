@@ -1,0 +1,175 @@
+<div class="app-content__body">
+
+    <form [formGroup]="statusForm">
+        <app-common-header [entityId]="entityID"  [statusData]="statusData" [isStatusEditable]="false"></app-common-header>
+    </form>
+
+    <form [formGroup]="AddEditEventReasonForm">
+        <div class="card">
+            <!-- Card Header Section-->
+            <div class="card__header">
+                <h4 class="card__heading">{{'BasicDetails'| translate}}</h4>
+            </div>
+            <!-- End Card Header Section-->
+   
+            <div class="card__body">
+                <div class="row">
+   
+                   <!-- input box start -->
+                   <div class="col-sm-6 col-md-6">
+                      <div class="form-group">
+                          <app-kendo-label [label]="'AssignmentStartDate'" [isDate]="true" [value]="scheduledData.AssignmentStartDate"></app-kendo-label>
+                      </div>
+                  </div>
+                  <!-- input box start -->
+   
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6">
+                      <div class="form-group">
+                          <app-kendo-label [label]="'AssignmentEndDate'" [isDate]="true" [value]="scheduledData.AssignmentEndDate"></app-kendo-label>
+                      </div>
+                  </div>
+                  <!-- input box start -->
+   
+                      <!-- input box start -->
+                      <div class="col-sm-6 col-md-6">
+                          <div class="dropdown__shift-range">
+                          <div class="form-group">
+                              <div class="row">
+                                  <div class="col-sm-6">
+                            <app-kendo-label [label]="'Shift'" [value]="scheduledData.ShiftDetailsGetDto.ShiftName"></app-kendo-label>
+                          </div>
+                            </div>
+                            <div class="dropdown__shift-range--input">
+                              <div class="achor__text" >
+                               
+                                 <app-weekday-picker [dayInfo]="shiftScedulerSer.generateDaysInfo(scheduledData.ShiftDetailsGetDto)" [isWeekdayEditMode]="false" [timeRangeProperties]="timeRange" [timeFormat]="'hh:mm a'"
+                                 [startTimeControlName]="'startTimeControlName'" [endTimeControlName]="'endTimeControlName'" [isReadonly]="false">
+                                 </app-weekday-picker>
+                              </div>
+                          </div>
+                          </div>
+                      </div>
+                      <!-- input box start -->
+                </div>
+            </div>
+            </div>
+        </div>
+   
+        <div class="row">
+          <div class="col-sm-9 col-md-9">
+              <div class="card">
+                  <!-- Card Header Section-->
+                  <div class="card__header">
+                      <h4 class="card__heading">{{'ShiftCalendar'| translate}}</h4>
+                  </div>
+   
+                  <!-- End Card Header Section-->
+                  <div class="card__body">
+                      <div class="">
+                        <div class="scheduler--calendar">
+                        <kendo-scheduler 
+                        kendoSchedulerSlotSelectable
+                        [(slotSelection)]="selection"
+                        timezone="UTC"
+                        (slotSelectionChange)="onSelectionChange($event)"
+
+                        
+                        class="editscheduler"  (navigate)="onSchedulerNavigate($event)"  [selectedDate]="selectedDate" [slotClass]="getSlotClass" [kendoSchedulerBinding]="events" [resources]="resources" roomIdField="roomId">
+                        <ng-template kendoSchedulerMonthDaySlotTemplate let-date="date">
+                            <strong *ngIf="isDateInCurrentMonth(date,currentMonth,currentYear)">{{date.getDate() }}</strong>
+                          </ng-template>
+                            <kendo-scheduler-month-view >       
+                                <ng-template kendoSchedulerEventTemplate let-event>
+                                      <div *ngIf="event.dataItem.TypeName == 'ContractorEvent'" [title]="event.dataItem.Name" (click)="onEventClick(event)">
+                                         {{ event.dataItem.Name | translate }}
+                                      </div>
+                                  </ng-template>
+                            </kendo-scheduler-month-view>
+                            <kendo-scheduler-messages
+                            today="{{'Today' | translate}}"
+                            
+                          >
+                          </kendo-scheduler-messages>
+
+                          </kendo-scheduler>
+                        </div>
+                        <div class="scheduler--indicator">
+                            <ul>
+                                <li><span class="orange"></span>{{'TimeSubmitted' | translate}}</li>
+                                <li><span class="green"></span>{{'TimeApproved'| translate}}</li>
+                                <li><span class="primary"></span>{{'EventAdded' | translate}}</li>  
+                            </ul>
+                        </div>
+                        
+                    </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-sm-3 col-md-3" *ngIf="isSlotClick">
+              <div class="card schedular-card">
+                  <div class="card__header ">
+                      <h4 class="card__heading">
+                        <app-kendo-label   [value]="dayOfEvent"></app-kendo-label> <app-kendo-label  [isDate]="true" [value]="selectedEventDate"></app-kendo-label></h4>
+                        <div class="no-event-found" *ngIf="!selectedEvent">
+                            <span> {{eventEntered | translate}}</span>
+                        </div>
+                    </div>
+                  
+                  <div class="card__body pt-0" *ngIf="selectedEvent && isSlotClick">
+                      <div class="row">
+                          <div class="col-sm-12 col-md-12">
+                              <div class="form-group">
+                                  <app-kendo-label [label]="'EventName'" [value]="selectedEvent.EventName"></app-kendo-label>
+                              </div>
+                          </div>
+                          <div class="col-sm-12 col-md-12">
+                              <div class="form-group">
+                                  <app-kendo-label [label]="'EventReason'" [value]="selectedEvent.EventReasonName"></app-kendo-label>
+                              </div>
+                          </div>
+                          
+                          <div class="col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'Comments'"></app-kendo-label>
+                                <p class="label-answere">
+                                    {{truncatedComment}}
+                                    <span *ngIf="!showFullComment && isLength">
+                                        <a href="javascript:void(0)" (click)="toggleReadMore()">{{'ReadMore' | translate}}</a>
+                                      </span>
+                                      <span *ngIf="showFullComment">
+                                        <a href="javascript:void(0)" (click)="toggleReadMore()">{{'ReadLess' | translate}}</a>
+                                      </span>
+                                </p>
+
+                                
+                                
+                                
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'SheduleEnteredBy'" [value]="selectedEvent.CreatedBy"></app-kendo-label>
+                            </div>
+                        </div>
+                          <div class="col-sm-12 col-md-12">
+                              <div class="form-group">
+                                  <app-kendo-label [label]="'EventEnteredOn'" [isDate]="true" [value]="selectedEvent.CreatedOn"></app-kendo-label>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+   
+            <!-- Footer Section-->
+            <div class="page-footer">
+                <div class="btn-box btn-box--center">
+                    <button type="button" kendoButton themeColor="primary" (click)="navigate()">{{'Back'| translate}}</button>
+                </div>
+            </div>
+            <!-- End Footer Section-->
+    </form>
+  </div>
+   

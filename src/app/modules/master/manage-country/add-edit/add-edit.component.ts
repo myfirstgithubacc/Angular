@@ -1,0 +1,239 @@
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors } from "@angular/forms";
+import { CustomValidators } from '@xrm-shared/services/custom-validators.service';
+import { EventLogService } from '@xrm-shared/services/event-log.service';
+import { LocalizationService } from '@xrm-shared/services/Localization/localization.service';
+import { ManageCountry } from '@xrm-core/models/manage-country.model';
+import { ManageCountryService } from 'src/app/services/masters/manage-country.service';
+import { NavigationPaths } from '../navigation-paths/NavigationPaths';
+import { EMPTY, Subject, catchError, of, switchMap, takeUntil } from 'rxjs';
+import { ToastOptions } from '@xrm-shared/enums/toast-options.enum';
+import { ToasterService } from '@xrm-shared/services/toaster.service';
+import { XrmEntities } from '@xrm-shared/services/common-constants/XrmEntities.enum';
+import { magicNumber } from '@xrm-shared/services/common-constants/magic-number.enum';
+import { CommonService } from '@xrm-shared/services/common.service';
+import { GenericResponseBase, isSuccessfulResponse } from '@xrm-core/models/responseTypes/generic-response.interface';
+import { WidgetServiceService } from '@xrm-shared/widgets/services/widget-service.service';
+
+
+@Component({selector: 'app-add-edit',
+	templateUrl: './add-edit.component.html',
+	styleUrls: ['./add-edit.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush
+})
+
+export class AddEditComponent implements OnInit, OnDestroy {
+
+	public currentRecord: ManageCountry;
+	private entityId: number = XrmEntities.ManageCountry;
+	private destroyAllSubscribtion$ = new Subject<void>();
+	public EditCountry: FormGroup;
+
+	public ZipFormat = [
+		{ Text: 'Numeric', Value: 'NU' },
+		{ Text: 'Alphanumeric', Value: 'AN' }
+	];
+
+	constructor(
+		private route: Router,
+		private manageCountryService: ManageCountryService,
+		private toasterService: ToasterService,
+		private activatedRoute: ActivatedRoute,
+		private eventLogService: EventLogService,
+		private localizationService: LocalizationService,
+		private formbuilder: FormBuilder,
+		private customValidator: CustomValidators,
+		private commonService: CommonService,
+		private widget: WidgetServiceService,
+		private cdr: ChangeDetectorRef
+	) {
+
+		this.EditCountry = this.formbuilder.group({
+			CountryName: [null, [this.customValidator.RequiredValidator('PleaseEnterData', [{ Value: 'CountryName', IsLocalizeKey: true }])]],
+			ZipLabel: [null, [this.customValidator.RequiredValidator('PleaseEnterData', [{ Value: 'LabelOfZipCode', IsLocalizeKey: true }])]],
+			ZipLengthSeries: [
+				null, [
+					this.customValidator.RequiredValidator('PleaseEnterData', [{ Value: 'SeriesOfZipCode', IsLocalizeKey: true }]),
+		 			this.IsNumberValidator()
+				]
+			],
+			ZipFormat: [null, [this.customValidator.RequiredValidator('PleaseSelectData', [{ Value: 'FormatOfZipCode', IsLocalizeKey: true }])]],
+			PhoneExtFormat: [
+				null, [
+					this.customValidator.RequiredValidator('PleaseEnterData', [{ Value: 'PhoneExtFormat', IsLocalizeKey: true }]),
+					this.charactersValidation()
+				]
+			],
+			PhoneFormat: [null, [this.customValidator.RequiredValidator('PleaseEnterData', [{ Value: 'PhoneFormat', IsLocalizeKey: true }]), this.charactersValidation()]],
+			StateLabel: [null, [this.customValidator.RequiredValidator('PleaseEnterData', [{ Value: 'LabelOfState', IsLocalizeKey: true }])]],
+			CurrencyCode: [null, [this.customValidator.RequiredValidator('PleaseEnterData', [{ Value: 'CurrencyCode', IsLocalizeKey: true }])]]
+		});
+
+	}
+
+	ngOnInit(): void {
+
+		this.activatedRoute.params
+			.pipe(
+				switchMap((param: Params) => {
+					if (param['id']) {
+						this.getManageCountryById(param['id']);
+					}
+					return of(null);
+				}),
+				catchError((error: Error) => {
+					return EMPTY;
+				}),
+				takeUntil(this.destroyAllSubscribtion$)
+			)
+			.subscribe();
+	}
+
+	private getManageCountryById(id: string) {
+		this.manageCountryService.getManageCountryById(id).pipe(takeUntil(this.destroyAllSubscribtion$))
+			.subscribe((data: GenericResponseBase<ManageCountry>) => {
+				if(isSuccessfulResponse(data)){
+
+					this.currentRecord = data.Data;
+					this.eventLogService.entityId.next(XrmEntities.ManageCountry);
+					this.eventLogService.recordId.next(data.Data.Id);
+					this.EditCountry.patchValue(data.Data);
+					this.EditCountry.controls['ZipFormat'].patchValue({Value: data.Data.ZipFormat});
+
+					if(data.Data.ZipFormat === 'Numeric' || data.Data.ZipFormat === 'Alphanumeric'){
+						this.EditCountry.controls['ZipFormat'].patchValue({Value: data.Data.ZipFormat === 'Alphanumeric'
+							?'AN'
+							:'NU'});
+					}
+					this.manageCountryService.manageCountryData.next({'Disabled': this.currentRecord.Disabled, 'RuleCode': this.currentRecord.AutoGeneratedCode, 'Id': this.currentRecord.Id});
+				}
+			});
+	}
+
+	phoneFormatChange(){
+
+		const previousPhoneFormatLength = (this.currentRecord.PhoneFormat??'').length,
+			previousPhoneExtFormatLength = (this.currentRecord.PhoneExtFormat??'').length,
+			currentPhoneFormatLength = this.EditCountry.controls['PhoneFormat'].value.length,
+			currentPhoneExtFormatLength = this.EditCountry.controls['PhoneExtFormat'].value.length;
+
+		if((previousPhoneExtFormatLength > currentPhoneExtFormatLength) || (previousPhoneFormatLength > currentPhoneFormatLength)){
+			this.EditCountry.controls['PhoneExtFormat'].setErrors({error: true});
+			this.EditCountry.controls['PhoneFormat']
+				.setErrors({error: true, message: this.localizationService.GetLocalizeMessage('The current Phone - Extension Format cannot be changed, as the data is integrated with other modules that depend on the existing length.')});
+		}
+		else{
+			this.EditCountry.controls['PhoneFormat'].setErrors(null);
+			this.EditCountry.controls['PhoneExtFormat'].setErrors(null);
+		}
+		this.EditCountry.controls['PhoneFormat'].markAllAsTouched();
+		this.EditCountry.controls['PhoneExtFormat'].markAllAsTouched();
+	}
+
+
+	zipCodeSeriesChange() {
+		const prevData = this.currentRecord.ZipLengthSeries?.toString().split(',').map(Number) ?? [],
+			maxValue = Math.max(...prevData),
+			currentData = this.EditCountry.controls['ZipLengthSeries'].value.split(',').map(Number),
+
+		 newValues = currentData.filter((value: number) =>
+				!prevData.includes(value)),
+
+		 hasInvalidValue = newValues.length > magicNumber.zero && !newValues.some((value: number) =>
+				value >= maxValue);
+
+		if (hasInvalidValue) {
+			this.EditCountry.controls['ZipLengthSeries'].setErrors({
+				error: true,
+				message: 'The current series of Zip Codes cannot be decreased, as the data is integrated with other modules that depend on the existing length.'
+			});
+		} else {
+			this.EditCountry.controls['ZipLengthSeries'].setErrors(null);
+		}
+	}
+
+
+	public submitForm(){
+
+		this.EditCountry.markAllAsTouched();
+		if (this.EditCountry.valid) {
+			this.save();
+		}
+	}
+
+	private save(){
+
+		const data = this.EditCountry.value;
+		data.UKey = this.currentRecord.UKey;
+		data.ZipFormat = this.EditCountry.controls['ZipFormat'].value.Value;
+		this.manageCountryService.updateManageCountry(data).pipe(takeUntil(this.destroyAllSubscribtion$))
+			.subscribe((res: GenericResponseBase<ManageCountry>) => {
+
+				if(res.Succeeded){
+					this.toasterService.showToaster(ToastOptions.Success, 'CountryHasBeenSavedSuccessfully');
+					this.commonService.resetAdvDropdown(this.entityId);
+					this.eventLogService.isUpdated.next(true);
+					this.EditCountry.markAsPristine();
+					this.localizationService.manageCountryJson();
+					this.localizationService.Refresh();
+					this.localizationService.RefreshFile();
+  					this.widget.reloadJson.next(true);
+					  this.cdr.markForCheck();
+				}
+				else{
+					this.toasterService.showToaster(ToastOptions.Error, res.Message);
+				}
+			});
+	}
+
+	public redirectToList(){
+		this.route.navigate([NavigationPaths.list]);
+	}
+
+	private IsNumberValidator(){
+
+		return (control: AbstractControl): ValidationErrors | null => {
+			if (control.value == null) return null;
+			const val = control.value.toString(),
+				stringExp: RegExp = /[^0-9,]+/;
+			if (val.trim().length == magicNumber.zero) return null;
+			if (val.charAt(val.length - magicNumber.one) === ',') {
+				return {
+					error: true,
+					message: 'PleaseEnterNumericValueSeparatedByComma'
+				};
+			}
+			if (stringExp.test(val)) {
+				return {
+					error: true,
+					message: 'PleaseEnterNumericValueSeparatedByComma'
+				};
+			}
+			return null;
+		};
+	}
+
+	private charactersValidation(){
+
+		return (control: AbstractControl): ValidationErrors | null => {
+			if (control.value == null) return null;
+			const val = control.value.toString(),
+				stringExp: RegExp = /[^#( )-]+/;
+			if (val.trim().length == magicNumber.zero) return null;
+			if (stringExp.test(val)) {
+				return {
+					error: true,
+					message: 'PleaseEnterTheFormatByUsingKeywordSeparatedBySpace'
+				};
+			}
+			return null;
+		};
+	}
+
+	ngOnDestroy(): void {
+		this.toasterService.resetToaster();
+		this.destroyAllSubscribtion$.next();
+		this.destroyAllSubscribtion$.complete();
+	}
+}

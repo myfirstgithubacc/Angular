@@ -1,0 +1,41 @@
+.k-timepicker {
+	.k-icon-button {
+		border: none;
+		width: calc(1.4285714286em + 22px);
+		background: transparent;
+	}
+}
+
+.k-input-solid.k-dateinput:focus,
+.k-timepicker.k-focus .k-input-solid.k-dateinput {
+	border: none !important;
+	box-shadow: none;
+}
+
+.k-time-list-wrapper {
+	height: 160px !important;
+
+	&.k-focus {
+		&:hover {
+			border: none !important;
+		}
+	}
+}
+
+.k-time-highlight {
+	border-color: rgba(0, 0, 0, 0.08);
+	background-color: var(--border-color);
+}
+
+.k-time-list {
+	.k-item {
+		&:hover {
+			color: var(--color-primary) !important;
+		}
+	}
+}
+
+.k-time-header .k-time-now,
+.k-time-selector-header .k-time-now {
+	color: var(--color-primary) !important;
+}

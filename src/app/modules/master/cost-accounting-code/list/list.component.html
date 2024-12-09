@@ -1,0 +1,35 @@
+<div class="master-search widget-filter__search">
+  <div class="row">
+    <div class="col-md-12 master-search__wapper">
+      <div class="master-search__search-box">
+        <div class="custom-search">
+          <div class="custom-search__input-box">
+            <app-search [placeholder]="'SearchFor'" [isServerSidePagingEnable]="isServerSidePagingEnable"
+              [EntityId]="entityId" (onSearch)="OnSearchTriggered($event)"
+              [columnOptions]="columnOptions">
+            </app-search>
+          </div>
+
+          <app-advance-search [apiAddress]="advApiAddress" [isServerSidePagingEnable]="isServerSidePagingEnable"
+            [EntityId]="entityId" (selectedFilter)="OnFilterTriggered($event)" [isApiGateway]="true">
+          </app-advance-search>
+        </div>
+      </div>
+
+      <div class="master-search__button-box master-search__button-box--right">
+        <app-kendo-button [xrmEntityId]="entityId" [buttonName]="'NewEntity'" [buttonIcon]="'plus'"
+          (Click)="navigate()" [buttonLocalizeParam]="costAccountingNameLabelTextParams">
+        </app-kendo-button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" *ngIf="isLoading">
+  <grid-view [isServerSidePagingEnable]="isServerSidePagingEnable" [apiAddress]="apiAddress" [searchText]="searchText"
+    [advFilterData]="appliedAdvFilters" [entityId]="entityId" [columnOptions]="columnOptions" [actionSet]="actionSet"
+    [tabOptions]="tabOptions" [actionItemCategoryField]="'Disabled'" [isSortingAllowed]="true"
+    [kendoGridSelectedBy]="'UKey'" [fileName]="'CostAccountingCode' | translate" [ShowActivateDeactivateButton]='false'
+    [pageSize]="pageSize" [isApiGateway]="true" [multiSelect]="false">
+  </grid-view>
+</div>

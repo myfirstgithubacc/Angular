@@ -1,0 +1,231 @@
+<div class="col-sm-12">
+  <div class="list-view__tab list-view__tab--custom">
+    <!--&& inputProperties.AddEditUserForm.get('UserDetails')?.get('ApplicabilityForMultipleSectors')?.value -->
+    <a *ngIf="inputProperties.isEditMode && inputProperties.AddEditUserForm.get('UserDetails')?.get('ApplicabilityForMultipleSectors')?.value"
+      class="add_sector" (click)="addnewSector()">
+      <xrm-icon [name]="'plus'" [color]="'dark-blue-color'" [size]="14" class="sw-bolder"></xrm-icon>
+      {{ 'AddAdditionalSectors'|translate}}
+    </a>
+    <kendo-tabstrip class="list-view__border list-view__tab-item me-0 client_sector">
+      <ng-container *ngFor="let item of clientUserSectorAccessAddDtos.controls; let i = index;">
+        <kendo-tabstrip-tab class="list-view__tab-item" [selected]="item.get('isshow')?.value === true ? true : false">
+          <ng-template kendoTabTitle>
+            <span style="position:relative"
+              (click)="tabClick(i)">{{ShowSectorTabName(item?.get('sectorId')?.value?.Text,i)}}</span>
+            <xrm-icon *ngIf="showDeleteIcon(item?.get('sectorId')?.value?.Value)" [name]="'trash-2'"
+              [color]="'red-color'" [size]="16" class="sw-bold ms-2" (click)="deleteSector(i)"></xrm-icon>
+          </ng-template>
+        </kendo-tabstrip-tab>
+      </ng-container>
+    </kendo-tabstrip>
+  </div>
+</div>
+
+<form [formGroup]="inputProperties.AddEditUserForm">
+  <div formArrayName="SectorDetails" *ngFor="let item of SectorDetails.controls; let i = index;">
+    <div [formGroup]="getFormGroup(item)">
+      <ng-container *ngIf="item.get('isshow')?.value">
+        <div class="card">
+
+          <div class="card__header">
+            <h4 class="card__heading">{{'SectorDetails' | translate}}</h4>
+          </div>
+          <div class="card__body">
+
+            <div class="row">
+              <div class="col-sm-6 col-md-6" *ngIf="!CheckSavedSector(item.get('sectorId')?.value?.Value)">
+                <div class="form-group">
+                  <app-kendo-dropdown [list]="inputProperties.isEditMode?filteredSectors:inputProperties.allSectorList"
+                    [label]="inputProperties.SectorLabel" [controlName]="'sectorId'" [isRequired]="true"
+                    (onChange)="onChangeSector($event,i)" [placeholder]="'-Select-'">
+                  </app-kendo-dropdown>
+                </div>
+              </div>
+              <!--  -->
+              <div class="col-sm-6 col-md-6"
+                *ngIf="inputProperties.isEditMode && (SectorDetails?.controls?.length || 0) > 1">
+                <div class="form-group">
+                  <app-kendo-switch [label]="'PrimarySector'" [onLabel]="'Yes'" [offLabel]="'No'"
+                    [controlName]="'isDefault'" (onChangeSwitch)="onChangeDefaultSector($event,i)">
+                  </app-kendo-switch>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                  <app-kendo-dropdown [list]="item.get('locationList')?.value"
+                    [isAppend]="CheckSavedSector(item.get('sectorId')?.value?.Value) ? true: false" [label]="'Location'"
+                    [controlName]="'defaultLocationId'" [isRequired]="true" (onChange)="onChangeLocation()"
+                    [placeholder]="'-Select-'">
+                  </app-kendo-dropdown>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                  <app-kendo-dropdown [list]="item.get('org1List')?.value"
+                    [isAppend]="CheckSavedSector(item.get('sectorId')?.value?.Value) ? true: false"
+                    [label]="item.get('orgLevel1Label')?.value" [controlName]="'defaultOrgLevel1Id'" [isRequired]="true"
+                    (onChange)="onChangeOrglevel()" [placeholder]="'-Select-'">
+                  </app-kendo-dropdown>
+                </div>
+              </div>
+              <!--  -->
+              <div class="col-sm-6 col-md-6" *ngIf="item.get('isorgLevel2Visible')?.value">
+                <div class="form-group">
+                  <app-kendo-dropdown [list]="item.get('org2List')?.value"
+                    [isAppend]="CheckSavedSector(item.get('sectorId')?.value?.Value) ? true: false"
+                    [label]="item.get('orgLevel2Label')?.value" [controlName]="'orgLevel2Id'"
+                    [isRequired]="item.get('isorgLevel2Required')?.value" [placeholder]="'-Select-'">
+                  </app-kendo-dropdown>
+                </div>
+              </div>
+              <!--  -->
+              <div class="col-sm-6 col-md-6" *ngIf="item.get('isorgLevel3Visible')?.value">
+                <div class="form-group">
+                  <app-kendo-dropdown [list]="item.get('org3List')?.value"
+                    [isAppend]="CheckSavedSector(item.get('sectorId')?.value?.Value) ? true: false"
+                    [label]="item.get('orgLevel3Label')?.value" [controlName]="'orgLevel3Id'"
+                    [isRequired]="item.get('isorgLevel3Required')?.value" [placeholder]="'-Select-'">
+                  </app-kendo-dropdown>
+                </div>
+              </div>
+              <!--  -->
+              <div class="col-sm-6 col-md-6" *ngIf="item.get('isorgLevel4Visible')?.value">
+                <div class="form-group">
+                  <app-kendo-dropdown [list]="item.get('org4List')?.value"
+                    [isAppend]="CheckSavedSector(item.get('sectorId')?.value?.Value) ? true: false"
+                    [label]="item.get('orgLevel4Label')?.value" [controlName]="'orgLevel4Id'"
+                    [isRequired]="item.get('isorgLevel4Required')?.value" [placeholder]="'-Select-'">
+                  </app-kendo-dropdown>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                  <app-kendo-dropdown [list]="item.get('chargeList')?.value"
+                    [isAppend]="CheckSavedSector(item.get('sectorId')?.value?.Value) ? true: false"
+                    [label]="'DefaultCostAccountingCode'" [controlName]="'defaultChargeId'" [placeholder]="'-Select-'">
+                  </app-kendo-dropdown>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                  <app-kendo-dropdown [list]="item.get('nextLevelManagerList')?.value"
+                    [isAppend]="CheckSavedSector(item.get('sectorId')?.value?.Value) ? true: false"
+                    [label]="'NextLevelManager'" [controlName]="'NextLevelManagerId'" [placeholder]="'-Select-'"
+                    [tooltipVisible]="false"
+                    [tooltipTitle]="'SelectAUserToDesignateAsTheNextLevelApproverForTheLIProffPSRRequest'">
+                  </app-kendo-dropdown>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-6"
+                *ngIf="inputProperties.AddEditUserForm.get('UserDetails')?.get('UserDataAccessRight')?.value?.Value == userDataAccessRight.Org1View || inputProperties.AddEditUserForm.get('UserDetails')?.get('UserDataAccessRight')?.value?.Value == userDataAccessRight.LocationView">
+                <div class="form-group">
+                  <div class="col-sm-6 col-md-6">
+                    <app-kendo-radio-button id="tres"
+                      [controlName]="inputProperties.AddEditUserForm.get('UserDetails')?.get('UserDataAccessRight')?.value?.Value == userDataAccessRight.Org1View ? 'AppliesToAllOrgLevel1' : 'AppliesToAllLocation'"
+                      [RadioGroup]="sectorTabRadioGroupList"
+                      [label]="inputProperties.AddEditUserForm.get('UserDetails')?.get('UserDataAccessRight')?.value?.Value == userDataAccessRight.Org1View ? getLocalizedMessage(item.get('orgLevel1Label')?.value) : getLocalizedMessage('Location')"
+                      [tooltipVisible]="false" [name]="'orgLocation Applicable'"
+                      (onChangeRadio)="onChangeRadio($event,item)">
+                    </app-kendo-radio-button>
+                    <div class="tree-bxs">
+                      <app-tree-view
+                        *ngIf="!item.get('AppliesToAllOrgLevel1')?.value && !item.get('AppliesToAllLocation')?.value"
+                        [data]="inputProperties.AddEditUserForm.get('UserDetails')?.get('UserDataAccessRight')?.value?.Value == userDataAccessRight.Org1View ? item.get('org1List')?.value : item.get('locationList')?.value"
+                        [textField]="'Text'" [isFiltered]="true" [treeViewType]="'multileveltreeview'"
+                        [childrenField]="'items'" [checkedKeys]="item.get('selectedTree')?.value"
+                        [selectedKeys]="item.get('selectedTree')?.value"
+                        [selectedItems]="item.get('selectedTree')?.value"
+                        [selectedItemsIndex]="item.get('selectedTree')?.value"
+                        (onCheckedTree)="selectedConfiguredTreeItems($event,i)"></app-tree-view>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Card Section End-->
+
+        <div class="card">
+
+          <div class="card__header">
+            <h4 class="card__heading">{{'ApprovalConfiguration'|translate}}</h4>
+          </div>
+
+          <div class="card__body">
+            <div class="row">
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                  <app-numeric-box [controlName]="'reqPSRLiApprovalLimit'" [min]="0" [maxlength]="7" [decimals]="2"
+                    [label]="'RequisitionPSRLIApprovalLimitUSD'">
+                  </app-numeric-box>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-6" *ngIf="item.get('isRfxSowVisible')?.value">
+                <div class="form-group">
+                  <app-numeric-box [controlName]="'rFxSowApprovalLimit'" [min]="0" [maxlength]="7" [decimals]="2"
+                    [label]="'RFxSOWApprovalLimitUSD'">
+                  </app-numeric-box>
+                </div>
+              </div>
+
+
+              <div class="col-sm-12 col-md-12 pt-0 " *ngIf="item.get('userApprovalConfigurationDetail')?.value?.length > 0">
+                <div class="list-view third-lavel-grid staf-list">
+                  <div class="row">
+                    <div class="col-sm-12">
+
+                      <kendo-grid [kendoGridBinding]="item.get('userApprovalConfigurationDetail')?.value"
+                        [pageable]="true" [pageSize]="5">
+                        <ng-container>
+                          <kendo-grid-column field="WorkflowName" [title]="'Workflow'|translate"></kendo-grid-column>
+                        </ng-container>
+                        <ng-template kendoGridDetailTemplate let-dataItem>
+                          <kendo-grid [kendoGridBinding]="dataItem.ApprovalConfigs" [pageSize]="20" class="gridView2"
+                            (cellClick)="cellClickHandler($event)" (cellClose)="cellCloseHandler($event)">
+                            <kendo-grid-column field="ApproverConfigName"
+                              title="{{'ApprovalConfigurationName' | translate}}"></kendo-grid-column>
+                            <ng-template kendoGridDetailTemplate let-dataItem>
+                              <kendo-grid [kendoGridBinding]="dataItem.ApproverLabels" class="gridView3"
+                                (cellClick)="cellClickHandler2($event)" (cellClose)="cellCloseHandler2($event)">
+                                <kendo-grid-column field="ApproverLabel" [title]="'ApprovalLevels'|translate"
+                                  [editable]="false"></kendo-grid-column>
+                                <kendo-grid-column title="{{'AuthorizedForApprovalLevel' | translate}}"
+                                  editor="boolean">
+                                  <ng-template kendoGridCellTemplate let-filter let-column="column"
+                                    let-filterService="filterService" let-dataItem>
+                                    <kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [checked]="dataItem.IsSelected"
+                                      (valueChange)="switchChange($event,i,dataItem)"></kendo-switch>
+                                  </ng-template>
+                                </kendo-grid-column>
+                              </kendo-grid>
+                            </ng-template>
+                          </kendo-grid>
+                        </ng-template>
+                      </kendo-grid>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <ng-container *ngIf="item.get('sectorId')?.value?.Value">
+          <app-udf-implementation [entityId]="16" [recordId]="item.get('ClientUserSectorAccessId')?.value?.Value"
+            [sectorId]="item.get('sectorId')?.value?.Value" [recordUKey]="getRecordUkeyForUdf(i)"
+            [parentsInfos]="udfCommonMethods.getParentsInfo()"
+            [actionTypeId]="CheckSavedSector(item.get('sectorId')?.value?.Value) ? actionType.Edit : actionType.Add"
+            (onDataPicked)="getUdfData($event,i)">
+          </app-udf-implementation>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+</form>

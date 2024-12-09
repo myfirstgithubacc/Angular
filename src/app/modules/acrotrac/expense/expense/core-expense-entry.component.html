@@ -1,0 +1,18 @@
+<ng-container>
+    <ng-container>
+        <div class="col-xs-12 col-md-12 LI-industrial__stepper" *ngIf="showHeader">
+            <app-time-and-expense-status-bar stepType="full" [linear]="false" [currentStep]="currentStep"
+                [statusId]="statusId"></app-time-and-expense-status-bar>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="showHeader">
+        <form [formGroup]="statusForm">
+            <app-common-header [statusData]="displaydata" [controlName]="'status'" [entityId]="entityId">
+            </app-common-header>
+        </form>
+    </ng-container>
+    <router-outlet></router-outlet>
+    <ng-container *ngIf="showHeader && statusId!=currentStep">
+        <event-log></event-log>
+    </ng-container>
+</ng-container>

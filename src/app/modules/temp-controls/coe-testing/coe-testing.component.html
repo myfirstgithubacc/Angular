@@ -1,0 +1,173 @@
+<div class="row">
+    <div class="col-sm-9">
+        <div class="card">
+            <div class="card__header">
+                <h4 class="card__heading">Email Body</h4>
+                <div class="card__header-icon"></div>
+            </div>
+            <div class="card__body">
+                <app-kendo-label [label]="'Rajiv Ranjan'" [value]="timezoneValue" [isTime]="true">
+                </app-kendo-label>
+
+
+                <br>
+
+                <form [formGroup]="form1" (ngSubmit)="submit()">
+                    <app-kendo-editor [controlName]="'editor'" (onChangeEditor)="changeEditor($event)"
+                        (onBlurEditor)="blurEditor($event)" (onFocusEditor)="focusEditor($event)"
+                        (onPasteEditor)="pasteEditor($event)" [value]="val" kendoDropTarget>
+
+                    </app-kendo-editor>
+                    <div class="k-editor-content">
+                        <!-- Editor content goes here -->
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-3">
+        <div class="card">
+            <div class="card__header">
+                <h4 class="card__heading">Email List</h4>
+                <div class="card__header-icon"></div>
+            </div>
+            <div class="card__body">
+                <div class="fields">
+                    <p draggable="true" (dragstart)="onDragStart($event, lst)" *ngFor="let lst of list">
+                        <xrm-icon name="list" color="dark-blue-color" [size]="18" class="sw-bold"></xrm-icon>{{lst}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card__body">
+    <p>{{form1.value | json}}</p>
+</div>
+
+<div class="row">
+    <div class="col-sm-9">
+        <div class="card">
+            <div class="card__header">
+                <h4 class="card__heading">Template Dropdown</h4>
+                <div class="card__header-icon"></div>
+            </div>
+            <div class="card__body">
+                <form [formGroup]="form2" (ngSubmit)="submit()">
+
+                    <br>
+
+                    <app-kendo-multiselect-dropdown [controlName]="'datamultiselect'" [placeholder]="'DdlSelect'"
+                        [list]="listItems" (kendoMulti)="getEvent($event)"></app-kendo-multiselect-dropdown>
+
+                    <app-kendo-multiselect-dropdown [controlName]="'datamultiselect1'" [placeholder]="'DdlSelect'"
+                        [list]="listItems" (kendoMulti)="getEvent($event)"></app-kendo-multiselect-dropdown>
+
+
+                    <!-- <app-kendo-multiselect-additional [isSearchableMode]="true" [controlName]="'datamultiselect'"
+                    [placeholder]="'DdlSelect'" [list]="listItems" ></app-kendo-multiselect-additional> -->
+                    <br>
+                    <app-kendo-template-dropdown [dropDownInterFace]="ddlSource" [controlName]="'ddlusaCity'">
+                    </app-kendo-template-dropdown>
+                    <br>
+                    <br>
+                    <app-autocomplete-dropdown [controlName]="'autocmplate'" [list]="genders" [label]="'Search Gender'"
+                        [isEditMode]="false"></app-autocomplete-dropdown>
+                    <br>
+                    <app-kendo-timepicker [controlName]="'clockBufferToSetReportingDate'"
+                        [tooltipVisible]="tooltipVisible" [tooltipTitle]="tooltipTitle"
+                        [label]="ClockBufferForReportingDatelabel" [isRequired]="true" [timeFormat]="timeFormat"
+                        (valueChange)="clockBufferChange($event)">
+                    </app-kendo-timepicker>
+                    <app-kendo-timepicker [controlName]="'clockBufferLavel'" [isEditMode]="true"
+                        [tooltipVisible]="tooltipVisible" [tooltipTitle]="tooltipTitle"
+                        [label]="ClockBufferForReportingDatelabel" [isRequired]="true" [timeFormat]="timeFormat">
+                    </app-kendo-timepicker>
+                    <app-kendo-label [label]="'acro'" [value]="timezoneDate" [isTime]="true">
+                    </app-kendo-label>
+                    <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [label]="'DisplayAdjustedHours'"
+                        class="kendo-label__change kendo-label__change--all" [controlName]="'ManuallyAdjust'">
+                    </app-kendo-switch>
+                    <br>
+                    <button type="button" (click)="postDll()">Submit</button>
+                    <br>
+                    <span>{{ddlData}}</span>
+                </form>
+                <form [formGroup]="dateForm">
+                    <app-kendo-datepicker [controlName]="'clockBufferToSetReportingDate'" [tooltipVisible]="true"
+                        [tooltipTitle]="'ClockBufferToSetReportingDateToolTip'" [label]="'ClockBufferForReportingDate'"
+                        [isRequired]="true">
+                    </app-kendo-datepicker>
+                    {{datePickerValue}}
+                    <br>
+                    <button (click)="onDatePicker()">Date Picker Value</button>
+                    <div class="row">
+                        <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [label]="'Nuberic Textbox '"
+                        class="kendo-label__change kendo-label__change--all" [controlName]="'rdbuttonfor'" (onChangeSwitch)="onrdbtnChange($event)">
+                    </app-kendo-switch>
+                    <app-numeric-box [label]="'Number checkbox'" [controlName]="'quantity'" [isReadOnly]="numbericBoxIsReadonly" [decimals]="2">
+                </app-numeric-box>
+                    </div>
+                </form>
+                <hr>
+               
+                <div *ngIf="isView">
+                    <h2>View Data</h2>
+                    <p><b>Time Picker Value:</b> {{ formData.timePicker}}</p>
+                    <p><b>DateTime Value:</b> {{ formData.dtTime | date}}</p>
+                    <p><b>Date and Time: </b>{{ formData.checkIn}}</p>
+                    <p><b>Shift Days/Time : </b>{{ formData.startTimeControlName}} - {{ formData.endTimeControlName}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-3">
+        <div class="card">
+            <div class="card__header">
+                <h4 class="card__heading"></h4>
+                <div class="card__header-icon"></div>
+            </div>
+            <div class="card__body">
+
+                <form [formGroup]="timeZoneForm2">
+                    <app-kendo-timepicker [controlName]="'timePicker'" [tooltipVisible]="tooltipVisible"
+                        [label]="'Time Widget'" [isEditMode]="false" (valueChange)="timezoneChange($event)"
+                        [timeFormat]="timeFormat">
+                    </app-kendo-timepicker>
+                    <app-kendo-datepicker [controlName]="'dtTime'" [tooltipVisible]="true" [tooltipTitle]="'dtTime'"
+                        [label]="'Date Widget'" [isRequired]="true">
+                    </app-kendo-datepicker>
+                    <label>Date and Time</label>
+                    <kendo-datetimepicker required formControlName="checkIn">
+                    </kendo-datetimepicker>
+                    <app-weekday-picker [timeFormat]="'hh:mm a'" [startTimeControlName]="'startTimeControlName'"
+                        [endTimeControlName]="'endTimeControlName'">
+                    </app-weekday-picker>
+                    <button type="button" (click)="dateTimePost()">Submit</button>
+                    <hr>
+                    <h2>Grid Data</h2>
+                    <p><b>Time Picker Value:</b> {{ formData.timePicker}}</p>
+                    <p><b>DateTime Value:</b> {{ formData.dtTime | date}}</p>
+                    <p><b>Date and Time: </b>{{ formData.checkIn}}</p>
+                    <p><b>Shift Days/Time : </b>{{ formData.startTimeControlName}} - {{ formData.endTimeControlName}}
+                    </p>
+                    <button (click)="editItem()">Edit</button>
+                    <button (click)="viewItem()">View</button>
+                    <hr>
+                    <h2>Payload Data</h2>
+                    <p><b>Time Picker Value:</b> {{ PayloadData.timePicker}}</p>
+                    <p><b>DateTime Value:</b> {{ PayloadData.dtTime | date}}</p>
+                    <p><b>Date and Time: </b>{{ PayloadData.checkIn}}</p>
+                    <p><b>Shift Days/Time: </b>{{ PayloadData.startTimeControlName}} - {{
+                        PayloadData.endTimeControlName}}</p>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+<div *ngIf="isEditMode; then thenTemplateName; else elseTemplateName"></div>
+<ng-template #thenTemplateName>
+  <app-kendo-label [label]="label" [value]="listControlName ? listControlName.value : formControl.value" [isTime]="true"
+    [tooltipPosition]="" [labelLocalizeParam]="labelLocalizeParam" [addOnLabelText]="addOnLabelText"
+    [addOnLabelTextLocalizeParam]="addOnLabelTextLocalizeParam" [tooltipVisible]="tooltipVisible"
+    [tooltipTitle]="tooltipTitle?? '' " [tooltipTitleLocalizeParam]="tooltipTitleLocalizeParam">
+  </app-kendo-label>
+</ng-template>
+<ng-template #elseTemplateName>
+  <tooltip-content [tooltipVisible]="tooltipVisible" [tooltipTitle]="tooltipTitle?? '' " [label]="label"
+    [tooltipPosition]="" [addOnLabelText]="addOnLabelText" [addOnLabelTextLocalizeParam]="addOnLabelTextLocalizeParam"
+    [isRequired]="isRequired" [tooltipTitleLocalizeParam]="tooltipTitleLocalizeParam"
+    [labelLocalizeParam]="labelLocalizeParam" [isHtmlContent]="isHtmlContent">
+  </tooltip-content>
+  <kendo-timepicker (blur)="onBlur($event)" (focus)="onFocus($event)" (open)="onOpen($event)" id="timePicker"
+    (close)="onClose($event)" (valueChange)="onValueChange($event)"
+    [formControl]="listControlName ? listControlName : formControl" [format]="timeFormat" [disabled]="isDisabled"
+    [formatPlaceholder]="{ 
+      year: placeholderFormat.year,
+      month: placeholderFormat.month, 
+      day: placeholderFormat.day, 
+      hour: placeholderFormat.hour, 
+      minute: placeholderFormat.minute, 
+      second: placeholderFormat.second,
+      millisecond: 'S' }" [formatPlaceholder]="placeholderFormat" [ngClass]="customClass"
+    [style.--dynamic-color]="dynamicColor">
+    <kendo-timepicker-messages [accept]="'Set' | translate" [acceptLabel]="'Set' | translate"
+      [cancel]="'Cancel' | translate" [cancelLabel]="'Cancel' | translate" [now]="'Now' | translate"
+      [nowLabel]="'Now' | translate" [hour]="'Hour' | translate" [minute]="'Minute' | translate"
+      [toggle]="'ToggleTimeList' | translate">
+    </kendo-timepicker-messages>
+  </kendo-timepicker>
+  <app-print-error-message [control]="listControlName ? listControlName : formControl"></app-print-error-message>
+</ng-template>

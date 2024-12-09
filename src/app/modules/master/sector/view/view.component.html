@@ -1,0 +1,2318 @@
+<div class="app-content__body floating-layout floating-layout__view-layout">
+    <div class="row">
+        <div class="col-md-3 mobile-none">
+            <div class="wizard">
+                <kendo-stepper [steps]="steps" stepType="full" [(currentStep)]="currentStep" [linear]="false"
+                    orientation="vertical" (activate)=stepperEvent($event)>
+                </kendo-stepper>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="mb-3" *ngIf="currentStep === 0 || resetStep" [attr.id]="steps">
+                <div class="card">
+                    <div class="card__header">
+                        <h4 class="card__heading">{{ "BasicDetails" | translate }}</h4>
+                        <div class="card__header-icon">
+                        </div>
+                    </div>
+                    <div class="card__body">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'SectorName'" [labelLocalizeParam]="sectorLabelParams"
+                                        [value]="sectorDetails.BasicDetail.SectorName">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12">
+                                <h4 class="card__body--subheading">
+                                    {{ "AddressDetails" | translate }}
+                                </h4>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'AddressLine1'"
+                                        [value]="sectorDetails.BasicDetail.AddressLine1">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'AddressLine2'"
+                                        [value]="sectorDetails.BasicDetail.AddressLine2">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'CountryId'"
+                                        [value]="sectorDetails.BasicDetail.CountryName">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="StateLabel" [value]="sectorDetails.BasicDetail.StateName">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'City'" [value]="sectorDetails.BasicDetail.City">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'TimeZoneId'"
+                                        [value]="sectorDetails.BasicDetail.TimezoneName">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="ZipCodeLabel"
+                                        [value]="sectorDetails.BasicDetail.PostalCode">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12">
+                                <h4 class="card__body--subheading">
+                                    {{ "OtherDetails" | translate }}
+                                </h4>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'DefaultCulture'"
+                                        [value]="sectorDetails.BasicDetail.HomeLanguageName">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'PasswordExpiryPeriod'"
+                                        [value]="sectorDetails.BasicDetail.PasswordExpiryPeriodName">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'InitialGoLiveDate'" [isDate]="true"
+                                        [value]="sectorDetails.BasicDetail.InitialGoLiveDate">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-m d-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'WeekEndingDayId'"
+                                        [value]="sectorDetails.BasicDetail.WeekDayName" [tooltipVisible]="true"
+                                        [tooltipTitle]="'Weekending_Day_Tooltip'">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+
+                                    <app-kendo-label [label]="'LimitAvailableWeekendingDatesInTimeEntry'"
+                                        [value]="sectorDetails.BasicDetail.IsLimitAvailableWeekendingInTimeCapture | yesNo"
+                                        [tooltipVisible]="true"
+                                        [tooltipTitle]="'Limit_Available_Weekending_Dates_in_Time_Entry_Tooltip'">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div *ngIf="sectorDetails.BasicDetail.IsLimitAvailableWeekendingInTimeCapture === true"
+                                    class="form-group">
+                                    <app-kendo-label [label]="'NoOfPastWeekeding'"
+                                        [value]="sectorDetails.BasicDetail.NoOfPastWeekeding" [tooltipVisible]="true"
+                                        [tooltipTitle]="'No_of_Previous_Weekending_Dates_Allowed_Tooltip'">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" *ngIf="currentStep === 1 || resetStep">
+                <div class="card__header" id="organization-structure">
+                    <h4 class="card__heading">{{ "OrganizationStructure" | translate }}
+                    </h4>
+                </div>
+                <div class="card__body">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 list-view ">
+                            <ng-template #template let-anchor>
+                                <span>{{ anchor.nativeElement.getAttribute("field") }}</span>
+                                <span>{{ anchor.nativeElement.innerText }}</span>
+                            </ng-template>
+                            <div kendoTooltip [tooltipTemplate]="template" filter="a[field], .k-grid td"
+                                (mouseover)="showTooltip($event)">
+                                <div kendoTooltip [tooltipTemplate]="template" filter="a[field]" kendoTooltip>
+                                    <kendo-grid [data]="sectorDetails.OrgLevelConfigs.SectorOrgLevelConfigDtos">
+                                        <kendo-grid-column media="(max-width: 920px)" title="Items">
+                                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                                <dl>
+                                                    <dt>{{'OrganizationStructure' | translate}}</dt>
+                                                    <dd>
+                                                        <app-kendo-label
+                                                            [label]="'OrgLevel' | translate: { placeholder1: rowIndex + 1 }">
+                                                        </app-kendo-label>
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{'ScreenLabelName' | translate}}</dt>
+                                                    <dd>
+                                                        <span class="k-column-title" kendoTooltip
+                                                            title="{{'ScreenLabelName'| translate}}">{{'ScreenLabelName'|
+                                                            translate}}
+                                                        </span>
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{'Utilize' | translate}}</dt>
+                                                    {{dataItem.IsVisible | yesNo}}
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{'Mandatory' | translate}}</dt>
+                                                    {{ (dataItem.IsVisible) ? (dataItem.IsMandatory | yesNo) : ''}}
+                                                </dl>
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                        <kendo-grid-column title="{{'OrganizationStructure' | translate}}"
+                                            media="(min-width: 921px)" [width]="150">
+                                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                                <app-kendo-label
+                                                    [label]="'OrgLevel' | translate: { placeholder1: rowIndex + 1 }">
+                                                </app-kendo-label>
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                        <kendo-grid-column field="OrgName" title="{{'ScreenLabelName' | translate}}"
+                                            media="(min-width: 921px)" [width]="300">
+                                            <ng-template kendoGridHeaderTemplate let-rowIndex="rowIndex"
+                                                style="width:'column.width;'">
+                                                <span class="k-column-title" kendoTooltip
+                                                    title="{{'ScreenLabelName'| translate}}">{{'ScreenLabelName'|
+                                                    translate}}
+                                                </span>
+                                            </ng-template>
+                                            <ng-template let-dataItem kendoGridCellTemplate let-rowIndex="rowIndex">
+                                                <p class="label-answere wrapping-needed">{{dataItem.OrgName}} </p>
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                        <kendo-grid-column media="(min-width: 921px)" field="visible"
+                                            title="{{'Utilize' | translate}}" [width]="100">
+                                            <ng-template kendoGridCellTemplate let-filter let-column="column"
+                                                let-filterService="filterService" let-dataItem>
+                                                <p class="label-answere">{{dataItem.IsVisible | yesNo}}</p>
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                        <kendo-grid-column media="(min-width: 921px)" field="Mandatory"
+                                            title="{{'Mandatory' | translate}}" [width]="100">
+                                            <ng-template kendoGridCellTemplate let-filter let-column="column"
+                                                let-filterService="filterService" let-dataItem>
+                                                <p class="label-answere">{{ (dataItem.IsVisible) ? (dataItem.IsMandatory
+                                                    | yesNo) : ''}}</p>
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                    </kendo-grid>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" *ngIf="currentStep === 2 || resetStep">
+                <div class="card__header">
+                    <h4 class="card__heading">
+                        {{ "ShiftConfigurations" | translate }}
+                    </h4>
+                    <div class="card__header-icon">
+                    </div>
+                </div>
+                <div class="card__body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'ShiftDifferentialMethod'"
+                                    [value]="sectorDetails.ShiftConfiguration.ShiftdifferentialMethodName">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" *ngIf="currentStep === 3 || resetStep">
+                <div class="card__header" id="pricing-model-configurations">
+                    <h4 class="card__heading">
+                        {{ "PricingModelConfigurations" | translate }}
+                    </h4>
+                    <div class="card__header-icon">
+                    </div>
+                </div>
+                <div class="card__body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <tooltip-content [label]="'CostEstimatingType'"
+                                    [value]="sectorDetails.PricingModelConfiguration.CostEstimationTypeName"
+                                    [tooltipTitle]="'Cost_Estimation_Type_Tooltip'" [tooltipVisible]="true"
+                                    [isHtmlContent]="true">
+                                </tooltip-content>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <tooltip-content [label]="'MspFeeType'"
+                                    [value]="sectorDetails.PricingModelConfiguration.MspFeeTypeName"
+                                    [tooltipTitle]="'Msp_Fee_Type_Tooltip'" [tooltipVisible]="true"
+                                    [isHtmlContent]="true">
+                                </tooltip-content>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'ClientPaysStaffingAgencyDirectly'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Client_Pays_Staffing_Agency_Directly_Tooltip'"
+                                    [value]="sectorDetails.PricingModelConfiguration.ClientPaysStaffingAgencyDirectly | yesNo">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <tooltip-content [label]="'PricingModel'"
+                                    [value]="sectorDetails.PricingModelConfiguration.PricingModelName"
+                                    [tooltipTitle]="'Pricing_Model_Tooltip'" [tooltipVisible]="true"
+                                    [isHtmlContent]="true">
+                                </tooltip-content>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <tooltip-content [label]="'BillRateValidation'"
+                                    [value]="sectorDetails.PricingModelConfiguration.BillRateValidationName"
+                                    [tooltipTitle]="'Bill_Rate_Validation_Tooltip'" [tooltipVisible]="true"
+                                    [isHtmlContent]="true">
+                                </tooltip-content>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            <h4 class="card__body--subheading">
+                                {{ "IsOtEligibilityVisible" | translate }}
+                            </h4>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'Visible'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'OT_Eligibility_Details_Tooltip'"
+                                    [value]="sectorDetails.PricingModelConfiguration.IsOtEligibilityVisible | yesNo">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" *ngIf="currentStep === 4 || resetStep">
+                <div class="card__header">
+                    <h4 class="card__heading">
+                        {{ "RatesFeesConfigurations" | translate }}
+                    </h4>
+                    <div class="card__header-icon">
+                    </div>
+                </div>
+                <div class="card__body">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12">
+                            <h4 class="card__body--subheading mt-0">
+                                {{ "RatesConfigurations" | translate }}
+                            </h4>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'OtRateCalcuatedBasedOn'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'OT_DT_Rates_Calculated_Based_On_Tooltip'"
+                                    [value]="sectorDetails.RatesAndFeesConfiguration.OtRateTypeName">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'OtWageMultiplier'"
+                                    [value]="sectorDetails.RatesAndFeesConfiguration.OtWageMultiplier | number : '1.3-3'"
+                                    [tooltipVisible]="true" [tooltipTitle]="'OT_Wage_Multiplier_Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'DtWageMultiplier'"
+                                    [value]="sectorDetails.RatesAndFeesConfiguration.DtWageMultiplier | number : '1.2-5'"
+                                    [tooltipVisible]="true" [tooltipTitle]="'DT_Wage_Multiplier_Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'OtBillMultiplier'"
+                                    [value]="sectorDetails.RatesAndFeesConfiguration.OtBillMultiplier | number : '1.3-5'"
+                                    [tooltipVisible]="true" [tooltipTitle]="'OT_Bill_Multiplier_Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'DtBillMultiplier'"
+                                    [value]="sectorDetails.RatesAndFeesConfiguration.DtBillMultiplier | number : '1.3-5'"
+                                    [tooltipVisible]="true" [tooltipTitle]="'DT_Bill_Multiplier_Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            <h4 class="card__body--subheading">
+                                {{ "FeesConfigurations" | translate }}
+                            </h4>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'RecruitedLiMspFeePercent'"
+                                    [value]="sectorDetails.RatesAndFeesConfiguration.RecruitedLiMspFee | number : '1.3-3'"
+                                    [tooltipVisible]="true" [tooltipTitle]="'Recruited_LI_MSP_Fee_Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'PayrolledMspFeePercent'"
+                                    [value]="sectorDetails.RatesAndFeesConfiguration.PayrolledMspFee | number : '1.3-3'"
+                                    [tooltipVisible]="true" [tooltipTitle]="'Payrolled_MSP_Fee_Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'VendorFeeMultiplier'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Vendor_Fee_Multiplier_Tooltip'"
+                                    [value]="sectorDetails.RatesAndFeesConfiguration.VendorFeeMultiplier | number : '1.2-2'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'RecruitedAdminFee'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Recruited_Admin_Fee_Tooltip'"
+                                    [value]="sectorDetails.RatesAndFeesConfiguration.RecruitedAdminFee | number : '1.2-2'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'PayrolledAdminFee'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Payroll_Admin_Fee_Tooltip'"
+                                    [value]="sectorDetails.RatesAndFeesConfiguration.PayrolledAdminFee | number : '1.2-5'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'StandardRecruitedMarkup'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Standard_Recruited_Markup_Tooltip'"
+                                    [value]="sectorDetails.RatesAndFeesConfiguration.StandardRecruitedMarkup | number : '1.3-3'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'MaskOtFieldsInSystem'"
+                                    [value]="sectorDetails.RatesAndFeesConfiguration.MaskOtFieldsInSystem | yesNo"
+                                    [tooltipVisible]="true" [tooltipTitle]="'Mask_OT_Fields_in_System_Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" *ngIf="currentStep === 5 || resetStep">
+                <div class="card__header">
+                    <h4 class="card__heading">
+                        {{ "TAndEConfigurations" | translate }}
+                    </h4>
+                </div>
+                <div class="card__body">
+                    <div class="row">
+                        <!-- <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'IsClpJobRotationAllowed'"
+                                    [value]="sectorDetails.TimeAndExpenseConfiguration.IsClpJobRotationAllowed | yesNo"
+                                    [tooltipVisible]="true" [tooltipTitle]="'CLPJobRotationAllowedToolTip'">
+                                </app-kendo-label>
+                            </div>
+                        </div> -->
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'IsAllTimeAdjustmentApprovalRequired'"
+                                    [value]="sectorDetails.TimeAndExpenseConfiguration.IsAllTimeAdjustmentApprovalRequired | yesNo"
+                                    [tooltipVisible]="true"
+                                    [tooltipTitle]="'All_Time_Adjustments_Require_Approval_Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'AllowTimeUploadWithStOtDt'"
+                                    [value]="sectorDetails.TimeAndExpenseConfiguration.AllowTimeUploadWithStOtDt | yesNo"
+                                    [tooltipVisible]="true" [tooltipTitle]="'Allow_Time_Upload_With_ST_OT_DT_Toottip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'ValidateApprovedAmountWithTimeRecords'"
+                                    [tooltipVisible]="true"
+                                    [tooltipTitle]="'Validate_Approved_Amount_With_Time_Records_Tooltip'"
+                                    [value]="sectorDetails.TimeAndExpenseConfiguration.ValidateApprovedAmountWithTimeRecords | yesNo">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'AllowStaffingAgencyInTandEApproval'"
+                                    [value]="sectorDetails.TimeAndExpenseConfiguration.AllowStaffingAgencyInTandEApproval | yesNo"
+                                    [tooltipVisible]="true"
+                                    [tooltipTitle]="'Adjustments_To_Uploaded_Hours_Are_Auto_Approved_Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'TimeUploadAsApprovedHours'"
+                                    [value]="sectorDetails.TimeAndExpenseConfiguration.TimeUploadAsApprovedHours | yesNo"
+                                    [tooltipVisible]="true" [tooltipTitle]="'Time_Upload_as_Approved_Hours_Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div *ngIf="sectorDetails.TimeAndExpenseConfiguration.TimeUploadAsApprovedHours === true"
+                            class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'IsAutoApprovedAdjustment'"
+                                    [value]="sectorDetails.TimeAndExpenseConfiguration.IsAutoApprovedAdjustment | yesNo"
+                                    [tooltipVisible]="true"
+                                    [tooltipTitle]="'Adjustments_To_Uploaded_Hours_Are_Auto_Approved_Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="clearfix"></div>
+                        <div class="col-sm-12 col-md-12">
+                            <div class="pt-2">
+                                <app-kendo-label [label]="'SendPoDepletionNoticesTo'"></app-kendo-label>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'IsPoSentToPm'"
+                                                [value]="sectorDetails.TimeAndExpenseConfiguration.IsPoSentToPm | yesNo">
+                                            </app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <app-kendo-label [label]="'IsPoSentToPoOwner'"
+                                                [value]="sectorDetails.TimeAndExpenseConfiguration.IsPoSentToPoOwner | yesNo">
+                                            </app-kendo-label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'PO'" [tooltipVisible]="true" [tooltipTitle]="'Po_Tooltip'"
+                                    [tooltipTitleLocalizeParam]="labelLocalizeFunction(2)"
+                                    [value]="sectorDetails.TimeAndExpenseConfiguration.PoTypeName">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="sectorDetails.TimeAndExpenseConfiguration.PoType == poType">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'DefaultPoForRecruitment'"
+                                    [value]="sectorDetails.TimeAndExpenseConfiguration.DefaultPoForRecruitment">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'DefaultPoForPayroll'"
+                                    [value]="sectorDetails.TimeAndExpenseConfiguration.DefaultPoForPayroll">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'NoConsecutiveWeekMissingEntry'"
+                                    [value]="sectorDetails.TimeAndExpenseConfiguration.NoConsecutiveWeekMissingEntryName"
+                                    [tooltipVisible]="true"
+                                    [tooltipTitle]="'Number_Of_ConsecutiveWeeks_With_Missing_Timesheet_Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'DefaultPoDepletionForNewLocations'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Default_PO_Depletion_for_New_Locations_Tooltip'"
+                                    [value]="sectorDetails.TimeAndExpenseConfiguration.DefaultPoDepletionForNewLocations | number : '1.2-2'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" *ngIf="currentStep === 6 || resetStep">
+                <div class="card__header">
+                    <h4 class="card__heading">
+                        {{ "AssignmentExtensionAndOtherConfigurations" | translate }}
+                    </h4>
+                    <div class="card__header-icon">
+                    </div>
+                </div>
+                <div class="card__body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'AllowProcessExtensionAdjustment'"
+                                    [value]="sectorDetails.AssignmentExtensionAndOtherConfiguration.AllowProcessExtensionAdjustment | yesNo"
+                                    [tooltipVisible]="true"
+                                    [tooltipTitle]="'Allow_Process_Extension_Adjustment_Tooltip'"
+                                    [tooltipTitleLocalizeParam]="sectorLabelParams">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'ExtRateIncreaseAllowed'"
+                                    [value]="sectorDetails.AssignmentExtensionAndOtherConfiguration.ExtRateIncreaseAllowed | yesNo"
+                                    [tooltipVisible]="true"
+                                    [tooltipTitle]="'Is_Assignment_Extension_Rate_Increase_Allowed_Tooltip'"
+                                    [tooltipTitleLocalizeParam]="sectorLabelParams">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'IsTrainingRequired'"
+                                    [value]="sectorDetails.AssignmentExtensionAndOtherConfiguration.IsTrainingRequired | yesNo"
+                                    [tooltipVisible]="true" [tooltipTitle]="'Is_Training_Module_Required_Tooltip'"
+                                    [tooltipTitleLocalizeParam]="sectorLabelParams">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'AllowSelectionPayRateFillLiRequest'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Previous_Assignment_Wage_Rate_Selectable_in_Fill_A_Request_Tooltip'"
+                                    [value]="sectorDetails.AssignmentExtensionAndOtherConfiguration.AllowSelectionPayRateFillLiRequest | yesNo">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'ChangeRateWithoutEffectiveDate'"
+                                    [value]="sectorDetails.AssignmentExtensionAndOtherConfiguration.ChangeRateWithoutEffectiveDate | yesNo"
+                                    [tooltipVisible]="true"
+                                    [tooltipTitle]="'Change_Rate_Without_Effective_Date_Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'AllowMspAdjustSupplierMarkupInPsr'"
+                                    [value]="sectorDetails.AssignmentExtensionAndOtherConfiguration.AllowMspAdjustSupplierMarkupInPsr | yesNo"
+                                    [tooltipVisible]="true"
+                                    [tooltipTitle]="'Allow_MSP_To_Adjust_Staffing_Agency_Markup_When_Processing_PSR_Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group"><span class="textarea__count">{{'Days' | translate}}</span>
+                                <app-kendo-label [label]="'OffBoardInterval'"
+                                    [value]="sectorDetails.AssignmentExtensionAndOtherConfiguration.OffBoardInterval"
+                                    [tooltipVisible]="true" [tooltipTitle]="'Off_Board_Interval_Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group"><span class="textarea__count">{{'Days' | translate}}</span>
+                                <app-kendo-label [label]="'OffBoardIntervalLi'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Off_Board_Interval_for_LI_Tooltip'"
+                                    [value]="sectorDetails.AssignmentExtensionAndOtherConfiguration.OffBoardIntervalLi">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" *ngIf="currentStep === 7 || resetStep">
+                <div class="card__header">
+                    <h4 class="card__heading">
+                        {{ "TenureConfigurations" | translate }}
+                    </h4>
+                    <div class="card__header-icon">
+                    </div>
+                </div>
+                <div class="card__body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'TenurePolicyApplicable'"
+                                    [value]="sectorDetails.TenureConfiguration.TenurePolicyApplicable | yesNo">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="clearix"></div>
+                        <div class="row" *ngIf="sectorDetails.TenureConfiguration.TenurePolicyApplicable === true">
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [tooltipVisible]="true"
+                                        [tooltipTitle]="'CLP_Allowable_Tenure_Is_Renewed_After_Reset_Period_Tooltip' | translate"
+                                        [label]="'CLPAllowableTenureIsRenewedAfterResetPeriod'"
+                                        [value]="sectorDetails.TenureConfiguration.IsTenureAllowRenewedAfterResetPeriod | yesNo">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'TenureLimitType'" [tooltipVisible]="true"
+                                        [tooltipTitle]="'Tenure_Limit_Type_Tooltip'"
+                                        [value]="sectorDetails.TenureConfiguration.TenureLimitTypeName">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group"><span
+                                        class="textarea__count">{{((sectorDetails.TenureConfiguration.TenureLimitType
+                                        == tenureLimitType) ? 'Months': 'Hours') | translate}}</span>
+                                    <app-kendo-label [label]="'ReqTenureLimit'" [tooltipVisible]="true"
+                                        [tooltipTitle]="'Requisition_Tenure_Limit_Tooltip'"
+                                        [value]="sectorDetails.TenureConfiguration.ReqTenureLimit | number">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group"><span
+                                        class="textarea__count">{{((sectorDetails.TenureConfiguration.TenureLimitType
+                                        == tenureLimitType) ? 'Months': 'Hours') | translate}}</span>
+                                    <app-kendo-label [label]="'ExtTenureLimit'" [tooltipVisible]="true"
+                                        [tooltipTitle]="'Extension_Tenure_Limit_Tooltip'"
+                                        [value]="sectorDetails.TenureConfiguration.ExtTenureLimit | number">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group"><span
+                                        class="textarea__count">{{((sectorDetails.TenureConfiguration.TenureLimitType
+                                        == tenureLimitType) ? 'Months': 'Hours') | translate}}</span>
+                                    <app-kendo-label [label]="'ClpTenureLimit'" [tooltipVisible]="true"
+                                        [tooltipTitle]="'CLP_Tenure_Limit_Tooltip'"
+                                        [value]="sectorDetails.TenureConfiguration.ClpTenureLimit | number">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'TenureResetPeriod'" [tooltipVisible]="true"
+                                        [tooltipTitle]="'Tenure_Reset_Period_Tooltip'"
+                                        [value]="sectorDetails.TenureConfiguration.TenureResetPeriod">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" *ngIf="currentStep === 8 || resetStep">
+                <div class="card__header">
+                    <h4 class="card__heading">
+                        {{ "RequisitionConfigurations" | translate }}
+                    </h4>
+                    <div class="card__header-icon">
+                    </div>
+                </div>
+                <div class="card__body">
+                    <div class="row">
+                        <!-- <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'IsExtendedWorkLocationAddress'"
+                                    [value]="sectorDetails.RequisitionConfiguration.IsExtendedWorkLocationAddress | yesNo"
+                                    [tooltipVisible]="true" [tooltipTitle]="'ShowExtendedWorkLocationAddressToolTip'">
+                                </app-kendo-label>
+                            </div>
+                        </div> -->
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'DisplayCanSupplierContactQusInReq'"
+                                    [value]="sectorDetails.RequisitionConfiguration.DisplayCanSupplierContactQusInReq | yesNo"
+                                    [tooltipVisible]="true"
+                                    [tooltipTitle]="'Display_Can_Suppliers_Contact_Question_In_Req_Tootip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'RestrictReqToOnePos'"
+                                    [value]="sectorDetails.RequisitionConfiguration.RestrictReqToOnePos | yesNo"
+                                    [tooltipVisible]="true"
+                                    [tooltipTitle]="'Restrict_Requisitions_To_One_Position_Tootip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <!-- <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'MaskSubmittedMarkUpAndWageRate'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Mask_Submitted_Mark_Up_And_Wage_Rate_Tooltip'"
+                                    [value]="sectorDetails.RequisitionConfiguration.MaskSubmittedMarkUpAndWageRate | yesNo">
+                                </app-kendo-label>
+                            </div>
+                        </div> -->
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'IsSecurityClearance'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Security_Clearance_Item_Selectable_Tooltip'"
+                                    [value]="sectorDetails.RequisitionConfiguration.IsSecurityClearance | yesNo">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'QuestionBankRequired'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Question_Bank_Functionality_Required_Tooltip'"
+                                    [value]="sectorDetails.RequisitionConfiguration.QuestionBankRequired | yesNo">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div *ngIf="sectorDetails.RequisitionConfiguration.QuestionBankRequired === true"
+                            class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'QuestionToBeAnsweredBy'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Question_To_Be_Answered_By_Tooltip'"
+                                    [value]="sectorDetails.RequisitionConfiguration.QuestionToBeAnsweredByName">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div *ngIf="sectorDetails.RequisitionConfiguration.QuestionBankRequired === true"
+                            class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'QuestionBankLabel'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Question_Bank_Label_Tooltip'"
+                                    [value]="sectorDetails.RequisitionConfiguration.QuestionBankLabel">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'BroadCastInterval'"
+                                    [value]="sectorDetails.RequisitionConfiguration.BroadCastInterval"
+                                    [tooltipVisible]="true" [tooltipTitle]="'Broadcast_Interval_Days_Tootip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'LiFillRateWeekAhead'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Weeks_Ahead_For_Li_Fill_Rate_Plan_Entry_Tooltip'"
+                                    [value]="sectorDetails.RequisitionConfiguration.LiFillRateWeekAhead">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'IsPositionDetailsEditable'"
+                                    [value]="sectorDetails.RequisitionConfiguration.IsPositionDetailsEditable | yesNo"
+                                    [tooltipVisible]="true" [tooltipTitle]="'Is_Position_Details_Editable_Tootip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'RateExceptionAllowed'"
+                                    [value]="sectorDetails.RequisitionConfiguration.IsRateExceptionAllowed | yesNo"
+                                    [tooltipVisible]="true"
+                                    [tooltipTitle]="'Rate_Exception_Allowed_Professional_Request_Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            <h4 class="card__body--subheading">{{'CandidateEvaluation' | translate}}</h4>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'IsSystemRankingFunctionality'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Include_System_Candidate_Ranking_Functionality_Tooltip'"
+                                    [value]="sectorDetails.RequisitionConfiguration.IsSystemRankingFunctionality | yesNo">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="row"
+                            *ngIf="sectorDetails.RequisitionConfiguration.IsSystemRankingFunctionality===true">
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'IsSystemCandidateRankingMandatory'"
+                                        [tooltipVisible]="true"
+                                        [tooltipTitle]="'System_Candidate_Ranking_Mandatory_Tooltip'"
+                                        [value]="sectorDetails.RequisitionConfiguration.IsSystemCandidateRankingMandatory | yesNo">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'EnableManagerScoring'" [tooltipVisible]="true"
+                                        [tooltipTitle]="'Enable_Manager_Scoring_Tooltip'"
+                                        [value]="sectorDetails.RequisitionConfiguration.EnableManagerScoring | yesNo">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'IsManagerScoringMandatory'" [tooltipVisible]="true"
+                                        [tooltipTitle]="'Manager_Scoring_Mandatory_Tooltip'"
+                                        [value]="sectorDetails.RequisitionConfiguration.IsManagerScoringMandatory | yesNo">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12"
+                            *ngIf="sectorDetails.RequisitionConfiguration.IsSystemRankingFunctionality===true">
+                            <h4 class="card__body--subheading">
+                                {{ "EvaluationCriteria" | translate }}
+                            </h4>
+                        </div>
+                        <div class="col-sm-12 col-md-12 list-view "
+                            *ngIf="sectorDetails.RequisitionConfiguration.IsSystemRankingFunctionality===true">
+                            <kendo-grid [data]="sectorDetails.RequisitionConfiguration.SectorCandidateEvaluationItems">
+                                <kendo-grid-column media="(max-width: 920px)" title="Items">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <div>
+                                            <dl>
+                                                <dt>{{'ItemNumber' | translate}}</dt>
+                                                {{ rowIndex + 1 }}
+                                            </dl>
+                                            <dl>
+                                                <dt>Evaluation Type</dt>
+                                                {{dataItem.EvaluationRequirementName}}
+                                            </dl>
+                                            <dl>
+                                                <dt>{{'ItemTitle' | translate}}</dt>
+                                                {{dataItem.Description}}
+                                            </dl>
+                                            <dl>
+                                                <dt>{{'Visible' | translate}}</dt>
+                                                {{dataItem.IsVisible | yesNo}}
+                                            </dl>
+                                        </div>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column field="level" title="{{'ItemNumber' | translate}}"
+                                    media="(min-width: 921px)" [width]="100">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere">{{rowIndex+1}}</p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column field="level" title="Evaluation Type" media="(min-width: 921px)"
+                                    [width]="200">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere">{{dataItem.EvaluationRequirementName}}</p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column title="{{'ItemTitle' | translate}}" media="(min-width: 921px)">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere wrapping-needed">{{dataItem.Description}}</p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column title="{{'Visible' | translate}}" [width]="100"
+                                    media="(min-width: 921px)">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere">{{dataItem.IsVisible | yesNo}}</p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                            </kendo-grid>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            <h4 class="card__body--subheading">
+                                {{ "AssignmentType" | translate }}
+                            </h4>
+                        </div>
+
+                        <div class="col-sm-12 col-md-12 list-view ">
+                            <kendo-grid [data]="sectorDetails.RequisitionConfiguration.SectorAssignmentTypes">
+                                <kendo-grid-column media="(max-width: 920px)" title="Items">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <dl>
+                                            <dt>{{'ItemNumber' | translate}}</dt>
+                                            {{rowIndex + 1}}
+                                        </dl>
+                                        <dl>
+                                            <dt>{{'ItemTitle' | translate}}</dt>
+                                            {{dataItem.AssignmentName}}
+                                        </dl>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column field="level" title="{{'ItemNumber' | translate}}" [width]="100"
+                                    media="(min-width: 921px)">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere">
+                                            {{rowIndex + 1}}</p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column title="{{'ItemTitle' | translate}}" media="(min-width: 921px)">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere wrapping-needed">
+                                            {{dataItem.AssignmentName}}</p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                            </kendo-grid>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" *ngIf="currentStep === 9 || resetStep">
+                <div class="card__header">
+                    <h4 class="card__heading">
+                        {{ "SubmittalConfigurations" | translate }}
+                    </h4>
+                    <div class="card__header-icon">
+                    </div>
+                </div>
+                <div class="card__body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'IsSubmittalReminderToManager'"
+                                    [value]="sectorDetails.SubmittalConfiguration.IsSubmittalReminderToManager| yesNo"
+                                    [tooltipVisible]="true"
+                                    [tooltipTitle]="'Send_Submittal_Reminder_To_Manager_Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div *ngIf="sectorDetails.SubmittalConfiguration.IsSubmittalReminderToManager === true"
+                            class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'SubmittalReminderInterval'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Submittal_Reminder_Interval_Tooltip'"
+                                    [value]="sectorDetails.SubmittalConfiguration.SubmittalReminderInterval">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'SubmittalReminderToStaffingForNotOfferAccepting'"
+                                    [value]="sectorDetails.SubmittalConfiguration.SubmittalReminderToStaffingForNotOfferAccepting| yesNo"
+                                    [tooltipVisible]="true"
+                                    [tooltipTitle]="'Send_Reminder_To_Staffing_Agencies_For_Not_Offer_Accepting_Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div *ngIf="sectorDetails.SubmittalConfiguration.SubmittalReminderToStaffingForNotOfferAccepting === true"
+                            class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'SubmittalReminderIntervalToStaffing'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Submittal_Reminder_Interval_To_Staffing_Agency_Tooltip'"
+                                    [value]="sectorDetails.SubmittalConfiguration.SubmittalReminderIntervalToStaffing">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            <h4 class="card__body--subheading">
+                                {{ "UniqueSubmittals" | translate }}
+                            </h4>
+                        </div>
+                        <div class="col-sm-12 col-md-12 list-view  form-group">
+                            <ng-template #template let-anchor>
+                                <span>{{ anchor.nativeElement.getAttribute("field") }}</span>
+                                <span>{{ anchor.nativeElement.innerText }}</span>
+                            </ng-template>
+                            <div kendoTooltip [tooltipTemplate]="template" filter="a[field], .k-grid td"
+                                (mouseover)="showTooltip($event)">
+                                <div kendoTooltip [tooltipTemplate]="template" filter="a[field]" kendoTooltip>
+                                    <kendo-grid [data]="sectorDetails.SubmittalConfiguration.UniqueSubmittals">
+                                        <kendo-grid-column media="(max-width: 920px)" title="Items">
+                                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                                <dl>
+                                                    <dt>{{'StandardFieldName'| translate}}</dt>
+                                                    {{ UIDlabel| translate}}
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{'CurrentFieldName' | translate}}</dt>
+                                                    {{dataItem.LabelName | translate}}
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{'ToolTip' | translate}}</dt>
+                                                    {{dataItem.ToolTip}}
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{uidDynamicColumnname | translate}}</dt>
+                                                    {{dataItem.MaxLength}}
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{'IsNumeric' | translate}}</dt>
+                                                    {{dataItem.IsNumeric | yesNo}}
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{'IsPartialEntry' | translate}}</dt>
+                                                    {{'IsPartialEntry' | translate}}
+                                                </dl>
+                                                <dl>
+                                                    <dt>{{'RightmostChars' | translate}}</dt>
+                                                    {{dataItem.RightmostChars}}
+                                                </dl>
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                        <kendo-grid-column media="(min-width: 921px)">
+                                            <ng-template kendoGridHeaderTemplate let-rowIndex="rowIndex"
+                                                style="width:'column.width;'">
+                                                <span class="k-column-title" kendoTooltip
+                                                    title="{{'StandardFieldName'| translate}}">{{'StandardFieldName'|
+                                                    translate}}</span>
+                                            </ng-template>
+                                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                                <p class="label-answere wrapping-needed">{{ UIDlabel | translate}}
+                                                </p>
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                        <kendo-grid-column media="(min-width: 921px)">
+                                            <ng-template kendoGridHeaderTemplate let-rowIndex="rowIndex"
+                                                style="width:'column.width;'">
+                                                <span class="k-column-title" kendoTooltip
+                                                    title="{{'CurrentFieldName' | translate}}">{{'CurrentFieldName' |
+                                                    translate}}</span>
+                                            </ng-template>
+                                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                                <p class="label-answere wrapping-needed">{{dataItem.LabelName |
+                                                    translate}}
+                                                </p>
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                        <kendo-grid-column title="{{'ToolTip' | translate}}" media="(min-width: 921px)">
+                                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                                <p class="label-answere wrapping-needed">{{dataItem.ToolTip}}</p>
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                        <kendo-grid-column title="{{ uidDynamicColumnname | translate}}"
+                                            media="(min-width: 921px)">
+                                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                                <p class="label-answere">{{dataItem.MaxLength}}</p>
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                        <kendo-grid-column title="{{'IsNumeric' | translate}}"
+                                            media="(min-width: 921px)">
+                                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                                <p class="label-answere">{{dataItem.IsNumeric | yesNo}}</p>
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                        <kendo-grid-column title="{{'IsPartialEntry' | translate}}" [width]="150"
+                                            media="(min-width: 921px)">
+                                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                                <p class="label-answere">{{dataItem.IsPartialEntry | yesNo}}
+                                                </p>
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                        <kendo-grid-column title="{{'RightmostChars' | translate}}"
+                                            media="(min-width: 921px)">
+                                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                                <p class="label-answere">{{dataItem.RightmostChars}}</p>
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                    </kendo-grid>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="card" *ngIf="currentStep === 10 || resetStep">
+                <div class="card__header">
+                    <h4 class="card__heading">
+                        {{ "BenefitAdderConfigurations" | translate }}
+                    </h4>
+                    <div class="card__header-icon">
+                    </div>
+                </div>
+                <div class="card__body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'IsBenefitAdder'"
+                                    [value]="sectorDetails.BenefitAdderConfiguration.IsBenefitAdder| yesNo"
+                                    [tooltipVisible]="true" [tooltipTitle]="'Require_Benefit_Adders_Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 list-view "
+                            *ngIf="sectorDetails.BenefitAdderConfiguration.IsBenefitAdder === true">
+                            <kendo-grid [data]="sectorDetails.BenefitAdderConfiguration.SectorBenefitAdders">
+                                <kendo-grid-column media="(max-width: 920px)" title="Items">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <dl>
+                                            <dt>{{'ItemNumber' | translate}}</dt>
+                                            {{'BenefitAdder' | translate}} {{rowIndex + 1}}
+                                        </dl>
+                                        <dl>
+                                            <dt>{{'BenefitAdder' | translate}}</dt>
+                                            {{dataItem.Label}}
+                                        </dl>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column field="level" title="{{'ItemNumber' | translate}}" [width]="120"
+                                    media="(min-width: 921px)">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere">{{'BenefitAdder' | translate}} {{rowIndex + 1}} </p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column title="{{'BenefitAdder' | translate}}" media="(min-width: 921px)">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere wrapping-needed"> {{dataItem.Label}} </p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                            </kendo-grid>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" *ngIf="currentStep === 11 || resetStep">
+                <div class="card__header">
+                    <h4 class="card__heading">
+                        {{ "ConfigureMSPProcessActivity" | translate }}
+                    </h4>
+                    <div class="card__header-icon">
+                    </div>
+                </div>
+                <div class="card__body">
+                    <div class="row">
+                        <!-- <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'IsSkipProcessReqByMsp'"
+                                    [value]="sectorDetails.ConfigureMspProcessActivity.IsSkipProcessReqByMsp | yesNo"
+                                    [tooltipVisible]="true" [tooltipTitle]="'Skip_Process_Requisition_By_MSP_Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div> -->
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'IsSkipProcessSubByMsp'"
+                                    [value]="sectorDetails.ConfigureMspProcessActivity.IsSkipProcessSubByMsp | yesNo"
+                                    [tooltipVisible]="true" [tooltipTitle]="'Skip_Process_Submittal_By_MSP_Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'HideNteRatefromCopyReqLib'"
+                                    [value]="sectorDetails.ConfigureMspProcessActivity.HideNteRatefromCopyReqLib | yesNo"
+                                    [tooltipVisible]="true"
+                                    [tooltipTitle]="'Hide_NTE_From_Requisition_Library_Dropdown_In_Requisition_Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'IsSkipLIRequestProcessByMsp'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Skip_LI_Request_Process_by_MSP_Tooltip'"
+                                    [value]="sectorDetails.ConfigureMspProcessActivity.IsSkipLIRequestProcessByMsp | yesNo">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div *ngIf="sectorDetails.ConfigureMspProcessActivity.IsSkipLIRequestProcessByMsp === true"
+                            class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'IsAutoBroadcastForLiRequest'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Auto_Broadcast_for_LI_Request_Tooltip'"
+                                    [value]="sectorDetails.ConfigureMspProcessActivity.IsAutoBroadcastForLiRequest | yesNo">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" *ngIf="currentStep === 12 || resetStep">
+                <div class="card__header">
+                    <h4 class="card__heading">
+                        {{ "PerformanceSurveyConfigurations" | translate }}
+                    </h4>
+                    <div class="card__header-icon">
+                    </div>
+                </div>
+                <div class="card__body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'SurveyForClosedRequisition'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Satisfaction_Survey_For_Closed_Requisition_Tootip'"
+                                    [value]="sectorDetails.PerformanceSurveyConfiguration.SurveyForClosedReq | yesNo">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'SurveyAllowedForAssignment'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Survey_For_Assignment_Tooltip'"
+                                    [value]="sectorDetails.PerformanceSurveyConfiguration.SurveyAllowedForAssignment | yesNo">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12"
+                            *ngIf="sectorDetails.PerformanceSurveyConfiguration.SurveyAllowedForAssignment">
+                            <h4 class="card__body--subheading mt-0">{{'ScheduleOfPerformanceSurvey' | translate}}
+                            </h4>
+                        </div>
+                        <div *ngIf="sectorDetails.PerformanceSurveyConfiguration.SurveyAllowedForAssignment === true"
+                            class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'AfterAssignmentEndDate'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'After_End_Of_Assignment_Tooltip'"
+                                    [value]="sectorDetails.PerformanceSurveyConfiguration.AfterAssignmentEndDate | yesNo">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div *ngIf="sectorDetails.PerformanceSurveyConfiguration.SurveyAllowedForAssignment === true"
+                            class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'NoOfDaysAfterAssignmentStart'"
+                                    [value]="sectorDetails.PerformanceSurveyConfiguration.NoOfDaysAfterAssignmentStart |yesNo"
+                                    [tooltipVisible]="true" [tooltipTitle]="'DayAfterAssignmentStart'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <span
+                            *ngIf="sectorDetails.PerformanceSurveyConfiguration.NoOfDaysAfterAssignmentStart === true">
+                            <div class="clearfix"></div>
+                            <div class="col-sm-12 col-md-12 list-view  form-group">
+                                <kendo-grid
+                                    [data]="sectorDetails.PerformanceSurveyConfiguration.NoOfDaysAfterStartDateLevels">
+                                    <kendo-grid-column media="(max-width: 920px)" title="Items">
+                                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                            <dl>
+                                                <dt>{{'Days' | translate}}
+                                                    <tooltip-content [tooltipTitle]="'Days_Tooltip'"
+                                                        [tooltipVisible]="true" [label]="''">
+                                                    </tooltip-content>
+                                                </dt>
+                                                {{dataItem}}
+                                            </dl>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                    <kendo-grid-column title="{{'Days' | translate}}" media="(min-width: 921px)">
+                                        <ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
+                                            {{'Days' | translate}}
+                                            <tooltip-content [tooltipTitle]="'Days_Tooltip'" [tooltipVisible]="true"
+                                                [label]="''">
+                                            </tooltip-content>
+                                        </ng-template>
+                                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                            <p class="label-answere wrapping-needed">{{dataItem}}</p>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                </kendo-grid>
+                            </div>
+                            <div class="col-sm-12 col-md-12">
+                                <div class="card__body--subheading mt-0 mb-0"></div>
+                            </div>
+                        </span>
+                        <div *ngIf="sectorDetails.PerformanceSurveyConfiguration.SurveyAllowedForAssignment === true"
+                            class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'ScheduleThroughoutLengthOfAssignment'"
+                                    [tooltipVisible]="true"
+                                    [tooltipTitle]="'Schedule_Throughout_The_Length_Of_Assignment_Tooltip'"
+                                    [value]="sectorDetails.PerformanceSurveyConfiguration.ScheduleThroughoutLengthOfAssignment |yesNo">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div *ngIf="sectorDetails.PerformanceSurveyConfiguration.ScheduleThroughoutLengthOfAssignment === true"
+                            class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'ScheduledEvery'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Scheduled_Every_Tooltip'"
+                                    [value]="sectorDetails.PerformanceSurveyConfiguration.LengthOfAssignment">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div *ngIf="sectorDetails.PerformanceSurveyConfiguration.ScheduleThroughoutLengthOfAssignment === true"
+                            class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'LengthOfAssignmentType'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Length_Of_Assignment_Type_Tooltip'"
+                                    [value]="sectorDetails.PerformanceSurveyConfiguration.LengthOfAssignmentTypeName">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div *ngIf="sectorDetails.PerformanceSurveyConfiguration.SurveyAllowedForAssignment === true"
+                            class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'CanSurveyAnyTime'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Survey_At_Any_Time_Tooltip'"
+                                    [value]="sectorDetails.PerformanceSurveyConfiguration.CanSurveyAnyTime | yesNo">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div *ngIf="sectorDetails.PerformanceSurveyConfiguration.SurveyAllowedForAssignment === true"
+                            class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'DisplayQuestion'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Display_Question_Tooltip'"
+                                    [value]="sectorDetails.PerformanceSurveyConfiguration.DisplayQuestion | yesNo">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div *ngIf="sectorDetails.PerformanceSurveyConfiguration.DisplayQuestion === true"
+                            class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'QuestionLabel'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Question_Label_Tooltip'"
+                                    [value]="sectorDetails.PerformanceSurveyConfiguration.QuestionLabel">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div *ngIf="sectorDetails.PerformanceSurveyConfiguration.SurveyAllowedForAssignment === true"
+                            class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'DisplayNoThanks'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Display_No_Thanks_To_Skip_Survey_Tooltip'"
+                                    [value]="sectorDetails.PerformanceSurveyConfiguration.DisplayNoThanks | yesNo">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            <h4 class="card__body--subheading mt-0">
+                                {{ "CLPSurveyScale" | translate }}
+                            </h4>
+                        </div>
+                        <div class="col-sm-12 col-md-12 list-view  form-group">
+                            <kendo-grid [data]="sectorDetails.PerformanceSurveyConfiguration.SectorClpSurveyScales">
+                                <kendo-grid-column media="(max-width: 920px)" title="Items">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <dl>
+                                            <dt>{{'ItemNumber' | translate}}</dt>
+                                            {{ rowIndex + 1 }}
+                                        </dl>
+                                        <dl>
+                                            <dt>{{'ItemTitle' | translate}}</dt>
+                                            <dd>
+                                                {{dataItem.Definition}}
+                                            </dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>{{'UsedIn' | translate}}</dt>
+                                            {{dataItem.ApplicableForName | translate}}
+                                        </dl>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column class="SectorClpSurveyScales" field="level"
+                                    title="{{'ItemNumber' | translate}}" [width]="100" media="(min-width: 921px)">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere">{{rowIndex + 1}}</p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column class="SectorClpSurveyScales" title="{{'ItemTitle' | translate}}"
+                                    media="(min-width: 921px)">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere wrapping-needed">{{dataItem.Definition}}</p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column title="{{'UsedIn' | translate}}" media="(min-width: 921px)">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere wrapping-needed">
+                                            {{dataItem.ApplicableForName | translate}}</p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                            </kendo-grid>
+                        </div>
+                        <div class="col-sm-9 col-md-9">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'IsAvgSurveyScoreAllowForComment'"
+                                    [value]="sectorDetails.PerformanceSurveyConfiguration.IsAvgSurveyScoreAllowForComment | yesNo"
+                                    [tooltipVisible]="true"
+                                    [tooltipTitle]="'Display_Question_If_Avg_Score_Is_Less_Than_Please_Enter_Comments_In_Survey_To_Be_Completed_Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3"
+                            *ngIf="sectorDetails.PerformanceSurveyConfiguration.IsAvgSurveyScoreAllowForComment">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'AvgSurveyScore'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Define_Value_Of_X_Score_Tooltip'"
+                                    [value]="sectorDetails.PerformanceSurveyConfiguration.AvgSurveyScore | number : '1.2-2'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12"
+                            *ngIf="sectorDetails.PerformanceSurveyConfiguration.SurveyForClosedReq">
+                            <h4 class="card__body--subheading">
+                                {{ "RequisitionSurveyScale" | translate }}
+
+                            </h4>
+                        </div>
+                        <div class="col-sm-12 col-md-12 list-view "
+                            *ngIf="sectorDetails.PerformanceSurveyConfiguration.SurveyForClosedReq">
+                            <kendo-grid
+                                [data]="sectorDetails.PerformanceSurveyConfiguration.SectorRequisitionSurveyScales">
+                                <kendo-grid-column class="SectorRequisitionSurveyScales" media="(max-width: 920px)"
+                                    title="Items">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <dl>
+                                            <dt>{{'ItemNumber' | translate}}</dt>
+                                            {{ rowIndex + 1 }}
+                                        </dl>
+                                        <dl>
+                                            <dt>{{'ItemTitle' | translate}}
+                                                <tooltip [tooltipData]="requisitionSurveyScaleTooltip"></tooltip>
+                                            </dt>
+                                            {{dataItem.Definition}}
+                                        </dl>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column class="SectorRequisitionSurveyScales" field="level"
+                                    title="{{'ItemNumber' | translate}}" [width]="100" media="(min-width: 921px)">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere">{{rowIndex + 1}}</p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column title="{{'ItemTitle' | translate}}" media="(min-width: 921px)">
+                                    <ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
+                                        {{'ItemTitle' | translate}}
+                                        <tooltip [tooltipData]="requisitionSurveyScaleTooltip"></tooltip>
+                                    </ng-template>
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere wrapping-needed">{{dataItem.Definition}}</p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                            </kendo-grid>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            <h4 class="card__body--subheading">
+                                {{ "CLPPerformanceFactor" | translate }}
+                            </h4>
+                        </div>
+                        <div class="col-sm-12 col-md-12 list-view ">
+                            <kendo-grid
+                                [data]="sectorDetails.PerformanceSurveyConfiguration.SectorClpSurveyPerformanceFactors">
+                                <kendo-grid-column class="SectorClpSurveyPerformanceFactors" media="(max-width: 920px)"
+                                    title="Items">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <dl>
+                                            <dt>{{'ItemNumber' | translate}}"</dt>
+                                            {{ rowIndex + 1 }}
+                                        </dl>
+                                        <dl>
+                                            <dt>{{'ItemTitle' | translate}}
+                                                <tooltip [tooltipData]="clpPerformanceFactorTooltip"></tooltip>
+                                            </dt>
+                                            <dd>
+                                                {{ dataItem.Factor }}
+                                            </dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>{{'UsedIn' | translate}}</dt>
+                                            {{ dataItem.ApplicableForName | translate }}
+                                        </dl>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column class="SectorClpSurveyPerformanceFactors" field="level"
+                                    title="{{'ItemNumber' | translate}}" [width]="100" media="(min-width: 921px)">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere">{{ rowIndex + 1 }}</p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column title="{{'ItemTitle' | translate}}" media="(min-width: 921px)">
+                                    <ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
+                                        {{'ItemTitle' | translate}}
+                                        <tooltip [tooltipData]="clpPerformanceFactorTooltip"></tooltip>
+                                    </ng-template>
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere wrapping-needed">{{ dataItem.Factor }}</p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column title="{{'UsedIn' | translate}}" media="(min-width: 921px)">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere wrapping-needed">
+                                            {{ dataItem.ApplicableForName | translate }}</p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                            </kendo-grid>
+                        </div>
+                        <div class="col-sm-12 col-md-12"
+                            *ngIf="sectorDetails.PerformanceSurveyConfiguration.SurveyForClosedReq">
+                            <h4 class="card__body--subheading">
+                                {{ "RequisitionPerformanceFactor" | translate }}
+                            </h4>
+                        </div>
+                        <div class="col-sm-12 col-md-12 list-view "
+                            *ngIf="sectorDetails.PerformanceSurveyConfiguration.SurveyForClosedReq">
+                            <kendo-grid
+                                [data]="sectorDetails.PerformanceSurveyConfiguration.SectorRequisitionSurveyPerformanceFactors">
+                                <kendo-grid-column media="(max-width: 920px)" title="Items">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <dl>
+                                            <dt>{{'ItemNumber' | translate}}</dt>
+                                            {{ rowIndex + 1 }}
+                                        </dl>
+                                        <dl>
+                                            <dt> {{'ItemTitle' | translate}}
+                                                <tooltip [tooltipData]="requisitionPerformanceFactorTooltip"></tooltip>
+                                            </dt>
+                                            <dd>
+                                                {{ dataItem.Factor }}
+                                            </dd>
+                                        </dl>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column field="level" title="{{'ItemNumber' | translate}}" [width]="100"
+                                    media="(min-width: 921px)">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere">{{ rowIndex + 1}}</p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column title="{{'ItemTitle' | translate}}" media="(min-width: 921px)">
+                                    <ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
+                                        {{'ItemTitle' | translate}}
+                                        <tooltip [tooltipData]="requisitionPerformanceFactorTooltip"></tooltip>
+                                    </ng-template>
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere wrapping-needed">{{ dataItem.Factor }}</p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                            </kendo-grid>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" *ngIf="currentStep === 13 || resetStep">
+                <div class="card__header">
+                    <h4 class="card__heading">{{'RFxConfigurations' | translate}}
+                    </h4>
+                    <div class="card__header-icon">
+                    </div>
+                </div>
+                <div class="card__body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'RfxSowRequired'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Is_RFx_SOW_Required_Tooltip'"
+                                    [value]="sectorDetails.RfxConfiguration.IsRfxSowRequired | yesNo">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="sectorDetails.RfxConfiguration.IsRfxSowRequired === true">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'SowMspFeePercentage'"
+                                    [value]="sectorDetails.RfxConfiguration.SowMspFeePercentage  | number : '1.2-2'"
+                                    [tooltipVisible]="true" [tooltipTitle]="'SOW_MSP_Fee_Percentage__Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'IcMspFeePercentage'"
+                                    [value]="sectorDetails.RfxConfiguration.IcMspFeePercentage  | number : '1.2-2'"
+                                    [tooltipVisible]="true" [tooltipTitle]="'IC_MSP_Fee_Percentage__Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'SowAdminFee'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'SOW_Admin_Fee_Tooltip'"
+                                    [value]="sectorDetails.RfxConfiguration.SowAdminFee  | number : '1.2-2'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'IsReqLibraryUsedforTmSow'"
+                                    [value]="sectorDetails.RfxConfiguration.IsReqLibraryUsedforTmSow  | yesNo"
+                                    [tooltipVisible]="true"
+                                    [tooltipTitle]="'Requisition_Library_Used_For_T_and_M_SOW_Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'IsSkipProcessRfxSubmittal'"
+                                    [value]="sectorDetails.RfxConfiguration.IsSkipProcessRfxSubmittal  | yesNo"
+                                    [tooltipVisible]="true" [tooltipTitle]="'Skip_Process_RFx_Submittal_Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'IsProcessSowbyMsp'"
+                                    [value]="sectorDetails.RfxConfiguration.IsProcessSowbyMsp  | yesNo"
+                                    [tooltipVisible]="true" [tooltipTitle]="'Skip_Process_SOW_By_MSP_Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'IsSowAmountLimitRequired'"
+                                    [value]="sectorDetails.RfxConfiguration.IsSowAmountLimitRequired  | yesNo"
+                                    [tooltipVisible]="true"
+                                    [tooltipTitle]="'Is_There_A_Limit_On_The_Total_SOW_Amount_Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div *ngIf="sectorDetails.RfxConfiguration.IsSowAmountLimitRequired === true"
+                            class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'SowAmountLimit'" [tooltipVisible]="true" [isCurrency]="true"
+                                    [countryId]="sectorDetails.BasicDetail.CountryId"
+                                    [tooltipTitle]="'Max_SOW_Amount_Tooltip'"
+                                    [value]="sectorDetails.RfxConfiguration.SowAmountLimit | number: '1.2-2'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'PO'" [tooltipVisible]="true" [tooltipTitle]="'Po_Tooltip'"
+                                    [tooltipTitleLocalizeParam]='sectorLabelTextParams'
+                                    [value]="sectorDetails.RfxConfiguration.PoTypeSowIcName">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div *ngIf="sectorDetails.RfxConfiguration.PoTypeSowIc == poType" class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'DefaultPoForSowIc'"
+                                    [value]="sectorDetails.RfxConfiguration.DefaultPoForSowIc">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 list-view ">
+                            <kendo-grid [data]="sectorDetails.RfxConfiguration.SectorRfxStandardFields">
+                                <kendo-grid-column media="(max-width: 920px)" title="Items">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex>
+                                        <dl>
+                                            <dt>{{'ComplianceFieldName' | translate}}</dt>
+                                            {{rfxStandardLabelText[rowIndex] |
+                                            translate}}
+                                        </dl>
+                                        <dl>
+                                            <dt>
+                                                {{'CurrentFieldName' | translate}}
+                                            </dt>
+                                            {{dataItem.DisplayName}}
+                                        </dl>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column field="level" [width]="150" field="standard_Field_Name"
+                                    title="{{'ComplianceFieldName' | translate}}" media="(min-width: 921px)"
+                                    [width]="100">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere wrapping-needed">{{rfxStandardLabelText[rowIndex] |
+                                            translate}}</p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column title="{{'CurrentFieldName' | translate}}" [width]="150"
+                                    media="(min-width: 921px)">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere wrapping-needed">{{dataItem.DisplayName}}</p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                            </kendo-grid>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            <div class="card__body--subheading"></div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 list-view ">
+                            <kendo-grid [data]="sectorDetails.RfxConfiguration.SectorSowCommodityTypes">
+                                <kendo-grid-column media="(max-width: 920px)" title="Items">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex>
+                                        <dl>
+                                            <dt>{{'CommodityTypeName' | translate}}</dt>
+                                            <dd>
+                                                {{commodityTypeLabelText[rowIndex] | translate}}
+                                                <tooltip *ngIf="commodityTypeLabelText[rowIndex] === 'RateCardItem'"
+                                                    [tooltipData]="rateCardItemTooltip"></tooltip>
+                                            </dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>
+                                                {{'CurrentCommodityTypeName' | translate}}
+                                            </dt>
+                                            <dd>{{dataItem.CurrentCommodityTypeName}}</dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>{{'Active' | translate}}</dt>
+                                            <dd>
+                                                {{dataItem.Active | yesNo}}
+                                            </dd>
+                                        </dl>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column field="commodity_Type_Name"
+                                    title="{{'CommodityTypeName' | translate}}" media="(min-width: 921px)">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere wrapping-needed">
+                                            {{commodityTypeLabelText[rowIndex] | translate}}
+                                            <tooltip *ngIf="commodityTypeLabelText[rowIndex] === 'RateCardItem'"
+                                                [tooltipData]="rateCardItemTooltip"></tooltip>
+                                        </p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column title="{{'CurrentCommodityTypeName' | translate}}"
+                                    media="(min-width: 921px)">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere wrapping-needed">
+
+                                            {{dataItem.CurrentCommodityTypeName}}
+                                        </p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column title="{{'Active' | translate}}" media="(min-width: 921px)">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere">{{dataItem.Active | yesNo}}</p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                            </kendo-grid>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" *ngIf="currentStep === 14 || resetStep">
+                <div class="card__header">
+                    <h4 class="card__heading">
+                        {{ "CostAccountingCodeConfigurations" | translate }}
+                    </h4>
+                    <div class="card__header-icon">
+                    </div>
+                </div>
+                <div class="card__body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'IsMultipleTimeApprovalNeeded'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'Multiple_Time_Approval_Needed_Tooltip'"
+                                    [value]="sectorDetails.ChargeNumberConfiguration.IsMultipleTimeApprovalNeeded | yesNo">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'IsChargeEnteredManually'"
+                                    [value]="sectorDetails.ChargeNumberConfiguration.IsChargeEnteredManually | yesNo"
+                                    [tooltipVisible]="true" [tooltipTitle]="'Will_Charge_Be_Entered_Manually_Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6"
+                            *ngIf="sectorDetails.ChargeNumberConfiguration.IsChargeEnteredManually === false">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'HasChargeEffectiveDate'"
+                                    [value]="sectorDetails.ChargeNumberConfiguration.HasChargeEffectiveDate | yesNo"
+                                    [tooltipVisible]="true" [tooltipTitle]="'Does_Charge_Has_Effective_Date_Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6"
+                            *ngIf="sectorDetails.ChargeNumberConfiguration.IsChargeEnteredManually === false">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'IsChargeInReqPsr'"
+                                    [value]="sectorDetails.ChargeNumberConfiguration.IsChargeInReqPsr | yesNo"
+                                    [tooltipVisible]="true"
+                                    [tooltipTitle]="'Is_Charge_Required__In_Requisition_PSR_Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'NoOfSegments'"
+                                    [value]="sectorDetails.ChargeNumberConfiguration.NoOfSegment">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 list-view ">
+                            <kendo-grid [data]="sectorDetails.ChargeNumberConfiguration.SectorCostCenterConfigs">
+                                <kendo-grid-column media="(max-width: 920px)" title="Items">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <dl>
+                                            <dt>{{'SrNo' | translate}}</dt>
+                                            {{ rowIndex + 1 }}
+                                        </dl>
+                                        <dl>
+                                            <dt>{{'SegmentName' | translate}}</dt>
+                                            {{dataItem.SegmentName}}
+                                        </dl>
+                                        <dl>
+                                            <dt>{{'SegmentMinLength' | translate}}</dt>
+                                            <dd>
+                                                <p class="label-answere">{{dataItem.SegmentMinLength}}</p>
+                                            </dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>{{'SegmentMaxLength' | translate}}</dt>
+                                            {{dataItem.SegmentMaxLength}}
+                                        </dl>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column field="level" title="S.No." [width]="100" media="(min-width: 921px)">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere">
+                                            {{rowIndex + 1}}</p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column title="{{'SegmentName' | translate}}" media="(min-width: 921px)">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere wrapping-needed">
+                                            {{dataItem.SegmentName}}</p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column title="{{'SegmentMinLength' | translate}}" [width]="150"
+                                    media="(min-width: 921px)">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere">
+                                            {{dataItem.SegmentMinLength}}
+                                        </p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column title="{{'SegmentMaxLength' | translate}}" [width]="150"
+                                    media="(min-width: 921px)">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere">
+                                            {{dataItem.SegmentMaxLength}}
+                                        </p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                            </kendo-grid>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" *ngIf="currentStep === 15 || resetStep">
+                <div class="card__header">
+                    <h4 class="card__heading">{{ "OnboardingRequirements" | translate }}</h4>
+                    <div class="card__header-icon">
+                    </div>
+                </div>
+                <div class="card__body">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12">
+                            <h4 class="card__body--subheading">{{'IsDrugScreenItemEditable' | translate}}</h4>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'Visible'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'DrugResultDetailVisibleToolTip'"
+                                    [value]="sectorDetails.BackgroundCheck.IsDrugResultVisible |yesNo">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'DrugScreenEditable'"
+                                    [value]="sectorDetails.BackgroundCheck.IsDrugScreenItemEditable |yesNo">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'DefaultValue'"
+                                    [value]="(sectorDetails.BackgroundCheck.DefaultDrugResultValue) ? 'Yes' : 'No'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            <h4 class="card__body--subheading">{{'IsBackGroundItemEditable' | translate}}</h4>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'Visible'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'BackgroundCheckDetailVisibleToolTip'"
+                                    [value]="sectorDetails.BackgroundCheck.IsBackGroundCheckVisible |yesNo">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'BackgroundCheckEditable'"
+                                    [value]="sectorDetails.BackgroundCheck.IsBackGroundItemEditable | yesNo">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'DefaultValue'"
+                                    [value]="(sectorDetails.BackgroundCheck.DefaultBackGroundCheckValue) ? 'Yes' : 'No'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="card__body--subheading">
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [tooltipVisible]="true"
+                                    [tooltipTitle]="'PendingDrugAndBackChecksAllowedLICLPsToolTip'"
+                                    [label]="'AllowToFillCandidateWithPendingCompliance'"
+                                    [value]="sectorDetails.BackgroundCheck.AllowToFillCandidateWithPendingCompliance |yesNo">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [tooltipVisible]="true"
+                                    [tooltipTitle]="'AttachSelectedCandidatePreEmploymentFormsToClientEmailToolTip'"
+                                    [label]="'AllowAttachPreEmploymentDocToClientEmail'"
+                                    [value]="sectorDetails.BackgroundCheck.AllowAttachPreEmploymentDocToClientEmail |yesNo">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 list-view ">
+                            <kendo-grid [data]="sectorDetails.BackgroundCheck.SectorBackgrounds" [navigable]="false">
+                                <kendo-grid-column media="(max-width: 920px)" title="Items">
+                                    <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                        <dl>
+                                            <dt>{{'ComplianceFieldName' | translate}}</dt>
+                                            {{'BackgroundChecks'|translate}}{{' '}}{{rowIndex+1}}
+                                        </dl>
+                                        <dl>
+                                            <dt>{{'OnboardingItemLabel' | translate}}</dt>
+                                            {{dataItem.ComplianceItemLabel}}
+                                        </dl>
+                                        <dl>
+                                            <dt>
+                                                {{'Visible' | translate}}
+                                                <tooltip [tooltipData]="standardFieldNameVisibleTooltip"></tooltip>
+                                            </dt>
+                                            {{dataItem.IsVisibleToClient | yesNo}}
+                                        </dl>
+                                        <dl>
+                                            <dt>{{'Professional' | translate}}</dt>
+                                            {{dataItem.IsApplicableForProfessional | yesNo}}
+                                        </dl>
+                                        <dl>
+                                            <dt>{{'LightIndustrial' | translate}}</dt>
+                                            {{dataItem.IsApplicableForLi | yesNo}}
+                                        </dl>
+                                        <dl>
+                                            <dt>{{'ICSOW' | translate}}</dt>
+                                            {{dataItem.IsApplicableForSow | yesNo}}
+                                        </dl>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column field="standard_Field_Name" [width]="200" media="(min-width: 921px)">
+                                    <ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
+                                        {{'ComplianceFieldName' | translate}}
+                                    </ng-template>
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere">
+                                            {{'BackgroundChecks'|translate}}{{' '}}{{rowIndex+1}}</p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column title="{{'OnboardingItemLabel' | translate}}"
+                                    media="(min-width: 921px)">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere wrapping-needed">
+                                            {{dataItem.ComplianceItemLabel}}</p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column media="(min-width: 921px)" field="visible" [width]="100">
+                                    <ng-template kendoGridHeaderTemplate let-column let-columnIndex="columnIndex">
+                                        {{'Visible' | translate}}
+                                        <tooltip [tooltipData]="standardFieldNameVisibleTooltip"></tooltip>
+                                    </ng-template>
+                                    <ng-template kendoGridCellTemplate let-filter let-column="column"
+                                        let-filterService="filterService" let-dataItem>
+                                        <p class="label-answere">
+                                            {{dataItem.IsVisibleToClient | yesNo}}</p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column title="{{'Professional' | translate}}" [width]="100"
+                                    media="(min-width: 921px)">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere">
+                                            {{dataItem.IsApplicableForProfessional | yesNo}}</p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column title="{{'LightIndustrial' | translate}}" [width]="100"
+                                    media="(min-width: 921px)">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere">
+                                            {{dataItem.IsApplicableForLi | yesNo}}</p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column title="{{'ICSOW' | translate}}" [width]="100"
+                                    media="(min-width: 921px)">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <p class="label-answere">
+                                            {{dataItem.IsApplicableForSow | yesNo}}</p>
+                                    </ng-template>
+                                </kendo-grid-column>
+                            </kendo-grid>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" *ngIf="currentStep === 16 || resetStep">
+                <div class="card__header">
+                    <h4 class="card__heading">{{ "XRMTimeClock" | translate }}</h4>
+                </div>
+                <div class="card__body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'IsXrmTimeClockRequired'"
+                                    [value]="sectorDetails.XrmTimeClock.IsXrmTimeClockRequired | yesNo"
+                                    [tooltipVisible]="true" [tooltipTitle]="'Enable_XRM_Time_Clock_Tooltip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="sectorDetails.XrmTimeClock.IsXrmTimeClockRequired === true">
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'IsDailyPunchApprovalNeeded'"
+                                        [value]="sectorDetails.XrmTimeClock.IsDailyPunchApprovalNeeded | yesNo"
+                                        [tooltipVisible]="true"
+                                        [tooltipTitle]="'Is_Daily_Punch_Approval_Needed_Tooltip'">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [tooltipVisible]="true"
+                                        [tooltipTitle]="'Allow_Manager_To_Adjust_Punch_In_Out_Tooltip'"
+                                        [label]="'IsAllowManagerAdjustPunchInOut'"
+                                        [value]="sectorDetails.XrmTimeClock.IsAllowManagerAdjustPunchInOut | yesNo">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="sectorDetails.XrmTimeClock.IsXrmTimeClockRequired === true">
+                            <div class="clearfix"></div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'AccrueHoursFromActualPunchIn'"
+                                        [value]="sectorDetails.XrmTimeClock.AccrueHoursFromActualPunchIn | yesNo"
+                                        [tooltipVisible]="true" [tooltipTitle]="'AccrueHoursFromActualPunchInToolTip'">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12">
+                                <div class="pt-2">
+                                    <app-kendo-label [label]="'AllowManualSelectionDuringPunchFor'"
+                                        [tooltipVisible]="true"
+                                        [tooltipTitle]="'Allow_Manual_Selection_During_Punch_For_Tooltip'">
+                                    </app-kendo-label>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <app-kendo-label [label]="'IsAllowManualCharge'"
+                                                    [value]="sectorDetails.XrmTimeClock.IsAllowManualCharge | yesNo">
+                                                </app-kendo-label>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-sm-6"
+                                            *ngIf="sectorDetails.TimeAndExpenseConfiguration.IsClpJobRotationAllowed">
+                                            <div class="form-group">
+                                                <app-kendo-label [label]="'IsAllowManualShift'"
+                                                    [value]="sectorDetails.XrmTimeClock.IsAllowManualShift | yesNo">
+                                                </app-kendo-label>
+                                            </div>
+                                        </div> -->
+                                        <!-- <div class="col-sm-6"
+                                            *ngIf="sectorDetails.TimeAndExpenseConfiguration.IsClpJobRotationAllowed">
+                                            <div class="form-group">
+                                                <app-kendo-label [label]="'JobCategory'"
+                                                    [value]="sectorDetails.XrmTimeClock.IsAllowManualJobCategory | yesNo">
+                                                </app-kendo-label>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="sectorDetails.XrmTimeClock.IsXrmTimeClockRequired === true">
+                            <div class="clearfix"></div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [tooltipVisible]="true"
+                                        [tooltipTitle]="'Will_XRM_Use_Employee_ID_Or_Time_Clock_ID_Tooltip'"
+                                        [label]="'XrmUseEmployeeIdTimeClockId'"
+                                        [value]="sectorDetails.XrmTimeClock.XrmUseEmployeeTimeClockName">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="row" *ngIf="sectorDetails.XrmTimeClock.IsXrmTimeClockRequired === true">
+                            <div class="clearfix"></div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'ClockBufferForReportingDate'" [tooltipVisible]="true"
+                                        [tooltipTitle]="'Clock_Buffer_To_Set_Reporting_Date_Tooltip'"
+                                        [value]="ClockBufferForReportingDate">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'ClockBufferForShiftStart'" [tooltipVisible]="true"
+                                        [tooltipTitle]="'Clock_Buffer_For_Showing_CLPs_Early_Shift_Start_Tooltip'"
+                                        [value]="ClockBufferForShiftStart">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="row" *ngIf="sectorDetails.XrmTimeClock.IsXrmTimeClockRequired === true">
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'IsAutoLunchDeduction'"
+                                        [value]="sectorDetails.XrmTimeClock.IsAutoLunchDeduction | yesNo"
+                                        [tooltipVisible]="true" [tooltipTitle]="'AutoLunchDeductionAllowedToolTip'">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6" *ngIf="!isDraft">
+                                <div class="form-group">
+                                    <app-kendo-label [tooltipVisible]="true"
+                                        [tooltipTitle]="'Effective_Date_for_Lunch_Configuration_Tooltip'"
+                                        [label]="'EffectiveDateForLunchConfiguration'"
+                                        [value]="sectorDetails.XrmTimeClock.EffectiveDateForLunchConfiguration">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="sectorDetails.XrmTimeClock.IsAutoLunchDeduction === true">
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'LunchTimeDeducted'" [tooltipVisible]="true"
+                                        [tooltipTitle]="'Lunch_Time_To_Be_Deducted_Tooltip'"
+                                        [value]="sectorDetails.XrmTimeClock.LunchTimeDeducted">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [tooltipVisible]="true"
+                                        [tooltipTitle]="'MinimumHoursToBeWorkedBeforeLunchDeductionToolTip'"
+                                        [label]="'MinimumHourWorkedBeforeLunchDeduction'"
+                                        [value]="sectorDetails.XrmTimeClock.MinimumHourWorkedBeforeLunchDeduction">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="sectorDetails.XrmTimeClock.IsXrmTimeClockRequired === true">
+                            <div class="clearfix"></div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'IsPunchRoundingNeeded'"
+                                        [value]="sectorDetails.XrmTimeClock.IsPunchRoundingNeeded | yesNo"
+                                        [tooltipVisible]="true" [tooltipTitle]="'Punch_Rounding_Needed_Tooltip'">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="row" *ngIf="sectorDetails.XrmTimeClock.IsPunchRoundingNeeded === true">
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'PunchInTimeIncrementRounding'" [tooltipVisible]="true"
+                                        [tooltipTitle]="'PunchInTimeIncrementRoundingToolTip'"
+                                        [value]="sectorDetails.XrmTimeClock.PunchInTimeIncrementRoundingName">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'PunchOutTimeIncrementRounding'" [tooltipVisible]="true"
+                                        [tooltipTitle]="'PunchOutTimeIncrementRoundingToolTip'"
+                                        [value]="sectorDetails.XrmTimeClock.PunchOutTimeIncrementRoundingName">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'PunchInTimeRounding'" [tooltipVisible]="true"
+                                        [tooltipTitle]="'Punch_Time_Rounding_Tooltip'"
+                                        [value]="sectorDetails.XrmTimeClock.PunchInTimeRoundingName">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'PunchOutTimeRounding'" [tooltipVisible]="true"
+                                        [tooltipTitle]="'Punch_Time_Rounding_Tooltip'"
+                                        [value]="sectorDetails.XrmTimeClock.PunchOutTimeRoundingName">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="currentStep === 18 || resetStep">
+                <app-udf-implementation [entityId]="entityId" [sectorId]="sectorIdUDF" [recordUKey]="recordUKey"
+                    [recordId] = "sectorIdUDF" [showNewUdfConfigs] = "true"
+                    [parentsInfos]="udfCommonMethods.getParentsInfo()" [actionTypeId]="actionTypeId">
+                </app-udf-implementation>
+            </div>
+            <div class="card" *ngIf="currentStep === 17 || resetStep">
+                <div class="card__header">
+                    <h4 class="card__heading">{{'EmailApprovalConfigurations' | translate}}</h4>
+                    <div class="card__header-icon">
+                    </div>
+                </div>
+                <div class="card__body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [tooltipVisible]="true"
+                                    [tooltipTitle]="'Add_Quick_Link_To_Approval_Emails_Tooltip'"
+                                    [label]="'IsQuickLinkToApprovalEmails'"
+                                    [value]="sectorDetails.EmailApprovalConfiguration.IsQuickLinkToApprovalEmails | yesNo">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-footer stepper-button" *ngIf="!resetStep">
+                <div class="stepper-button__prev">
+                    <button kendoButton href="javascript:;" fillMode="outline" themeColor="primary"
+                        *ngIf="currentStep !== 0" (click)="prev()">
+                        <xrm-icon name="chevron-left" [size]="15" color="dark-blue-color" class="sw-bold"></xrm-icon>
+                        {{'Previous' | translate}}
+                    </button>
+                </div>
+                <div class="stepper-button__next">
+                    <button kendoButton routerLink="/xrm/master/sector" *ngIf="currentStep !== (steps.length - 1)" fillMode="outline"
+                        themeColor="primary">{{'Back' | translate}}</button>
+                    <button kendoButton routerLink="/xrm/master/sector" *ngIf="currentStep == (steps.length - 1)" fillMode="solid"
+                        themeColor="primary">{{'Back' | translate}}</button>
+                    <button kendoButton href="javascript:;" themeColor="primary" *ngIf="currentStep !== (steps.length - 1)"
+                        (click)="next()">
+                        {{'Next' | translate}} <xrm-icon name="chevron-right" [size]="15" color="white-color"
+                            class="sw-bolder"></xrm-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="page-footer stepper-button" *ngIf="resetStep">
+                <div class="stepper-button__prev">
+                    <button kendoButton href="javascript:;" fillMode="solid" themeColor="primary"
+                        routerLink="/xrm/master/sector/list">{{'Back' | translate}}</button>
+                </div>
+                <div class="stepper-button__next">
+                </div>
+            </div>
+        </div>
+    </div>

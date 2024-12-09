@@ -1,0 +1,50 @@
+<div class="master-search widget-filter__search">
+    <div class="row">
+        <div class="col-md-12 master-search__wapper">
+            <div class="master-search__search-box">
+                <div class="custom-search">
+                    <div class="custom-search__input-box">
+                        <app-search
+                            [placeholder]="'SearchFor'"
+                            [isServerSidePagingEnable]="true"
+                            [columnOptions]="columnOptions"
+                            [EntityId]="entityId"
+                            (onSearch)="onSearchTriggered($event)"
+                        ></app-search>
+                    </div>
+                    <app-advance-search
+                        [apiAddress]="'assign-revision/advanced-search-list'"
+                        [isApiGateway]="true"
+                        [EntityId]="entityId"
+                        [isServerSidePagingEnable]="true"
+                        [userValues]="assignmentID === null ? null : {AssignmentId:assignmentID}"
+                        [entityType]="assignmentID === null ? 'RevisionMenuList' : 'AssignmentRevisionList'"
+                        (selectedFilter)="onFilterTriggered($event)"
+                    ></app-advance-search>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <grid-view
+        [isServerSidePagingEnable]="true"
+        [apiAddress]="'assign-revision/get-all-paging'"
+        [isApiGateway]="true"
+        [searchText]="selectTextsearch"
+        [advFilterData]="appliedAdvFilters"
+        [columnOptions]="columnOptions"
+        [actionSet]="actionSet"
+        [tabOptions]="tabOptions"
+        [multiSelect]="false"
+        [fileName]="'Revision'"
+        [actionItemCategoryField]="'StatusId'"
+        [kendoGridSelectedBy]="'UKey'"
+        [entityId]="entityId"
+        [userValues]="assignmentID === null ? null : {AssignmentId:assignmentID}"
+        [entityType]="assignmentID === null ? 'RevisionMenuList' : 'AssignmentRevisionList'"
+        [pageSize]="pageSize"
+        [manageActionSets]="manageActionSets"
+    ></grid-view>
+
+</div>

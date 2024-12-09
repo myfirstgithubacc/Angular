@@ -1,0 +1,21 @@
+<div *ngIf="benefitData.length && isBenefitDataAvailable">
+    <form [formGroup]="benefitAdderForm">
+        <div class="form-group" *ngIf="!showInOneLine">
+            <app-kendo-label [label]="benefitAdderLabel" [valueItems]="finalData"
+                [tooltipTitle]="'RequestBenefitAdderNote'" [tooltipVisible]="true"></app-kendo-label>
+        </div>
+        <table class="table benefitAdderTable" *ngIf="showInOneLine"
+            aria-describedby="This is used to show the benefit adder details in table format">
+            <tbody>
+                <tr>
+                    <th>
+                        <app-kendo-label [label]="benefitAdderLabel"></app-kendo-label>
+                    </th>
+                    <td>
+                        <app-kendo-label [valueItems]="finalData"></app-kendo-label>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</div>

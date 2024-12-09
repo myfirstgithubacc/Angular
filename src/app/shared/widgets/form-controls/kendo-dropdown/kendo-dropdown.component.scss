@@ -1,0 +1,74 @@
+.required--dropdown-value {
+	font-size: 14px;
+	vertical-align: baseline;
+	padding: 0;
+	line-height: 0;
+}
+
+.k-combobox.k-disabled .k-button {
+	border-radius: 0;
+}
+
+.search-singleselect kendo-combobox .k-i-caret-alt-down,
+.search-singleselect kendo-combobox .k-clear-value {
+	display: none !important;
+}
+
+.autocomplete-search {
+	position: relative;
+
+	.k-i-search {
+		position: absolute;
+		right: 0px;
+		top: 0;
+		width: 40px;
+		height: 34px;
+		line-height: 34px;
+		text-align: center;
+	}
+
+	.k-i-loading {
+		position: absolute;
+		right: 30px;
+		top: 5px;
+	}
+}
+
+.k-combobox {
+	.k-icon-button {
+		border: none;
+		width: calc(1.4285714286em + 22px);
+		background: transparent;
+	}
+}
+
+.k-i-caret-alt-down:before {
+	color: var(--color-black);
+	font-size: var(--base-font-size);
+	background-image: url(../../../../../assets/icon/xrm-icons/chevron-down.svg);
+	background-size: 16px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 15px;
+	content: "";
+}
+
+.combobox-search {
+	position: relative;
+}
+
+.combobox-search .k-i-search {
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 40px;
+	height: 32px;
+	line-height: 34px;
+	text-align: center;
+}
+
+.combobox-search .k-i-search:before {
+	background: #fff;
+	width: 24px;
+	height: 30px;
+}

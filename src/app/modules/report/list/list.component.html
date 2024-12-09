@@ -1,0 +1,101 @@
+<div class="master-search custom_report--page">
+  <div class="row g-3">
+    <div class="col-sm-3">
+      <!-- Card Section-->
+      <div class="card" style="margin-bottom: 1rem;">
+        <!-- Card Header Section-->
+        <div class="card__header">
+          <h4 class="card__heading">{{'ReportLibrary' | translate}}</h4>
+          <div class="card__header-icon">
+            <a href="javascript:;"></a>
+          </div>
+        </div>
+        <!-- End Card Header Section-->
+
+        <ReportPanelBar [FolderPermission]="permissions.manageFolder"
+          (onPanelChange)="setTabNameAndChangeColumnOptions($event)"
+          (changeEntityTypeAndUserValues)="changeEntityTypeAndUserValues($event)">
+        </ReportPanelBar>
+      </div>
+    </div>
+    <div class="col-sm-9">
+      <div class="row g-3">
+        <div *ngIf="permissions?.create" class="col-sm-6">
+          <div class="card" style="margin-bottom: 1rem;">
+            <!-- Card Header Section-->
+            <div class="card__header">
+              <h4 class="card__heading">Create Custom Report</h4>
+              <div class="card__header-icon">
+                <button kendoButton fillMode="outline" themeColor="primary" routerLink="/xrm/report/report-library/custom-report/base-data" (click)="createReport()">
+                  {{'GetStarted' | translate}} <xrm-icon name="chevron-right"  [size]="15" color="dark-blue-color"
+                  class="sw-bolder"></xrm-icon>
+                </button>
+              </div>
+            </div>
+            <!-- End Card Header Section-->
+            <!-- Card Body Section-->
+            <div class="card__body">
+              <p>{{'SelectBaseDataGroupForReportCustomization' | translate}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="card">
+            <!-- Card Header Section-->
+            <div class="card__header">
+              <h4 class="card__heading">{{'PreDefinedReports' | translate}}</h4>
+              <div class="card__header-icon">
+                <button kendoButton fillMode="outline" themeColor="primary" routerLink="/xrm/report/report-library/pre-defined-report">
+                  {{'GetStarted' | translate}} <xrm-icon name="chevron-right"  [size]="15" color="dark-blue-color"
+                  class="sw-bolder"></xrm-icon>
+                </button>
+              </div>
+            </div>
+            <!-- End Card Header Section-->
+            <!-- Card Body Section-->
+            <div class="card__body">
+              <p>{{'ImmediateUseOrCopyEditReport' | translate}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!--radio button end -->
+      <div class="report_grid-main">
+        <div class="master-search widget-filter__search">
+          <div class="row">
+            <div class="col-md-12 master-search__wapper mb-0">
+              <div class="master-search__search-box">
+                <div class="custom-search">
+                  <div class="custom-search__input-box">
+                    <app-search [isServerSidePagingEnable]="true" [placeholder]="'SearchFor'" [EntityId]="entityId"
+                      (onSearch)="OnSearchTriggered($event)" [columnOptions]="columnOptions">
+                    </app-search>
+                  </div>
+                  <div class="custom-search__btn-box">
+                    <app-advance-search [isServerSidePagingEnable]="true" [EntityId]="entityId"
+                      (selectedFilter)="OnFilterTriggered($event)" [apiAddress]="advApiAddress" [isApiGateway]="true"
+                      [entityType]="entityType">
+                    </app-advance-search>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="report_grid" *ngIf="isLoading">
+          <grid-view [apiAddress]="apiAddress" [columnOptions]="columnOptions" [actionSet]="actionSet"
+            [advFilterData]="appliedAdvFilters" [tabOptions]="tabOptions" [kendoGridSelectedBy]="'reportId'"
+            [actionItemCategoryField]="'ApplicableActions'" [entityId]="entityId" [pageSize]="pageSize"
+            [isServerSidePagingEnable]="true" [isApiGateway]="true" [userValues]="userValues" [searchText]="searchList"
+            [entityType]="entityType" [fileName]="entityType" [multiSelect]="false">
+          </grid-view>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!--radio button end -->

@@ -1,0 +1,101 @@
+<form [formGroup]="pricingModelConfigForm">
+    <div class="card">
+        <!-- Card Header Section-->
+        <div class="card__header" id="pricing-model-configurations">
+            <h4 class="card__heading">{{ 'PricingModelConfigurations' | translate }}</h4>
+            <div class="card__header-icon">
+            </div>
+        </div>
+        <!-- End Card Header Section-->
+
+        <!-- Card Body Section-->
+        <div class="card__body">
+            <div class="row">
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-radio-button *ngIf="!(isEditMode && !isDraft) else tooltipContent" [controlName]="'CostEstimationType'" [name]="'CostEstimationType'"
+                            [RadioGroup]="dropdowns.CostEstimationTypes" [label]="'CostEstimatingType'"
+                            [isRequired]="false" [tooltipVisible]="true" [isEditMode]="isEditMode && !isDraft"
+                            [tooltipTitle]="'Cost_Estimation_Type_Tooltip'" [isHtmlContent]="true">
+                        </app-kendo-radio-button>
+                        <ng-template #tooltipContent>
+                            <tooltip-content #tooltipContent [label]="'CostEstimatingType'"
+                                [value]="tooltipContentValue"
+                                [tooltipTitle]="'Cost_Estimation_Type_Tooltip'" [tooltipVisible]="true"
+                                [isHtmlContent]="true">
+                            </tooltip-content>
+                        </ng-template>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-dropdown [list]="dropdowns.MspFeeTypes" [label]="'MspFeeType'"
+                            [controlName]="'MspFeeType'" [placeholder]="'DdlSelect'" [isRequired]="true"
+                            [tooltipVisible]="true" [tooltipTitle]="'Recruited_LI_MSP_Fee_Tooltip'"
+                            [tooltipVisible]="true" [isHtmlContent]="true" [tooltipTitle]="'Msp_Fee_Type_Tooltip'">
+                        </app-kendo-dropdown>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'ClientPaysStaffingAgencyDirectly'"
+                            [label]="'ClientPaysStaffingAgencyDirectly'" [onLabel]="'Yes'" [offLabel]="'No'"
+                            [tooltipVisible]="true" [tooltipTitle]="'Client_Pays_Staffing_Agency_Directly_Tooltip'">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <div class="clearfix"></div>
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-4">
+                    <div class="form-group">
+                        <app-kendo-radio-button [controlName]="'PricingModel'"
+                            [RadioGroup]="dropdowns.PricingModels" [label]="'PricingModel'"
+                            [isRequired]="false" [name]="'PricingModel'" (onChangeRadio)="onClickPricingModel($event)"
+                            [tooltipVisible]="true" [tooltipTitle]="'Pricing_Model_Tooltip'" [isHtmlContent]="true">
+                        </app-kendo-radio-button>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-4">
+                    <div class="form-group">
+                        <app-kendo-radio-button [controlName]="'BillRateValidation'"
+                            [RadioGroup]="dropdowns.BillRateValidations" [label]="'BillRateValidation'"
+                            [isRequired]="false" [name]="'BillRateValidation'" [isHtmlContent]="true" [tooltipVisible]="true"
+                            [tooltipTitle]="'Bill_Rate_Validation_Tooltip'">
+                        </app-kendo-radio-button>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- page subheading -->
+                <div class="col-sm-12 col-md-12">
+                    <h4 class="card__body--subheading">{{ 'IsOtEligibilityVisible' | translate }}</h4>
+                </div>
+                <!-- page subheading -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'IsOtEligibilityVisible'" [label]="'Visible'" [onLabel]="'Yes'"
+                            [offLabel]="'No'" [tooltipVisible]="true" [tooltipTitle]="'OT_Eligibility_Details_Tooltip'">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <!-- input box start -->
+            </div>
+        </div>
+        <!-- End Card Body Section-->
+    </div>
+</form>

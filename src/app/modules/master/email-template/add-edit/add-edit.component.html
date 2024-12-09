@@ -1,0 +1,645 @@
+<!-- Main Body Section -->
+<div class="app-content__body email__config">
+	<form [formGroup]="EditEmailConfigurationForm">
+
+			<!-- First Card Section-->
+			<div class="card">
+					<!-- Card Header Section-->
+					<div class="card__header">
+							<h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+					</div>
+					<!-- End Card Header Section-->
+					<!-- Card Body Section-->
+					<div class="card__body">
+							<div class="row">
+									<!-- Text Box Start -->
+									<div class="col-sm-6 col-md-6">
+											<div class="form-group">
+													<app-kendo-switch 
+													[controlName]="'EditTemplateForSector'" 
+													[label]="'EditTemplateForSpecificSector'"
+													[onLabel]="'Yes'" 
+													[offLabel]="'No'"
+													(onChangeSwitch)="onChangeTemplate()"
+													[tooltipVisible]="true" 
+                    								[tooltipTitle]="'EditTemplateForSpecificSectorTooltip'" 
+													></app-kendo-switch>
+											</div>
+									</div>
+									<!-- Text Box End -->
+
+									<!-- Text Box Start -->
+									<div class="col-sm-6 col-md-6" *ngIf="!isSectorVisible">
+											<div class="clearfix">
+											</div>
+									</div>
+									<!-- Text Box End -->
+
+									<!-- Text Box Start -->
+									<div class="col-sm-6 col-md-6" *ngIf="isSectorVisible">
+											<div class="form-group">
+												<app-kendo-dropdown [list]="sectorDropDownList" [label]="'Sector'" [isRequired]="true"
+															[placeholder]="'DdlSelect'" [controlName]="'Sector'" (onChange)="onChangeSector($event)">
+													</app-kendo-dropdown>
+													<div class="mt-1 file-caption">
+															<span class="alert-text">
+																	{{'SectorDropdownNote' | translate}}
+															</span>
+													</div>
+													
+											</div>
+									</div>
+									<!-- Text Box End -->
+
+									<!-- Text Box Start -->
+									<div class="col-sm-6 col-md-6">
+											<div class="form-group">
+													<app-kendo-dropdown [list]="languageDropDownList" [label]="'Language'" [isRequired]="true"
+															[placeholder]="'DdlSelect'" [controlName]="'Language'">
+													</app-kendo-dropdown>
+											</div>
+									</div>
+									<!-- Text Box End -->
+
+									<!-- Text Box Start -->
+									<div class="col-sm-6 col-md-6">
+											<div class="form-group">
+													<app-kendo-label [value]="EmailTemplate.TemplateMasterGetAllDto.MenuCategoryName" [label]="'Category'" >
+													</app-kendo-label>
+											</div>
+									</div>
+									<!-- Text Box End -->
+
+									<!-- Text Box Start -->
+									<div class="col-sm-6 col-md-6">
+											<div class="form-group">
+													<app-kendo-label [value]="EmailTemplate.TemplateMasterGetAllDto.XrmEntityName" [label]="'Workflow'" >
+													</app-kendo-label>
+											</div>
+									</div>
+									<!-- Text Box End -->
+
+									<!-- Text Box Start -->
+									<div class="col-sm-6 col-md-6">
+											<div class="form-group">
+													<app-kendo-label [value]="EmailTemplate.TemplateMasterGetAllDto.ActionName" [label]="'Action'" >
+													</app-kendo-label>
+											</div>
+									</div>
+									<!-- Text Box End -->
+
+									<!-- Text Box Start -->
+									<div class="col-sm-6 col-md-6">
+											<div class="form-group">
+													<app-kendo-label [value]="EmailTemplate.TemplateMasterGetAllDto.TemplateName" [label]="'TemplateName'" >
+													</app-kendo-label>
+											</div>
+									</div>
+									<!-- Text Box End -->
+
+									<!-- Text Box Start -->
+									<div class="col-sm-6 col-md-6">
+											<div class="form-group">
+													<app-kendo-radio-button [controlName]="'Priority'" [RadioGroup]="Priority"
+													[label]="'Priority'"></app-kendo-radio-button>
+											</div>
+									</div>
+									<!-- Text Box End -->
+									 <div class="col-sm-6 col-md-6">
+										<div class="form-group">
+											<app-kendo-label 
+											[tooltipVisible]="true" 
+											[tooltipTitle]="'ApprovalViaEmailTooltp'"
+											[label]="'ApprovalViaEmail'" 
+											[value]="isReviewLinkValue | yesNo"></app-kendo-label>
+										</div>
+									</div> 
+
+							</div>
+					</div>
+			</div>
+
+
+			<!-- second Card Section-->
+			<div class="card">
+					<!-- Card Header Section-->
+					<div class="card__header">
+							<h4 class="card__heading">{{'RecipientDetails' | translate}}</h4>
+							<div class="card__header-icon" *ngIf="!isUserTemplate">
+									<a href="javascript:;" class="link-color" (click)="openList()">
+											<span class="button__icon"><xrm-icon name="edit-3" [size]="16" color="dark-blue-color" class="sw-bolder"  title="Edit Recipient(s)"></xrm-icon></span>
+									</a>
+							</div>
+					</div>
+					<!-- End Card Header Section-->
+					<!-- Card Body Section-->
+					<div class="card__body">
+						<div class="row">
+							<div class="col-sm-6 col-md-6" *ngIf="toRecipients && toRecipients.length > 0">
+									<div class="form-group">
+										<app-kendo-label [label]="'To'" [value]="getRecipientNames(toRecipients)"></app-kendo-label>
+									</div>
+								</div>
+								<div class="col-sm-6 col-md-6" *ngIf="ccRecipients && ccRecipients.length > 0">
+									<div class="form-group">
+										<app-kendo-label [label]="'Cc'" [value]="getRecipientNames(ccRecipients)"></app-kendo-label>
+									</div>
+								</div>
+								<div class="col-sm-6 col-md-6" *ngIf="bccRecipients && bccRecipients.length > 0">
+									<div class="form-group">
+										<app-kendo-label [label]="'Bcc'" [value]="getRecipientNames(bccRecipients)"></app-kendo-label>
+									</div>
+								</div>
+					</div>
+					</div>
+					<!-- End Card Body Section-->
+			</div>
+
+	<!-- Third Card Section-->
+	<div class="row">
+			<div class="col-sm-9 col-md-9">
+					<!-- Card Section-->
+					<div class="card">
+							<!-- Card Header Section-->
+							<div class="card__header">
+									<h4 class="card__heading">{{"EmailSubjectBody"| translate}}</h4>
+									<div class="card__header-icon">
+											<a class="link-color" class="link-color" (click)="openPreview()"><span class="icon-group">
+													<xrm-icon name="eye" [size]="18" color="dark-blue-color"></xrm-icon></span>
+													 {{'Preview' | translate}}
+											</a>
+									</div>
+							</div>
+							<!-- End Card Header Section-->
+
+							<!-- Card Body Section-->
+							<div class="card__body">
+									<div class="row">
+
+											<!-- input box start -->
+											<div class="col-sm-12 col-md-12">
+													<div class="form-group">
+															<kendo-label text="Subject"><xrm-icon name="star" class="required"></xrm-icon>
+																	<div class="row">
+																			<div class="col-sm-2 col-md-2">
+																					<div class="fields">
+																							<p>
+																							<xrm-icon name="list" color="dark-blue-color" [size]="18" class="sw-bold"></xrm-icon>{{'[' + ('ClientName' | translate) + ']'}}
+																						</p>
+																					</div>
+																			</div>
+																			<div class="col-sm-10 col-md-10">
+																					<app-textbox kendoDropTarget [controlName]="'SubjectName'"
+																					(drop)="onDrop($event)"
+																					></app-textbox>
+																			</div>
+																	</div>
+															</kendo-label>
+													</div>
+											</div>
+											<!-- input box start -->
+											<!-- input box start -->
+
+											<div class="col-sm-12 col-md-12">
+													<div class="form-group">
+															<app-kendo-editor 
+															class="custom__editor"
+																[controlName]="'editor'" 
+																kendoDropTarget
+																>
+															</app-kendo-editor>
+															<div class="k-editor-content">
+															<!-- Editor content goes here -->
+															</div>
+													</div>
+											</div>
+							</div>
+
+					</div>
+					<!-- End Card Body Section-->
+			</div>
+			<!-- Edn Card Section-->
+			<div class="col-sm-12 col-md-12">
+				<form [formGroup]="attachmentForm">
+					<!-- Card Section-->
+					<div class="card">
+							<!-- Card Header Section-->
+							<div class="card__header">
+									<h4 class="card__heading">{{'Attachments'|translate}}</h4>
+							</div>
+							<!-- Card Header Section end-->
+
+							<!-- Card Body Section-->
+							<div class="card__body">
+									<div class="row">
+											<!-- Text Box Start -->
+											<div class="col-sm-6 col-md-6">
+												<div class="form-group">
+														<app-kendo-radio-button [controlName]="'radiobtn'" [RadioGroup]="attachments" [name]="'attachments'"
+																[label]="'AttachmentType'" (onChangeRadio)="onAttachmentTypeChange($event)"
+														></app-kendo-radio-button>
+												</div>
+										</div>
+											<!-- Text Box End -->
+											<div class="row" *ngIf="attachmentForm?.get('radiobtn')?.value === '1'" >
+					
+													 <div class="col-sm-6 col-md-6">
+															<div class="form-group">
+																	<app-textbox [controlName]="'DocumentTitle'" [label]="'DocumentTitle'">
+																	</app-textbox>
+															</div>
+													</div>
+													<!-- input box start -->
+
+
+													<div class="col custom__file__upload ps-0">
+															<div class="form-group upload-wrps"
+															*ngIf="!attachmentForm.get('DocumentFileName')?.value">
+																<div class="email__choose-file">
+																	<app-kendo-fileselect [fileSelectTheme]="'primary'"
+																									[multiple]="false" [isDisabled]="!attachmentForm.get('DocumentTitle')?.value"
+																									[fileselectMessage]="'ChooseFiles'"																						
+																									(onSelect)="onFileSelect($event)">
+																								</app-kendo-fileselect>
+											
+																								<div class="wrapper">
+																									<div class="custom-dropzone" kendoUploadDropZone="myZone">
+																										<app-kendo-button kendoButton fillMode="outline"
+																											themeColor="primary" [buttonName]="'Choose File'"
+																											[buttonIcon]="'upload'"
+																											[isDisable]="!attachmentForm.get('DocumentTitle')?.value">
+																										</app-kendo-button>
+																									</div>
+																								</div>
+																</div>
+																</div>
+													</div> 
+
+											</div>
+
+											<div class="row" *ngIf="attachmentForm?.get('radiobtn')?.value === '2'" >
+													<div class="col-sm-12 col-md-12">
+															<div class="row">
+										
+																	 <div class="col-sm-5 col-md-5">
+																			<div class="form-group">
+																					<app-kendo-dropdown #documentTitleDropdown [label]="'DocumentTitle'" [list]="DocumentDrpList"
+																					[controlName]="'DocumentTitleDrp'" [placeholder]="'DdlSelect'" [isValuePrimitiveAllowed]="true"
+																					[placeholder]="'DdlSelect'">
+																					</app-kendo-dropdown>
+																			</div>
+																	</div> 
+
+																	<div class="col-sm-2 col-md-2">
+																			<div class="col custom__file__upload ps-0">
+																					<div class="form-group upload-wrps"
+																					>																	
+																								<div class="wrapper">
+																									<div class="custom-dropzone" kendoUploadDropZone="myZone">																
+																										<app-kendo-button kendoButton fillMode="outline"
+																											themeColor="primary" [buttonName]="'Add'"
+																											[buttonIcon]="'plus'" (click)="onAddButtonClick()">
+																										</app-kendo-button>
+																									</div>
+																								</div>
+																				
+																					</div>
+																			
+																			</div>
+																			<div class="attachment-file2"
+																			*ngIf="attachmentForm.get('DocumentFileName')?.value">
+																			<div>
+																				{{attachmentForm.get('DocumentFileName')?.value}}
+																			</div>
+																			</div>
+																	</div> 
+															</div>
+													</div>
+													<!-- input box start -->
+
+											</div>
+											<div class="col-sm-12 col-md-12 list-view third-lavel-grid staf-list">
+													<div class="form-group">
+													
+														 <kendo-grid [data]="emailTemplateGridData">
+															<kendo-grid-column field="DocumentTitleValue" [title]="'DocumentTitle'|translate">
+																<ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+																  <div class="me-4">
+																	<span>
+																	  {{  dataItem.DocumentTitleValue||dataItem.DocumentConfigurationName}}
+																	</span>												
+																  </div>																 
+																</ng-template>
+															  </kendo-grid-column>
+															  <kendo-grid-column field="Attachment" [title]="'Attachment'">
+																<ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+																  <div class="me-4" *ngIf="dataItem.DocumentType=='Static'">
+																	<div class="attachment-file2">
+																		<div class="file-icon">
+																			<img alt="document" [src]="getIconUrl(dataItem.DocumentExtension|| dataItem.FileExtension)" [height]="22">
+																		</div>
+																		<div class="file-type">
+																			<a href="javascript:void(0)" (click)="downloadRecords(dataItem)">
+																				{{ dataItem.Attachment || dataItem.DocumentName+'.'+ dataItem.DocumentExtension}}
+																			</a>
+																		</div>
+																	</div>														
+																  </div>
+																</ng-template>
+															  </kendo-grid-column>
+															  <kendo-grid-column field="DocumentType" [title]="'AttachmentType'|translate">
+																<ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+																  <div class="me-4">
+																	<span>
+																	  {{ dataItem.DocumentType }}
+																	</span>
+																  </div>
+																</ng-template>
+															  </kendo-grid-column>
+															  <kendo-grid-column [title]="'Actions'">
+																<div class="me-4">
+																	<ng-template kendoGridCellTemplate let-dataItem>
+																		<div class="action-item" kendoTooltip >
+																			<a href="javascript:;" kendoButton title="Download" (click)="downloadRecords(dataItem)"
+																			*ngIf="dataItem.DocumentType === 'Static' && dataItem.DocumentConfigurationName!== ' '"  >
+
+																				<xrm-icon [name]="'download'" [color]="'dark-blue-color'" [size]="16" class="sw-bold"></xrm-icon>
+																		</a>
+																			<a href="javascript:;" kendoButton title="Delete" class="delete" (click)="clearFile(dataItem)"
+																			>
+
+																				<xrm-icon [name]="'trash-2'" [color]="'red-color'" [size]="16" class="sw-bold"></xrm-icon>
+                                                   							</a>
+																		</div>
+																	</ng-template>
+																  </div>                           
+															  </kendo-grid-column>
+															  <ng-template kendoGridNoRecordsTemplate>
+																{{ 'GridNoRecordAvailable' | translate }}
+															  </ng-template>
+														</kendo-grid>  
+													</div>
+											</div>
+											</div>
+									</div>
+							</div>
+							<!-- Card Body Section end-->
+					</form>
+					</div>
+			</div>
+
+
+<div class="col-sm-3 col-md-3">
+	<!-- Card Section-->
+	<div class="card">
+		<!-- Card Body Section-->
+		<div class="card__body">
+				<div class="row">
+
+						<!-- input box start -->
+						<div class="col-sm-12 col-md-12" *ngIf="BasicDetailsDynamicFieldlistBackup?.length??0 > 0 || UDFDynamicFieldlistBackup?.length??0 > 0 || UDFDynamicFieldlistBackup?.length??0 > 0">
+								<h4 class="card__body--first__subheading">{{'DynamicFields' | translate}}</h4>
+						</div>
+						<!-- input box end -->
+
+						<!-- input box start -->
+						<div class="col-sm-12 col-md-12" class="Space" *ngIf="BasicDetailsDynamicFieldlistBackup?.length??0 > 0 || UDFDynamicFieldlistBackup?.length??0 > 0 || UDFDynamicFieldlistBackup?.length??0 > 0">
+							<div class="custom-search__input-box">
+								<kendo-textbox (valueChange)="searchValueChangeCustom(searchTextBoxCustom.value)" #searchTextBoxCustom appRestrictInput [allowLetter]="true" [allowNumber]="true" allowSpecialCharacter=" ."
+								[placeholder]="'SearchFor' | translate"
+								(keyup)="OnEnterPressCustom($event, searchTextBoxCustom.value)" 
+								[isSpecialCharacterAllowed]="true">
+	
+								<ng-template kendoTextBoxSuffixTemplate>
+									<button type="button" kendoButton fillMode="solid" themeColor="primary" class="send-button" icon="zoom"
+										(click)="searchCustom(searchTextBoxCustom.value)">
+									</button>
+								</ng-template>
+							</kendo-textbox>
+					</div>
+						</div>
+						<!-- input box end -->
+
+						<!-- input box start -->
+						<div class="col-sm-12 col-md-12 " *ngIf="BasicDetailsDynamicFieldlist?.length??0 > 0">
+								<kendo-expansionpanel title="{{'BasicDetails' | translate}}" class="drag_drop">
+										<div class="list-view  dynamic-layout">
+												<div class="row">
+														<div class="col-sm-12 col-md-12">
+															<div class="fields">
+																<p draggable="true" (dragstart)="onDragStart($event, lst)" *ngFor="let lst of BasicDetailsDynamicFieldlist">
+																	<xrm-icon name="list" color="dark-blue-color" [size]="18" class="sw-bold"></xrm-icon>{{'['}}{{lst.LocalizedValue}}{{']'}}
+															</div>
+														</div>
+												</div>
+										</div>
+								</kendo-expansionpanel>
+						</div>
+						<!-- input box end -->
+
+						<!-- input box start -->
+						<div class="col-sm-12 col-md-12" *ngIf="UDFDynamicFieldlist?.length??0 > 0">
+								<kendo-expansionpanel title="{{'Other Details (UDFs)'}}" class="drag_drop">
+										<div class="list-view dynamic-layout">
+												<div class="row">
+														<div class="col-sm-12 col-md-12">
+															<div class="fields">
+																<p draggable="true" (dragstart)="onDragStart($event, lst)" *ngFor="let lst of UDFDynamicFieldlist">
+																	<xrm-icon name="list" color="dark-blue-color" [size]="18" class="sw-bold"></xrm-icon>{{'['}}{{lst.LocalizedValue}}{{']'}}
+															</div>
+														</div>
+												</div>
+										</div>
+								</kendo-expansionpanel>
+						</div>
+						<!-- input box end -->
+
+						<!-- input box start -->
+						<div class="Top-Space">
+								<div class="col-sm-12 col-md-12">
+										<h4 class="card__body--subheading">{{'ConfigurableDynamicFields' | translate}}</h4>
+								</div>
+						</div>
+						<!-- input box end -->
+
+						<!-- input box start -->
+						<div class="col-sm-12 col-md-12" class="Space">
+							<div class="custom-search__input-box">
+								<kendo-textbox #searchTextBox appRestrictInput [allowLetter]="true" [allowNumber]="true" allowSpecialCharacter=" ."
+								[placeholder]="'SearchFor' | translate" (valueChange)="searchValueChange(searchTextBox.value)"
+								(keyup)="OnEnterPress($event, searchTextBox.value)" 
+								[isSpecialCharacterAllowed]="true">
+	
+								<ng-template kendoTextBoxSuffixTemplate>
+									<button type="button" kendoButton fillMode="solid" themeColor="primary" class="send-button" icon="zoom"
+										(click)="search(searchTextBox.value)">
+									</button>
+								</ng-template>
+							</kendo-textbox>
+					</div>
+						</div>
+						<!-- input box end -->
+
+						<!-- input box start -->
+						<div class="col-sm-12 col-md-12 dynamic-layout">
+								<div class="fields">
+									<p draggable="true" (dragstart)="onDragStart($event, lst)" *ngFor="let lst of ConfigurableDynamicFieldlist">
+										<xrm-icon name="list" color="dark-blue-color"[size]="18" class="sw-bold"></xrm-icon>{{'['}}{{lst.LocalizedValue}}{{']'}}
+								</div>
+						</div>
+
+				</div>
+		</div>
+		<!-- End Card Body Section-->
+</div>
+</div>
+</div>
+
+
+
+			<!--  Page Footer Section-->
+			<div class="page-footer">
+					<div class="btn-box btn-box--center">
+							
+							<button type="button" kendoButton fillMode="outline" themeColor="primary"
+									(click)="cancel()"> {{ "Cancel" | translate}}
+							</button>
+							<button type="button" appFocusOnError [formName]="EditEmailConfigurationForm" 
+							kendoButton (click)="submitForm()" themeColor="primary"
+							[disabled]="EditEmailConfigurationForm.pristine">
+							{{'Save' | translate}}
+							</button>
+					</div>
+			</div>
+			<!-- End Footer Section-->
+	</form>
+</div>
+
+
+<!-- Help dialog -->
+<div class="col-sm-12 col-md-12 list-view list-view__border list-view list-view__border__border">
+	<kendo-dialog title="Update Recipient Details" class="dailog dailog_helpdata" (close)="onDecline()"
+			*ngIf="dialogRecipient" [width]="800">
+			<form [formGroup]="listForm">
+			<div class="row">
+					<div class="col-sm-5">
+							<div class="form-group">
+									<kendo-label text="{{'AdditionalRecipients' | translate}}">
+											<kendo-combobox #UserTypeList class="combobox" [data]="RecipientDropDownList" (valueChange)="onChange($event)"
+												textField="Text" valueField="Value" [filterable]="true"  [kendoDropDownFilter]="filterSettings"
+													[allowCustom]="true" placeholder="-Select-">
+											</kendo-combobox>
+									</kendo-label>
+							</div>
+					</div>
+					<div class="col-sm-5" *ngIf="RoleDropdown">
+							<div class="form-group">
+									<kendo-label text="{{'Role' | translate}}">
+											<kendo-combobox #Role class="combobox" [filterable]="true"  [kendoDropDownFilter]="filterSettings" textField="Text" valueField="Value" [data]="RoleDropDownList" [allowCustom]="true"
+													placeholder="-Select-">
+											</kendo-combobox>
+									</kendo-label>
+							</div>
+					</div>
+					<div class="col-sm-5" *ngIf="UserDropdown">
+							<div class="form-group">
+									<div class="popup-search">
+											<kendo-label text="{{'User' | translate}}">
+													<kendo-combobox #User class="combobox" [filterable]="true"  [kendoDropDownFilter]="filterSettings" textField="Text" valueField="Value" [data]="UserDropDownList" [placeholder]=" 'SearchFor' | translate"
+															placeholder="-Select-">
+													</kendo-combobox>
+											</kendo-label>
+									</div>
+							</div>
+					</div>
+					<div class="col-sm-5" *ngIf="UserTextbox">
+							<div class="form-group">
+											<app-textbox [controlName]="'Email'" [label]="'External user'" [placeholder]="'xxx@acrocorp.com'"></app-textbox>
+							</div>
+					</div>
+					<div class="col-sm-2">
+							<div class="form-group mt-3">
+									<button (click)="AddToList()" kendoButton themeColor="primary">{{'AddToList' | translate}}</button>
+							</div>
+					</div>
+			</div>
+			</form>
+			<kendo-grid [data]="emailData" class="max-height164">
+					<kendo-grid-column field="RecipientTypeName" title="Type" [width]="150">
+						<ng-template kendoGridCellTemplate let-dataItem>
+						  {{ dataItem.RecipientTypeName | translate }}
+						</ng-template>
+					  </kendo-grid-column>
+					  <kendo-grid-column field="nameForView" title="Recipient" [width]="150">
+						<ng-template kendoGridCellTemplate let-dataItem>
+						  {{ dataItem.nameForView | translate }}
+						</ng-template>
+					  </kendo-grid-column>
+					<kendo-grid-column field="To" title="To" [width]="60">
+							<ng-template let-dataItem kendoGridCellTemplate let-rowIndex="rowIndex">
+								<input type="radio" [name]="rowIndex" (change)="onRadio(rowIndex, 'To', r1.value)" [checked]="dataItem.To" #r1 kendoRadioButton />
+							</ng-template>
+					</kendo-grid-column>
+					<kendo-grid-column field="Cc" title="Cc" [width]="60">
+							<ng-template let-dataItem kendoGridCellTemplate let-rowIndex="rowIndex">
+								<input type="radio" [name]="rowIndex" (change)="onRadio(rowIndex, 'Cc', r2.value)" [checked]="dataItem.Cc" #r2 kendoRadioButton />
+							</ng-template>
+					</kendo-grid-column>
+					<kendo-grid-column field="Bcc" title="Bcc" [width]="60">
+							<ng-template let-dataItem kendoGridCellTemplate let-rowIndex="rowIndex">
+								<input type="radio" [name]="rowIndex" (change)="onRadio(rowIndex, 'Bcc', r3.value)" [checked]="dataItem.Bcc" #r3 kendoRadioButton />
+							</ng-template>
+					</kendo-grid-column>
+					<kendo-grid-column field="None" title="None" [width]="60">
+							<ng-template let-dataItem kendoGridCellTemplate let-rowIndex="rowIndex">
+								<input type="radio" [name]="rowIndex" (change)="onRadio(rowIndex, 'None', r4.value)" [checked]="dataItem.None" #r4 kendoRadioButton />
+							</ng-template>
+					</kendo-grid-column>
+			</kendo-grid>
+
+			<div class="text-center">
+					<div class="Top-Space">
+							<button [disabled]="!touched" type="button" kendoButton themeColor="primary" (click)="onAccept()">{{'Save' | translate}}</button>
+							<button kendoButton fillMode="outline" themeColor="primary" (click)="onDecline()">{{'Cancel' | translate}}</button>
+					</div>
+			</div>
+
+	</kendo-dialog>
+</div>
+<!-- Help dialog -->
+
+
+<!-- Preview Dialog Start -->
+<kendo-dialog class="preview-dialog-popup dailog dailog-center" (close)="closeDialog()" *ngIf="previewDialogOpen"
+	[width]="420">
+	<a href="javascript:;" class="close-dailog" (click)="onPreviewAccept()"><xrm-icon name="x" color="black-color" [size]="18" [strokeWidth]="2.5"></xrm-icon></a>
+	<h3 class="dailog__title">{{'EmailPreview' | translate}}</h3>
+	<div class="card">
+			<div class="card__header">
+					<h4 class="card__heading">{{'EmailSubjectBody' | translate}}</h4>
+			</div>
+			<div class="card__body">
+				<div class="row">
+						<div class="col-sm-12 col-md-12">
+								<div class="form-group email__template-subjectline">
+										<app-kendo-label [label]="'Subject: [' + ( 'ClientName' | translate ) + '] - ' + EditEmailConfigurationForm.controls['SubjectName'].value" [value]="''"></app-kendo-label>
+								</div>
+						</div>
+						<!-- Text Box End -->
+				</div>
+
+						<!-- Text Box Start -->
+						<div class="col-sm-12 col-md-12">
+								<div class="form-group">										
+									<div *ngIf="body" [innerHTML]="previewTemplate | safe: 'html'"></div>										
+								</div>
+						</div>
+						<!-- Text Box End -->
+		</div>
+	</div>
+
+
+
+</kendo-dialog>
+<!-- Preview Dialog End -->
+

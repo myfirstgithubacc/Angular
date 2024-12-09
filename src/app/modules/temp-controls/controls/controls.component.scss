@@ -1,0 +1,25 @@
+
+.tooltip-format {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	text-align: left;
+}
+
+.tooltip-format li {
+	font-size: 11px !important;
+	position: relative;
+	margin-left: 15px;
+	margin-bottom: 10px;
+}
+
+.tooltip-format li:before {
+	content: "";
+	position: absolute;
+	left: -12px;
+	top: 6px;
+	width: 6px;
+	height: 6px;
+	background: #fff;
+	border-radius: 40px;
+}

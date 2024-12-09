@@ -1,0 +1,485 @@
+<!-- Card Section-->
+<div class="card">
+  <!-- Card Body Section-->
+  <div class="card__body">
+    <div class="list-view list-screen-grid">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="list-view__tab" *ngIf="showTabs">
+            <kendo-tabstrip class="list-view__tab-item" (tabSelect)="alterTabbedView($event, true)">
+              <kendo-tabstrip-tab *ngFor="let tab of tabOptions.tabList" class="list-view__tab-item"
+                [selected]="tab.selected">
+                <ng-template kendoTabTitle>
+                  <p>{{ tab.tabName | translate }}</p>
+                  <tooltip-content *ngIf="tab && tab.isTooltipVisible" [tooltipVisible]="tab.isTooltipVisible"
+                    [tooltipTitle]="tab.tooltipText" [tooltipPosition]="tab?.tooltipPosition"
+                    [isHtmlContent]="tab && tab.isHtmlContent"
+                    [tooltipTitleLocalizeParam]="(tab && tab.tooltipLocalizedParam) ? tab.tooltipLocalizedParam: []">
+                  </tooltip-content>
+                </ng-template>
+              </kendo-tabstrip-tab>
+            </kendo-tabstrip>
+          </div>
+
+          <ng-template #template let-anchor>
+            <span>{{ anchor.nativeElement.getAttribute("field") }}</span>
+            <span>{{ anchor.nativeElement.innerText }}</span>
+          </ng-template>
+          <div kendoTooltip [tooltipTemplate]="template" filter="a[field], .k-grid td"
+            (mouseover)="showTooltip($event)">
+            <div kendoTooltip [tooltipTemplate]="template" filter="a[field]">
+              <ng-container *ngIf="isList">
+                <!-- {{gridView | json}} -->
+                <kendo-grid #grid appGridBinding [userValues]="userValues" [apiAddress]="apiAddress" [menuId]="menuId"
+                  [contractorId]="contractorId" [searchText]="searchText" [exportApiAddress]="exportApiAddress"
+                  [exportFileName]="fileName" [isExportBtnClicked]="isExportBtnClicked" [advFilterData]="advFilterData"
+                  [currentTab]="currentTab" [entityId]="entityId" [entityType]="entityType"
+                  [IsPreviousAssignment]="IsPreviousAssignment" [customSort]="sort"
+                  [isReloadGridData]="isReloadGridData" [selectedTabInfo]="selectedTabInfo"
+                  [isServerSidePagingEnable]="isServerSidePagingEnable" kendoGridSelectBy="{{ kendoGridSelectedBy }}"
+                  [pageSize]="pageSize" [height]="height" [pageable]="true" [sortable]="{
+                  allowUnsort: true,
+                  mode: multiple ? 'multiple' : 'single'
+                }" [groupable]="false" [reorderable]="true" [resizable]="true"
+                  [selectable]="{ enabled: true, checkboxOnly: true }"
+                  [columnMenu]="{ filter: true, columnChooser: false }" class="grid-responsive"
+                  [(selectedKeys)]="mySelection" [pageable]="{ position: 'both' }" [sort]="sort"
+                  (sortChange)="sortChange($event)" (columnReorder)="onColumnReordered($event)"
+                  (columnVisibilityChange)="onVisibilityChange($event)" (pageChange)="onPageSizeChange($event)">
+                  <ng-container *ngIf="!isServerSidePagingEnable">
+                    <ng-container [kendoGridBinding]="gridView" [pageSize]="pageSize"></ng-container>
+                  </ng-container>
+
+                  <ng-template kendoPagerTemplate let-totalPages="totalPages" let-currentPage="currentPage">
+                    <ng-container *ngIf="isPaginationVisible">
+                      <kendo-pager-info></kendo-pager-info>
+                      <kendo-pager-prev-buttons></kendo-pager-prev-buttons>
+                      <kendo-pager-numeric-buttons [buttonCount]="buttonCount"></kendo-pager-numeric-buttons>
+                      <kendo-pager-next-buttons></kendo-pager-next-buttons>
+                      <kendo-pager-input></kendo-pager-input>
+                      <kendo-grid-messages pagerItems="{{ 'GridItem' | translate }}"
+                        pagerItemsPerPage="{{ 'GridItemsPerPage' | translate }}" pagerPage="{{ 'Page' | translate }}"
+                        columns="{{ 'Columns' | translate }}" columnsApply="{{ 'Apply' | translate }}"
+                        columnsReset="{{ 'Reset' | translate }}" pagerNextPage="{{ 'GoToNextPage' | translate }}"
+                        pagerLastPage="{{ 'GoToLastPage' | translate }}"
+                        pagerFirstPage="{{ 'GoToFirstPage' | translate }}"
+                        pagerPreviousPage="{{ 'GoToPreviousPage' | translate }}">
+                      </kendo-grid-messages>
+
+                      <kendo-pager-page-sizes [pageSizes]="sizes"></kendo-pager-page-sizes>
+                    </ng-container>
+                  </ng-template>
+
+                  <ng-template *ngIf="isToolbarVisible" kendoGridToolbarTemplate class="list-view__header">
+
+                    <div class="breadcrumbs-hardcode">
+                      <div class="icon-group">
+                        <ng-container *ngIf="isInternalSearch">
+                          <kendo-textbox placeholder="{{ 'GridSearch' | translate }}"
+                            (valueChange)="onGridFilter($event)" [style.width.px]="180"></kendo-textbox>
+                        </ng-container>
+                        <span *ngIf="mySelection.length > 0">
+                          <div class="show-actions" kendoTooltip>
+                            <span class="activateLabel"
+                              *ngIf="ShowActivateDeactivateButton || currentTab.toLowerCase() == 'inactive'"
+                              (click)="groupedAction('activate')">
+                              <xrm-icon [name]="'check'" [color]="'green-color'" [size]="17" [strokeWidth]="2.5"
+                                [title]="'Activate' | translate"></xrm-icon>
+                              {{ 'Activate' | translate }}
+                            </span>
+                            <span class="deactivateLabel"
+                              *ngIf="ShowActivateDeactivateButton || currentTab.toLowerCase() == 'active' "
+                              (click)="groupedAction('deactivate')">
+                              <xrm-icon [name]="'x'" [color]="'red-color'" [size]="17" [strokeWidth]="2.5"
+                                [title]="'Deactivate' | translate"></xrm-icon>
+                              {{ 'Deactivate' | translate }}
+                            </span>
+
+
+                            <span
+                              *ngIf="currentTab.toLowerCase() != 'inactive' && currentTab.toLowerCase() != 'active' && massActionButtonSet.length > 0">
+                              <span *ngFor="let action of massActionButtonSet">
+                                <span *ngIf="currentTab.toLowerCase() == action.tabName.toLowerCase()">
+                                  <span *ngFor="let action1 of action.button">
+                                    <div class="show-status">
+                                      <span [ngClass]="action1.isActiveType ? 'activateLabel' : 'deactivateLabel'"
+                                        (click)="groupedAction(action1.id)">
+                                        <xrm-icon [name]='action1.icon' [color]='action1.color'
+                                          title="{{action1.title | translate }}" [size]="17"
+                                          [strokeWidth]="2.2"></xrm-icon>
+                                        {{action1.title | translate}}
+                                      </span>
+                                    </div>
+                                  </span>
+                                </span>
+                              </span>
+                            </span>
+
+                          </div>
+                        </span>
+
+                        <ng-container *ngIf="extraButtonSet.length > 0">
+                          <button *ngFor="let btn of extraButtonSet" (click)="headericonClick(btn.type)" kendobutton=""
+                            title="{{ btn.type | translate }}"
+                            class="icon-group__item copy_button k-button k-button-md k-rounded-md k-button-solid-base k-button-solid"
+                            role="button" dir="ltr">
+
+                            <xrm-icon name="copy" [size]="15" color="black-color" [strokeWidth]="1.4"></xrm-icon>
+                          </button>
+                        </ng-container>
+                        <kendo-splitbutton #splitButton [hidden]="isExportHide" size="small" tabindex="0" class="icon-group__item"
+                          [data]="splitButtonItems" (itemClick)="onSplitButtonItemClick($event)"
+                          (buttonClick)="onSplitButtonClick()">
+                          <xrm-icon [name]="'download'" [color]="'black-color'" [size]="15" class="sw-bold"></xrm-icon>
+                        </kendo-splitbutton>
+                        <span *ngIf="isColumnChooserVisible">
+                          <kendo-grid-column-chooser #gridChooserColumn class="icon-group__item column-chooser-icon">
+                          </kendo-grid-column-chooser>
+                        </span>
+
+                      </div>
+                    </div>
+                    <button #pdfBtn kendoGridPDFCommand id="pdf_btn" class="d-none"></button>
+                    <button kendoGridExcelCommand id="excel_btn" class="d-none"></button>
+                  </ng-template>
+
+                  <kendo-grid-pdf fileName="{{ fileName }}.pdf">
+                    <span *ngFor="let column of columnOptions">
+                      <kendo-grid-column field="{{ column.fieldName }}" title="{{ column.columnHeader | translate }}">
+                      </kendo-grid-column>
+                    </span>
+                  </kendo-grid-pdf>
+
+                  <kendo-grid-excel fileName="{{ fileName }}.xlsx">
+                    <span *ngFor="let column of columnOptions">
+                      <span *ngIf="column.visibleByDefault">
+                        <kendo-excelexport-column field="{{ column.fieldName }}"
+                          title="{{ column.columnHeader | translate }}">
+                        </kendo-excelexport-column>
+                      </span>
+                    </span>
+                  </kendo-grid-excel>
+
+                  <kendo-grid-checkbox-column *ngIf="multiSelect && isCheckboxVisible == true"
+                    media="(min-width: 921px)" [width]="45" [headerClass]="['allCheckBox','text-center : true']"
+                    [class]="{'text-center': true }" [columnMenu]="false" [resizable]="false" [showSelectAll]="true"
+                    [reorderable]="false">
+                  </kendo-grid-checkbox-column>
+
+                  <!-- Start New Mobile Grid Column-->
+                  <kendo-grid-column class="mobile__grid" *ngIf="getWidth('G')" title="{{ title | translate }} List">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <table class="table">
+                        <caption></caption>
+                        <colgroup>
+                          <col class="col-label">
+                          <col class="col-space">
+                          <col class="col-data">
+                        </colgroup>
+                        <thead>
+                          <tr>
+                            <th>
+                              <!-- List Items -->
+                            </th>
+                            <th></th>
+                            <th *ngIf="isActionColumnVisible">
+
+                              <div class="action-item" kendoTooltip>
+                                <!-- this code is showing the actions icons if they are less than 3 -->
+                                <!-- new code goes here  -->
+                                <span *ngFor="let data of actionSet">
+                                  <span *ngIf="data.Status == dataItem[actionItemCategoryField]">
+                                    <span *ngIf="getActionSet(data.Items, dataItem).length < 4">
+                                    
+                                      <span *ngFor="let action of getActionSet(data.Items, dataItem)">
+                                        <a href="javascript:;" kendoButton title="{{ action.title | translate }}"
+                                          (click)="actionClicked(action.fn, dataItem, action.title)">
+                                          <xrm-icon [name]='action.icon' [color]='action.color' [size]="17"
+                                            class="sw-bold"></xrm-icon>
+                                        </a>
+                                      </span>
+                                    </span>
+                                    <span *ngIf="getActionSet(data.Items, dataItem).length >= 4">
+                                      <span *ngFor="let action of getActionSet(data.Items, dataItem).slice(0, 2)">
+                                        <a href="javascript:;" kendoButton title="{{ action.title | translate }}"
+                                          (click)="actionClicked(action.fn, dataItem, action.title)">
+                                          <xrm-icon [name]='action.icon' [color]='action.color' [size]="17"
+                                            class="sw-bold"></xrm-icon>
+                                        </a>
+                                      </span>
+                                      <app-kendo-dropdown-button
+                                        [actionSet]="getActionSet(data.Items, dataItem).slice(2)" [dataItem]="[dataItem]">
+                                      </app-kendo-dropdown-button>
+                                    </span>
+                                  </span>
+                                </span>
+
+                              </div>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let column of columnOptions">
+                            <td>
+                              <strong>{{ column.columnHeader | translate }}</strong>
+                            </td>
+                            <td>:</td>
+                            <td>
+                              <span>
+                                <dd>
+
+                                  <ng-container *ngIf="column.ValueType; else nullCase">
+
+                                    <ng-container [ngSwitch]="column.ValueType?.toLowerCase()">
+
+                                      <ng-container *ngSwitchCase="'number'">
+                                        {{ localizationService.TransformNumber(dataItem[column.fieldName],
+                                        column.DecimalPlaces, dataItem.CountryId) }}
+                                      </ng-container>
+
+                                      <ng-container *ngSwitchCase="'text'">
+                                        <ng-container *ngIf="column.IsLocalizedKey; else normalData">
+                                          {{ dataItem[column.fieldName] | translate }}
+                                        </ng-container>
+
+                                        <ng-template #normalData>
+                                          {{ dataItem[column.fieldName] }}
+                                        </ng-template>
+                                      </ng-container>
+
+                                      <ng-container *ngSwitchCase="'date'">
+                                        {{ dataItem[column.fieldName] | date : dateFormat }}
+                                      </ng-container>
+
+                                      <ng-container *ngSwitchCase="'time'">
+                                        {{ localizationService.TransformData(dataItem[column.fieldName],
+                                        timeCultureEnum) }}
+                                      </ng-container>
+
+                                      <ng-container *ngSwitchCase="'datetime'">
+                                        {{ dataItem[column.fieldName] | date : dateTimeFormat }}
+                                      </ng-container>
+
+                                      <ng-container *ngSwitchCase="'phone'">
+                                        {{ phoneFormat(dataItem.CountryId, dataItem[column.fieldName]) }}
+                                      </ng-container>
+
+                                      <ng-container *ngSwitchDefault>
+                                        <ng-container *ngIf="!column.ValueType">
+                                          {{ dataItem[column.fieldName] }}
+                                        </ng-container>
+
+                                        <ng-container
+                                          *ngIf="cultureArray.indexOf(column.ValueType?.toLowerCase()) == -1">
+                                          {{
+                                          column.IsLocalizedKey
+                                          ? (dataItem[column.fieldName] | translate)
+                                          : dataItem[column.fieldName]
+                                          }}
+                                        </ng-container>
+
+                                      </ng-container>
+
+                                    </ng-container>
+
+                                  </ng-container>
+
+                                  <ng-template #nullCase>
+                                    {{ dataItem[column.fieldName] }}
+                                  </ng-template>
+
+
+                                </dd>
+                              </span>
+
+
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                    </ng-template>
+                  </kendo-grid-column>
+
+                  <!-- End New Mobile Grid Column-->
+
+                  <!-- columns for mid-size devices -->
+
+                  <kendo-grid-column media="(min-width: 921px)" *ngFor="let column of columnOptions"
+                    field="{{ column.fieldName }}" title="{{ column.columnHeader | translate }}"
+                    [width]="getColumnWidth(column.ColumnWidth)" [hidden]="!column.visibleByDefault"
+                    [filterable]="isFilteringAllowed" [sortable]="isSortingAllowed">
+                    <ng-template *ngIf="column.columnHeader === 'Document'" kendoGridCellTemplate
+                      let-rowIndex="rowIndex" let-dataItem>
+                      <div class="col-sm-12 attachment-file2-main"
+                        *ngIf="dataItem?.DmsFieldRecord?.DocumentAddDto?.FileExtension">
+                        <div class="attachment-file2" kendoTooltip>
+                          <div class="file-icon">
+                            <img *ngIf="dataItem?.DmsFieldRecord?.DocumentAddDto?.FileExtension == 'pdf'"
+                              src="./assets/images/pdf.png" alt="" height="22">
+                            <img *ngIf="dataItem?.DmsFieldRecord?.DocumentAddDto?.FileExtension == 'doc'"
+                              src="./assets/images/doc.png" alt="" height="22">
+                            <img *ngIf="dataItem?.DmsFieldRecord?.DocumentAddDto?.FileExtension == 'docx'"
+                              src="./assets/images/docx.png" alt="" height="22">
+                            <img *ngIf="dataItem?.DmsFieldRecord?.DocumentAddDto?.FileExtension == 'jpg'"
+                              src="./assets/images/jpg.png" alt="" height="22">
+                            <img *ngIf="dataItem?.DmsFieldRecord?.DocumentAddDto?.FileExtension == 'jpeg'"
+                              src="./assets/images/jpeg.png" alt="" height="22">
+                            <img *ngIf="dataItem?.DmsFieldRecord?.DocumentAddDto?.FileExtension == 'csv'"
+                              src="./assets/images/csv.png" alt="" height="22">
+                            <img *ngIf="dataItem?.DmsFieldRecord?.DocumentAddDto?.FileExtension == 'xlsx'"
+                              src="./assets/images/excel.png" alt="" height="22">
+                          </div>
+                          <div class="file-type">
+                            <a href="javascript:;"
+                              title="{{dataItem?.DmsFieldRecord?.DocumentAddDto?.FileNameWithExtension}}"
+                              (click)="emitFileObjData(dataItem?.DmsFieldRecord)">{{dataItem?.DmsFieldRecord?.DocumentAddDto?.FileNameWithExtension}}</a>
+
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                    <ng-template kendoGridHeaderTemplate let-rowIndex="rowIndex" style="width:'column.width;'">
+                      <span class="hide-tooltip" kendoTooltip>
+
+                        <span title="{{ column.columnHeader | translate }}">{{ column.columnHeader | translate }}</span>
+
+                      </span>
+
+                    </ng-template>
+                    <span>
+                      <ng-template kendoGridCellTemplate let-dataItem>
+
+                        <ng-container *ngIf="column.ValueType; else nullCase">
+
+                          <ng-container [ngSwitch]="column.ValueType?.toLowerCase()">
+
+                            <ng-container *ngSwitchCase="'number'">
+
+                              <ng-container *ngIf="isNaN(dataItem[column.fieldName])">
+                                {{ dataItem[column.fieldName] }}
+                              </ng-container>
+
+                              <ng-container *ngIf="!isNaN(dataItem[column.fieldName])">
+                                {{ localizationService.TransformNumber(dataItem[column.fieldName],
+                                column.DecimalPlaces, dataItem.CountryId) }}
+                              </ng-container>
+
+                            </ng-container>
+
+                            <ng-container *ngSwitchCase="'text'">
+                              <ng-container *ngIf="column.IsLocalizedKey; else normalData">
+                                {{ dataItem[column.fieldName] | translate }}
+                              </ng-container>
+
+                              <ng-template #normalData>
+                                {{ dataItem[column.fieldName]}}
+                              </ng-template>
+                            </ng-container>
+
+                            <ng-container *ngSwitchCase="'date'">
+                              {{ dataItem[column.fieldName] | date : dateFormat }}
+                            </ng-container>
+
+                            <ng-container *ngSwitchCase="'time'">
+                              {{ localizationService.TransformData(dataItem[column.fieldName],
+                              timeCultureEnum) }}
+                            </ng-container>
+
+                            <ng-container *ngSwitchCase="'datetime'">
+                              {{ dataItem[column.fieldName] | date : dateTimeFormat }}
+                            </ng-container>
+
+                            <ng-container *ngSwitchCase="'phone'">
+                              {{ phoneFormat(dataItem.CountryId, dataItem[column.fieldName]) }}
+                            </ng-container>
+
+                            <ng-container *ngSwitchDefault>
+                              <ng-container *ngIf="!column.ValueType">
+                                {{ dataItem[column.fieldName] }}
+                              </ng-container>
+
+                              <ng-container *ngIf="cultureArray.indexOf(column.ValueType?.toLowerCase()) == -1">
+                                {{
+                                column.IsLocalizedKey
+                                ? (dataItem[column.fieldName] | translate)
+                                : dataItem[column.fieldName]
+                                }}
+                              </ng-container>
+
+                            </ng-container>
+
+                          </ng-container>
+
+                        </ng-container>
+
+                        <ng-template #nullCase>
+                          {{ dataItem[column.fieldName] }}
+                        </ng-template>
+
+                      </ng-template>
+                    </span>
+
+                    <ng-template kendoGridFilterMenuTemplate let-filter let-column="column"
+                      let-filterService="filterService">
+                      <kendo-grid-string-filter-menu [column]="column" [filter]="filter" [filterService]="filterService"
+                        operator="startswith">
+                        <kendo-filter-startswith-operator></kendo-filter-startswith-operator>
+                        <kendo-filter-contains-operator></kendo-filter-contains-operator>
+                        <kendo-filter-eq-operator></kendo-filter-eq-operator>
+                        <kendo-filter-not-contains-operator></kendo-filter-not-contains-operator>
+                      </kendo-grid-string-filter-menu>
+                    </ng-template>
+                  </kendo-grid-column>
+
+                  <kendo-grid-column *ngIf="isActionColumnVisible" media="(min-width: 921px)" field="Status"
+                    title="{{'Actions' | translate}}" [width]="100" filter="numeric" [includeInChooser]="false"
+                    [columnMenu]="false" [reorderable]="false" [sortable]="false">
+                    <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                      <div class="action-item" kendoTooltip>
+                        <!-- Here goes the new code -->
+                        <span *ngFor="let data of actionSet">
+                          <span *ngIf="data.Status == dataItem[actionItemCategoryField]">
+                            <span *ngIf="getActionSet(data.Items, dataItem).length < 4">
+                              <span *ngFor="let action of getActionSet(data.Items, dataItem)">
+                                <a href="javascript:;" kendoButton title="{{ action.title | translate }}"
+                                  (click)="actionClicked(action.fn,dataItem,action.title, rowIndex)">
+                                  <xrm-icon [name]='action.icon' [color]='action.color' [size]="17"
+                                    class="sw-bold"></xrm-icon>
+                                </a>
+                              </span>
+                            </span>
+                            <span *ngIf="getActionSet(data.Items, dataItem).length >= 4">
+                              <span *ngFor="let action of getActionSet(data.Items, dataItem).slice(0, 2)">
+                                <a href="javascript:;" kendoButton title="{{ action.title | translate }}"
+                                  (click)="actionClicked(action.fn, dataItem, action.title, rowIndex)">
+                                  <xrm-icon [name]='action.icon' [color]='action.color' [size]="17"
+                                    class="sw-bold"></xrm-icon>
+                                </a>
+                              </span>
+                              <app-kendo-dropdown-button [entityId]="entityId"
+                                [actionSet]="getActionSet(data.Items, dataItem).slice(2)" [dataItem]="dataItem">
+                              </app-kendo-dropdown-button>
+                            </span>
+                          </span>
+                        </span>
+                      </div>
+                    </ng-template>
+                  </kendo-grid-column>
+
+                  <ng-template kendoGridNoRecordsTemplate>
+                    {{ noRecordsMessage | translate }}
+                  </ng-template>
+
+                </kendo-grid>
+              </ng-container>
+            </div>
+          </div>
+          <!-- End Card Body Section-->
+        </div>
+        <!-- End Card Section-->
+      </div>
+    </div>
+  </div>
+
+</div>

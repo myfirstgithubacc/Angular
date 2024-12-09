@@ -1,0 +1,138 @@
+
+<!-- Add Filter sidebar -->
+<div class="offcanvas offcanvas-end time-details-popup" tabindex="-1" id="approversItems"
+    aria-labelledby="approversItems">
+    <div class="offcanvas-header">
+        <h5>{{"ViewOtherApproversItems" | translate}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+        </button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="card">
+            <div class="card__header">
+                <h4 class="card__heading">{{'TimesheetReportDetails'| translate}}</h4>
+            </div>
+            <div class="card__body">
+                <div class="col-sm-12 col-md-12 list-view expense-report-grid">
+                    <ng-template #template let-anchor>
+                        <span>{{ anchor.nativeElement.innerText }}</span>
+                    </ng-template>
+                    <div kendoTooltip [tooltipTemplate]="template" filter=".k-grid td"
+                        (mouseover)="showTooltip($event)">
+                    <kendo-grid [data]="approverLineItems"  [resizable]="true" [selectable]="selectableSettings"
+                    [navigable]="false">
+                    <kendo-grid-column media="(max-width: 920px)" title="Items">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <!-- template for mobile -->
+                            <dl>
+                                <dt>{{'CostAccountingCode' | translate}}</dt>
+                                                <dd>
+                                                    {{dataItem.CostAccountingCodeName}}
+                                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>{{'IsAllowManualShift' | translate}}</dt>
+                                <dd>
+                                    {{dataItem.ShiftName}}
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt> {{HeaderValues['Sunday'] | date: 'EEE, MMM d'}}</dt>
+                                <dd>
+                                    {{dataItem?.Sunday?.toFixed(2)}}
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt> {{HeaderValues['Monday'] | date: 'EEE, MMM d'}}
+                                   </dt>
+                                <dd>
+                                    {{dataItem?.Monday?.toFixed(2)}}
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>{{HeaderValues['Tuesday'] | date: 'EEE, MMM d'}}</dt>
+                                <dd>
+                                    {{dataItem?.Tuesday?.toFixed(2)}}
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>{{HeaderValues['Wednesday'] | date: 'EEE, MMM d'}}</dt>
+                                <dd>
+                                    {{dataItem?.Wednesday?.toFixed(2)}}
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>{{HeaderValues['Thursday'] | date: 'EEE, MMM d'}}</dt>
+                                <dd>
+                                    {{dataItem?.Thursday?.toFixed(2)}}
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>{{HeaderValues['Friday'] | date: 'EEE, MMM d'}}</dt>
+                                <dd>
+                                    {{dataItem?.Friday?.toFixed(2)}}
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>{{HeaderValues['Saturday'] | date: 'EEE, MMM d'}}</dt>
+                                <dd>
+                                    {{dataItem?.Saturday?.toFixed(2)}}
+                                </dd>
+                            </dl>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column [title]="'CostAccountingCode' | translate" field="CostAccountingCodeName"
+                        [width]="160" media="(min-width: 921px)">
+                       
+                    </kendo-grid-column>
+                    <kendo-grid-column [title]="'ApproverName'  | translate" field="ApproverName"
+                        [width]="100" media="(min-width: 921px)">
+                       
+                    </kendo-grid-column>
+                    <kendo-grid-column field="ShiftName" [title]="'ShiftName' | translate" [width]="100">
+                    </kendo-grid-column>
+                    <kendo-grid-column field="HourType" [title]="'HoursType' | translate" [width]="80">
+                        <ng-template kendoGridFooterTemplate>
+                        <div class="text-end total-amount">
+                            <strong>  {{'Total' | translate}}</strong>
+                        </div>
+                    </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column *ngFor="let day of dayOrder" [field]="day" media="(min-width: 921px)">
+                        <ng-template kendoGridHeaderTemplate>
+                            <div class="day-header">
+                                <div class="grid__header-th">
+                                    {{ HeaderValues[day] | date:"EEE" }}
+                                    <p>{{ HeaderValues[day] | date:"MMM d" }}</p>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <span>
+                                {{ dataItem[day]?.toFixed(2) }}
+                            </span>
+                        </ng-template>
+                        <ng-template kendoGridFooterTemplate>
+                                <div>
+                                    <strong>{{FooterValues[day]?.toFixed(2)}}</strong>
+                                </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                    
+                    <kendo-grid-column field="day_Total_data" title="Total">
+                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                            <span>{{dataItem.TotalHours?.toFixed(2)}}</span>
+                        </ng-template>
+                        <ng-template kendoGridFooterTemplate >
+                            <strong>{{FooterValues.TotalHours?.toFixed(2)}}</strong> 
+                        </ng-template>
+                    </kendo-grid-column>
+                </kendo-grid>
+                </div>
+                </div>
+                <!-- Grid Box End -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Add Filter sidebar -->

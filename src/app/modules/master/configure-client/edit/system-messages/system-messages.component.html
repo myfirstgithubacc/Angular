@@ -1,0 +1,122 @@
+<div class="card__header">
+	<h4 class="card__heading">{{ "SystemMessages" | translate }}</h4>
+	<div class="card__header-icon">
+	</div>
+</div>
+
+<div class="card__body">
+	<div class="row">
+		<form [formGroup]="form">
+			<!-- Textarea box start -->
+			<div class="col-sm-12 col-md-12">
+				<div class="form-group">
+					<app-kendo-textarea [tooltipVisible]="true" [tooltipTitle]="'SubmitBidMessageToolTip'"
+						[controlName]="'submitBidMessage'" [label]="'SubmitBidMessageLabel'" [maxCharacters]="2000"
+						[isSpecialCharacterAllowed]="true">
+					</app-kendo-textarea>
+				</div>
+			</div>
+			<!-- Textarea box end -->
+
+			<!-- Textarea box start -->
+			<div class="col-sm-12 col-md-12">
+				<div class="form-group">
+					<app-kendo-textarea [tooltipVisible]="true" [tooltipTitle]="'RequestExceptionMessageToolTip'"
+						[controlName]="'exceptionMessage'" [label]="'RequestExceptionMessageLabel'" [maxCharacters]="1000"
+						[isSpecialCharacterAllowed]="true">
+					</app-kendo-textarea>
+				</div>
+			</div>
+			<!-- Textarea box end -->
+
+			<!-- Textarea box start -->
+			<div class="col-sm-12 col-md-12">
+				<div class="form-group">
+					<app-kendo-textarea [tooltipVisible]="true" [tooltipTitle]="
+							'SupplierOnBoardingConfirmationMessageToolTip'
+						" [controlName]="'onBoardingConfirmationMessage'" [label]="'SupplierOnBoardingConfirmationMessageLabel'"
+						[maxCharacters]="2000" [isSpecialCharacterAllowed]="true">
+					</app-kendo-textarea>
+				</div>
+			</div>
+			<!-- Textarea box end -->
+
+			<!-- Textarea box start -->
+			<div class="col-sm-12 col-md-12">
+				<div class="form-group">
+					<app-kendo-textarea [tooltipVisible]="true" [tooltipTitle]="'ExceptionApproverPopupMessageToolTip'"
+						[controlName]="'exceptionApproverMessage'" [label]="'ExceptionApproverPopupMessageLabel'"
+						[maxCharacters]="1000" [isSpecialCharacterAllowed]="true">
+					</app-kendo-textarea>
+				</div>
+			</div>
+			<!-- Textarea box end -->
+
+			<!-- Textarea box start -->
+			<div class="col-sm-12 col-md-12">
+				<div class="form-group">
+					<app-kendo-textarea [tooltipVisible]="true" [tooltipTitle]="'TimeExpenseApproverMessageToolTip'"
+						[controlName]="'timeExpenseApproverMessage'" [label]="'TimeExpenseApproverMessageLabel'"
+						[maxCharacters]="2000" [isSpecialCharacterAllowed]="true">
+					</app-kendo-textarea>
+				</div>
+			</div>
+			<!-- Textarea box end -->
+
+			<!-- Textarea box start -->
+			<div class="col-sm-12 col-md-12">
+				<div class="form-group">
+					<app-kendo-textarea [tooltipVisible]="true" [tooltipTitle]="'TimeEntryMessageToolTip'"
+						[controlName]="'timeEntryMessage'" [label]="'TimeEntryMessageLabel'" [maxCharacters]="2000"
+						[isSpecialCharacterAllowed]="true">
+					</app-kendo-textarea>
+				</div>
+			</div>
+			<!-- Textarea box end -->
+
+			 <!-- Textarea box start -->
+			 <div class="col-sm-12 col-md-12">
+				<div class="form-group">
+					<app-kendo-textarea [tooltipVisible]="true" [tooltipTitle]="'ExpenseEntryMessageToolTip'"
+						[controlName]="'expenseEntryMessage'" [label]="'ExpenseEntryMessageLabel'" [maxCharacters]="2000"
+						[isSpecialCharacterAllowed]="true">
+					</app-kendo-textarea>
+				</div>
+			</div>
+			<!-- Textarea box end -->
+
+			<!-- Textarea box start -->
+			<div *ngIf="sowReq" class="col-sm-12 col-md-12">
+				<div class="form-group">
+					<app-kendo-textarea [tooltipVisible]="true" [tooltipTitle]="'SowAcceptanceMessageToolTip'"
+						[controlName]="'sowAcceptanceMessage'" [label]="'SOWAcceptanceMessageLabel'" [isRequired]="true"
+						[maxCharacters]="2000" [isSpecialCharacterAllowed]="true">
+					</app-kendo-textarea>
+				</div>
+			</div>
+			<!-- Textarea box end -->
+
+			<!-- Textarea box start -->
+			<div *ngIf="sowReq" class="col-sm-12 col-md-12">
+				<div class="form-group">
+					<app-kendo-textarea [tooltipVisible]="true" [tooltipTitle]="'SowTimeExpenseEntryMessageToolTip'"
+						[controlName]="'sowTimeExpenseEntryMessage'" [label]="'SOWTimeExpenseEntryMessageLabel'"
+						[maxCharacters]="2000" [isSpecialCharacterAllowed]="true">
+					</app-kendo-textarea>
+				</div>
+			</div>
+			<!-- Textarea box end -->
+
+			<!-- Textarea box start -->
+			<div *ngIf="sowReq" class="col-sm-12 col-md-12">
+				<div class="form-group">
+					<app-kendo-textarea [tooltipVisible]="true" [tooltipTitle]="'SowTimeExpenseApproverMessageToolTip'"
+						[controlName]="'sowTimeExpenseApproverMessage'" [label]="'SOWTimeExpenseApproverMessageLabel'"
+						[maxCharacters]="2000" [isSpecialCharacterAllowed]="true">
+					</app-kendo-textarea>
+				</div>
+			</div>
+			<!-- Textarea box end -->
+		</form>
+	</div>
+</div>

@@ -1,0 +1,60 @@
+.ml-auto,
+.mx-auto {
+	margin-left: auto !important;
+}
+
+.revision-workflow-three {
+	.form-group {
+		border: 1px solid #F79009;
+		padding: 2px 10px 6px;
+		border-radius: 4px;
+	}
+}
+
+.revision-workflow-two .achor__text,
+.revision-workflow-three .achor__text-revision,
+.achor__text.achor__text-radio {
+	color: #F79009 !important;
+}
+
+.revision-workflow-two .mt-1 .achor__text,
+.revision-workflow-two .dropdown__shift-range--input>.achor__text {
+	color: #7c899c !important;
+}
+
+.revision-workflow-two {
+	&.active {
+		.form-group {
+			.k-input-solid {
+				border-color: #F79009 !important;
+			}
+		}
+	}
+}
+
+.quick-view__assignmentDetails .offcanvas-body [class^="col"] {
+	width: 100%;
+}
+
+.quick-view__assignmentDetails .offcanvas-body .card__body--inner-wrapper {
+	width: 100%;
+}
+
+.quick-view__assignmentDetails .offcanvas-body .card__body--inner-wrapper .view__screen .list__data .list__data--item.cost-accounting-panel-view span {
+	white-space: normal;
+	word-break: break-all;
+}
+
+.quick-view__assignmentDetails .list-view.third-lavel-grid.staf-list .k-grid-content,
+.quick-view__assignmentDetails .list-view__border .k-grid-content {
+	overflow: auto !important;
+}
+
+.quick-view__assignmentDetails .list-view__border .k-grid-content .k-table-th,
+.quick-view__assignmentDetails .list-view__border .k-grid-content .k-table-td {
+	width: 75px;
+}
+
+.quick-view__assignmentDetails .list-view__border .k-grid-aria-root colgroup col {
+	width: 110px !important;
+}

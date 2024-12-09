@@ -1,0 +1,73 @@
+        <!-- Card Header Section-->
+        <div class="card__header">
+          <h4 class="card__heading">{{ "LoginMethod" | translate }}</h4>
+          <div class="card__header-icon">
+          </div>
+        </div>
+        <!-- End Card Header Section-->
+
+        <!-- Card Body Section-->
+        <div class="card__body">
+          <div class="row">
+            <!-- input box start -->
+            <div class="col-sm-12 col-md-12">
+              <div class="form-group list-view">
+                <kendo-grid [data]="singleSignOnData">
+                  <kendo-grid-column media="(max-width: 920px)" title="Items">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        <!-- template for mobile -->
+                        <dl>
+                            <dt>{{'UserType' | translate}}</dt> 
+                            <dd>{{ dataItem.UserType }} <span kendoTooltip> <xrm-icon *ngIf="dataItem.UserType == 'Contractor/SOW Resource'" 
+                              [title]="'ClpSowResourceToolTip'|translate" name="info" 
+                              class="input-info" ></xrm-icon></span></dd>
+                        </dl>
+                        <dl>
+                          <dt>{{"LoginDefaultType" | translate}}</dt>
+                          <dd><div *ngFor="let cred of dataItem.data" class="me-4" >
+                            <span *ngIf="cred.IsDefault">
+                            {{ cred.LoginCredential }}
+                          </span>
+                          </div></dd>
+                      </dl>
+                        <dl>
+                          <dt>{{"LoginOtherType" | translate}}</dt>
+                          <dd><div *ngFor="let cred of dataItem.data" class="me-4" >
+                            {{'None' | translate}}
+                          </div></dd>
+                      </dl>
+                    </ng-template>
+                  </kendo-grid-column>
+                    
+                  <kendo-grid-column media="(min-width: 921px)" [width]="250" field="UserType" [title]="'UserType'|translate">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                      {{ dataItem.UserType }} <span kendoTooltip><xrm-icon *ngIf="dataItem.UserType == 'Contractor/SOW Resource'" 
+                        [title]="'ClpSowResourceToolTip'|translate" name="info" 
+                        class="input-info" ></xrm-icon></span>
+                      
+                    </ng-template>
+                  </kendo-grid-column>
+                  <kendo-grid-column media="(min-width: 921px)" field="LoginTypeDefault" [title]="'LoginDefaultType'|translate">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                      <div *ngFor="let cred of dataItem.data" class="me-4" >
+                        <span *ngIf="cred.IsDefault">
+                        {{ cred.LoginCredential }}
+                      </span>
+                      </div>
+                    </ng-template>
+                  </kendo-grid-column>
+                  <kendo-grid-column media="(min-width: 921px)" field="LoginType" [title]="'LoginOtherType' | translate">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                      <div *ngFor="let cred of dataItem.data" class="me-4" >
+                        {{'None' | translate}}
+                      </div>
+                    </ng-template>
+                  </kendo-grid-column>
+                </kendo-grid>
+              </div>
+            </div>
+            
+            
+          </div>
+        </div>
+        <!-- End Card Body Section-->

@@ -1,0 +1,91 @@
+<ng-container *ngIf="udfControlConfig.length > 0">
+
+  <form [formGroup]="udfForm">
+    <div [ngClass]="{'card': showTitle}" class="card">
+      <div class="card__header" *ngIf="showTitle">
+        <h4 class="card__heading">{{title | translate}} </h4>
+      </div>
+      <div class="card__body">
+        <div class="row">
+
+          <ng-container *ngFor="let item of udfControlConfig">
+            <ng-container *ngIf="item.FieldTypeId == 1">
+              <ng-container *ngIf="item.IsNumeric">
+                <div class=" col-sm-6 col-md-6">
+                  <div class="form-group">
+                    <app-numeric-box [controlName]="item.StandardFieldName" [label]="item.FieldLabelLocalizedKey"
+                      [isRequired]="isMasterScreen ? (item.IsMandatory && !isViewOnly) : false" [addOnLabelText]="(!isMasterScreen && !(item.IsMandatory && !isViewOnly) && !item.IsReadOnly)  ? 'Optional' : ''"
+                      [isEditMode]="item.IsReadOnly || !item.IsEditable || isViewOnly"
+                      [tooltipVisible]="item.FieldHelpTextLocalizedKey != null && item.FieldHelpTextLocalizedKey.length > 0"
+                      [tooltipTitle]="item.FieldHelpTextLocalizedKey"
+                      [maxlength]="item.MaxLength"></app-numeric-box>
+                  </div>
+                </div>
+              </ng-container>
+
+              <ng-container *ngIf="!item.IsNumeric">
+                <div class=" col-sm-6 col-md-6">
+                  <div class="form-group">
+                    <app-textbox [controlName]="item.StandardFieldName" [label]="item.FieldLabelLocalizedKey"
+                      [isSpecialCharacterAllowed]="true" [isRequired]="isMasterScreen ? (item.IsMandatory && !isViewOnly) : false"
+                      [isEditMode]="item.IsReadOnly || !item.IsEditable || isViewOnly" [addOnLabelText]="(!isMasterScreen && !(item.IsMandatory && !isViewOnly) && !item.IsReadOnly)  ? 'Optional' : ''"
+                      [tooltipVisible]="item.FieldHelpTextLocalizedKey != null && item.FieldHelpTextLocalizedKey.length > 0"
+                      [tooltipTitle]="item.FieldHelpTextLocalizedKey" [maxCharacters]="item.MaxLength"></app-textbox>
+                  </div>
+                </div>
+              </ng-container>
+
+            </ng-container>
+
+            <ng-container *ngIf="item.FieldTypeId == 2">
+              <div class="col-sm-12 col-md-12">
+                <div class="form-group">
+                  <app-kendo-textarea [controlName]="item.StandardFieldName" [label]="item.FieldLabelLocalizedKey"
+                    [isRequired]="isMasterScreen ? (item.IsMandatory && !isViewOnly) : false" [addOnLabelText]="(!isMasterScreen && !(item.IsMandatory && !isViewOnly) && !item.IsReadOnly)  ? 'Optional' : ''"
+                    [isEditMode]="item.IsReadOnly || !item.IsEditable || isViewOnly" [allowBullets]="true"
+                    [tooltipVisible]="item.FieldHelpTextLocalizedKey != null && item.FieldHelpTextLocalizedKey.length > 0"
+                    [tooltipTitle]="item.FieldHelpTextLocalizedKey" [maxCharacters]="item.MaxLength"
+                    [isSpecialCharacterAllowed]="true"></app-kendo-textarea>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="item.FieldTypeId == 3">
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                  <app-kendo-dropdown [controlName]="item.StandardFieldName" [addOnLabelText]="(!isMasterScreen && !(item.IsMandatory && !isViewOnly) && !item.IsReadOnly)  ? 'Optional' : ''"
+                    [isRequired]="isMasterScreen ? (item.IsMandatory && !isViewOnly) : false" [label]="item.FieldLabelLocalizedKey"
+                    [list]="item.PredefinedList" [isEditMode]="item.IsReadOnly || !item.IsEditable || isViewOnly"
+                    [list]="item.PredefinedListItems==null ? [] : item.PredefinedListItems"
+                    [tooltipVisible]="item.FieldHelpTextLocalizedKey != null && item.FieldHelpTextLocalizedKey.length > 0"
+                    [tooltipTitle]="item.FieldHelpTextLocalizedKey" [placeholder]="'DdlSelect'"
+                    [isSpecialCharacterAllowed]="true"></app-kendo-dropdown>
+
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="item.FieldTypeId==4">
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                  <app-kendo-datepicker [controlName]="item.StandardFieldName" [label]="item.FieldLabelLocalizedKey"
+                    [isRequired]="isMasterScreen ? (item.IsMandatory && !isViewOnly) : false" [addOnLabelText]="(!isMasterScreen && !(item.IsMandatory && !isViewOnly) && !item.IsReadOnly)  ? 'Optional' : ''"
+                    [isEditMode]="item.IsReadOnly || !item.IsEditable || actionTypeId == 3"
+                    [tooltipVisible]="item.FieldHelpTextLocalizedKey != null && item.FieldHelpTextLocalizedKey.length > 0"
+                    [minDate]="item.MinDate" [maxDate]="item.MaxDate" [tooltipTitle]="item.FieldHelpTextLocalizedKey">
+                  </app-kendo-datepicker>
+                </div>
+              </div>
+            </ng-container>
+
+
+          </ng-container>
+
+        </div>
+
+      </div>
+    </div>
+
+  </form>
+
+</ng-container>

@@ -1,0 +1,471 @@
+<form [formGroup]="inputProperties.editAssingmentForm">
+    <div class="card">
+        <!-- Card Header Section -->
+        <div class="card__header">
+            <h4 class="card__heading">{{'RateDetails' | translate}}</h4>
+            <div class="card__header-icon"></div>
+        </div>
+        <!-- End Card Header Section -->
+
+
+
+
+        <!-- Card Body Section -->
+        <div class="card__body">
+            <div class="row">
+                <!-- Effective Date for Current Rate start here -->
+                <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('EffectiveDateForCurrentRate')">
+                    <div class="form-group" >
+                        <app-kendo-label
+                            [label]="'EffectiveDateForCurrentRate'"
+                            [isDate]="true"
+                            [value]="inputProperties.assignmentDetails?.AssignmentRates?.RateEffectiveDateFrom"
+                        >
+                        </app-kendo-label>
+                    </div>
+                </div>
+                <!-- Effective Date for Current Rate Ends here -->
+
+
+
+
+                <!-- Rate Unit start here -->
+                <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('RateUnit')">
+                    <div class="form-group" >
+                        <app-kendo-label
+                            [label]="'RateUnit'"
+                            [value]="inputProperties.assignmentDetails?.UnitTypeName"
+                        >
+                        </app-kendo-label>
+                    </div>
+                </div>
+                <!-- Rate Unit Ends here -->
+
+
+
+
+                <div class="clearfix"></div>
+                <!-- 1st Shift Pay Rate (USD/Hr) start Here -->
+                <div class="col-sm-6 col-md-6" [ngClass]="inputProperties.isControlRevision?.BaseWageRate && isRevisionFieldExist('BaseWageRate') ? 'revision-workflow-two' : ''" *ngIf="isFieldVisible('baseWageRate')">
+                    <div class="form-group">
+                        <app-numeric-box
+                            [controlName]="'BaseWageRate'"
+                            [label]="getDayHourLocalizationValue('ActualPayRate')"
+                            [decimals]="2"
+                            [format]="'n2'"
+                            (afterValueChanged)="getRevisionFieldsUpdate('BaseWageRate')"
+                            [isEditMode]="isReadOnly('BaseWageRate') || inputProperties.IsRevisionPending"
+                            [isRequired]="true"
+                            [valueChangeDelay]="1000"
+                            [placeholder]="'0.00'"
+                        ></app-numeric-box>
+                        <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision?.BaseWageRate && isRevisionFieldExist('BaseWageRate')">
+                            <xrm-icon  name="alert-triangle" [size]="18" color="orange-color" title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                         </div>
+                    </div>
+                </div>
+                <!-- 1st Shift Pay Rate (USD/Hr) Ends Here -->
+
+
+
+
+                <!-- Actual ST Wage Rate (USD/Hr) start here -->
+                <div class="col-sm-6 col-md-6" [ngClass]="inputProperties.isControlRevision?.ActualSTWageRate && isRevisionFieldExist('ActualSTWageRate') ? 'revision-workflow-two' : ''" *ngIf="isFieldVisible('actualSTWageRate')">
+                    <div class="form-group">
+                        <app-numeric-box
+                            [controlName]="'ActualSTWageRate'"
+                            [label]="getDayHourLocalizationValue('STWageRate')"
+                            [decimals]="2"
+                            [format]="'n2'"
+                            [isEditMode]="isReadOnly('ActualSTWageRate') || inputProperties.IsRevisionPending"
+                            (afterValueChanged)="getRevisionFieldsUpdate('ActualSTWageRate')"
+                             [valueChangeDelay]="1000"
+                            [isRequired]="true"
+                            [placeholder]="'0.00'"
+                        ></app-numeric-box>
+                        <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision?.ActualSTWageRate && isRevisionFieldExist('ActualSTWageRate')">
+                            <xrm-icon  name="alert-triangle" [size]="18" color="orange-color" title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                         </div>
+                    </div>
+                </div>
+                <!-- Actual ST Wage Rate (USD/Hr) Ends here -->
+
+
+
+
+                <!-- OT Multiper (USD/Hr) start here -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label
+                            [label]="getDayHourLocalizationValue('OTMultiper')"
+                            [value]="inputProperties.editAssingmentForm.get('oTMultiper')?.value?.toFixed(4)"
+                        >
+                        </app-kendo-label>
+                    </div>
+                </div>
+                <!-- OT Multiper (USD/Hr) ends here -->
+
+
+
+
+                <!-- DT Multiper (USD/Hr) start here -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label
+                            [label]="getDayHourLocalizationValue('DTMultiper')"
+                            [value]="inputProperties.editAssingmentForm.get('dTMultiper')?.value?.toFixed(4)"
+                        >
+                        </app-kendo-label>
+                    </div>
+                </div>
+                <!-- DT Multiper (USD/Hr) ends here -->
+
+
+
+
+                <!-- OT Wage Rate (USD/Hr) start here -->
+                <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('otWageRate')" [ngClass]="inputProperties.isControlRevision?.OTWageRate && isRevisionFieldExist('OTWageRate') ? 'revision-workflow-two' : ''">
+                    <div class="form-group">
+                        <app-numeric-box
+                            [label]="getDayHourLocalizationValue('OTWageRate')"
+                            [controlName]="'OTWageRate'"
+                            [decimals]="2"
+                            [format]="'n2'"
+                            [isEditMode]="isReadOnly('OTWageRate') || inputProperties.IsRevisionPending"
+                            [isRequired]="true"
+                            (afterValueChanged)="getRevisionFieldsUpdate('OTWageRate')"
+                             [valueChangeDelay]="1000"
+                            [placeholder]="'0.00'"
+                        >
+                        </app-numeric-box>
+                        <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision?.OTWageRate && isRevisionFieldExist('OTWageRate')">
+                            <xrm-icon  name="alert-triangle" [size]="18" color="orange-color" title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                         </div>
+                    </div>
+                </div>
+                <!-- OT Wage Rate (USD/Hr) ends here -->
+
+
+
+
+                <!-- DT Wage Rate (USD/Hr) start here -->
+                <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('dtWageRate')" [ngClass]="inputProperties.isControlRevision?.DTWageRate && isRevisionFieldExist('DTWageRate') ? 'revision-workflow-two' : ''">
+                    <div class="form-group">
+                        <app-numeric-box
+                            [label]="getDayHourLocalizationValue('DTWageRate')"
+                            [controlName]="'DTWageRate'"
+                            [decimals]="2"
+                            [format]="'n2'"
+                            [isEditMode]="isReadOnly('DTWageRate') || inputProperties.IsRevisionPending"
+                            [isRequired]="true"
+                            (afterValueChanged)="getRevisionFieldsUpdate('DTWageRate')"
+                             [valueChangeDelay]="1000"
+                            [placeholder]="'0.00'"
+                        ></app-numeric-box>
+                        <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision?.DTWageRate && isRevisionFieldExist('DTWageRate')">
+                            <xrm-icon  name="alert-triangle" [size]="18" color="orange-color" title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                         </div>
+                    </div>
+                </div>
+                <!-- DT Wage Rate (USD/Hr) ends here -->
+
+                <!-- Submitted Markup % start Here -->
+                <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('submitMarkUp')" [ngClass]="inputProperties.isControlRevision?.StaffingAgencyMarkup && isRevisionFieldExist('StaffingAgencyMarkup') ? 'revision-workflow-two' : ''">
+                    <div class="form-group">
+                        <app-numeric-box
+                            [label]="'SubmittedMarkupPer'"
+                            [controlName]="'StaffingAgencyMarkup'"
+                            [decimals]="3"
+                            [format]="'n2'"
+                            [isEditMode]="isReadOnly('StaffingAgencyMarkup') || inputProperties.IsRevisionPending"
+                            [isRequired]="true"
+                            (afterValueChanged)="getRevisionFieldsUpdate('StaffingAgencyMarkup')"
+                             [valueChangeDelay]="1000"
+                            [placeholder]="'0.000'"
+                        ></app-numeric-box>
+                        <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision?.StaffingAgencyMarkup && isRevisionFieldExist('StaffingAgencyMarkup')">
+                            <xrm-icon  name="alert-triangle" [size]="18" color="orange-color" title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                         </div>
+                    </div>
+                </div>
+                <!-- Submitted Markup % ends Here -->
+
+
+
+
+                <!-- OT Hours Billed At start here -->
+                <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('otHoursBilledAt')" [ngClass]="inputProperties.isControlRevision?.OTRateTypeId && isRevisionFieldExist('OTRateTypeId') ? 'revision-workflow-two' : ''">
+                    <div class="form-group">
+                        <app-kendo-radio-button
+                            [label]="getDayHourLocalizationValue('OvertimeHoursBilledAt')"
+                            [controlName]="'OTRateTypeId'"
+                            [RadioGroup]="inputProperties.otHoursBilledAtRadioGroup"
+                            [name]="'otHoursBilledAt'"
+                            [isEditMode]="isReadOnly('OTRateTypeId') || inputProperties.IsRevisionPending"
+                            (onChangeRadio)="getRevisionFieldsUpdate('OTRateTypeId')"
+                        >
+                        </app-kendo-radio-button>
+                        <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision?.OTRateTypeId && isRevisionFieldExist('OTRateTypeId')">
+                            <xrm-icon  name="alert-triangle" [size]="18" color="orange-color" title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                         </div>
+
+                    </div>
+                </div>
+                <!-- OT Hours Billed At ends here -->
+
+
+
+
+                <!-- ST Bill Rate (USD/Hr) start here -->
+                <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('stBillRate')" [ngClass]="inputProperties.isControlRevision?.STBillRate && isRevisionFieldExist('STBillRate') ? 'revision-workflow-two' : ''">
+                    <div class="form-group">
+                        <app-numeric-box
+                            [label]="getDayHourLocalizationValue('STBillRate')"
+                            [controlName]="'STBillRate'"
+                            [decimals]="2"
+                            [format]="'n2'"
+                            [isEditMode]="isReadOnly('STBillRate') || inputProperties.IsRevisionPending"
+                            [isRequired]="true"
+                            (afterValueChanged)="getRevisionFieldsUpdate('STBillRate')"
+                             [valueChangeDelay]="1000"
+                            [placeholder]="'0.00'"
+                        >
+                        </app-numeric-box>
+                        <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision?.STBillRate && isRevisionFieldExist('STBillRate')">
+                            <xrm-icon  name="alert-triangle" [size]="18" color="orange-color" title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                         </div>
+                    </div>
+                </div>
+                <!-- ST Bill Rate (USD/Hr) ends here -->
+
+
+
+
+                <!-- OT Bill Rate (USD/Hr) start here -->
+                <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('otBillRate')" [ngClass]="inputProperties.isControlRevision?.OTBillRate && isRevisionFieldExist('OTBillRate') ? 'revision-workflow-two' : ''">
+                    <div class="form-group">
+                        <app-numeric-box
+                            [label]="getDayHourLocalizationValue('OTBillRate')"
+                            [controlName]="'OTBillRate'"
+                            [decimals]="2"
+                            [format]="'n2'"
+                            [isEditMode]="isReadOnly('OTBillRate') || inputProperties.IsRevisionPending"
+                            [isRequired]="true"
+                            (afterValueChanged)="getRevisionFieldsUpdate('OTBillRate')"
+                             [valueChangeDelay]="1000"
+                            [placeholder]="'0.00'"
+                        >
+                        </app-numeric-box>
+                        <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision?.OTBillRate && isRevisionFieldExist('OTBillRate')">
+                            <xrm-icon  name="alert-triangle" [size]="18" color="orange-color" title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                         </div>
+                    </div>
+                </div>
+                <!-- OT Bill Rate (USD/Hr) ends here -->
+
+
+
+
+                <!-- DT Bill Rate (USD/Hr) start here -->
+                <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('dtBillRate')" [ngClass]="inputProperties.isControlRevision?.DTBillRate && isRevisionFieldExist('DTBillRate') ? 'revision-workflow-two' : ''">
+                    <div class="form-group">
+                        <app-numeric-box
+                            [label]="getDayHourLocalizationValue('DTBillRate')"
+                            [controlName]="'DTBillRate'"
+                            [decimals]="2"
+                            [format]="'n2'"
+                            [isEditMode]="isReadOnly('DTBillRate') || inputProperties.IsRevisionPending"
+                            [isRequired]="true"
+                            (afterValueChanged)="getRevisionFieldsUpdate('DTBillRate')"
+                             [valueChangeDelay]="1000"
+                            [placeholder]="'0.00'"
+                        >
+                        </app-numeric-box>
+                        <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision?.DTBillRate && isRevisionFieldExist('DTBillRate')">
+                            <xrm-icon  name="alert-triangle" [size]="18" color="orange-color" title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                         </div>
+                    </div>
+                </div>
+                <!-- DT Bill Rate (USD/Hr) ends here -->
+
+
+
+
+                <!-- Staffing Agency ST Rate (USD/Hr) start here -->
+                <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('vendorSTRate')" [ngClass]="inputProperties.isControlRevision?.StaffingAgencySTBillRate && isRevisionFieldExist('StaffingAgencySTBillRate') ? 'revision-workflow-two' : ''">
+                    <div class="form-group">
+                        <app-numeric-box
+                            [label]="getDayHourLocalizationValue('StaffingAgencySTBillRate')"
+                            [controlName]="'StaffingAgencySTBillRate'"
+                            [decimals]="2"
+                            [format]="'n2'"
+                            [isEditMode]="isReadOnly('StaffingAgencySTBillRate') || inputProperties.IsRevisionPending"
+                            [isRequired]="true"
+                            (afterValueChanged)="getRevisionFieldsUpdate('StaffingAgencySTBillRate')"
+                             [valueChangeDelay]="1000"
+                            [placeholder]="'0.00'"
+                        >
+                        </app-numeric-box>
+                        <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision?.StaffingAgencySTBillRate && isRevisionFieldExist('StaffingAgencySTBillRate')">
+                            <xrm-icon  name="alert-triangle" [size]="18" color="orange-color" title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                         </div>
+                    </div>
+                </div>
+                <!-- Staffing Agency ST Rate (USD/Hr) ends here -->
+
+
+
+
+                <!-- Staffing Agency OT Rate (USD/Hr) start here -->
+                <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('vendorOTRate')" [ngClass]="inputProperties.isControlRevision?.StaffingAgencyOTBillRate && isRevisionFieldExist('StaffingAgencyOTBillRate') ? 'revision-workflow-two' : ''">
+                    <div class="form-group">
+                        <app-numeric-box
+                            [label]="getDayHourLocalizationValue('StaffingAgencyOTBillRate')"
+                            [controlName]="'StaffingAgencyOTBillRate'"
+                            [decimals]="2"
+                            [format]="'n2'"
+                            [isEditMode]="isReadOnly('StaffingAgencyOTBillRate') || inputProperties.IsRevisionPending"
+                            [isRequired]="true"
+                            (afterValueChanged)="getRevisionFieldsUpdate('StaffingAgencyOTBillRate')"
+                            [placeholder]="'0.00'"
+                        >
+                        </app-numeric-box>
+                        <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision?.StaffingAgencyOTBillRate && isRevisionFieldExist('StaffingAgencyOTBillRate')">
+                            <xrm-icon  name="alert-triangle" [size]="18" color="orange-color" title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                         </div>
+                    </div>
+                </div>
+                <!-- Staffing Agency OT Rate (USD/Hr) ends here -->
+
+
+
+
+                <!-- Staffing Agency DT Rate (USD/Hr) Starts here -->
+                <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('vendorDTRate')" [ngClass]="inputProperties.isControlRevision?.StaffingAgencyDTBillRate && isRevisionFieldExist('StaffingAgencyDTBillRate') ? 'revision-workflow-two' : ''">
+                    <div class="form-group">
+                        <app-numeric-box
+                            [label]="getDayHourLocalizationValue('StaffingAgencyDTBillRate')"
+                            [controlName]="'StaffingAgencyDTBillRate'"
+                            [decimals]="2"
+                            [format]="'n2'"
+                            [isEditMode]="isReadOnly('StaffingAgencyDTBillRate') || inputProperties.IsRevisionPending"
+                            [isRequired]="true"
+                            (afterValueChanged)="getRevisionFieldsUpdate('StaffingAgencyDTBillRate')"
+                             [valueChangeDelay]="1000"
+                            [placeholder]="'0.00'"
+                            >
+                        </app-numeric-box>
+                        <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision?.StaffingAgencyDTBillRate && isRevisionFieldExist('StaffingAgencyDTBillRate')">
+                            <xrm-icon  name="alert-triangle" [size]="18" color="orange-color" title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                         </div>
+                    </div>
+                </div>
+                <!-- Staffing Agency DT Rate (USD/Hr) Ends here -->
+
+
+
+
+                <!-- Modify PO Approved Amount based on Revised Rates Start Here -->
+                <div class="col-sm-6 col-md-6" *ngIf="inputProperties.showRevisionRateDate || showRevisionRateDate">
+                    <div class="form-group">
+                        <app-kendo-radio-button
+                            [label]="'ModifyPOApprovedAmountBasedOnRevisedRates'"
+                            [controlName]="'ModifyPObasedOnRevisedRates'"
+                            [RadioGroup]="inputProperties.modifyPORadioGroup"
+                            [name]="'modifyPOApprovedAmountBasedOnRevisedRates'"
+                            (onChangeRadio)="changePoRevised($event)"
+                            [isRequired]="true"
+                            >
+                        </app-kendo-radio-button>
+
+                        <div class="mt-1">
+
+                            <span *ngIf="inputProperties.editAssingmentForm?.get('ModifyPObasedOnRevisedRates')?.value && inputProperties.editAssingmentForm.get('revisedRatedate')?.value" class="achor__text mt-1">
+                            {{getEstimatedCostChangeText(this.inputProperties.editAssingmentForm.get('revisedFundByRateChange')?.value,inputProperties.currencyCode) }}
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- Modify PO Approved Amount based on Revised Rates Ends Here -->
+
+
+
+
+                <!-- Modify PO Approved Amount based on Revised Rates Start Here -->
+                <!-- <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-radio-button
+                            [label]="'Modify PO Approved Amount based on New End Date'"
+                            [controlName]="'modifyPOApprovedAmountBasedOnNewEndsDate'"
+                            [RadioGroup]="modifyPOApprovedRadioGroup">
+                    </app-kendo-radio-button>
+                        <div class="mt-1">
+
+                            <span>
+                                {{ EditAssingmentForm.get("modifyPO")?.value ? "Estimated Cost of Change: XXXXX. Please refer to the PO Details section below.": ""}}
+                            </span>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- Modify PO Approved Amount based on Revised Rates Ends Here -->
+
+                <!-- Revised Rate Effective Date start here -->
+                <div class="col-sm-6 col-md-6" *ngIf="inputProperties.showRevisionRateDate || showRevisionRateDate">
+                    <div class="form-group">
+                        <app-kendo-datepicker
+                            [label]="'RevisedRateEffectiveDate'"
+                            [controlName]="'revisedRatedate'"
+                            (onChange)="changeRateReviseDate($event)"
+                            [isRequired]="true"
+                        >
+                        </app-kendo-datepicker>
+
+                    </div>
+                </div>
+                <!-- Revised Rate Effective Date ends here -->
+
+                <ng-container *ngIf="inputProperties.benefitAdderGrid?.length! > 0">
+                    <!-- Page Subheading -->
+                <div class="col-sm-12 col-md-12">
+                    <h4 class="card__body--subheading">{{'BenefitAdder' | translate}}</h4>
+                </div>
+                <!-- Page Subheading -->
+                <!-- Grid Box Start -->
+                <div class="col-sm-6 col-md-6 list-view">
+                    <div>
+                        <kendo-grid [data]="inputProperties.benefitAdderGrid">
+                            <kendo-grid-column media="(max-width: 450px)" title>
+                                <ng-template
+                                    kendoGridCellTemplate
+                                    let-dataItem>
+                                    <dd>
+                                        <strong>{{'BenefitAdderType'| translate}}</strong>
+                                    </dd>
+                                    <dl></dl>
+                                    <dd>
+                                        <strong>{{getDayHourLocalizationValue('Rate')}}</strong>
+                                    </dd>
+                                    <dl></dl>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column
+                                field="LocalizedLabelKey"
+                                title="{{'BenefitAdderType' | translate}}">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                  {{dataItem.LocalizedLabelKey | translate}}
+                              </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column
+                                field="Value"
+                                title="{{getDayHourLocalizationValue('Rate')}}">
+                            </kendo-grid-column>
+                        </kendo-grid>
+                    </div>
+                </div>
+                </ng-container>
+                <!-- Grid Box End -->
+            </div>
+        </div>
+    </div>
+</form>

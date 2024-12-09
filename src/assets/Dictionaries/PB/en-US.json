@@ -1,0 +1,54 @@
+{
+    "Client":{
+        "Client":"PB"
+    },
+    "CultureInfo":{
+        "Ukey":"aaaaaaaaaaaaa",
+        "Code":"en-US"
+    },
+    "Language":{
+        "Code":"en",
+        "Name":"English"
+    },
+    "Country":{
+        "Name":"United States of America",
+        "CountryCode":"US",
+        "ZipFormat":"AN",
+        "PhoneFormat":"(###) ####-####",
+        "DateFormat":"MM/dd/YYYY HH:mm:ss tt",
+        "CurrencySymbol":"$",
+        "CurrencyCode":"USD"
+    },
+    "Content":[
+        {
+            "Ukey":"gggggggggggg",
+            "FieldKey":"LC",
+            "FieldValue":"Labor Category",
+            "Category":"Dynamic"
+            
+        },
+        {
+            "Ukey":"ggggggggggga",
+            "FieldKey":"JC",
+            "FieldValue":"Job Category",
+            "Category":"Dynamic"
+        },
+        {
+            "Ukey":"gggggggggggb",
+            "FieldKey":"BU",
+            "FieldValue":"Business Unit",
+            "Category":"Static"
+        },
+        {
+
+            "Ukey": "gggggggggggc",
+      
+            "FieldKey": "ReqFieldValidationMessage",
+      
+            "FieldValue": "This is required field",
+      
+            "Category": "Static"
+      
+          }
+    ]
+}

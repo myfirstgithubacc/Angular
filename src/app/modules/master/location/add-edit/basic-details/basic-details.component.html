@@ -1,0 +1,278 @@
+<form [formGroup]="basicDetailsForm">
+
+   <!-- Card Section Basic Details -->
+   <div class="card">
+      <!-- Card Header Section-->
+      <div class="card__header">
+         <h4 class="card__heading">{{'BasicDetails' | translate}}
+         </h4>
+      </div>
+      <!-- End Card Header Section-->
+      <!-- Card Body Section-->
+      <div class="card__body">
+         <div class="row">
+
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group">
+                  <app-kendo-dropdown [list]="sectorDropdownList" [label]="'Sector'" [controlName]="'sectorId'"
+                     [isEditMode]="isEditMode" [placeholder]="'DdlSelect'" [isRequired]="true"
+                     (onChange)="getLocationAllDropdownListBySectorId($event)" [isSpecialCharacterAllowed]="true">
+                  </app-kendo-dropdown>
+                  <p *ngIf="isEditMode" class="label-answere">{{locationDetails?.SectorName}}</p>
+               </div>
+            </div>
+            <!-- Input Box End -->
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group">
+                  <app-textbox [controlName]="'locationName'" [label]="'LocationName'" [isRequired]="true"
+                     [isEditMode]="isEditMode" [isSpecialCharacterAllowed]="true" [maxCharacters]="100">
+                  </app-textbox>
+               </div>
+            </div>
+            <!-- Input Box End -->
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group">
+                  <app-textbox [controlName]="'addressOne'" [label]="'AddressLine1'" [isRequired]="true" [maxCharacters]="100"
+                     [isSpecialCharacterAllowed]="true">
+                  </app-textbox>
+               </div>
+            </div>
+            <!-- Input Box End -->
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group">
+                  <app-textbox [controlName]="'addressTwo'" [label]="'AddressLine2'" [isSpecialCharacterAllowed]="true" [maxCharacters]="100">
+                  </app-textbox>
+               </div>
+            </div>
+            <!-- Input Box End -->
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group">
+                  <app-kendo-label [label]="'Country'" [value]="countryName"></app-kendo-label>
+
+               </div>
+            </div>
+            <!-- Input Box End -->
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group">
+                  <app-kendo-dropdown [list]="stateDropDownList" [label]="isEditMode ? stateLabelEdit : stateLabel"
+                     [controlName]="'state'" [placeholder]="'DdlSelect'" [isRequired]="true">
+                  </app-kendo-dropdown>
+               </div>
+            </div>
+            <!-- Input Box End -->
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group">
+                  <app-textbox [controlName]="'cityName'" [label]="'City'" [isRequired]="true"
+                     [isSpecialCharacterAllowed]="true" [maxCharacters]="50">
+                  </app-textbox>
+               </div>
+            </div>
+            <!-- Input Box End -->
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group">
+
+                  <app-kendo-masked-textbox [controlName]="'postalPinCode'"
+                     [label]="isEditMode ? zipLabelEdit : zipLabel"
+                     [countryId]="isEditMode ?  locationDetails?.CountryId : sectorDetails?.BasicDetail?.CountryId"
+                     [isZipCode]="true" [isRequired]="true"></app-kendo-masked-textbox>
+               </div>
+            </div>
+            <!-- Input Box End -->
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group">
+                  <app-kendo-dropdown [list]="timeZoneDropdown?.Data" [label]="'TimeZoneId'" [controlName]="'timeZone'"
+                     [placeholder]="'DdlSelect'" [isRequired]="true" [isSpecialCharacterAllowed]="true">
+                  </app-kendo-dropdown>
+               </div>
+            </div>
+            <!-- Input Box End -->
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group">
+                  <app-kendo-phone [label]="'Phone'" [phoneControlName]="'phoneNo'" [phoneExtControlName]="'phoneNoExt'"
+                     [countryId]="isEditMode ?  locationDetails?.CountryId : sectorDetails?.BasicDetail?.CountryId"
+                     [isRequired]="false" [isExtension]="true"></app-kendo-phone>
+               </div>
+            </div>
+            <!-- Input Box End -->
+
+            <!-- Page Subheading -->
+            <div class="col-sm-12 col-md-12">
+               <h4 class="card__body--subheading">{{'BillingDetails' | translate}}</h4>
+            </div>
+            <!-- Page Subheading -->
+
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group">
+                  <app-textbox [controlName]="'billingAddressOne'" [label]="'BillingAddress1'"
+                     [isSpecialCharacterAllowed]="true" [maxCharacters]="100">
+                  </app-textbox>
+               </div>
+            </div>
+            <!-- Input Box End -->
+
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group">
+                  <app-textbox [controlName]="'billingAddressTwo'" [label]="'BillingAddress2'"
+                     [isSpecialCharacterAllowed]="true" [maxCharacters]="100">
+                  </app-textbox>
+               </div>
+            </div>
+            <!-- Input Box End -->
+
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group">
+                  <app-textbox [controlName]="'billingCityName'" [label]="'BillingCity'"
+                     [isSpecialCharacterAllowed]="true" [maxCharacters]="50">
+                  </app-textbox>
+               </div>
+            </div>
+            <!-- Input Box End -->
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group">
+                  <app-kendo-dropdown [list]="stateDropDownList" [label]="'BillingState'"
+                     [labelLocalizeParam]="isEditMode ? localizeParamStateEdit : localizeParamState"
+                     [controlName]="'billingStateCode'" [placeholder]="'DdlSelect'">
+                  </app-kendo-dropdown>
+               </div>
+            </div>
+            <!-- Input Box End -->
+
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group">
+                  <app-kendo-masked-textbox [controlName]="'billingPostalCode'" [label]="'BillingZip'"
+                     [labelLocalizeParam]="isEditMode ? localizeParamZipEdit : localizeParamZip"
+                     [countryId]="isEditMode ?  locationDetails?.CountryId : sectorDetails?.BasicDetail?.CountryId"
+                     [isZipCode]="true" [isRequired]="false"></app-kendo-masked-textbox>
+               </div>
+            </div>
+            <!-- Input Box End -->
+
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group">
+                  <app-textbox [controlName]="'billingAttention'" [label]="'BillingAttention'"
+                     [isSpecialCharacterAllowed]="true" [maxCharacters]="300">
+                  </app-textbox>
+               </div>
+            </div>
+            <!-- Input Box End -->
+
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group">
+                  <app-textbox [controlName]="'billingEmail'" [label]="'BillingEmail'" [tooltipVisible]="true"
+                     [tooltipTitle]="'Following domain(s) are permitted.' + ' ' + configureClientEmailDomain"
+                     format="n3" [isSpecialCharacterAllowed]="true" [specialCharactersAllowed]="['-','_','.',',','@']" [maxCharacters]="50">
+                  </app-textbox>
+               </div>
+            </div>
+            <!-- Input Box End -->
+
+            <div class="col-sm-12 col-md-12">
+               <h4 class="card__body--subheading"></h4>
+            </div>
+
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group">
+                  <app-numeric-box [label]="'MileageRate'" [controlName]="'mileageRate'" [placeholder]="'0.000'"
+                     [isRequired]="true" [tooltipVisible]="true" [tooltipTitle]="'MileageRateToolTip'" format="n3"
+                     [min]="0" [maxlength]="7" [decimals]="3">
+                  </app-numeric-box>
+               </div>
+            </div>
+            <!-- Input Box End -->
+
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group">
+                  <app-numeric-box [label]="'PoPercentageNotification'"
+                     [controlName]="'poDepletionPercentageForNotification'" [placeholder]="'0.00'"
+                     [tooltipVisible]="true" [tooltipTitle]="'PODepletionPercentageForNotificationToolTip'" format="n2"
+                     [min]="0" [max]="100" [maxlength]="6" [decimals]="2">
+                  </app-numeric-box>
+               </div>
+            </div>
+            <!-- Input Box End -->
+
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group">
+                  <app-kendo-dropdown [list]="mspProgramManagerDropdownList" [label]="'MSPProgramManager'"
+                     [controlName]="'mspProgramMgr'" [placeholder]="'DdlSelect'" [isRequired]="true"
+                     [isSpecialCharacterAllowed]="true">
+                  </app-kendo-dropdown>
+               </div>
+            </div>
+            <!-- Input Box End -->
+
+            <!-- Text box start -->
+            <div class="col-sm-6 col-md-6" *ngIf="isEditMode">
+               <div class="form-group">
+                  <app-kendo-label [label]="'BadgeLength'" [value]="badgeLength"></app-kendo-label>
+               </div>
+            </div>
+            <!-- Text box end -->
+
+            <!-- Extra Div Added Input Box Start -->
+            <div class="col-sm-12 col-md-12">
+               <h4 class="card__body--subheading"></h4>
+            </div>
+            <!-- Extra Div Added Input Box End -->
+
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group">
+                  <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                     [tooltipTitle]="'SalesTaxRequiredToolTip'" [controlName]="'salesTaxRequired'"
+                     [label]="'SalesTaxRequired'" (onChangeSwitch)="onSalesTaxRequiredChange($event)" 
+                     [isDisable]="configureClientBasicDetails?.IsSalesTaxFromExternalSource">
+                  </app-kendo-switch>
+               </div>
+            </div>
+            <!-- Input Box End -->
+            <div class="clearfix"></div>
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6" *ngIf="basicDetailsForm?.get('salesTaxRequired')?.value">
+               <div class="form-group">
+                  <app-numeric-box [controlName]="'stateSalesTaxRate'" [label]="'StateSalesTaxRate'"
+                     [tooltipVisible]="true" [tooltipTitle]="'StateSalesTaxRateToolTip'" [placeholder]="'0.00'"
+                     format="n2" [isRequired]="true" [maxlength]="6" [min]="0" [decimals]="2"
+                     [max]="999999"></app-numeric-box>
+               </div>
+            </div>
+            <!-- Input Box End -->
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6" *ngIf="basicDetailsForm?.get('salesTaxRequired')?.value">
+               <div class="form-group">
+                  <app-numeric-box [controlName]="'taxablePercentOfBillRate'" [label]="'TaxableBillRate'"
+                     [tooltipVisible]="true" [tooltipTitle]="'TaxablePercentageOfBillRateToolTip'"
+                     [placeholder]="'0.00 %'" format="n2" [isRequired]="true" [maxlength]="6" [min]="0" [decimals]="2"
+                     [max]="999999"></app-numeric-box>
+               </div>
+            </div>
+            <!-- Input Box End -->
+
+
+         </div>
+      </div>
+      <!-- End Card Body Section-->
+   </div>
+   <!-- End Card Section-->
+
+</form>

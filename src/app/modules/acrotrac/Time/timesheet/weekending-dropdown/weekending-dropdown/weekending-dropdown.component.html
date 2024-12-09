@@ -1,0 +1,9 @@
+<form [formGroup]="formGroup">
+		<div class="form-group text-end arrow-btns mb-0">
+					<kendo-label class="kendo-label__change kendo-label__change--all" [text]="'WeekendingDate' | translate"></kendo-label>
+				<app-kendo-dropdown class="week_days_div "
+						[list]="WeekendingList" [label]="''" [controlName]="controlName"
+						[isRequired]="false" (onChange)="onWeekendingDropdownChange($event)">
+				</app-kendo-dropdown>
+			</div>
+</form>

@@ -1,0 +1,23 @@
+.fill-request-addedit-popup {
+	.custom__file__upload {
+		margin-top: 12px;
+	}
+	.disabled-btn-color {
+		.custom-choose-file-v2 {
+			span {
+				&.k-icon {
+					&.k-i-upload {
+						top: 14px;
+						left: 20px;
+					}
+				}
+			}
+		}
+	}
+}
+.alert__toast--fixed2 {
+	position: fixed;
+	top: 68px;
+	width: calc(100% - 64px);
+	z-index: 9;
+}

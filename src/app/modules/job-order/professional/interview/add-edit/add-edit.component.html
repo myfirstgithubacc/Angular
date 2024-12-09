@@ -1,0 +1,126 @@
+<!-- Main Body Section-->
+<div class="app-content__body app-content__kendoexpansion-main">
+    <form [formGroup]="InterviewRequestForm">
+        <div class="row">
+            <div class="col-md-12">
+
+                <!-- Start Kendo Expansion Panel -->
+                <kendo-expansionpanel (click)="$event.stopPropagation()" [expanded]="true" class="card">
+                    <ng-template kendoExpansionPanelTitleDirective>
+                        <div>
+                            <h4 class="card__heading">Basic Details</h4>
+                        </div>
+                    </ng-template>
+                    <div class="card__body">
+                        <div class="row">
+                            <!-- Input Box Start -->
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'Interview Availability'"
+                                        [value]="submittalData.InterviewAvailability"></app-kendo-label>
+                                </div>
+                            </div>
+                            <!-- Input Box End -->
+
+                            <!-- Input Box Start -->
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'Start Availability'"
+                                        [value]="submittalData.StartAvailability"></app-kendo-label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </kendo-expansionpanel>
+                <!-- End Kendo Expansion Panel -->
+
+                <!-- Start Kendo Expansion Panel -->
+                <kendo-expansionpanel (click)="$event.stopPropagation()" [expanded]="true" class="card">
+                    <ng-template kendoExpansionPanelTitleDirective>
+                        <div>
+                            <h4 class="card__heading">Interview Details</h4>
+                        </div>
+                    </ng-template>
+                    <div class="card__body">
+                        <div class="row">
+
+                            <!-- Input Box Start -->
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'Interview Round'" [value]="'1'"></app-kendo-label>
+                                </div>
+                            </div>
+                            <!-- Input Box End -->
+
+                            <div class="list-view">
+                                <app-list-view #interviewSlot (formData)="getinterviewSlot($event)"
+                                   [columnData]="interviewSlotColumn" [columnConfigure]="interviewSlotColumnConfiguration"
+                                   [populatedData]="prefilledData">
+                                </app-list-view>
+                             </div>
+
+                        </div>
+                    </div>
+                </kendo-expansionpanel>
+                <!-- End Kendo Expansion Panel -->
+
+
+                <!-- Start Kendo Expansion Panel -->
+                <kendo-expansionpanel (click)="$event.stopPropagation()" [expanded]="false" class="card">
+                    <ng-template kendoExpansionPanelTitleDirective>
+                        <div>
+                            <h4 class="card__heading">Additional Details</h4>
+                        </div>
+                    </ng-template>
+                    <div class="card__body">
+                        <div class="row">
+                            <!-- Input Box Start -->
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group mb-4">
+                                    <app-kendo-textarea [controlName]="'AdditionalInterviewDetail'"
+                                        [isRequired]="true" [tooltipVisible]="true"
+                                        [tooltipTitle]="'Please list who will conduct the interview, Directions to Location, Phone Number to call, Items to bring, etc.'"
+                                        [label]="'Additional Interview Details'">
+                                    </app-kendo-textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </kendo-expansionpanel>
+                <!-- End Kendo Expansion Panel -->
+
+                <!-- Start Kendo Expansion Panel -->
+                <kendo-expansionpanel (click)="$event.stopPropagation()" [expanded]="false" class="card">
+                    <ng-template kendoExpansionPanelTitleDirective>
+                        <div>
+                            <h4 class="card__heading">Comments</h4>
+                        </div>
+                    </ng-template>
+                    <div class="card__body">
+                        <div class="row">
+                            <!-- Input Box Start -->
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group mb-4">
+                                    <app-kendo-textarea [controlName]="'Comment'"
+                                        [label]="'Comments (Viewable to Staffing Agency and MSP)'">
+                                    </app-kendo-textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </kendo-expansionpanel>
+                <!-- End Kendo Expansion Panel -->
+
+            </div>
+        </div>
+
+
+        <div class="page-footer">
+            <div class="btn-box btn-box--center">
+                <button kendoButton fillMode="outline" themeColor="primary" (click)="navigate()">Cancel </button>
+                <button kendoButton href="javascript:;" themeColor="primary" (click)="submitForm()">Submit</button>
+            </div>
+        </div>
+
+    </form>
+</div>

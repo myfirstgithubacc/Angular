@@ -1,0 +1,131 @@
+<div class="advance__search">
+  <div class="app-content__body markup-page">
+    <form [formGroup]="searchMarkupForm">
+
+      <div class="card card--info">
+        <div class="card__header">
+          <h4 class="card__heading">{{'MarkupConfiguration' | translate}}</h4>
+        </div>
+
+        <div class="card__body pb-3">
+          <div class="row">
+            <div class="col-sm-6 col-md-6">
+              <div class="form-group staffingAgency-dropdown">
+                <app-kendo-dropdown [controlName]="'staffingAgency'" [label]="'StaffingAgency'"
+                  [placeholder]="'DdlSelect'" [list]="listStaffingAgency" [isRequired]="true"
+                  [isSpecialCharacterAllowed]="true" (onChange)="onStaffingAgencyChange($event)">
+                </app-kendo-dropdown>
+              </div>
+            </div>
+            <div class="col-sm-6 ps-0">
+              <div class="markup-button">
+                <div class="custom-search__btn-box">
+                  <ng-container *ngIf="searchMarkupForm.get('staffingAgency')?.value !==null">
+                    <button #anchor type="button" aria-label="filter" kendoButton (click)="openRightPanel()"
+                      fillMode="solid" icon="filter" themeColor="base"></button>
+                  </ng-container>
+                  <app-advance-filter-tooltip [label]="'AppliedFilter'" [AppliedfilterCount]="AppliedfilterCount"
+                    [SelectedAdvanceFilter]="SelectedAdvanceFilter" [entityId]="entityId" [position]="'bottom'"
+                    (click)="openRightPanel()"></app-advance-filter-tooltip>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <ng-container *ngIf="searchResult!=null">
+        <app-markup-grid *ngIf="!isActionIdFound" [markupResult]="markUpRes" [markupSearchData]="searchResult"
+          [selectedStaffingValue]="selectedStaffingValue" [appliedFilterCount]="AppliedfilterCount"
+          (onChange)="getForm($event)"></app-markup-grid>
+        <app-view-markup *ngIf="isActionIdFound" [markupResult]="markUpRes" [markupSearchData]="searchResult"
+          [selectedStaffingValue]="selectedStaffingValue" [appliedFilterCount]="AppliedfilterCount"></app-view-markup>
+      </ng-container>
+      <ng-container *ngIf="isBaseMarupLength == 0">
+        <div class="card no-data">
+          <div class="card__body">
+
+            <p>{{'GridNoRecordAvailable' | translate}}</p>
+          </div>
+        </div>
+      </ng-container>
+      <div class="page-footer" *ngIf="isBaseMarupLength >0">
+        <div class="btn-box btn-box--center">
+          <button type="button" *ngIf="!isActionIdFound" kendoButton fillMode="outline" themeColor="primary"
+            routerLink="/xrm/landing/home">{{'Cancel' | translate}}</button>
+          <button type="submit" *ngIf="!isActionIdFound" class="save" kendoButton x themeColor="primary"
+            [disabled]="isEditMode ? addForm.pristine && !isCopy :false" [formName]="MarkupConfigForm" appFocusOnError
+            (click)="save()">{{'Save' | translate}}</button>
+          <button type="submit" *ngIf="isActionIdFound" class="save" kendoButton x themeColor="primary"
+            routerLink="/xrm/landing/home">{{'Cancel' | translate}}</button>
+
+        </div>
+      </div>
+
+      <div>
+      </div>
+      <div *ngIf="searchResult!=null">
+        <event-log></event-log>
+      </div>
+    </form>
+
+  </div>
+
+
+  <div *ngIf="offcanvasServc" class="offcanvas offcanvas-end show offcanvas-body--mobileview" tabindex="-1"
+    id="errormessageSidebarsm" aria-labelledby="errormessageSidebarsm" [@slideInOut]>
+    <div class="offcanvas-header">
+      <h5>{{'AdvanceSearch' | translate}}</h5>
+      <button type="button" class="btn-close" (click)="hideRightPannel()"></button>
+    </div>
+    <div class="offcanvas-body">
+
+      <form [formGroup]="FilterForm">
+
+        <div class="col-md-12">
+          <div class="form-group">
+            <app-kendo-multiselect-dropdown [list]="sectorList" [label]="'Sector'" [controlName]="'Sector'"
+              [placeholder]="'-Select-' | translate" [isRequired]="false"
+              [isEditMode]="false"></app-kendo-multiselect-dropdown>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="form-group">
+            <app-kendo-multiselect-dropdown [list]="laborCategoryList" [label]="'LaborCategory'"
+              [controlName]="'LaborCategory'" [placeholder]="'-Select-' | translate" [isRequired]="false"
+              [isEditMode]="false"></app-kendo-multiselect-dropdown>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="form-group">
+            <app-kendo-multiselect-dropdown [list]="locationList" [label]="'Location'" [controlName]="'Location'"
+              [placeholder]="'-Select-' | translate" [isRequired]="false"
+              [isEditMode]="false"></app-kendo-multiselect-dropdown>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="offcanvas-footer">
+      <div class="col-md-12">
+        <div class="master-search__button-box">
+          <div class="button-group">
+            <button type="button" kendoButton themeColor="primary"
+              [disabled]="isFilterOpen ? FilterForm.pristine : false" appFocusOnError [formName]="FilterForm"
+              (click)="advanceFilterApply()">
+              {{'Apply'| translate}}
+            </button>
+            <button type="reset" kendoButton themeColor="primary" fillMode="outline" (click)="clearFilterForm()">
+              {{'Clear'|translate}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="offcanvas-backdrop fade show" *ngIf='markupoffcanvasoverlay' (click)="hideRightPannel()"></div>
+
+</div>

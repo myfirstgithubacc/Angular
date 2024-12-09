@@ -1,0 +1,43 @@
+<div class="dark-light__Theme" [class]="darktoggleClass">
+  <div class="body--expended" [class]="toggleClass">
+    <!-- App content Section-->
+    <div [class]="IconName">
+      <div [class]="ThemeName">
+        <!-- Header Section-->
+        <div class="app-content__header">
+          <app-header tabindex="0"></app-header>
+        </div>
+        <!-- End Page Header Section-->
+        <!-- Left Side Section-->
+        <div class="app-content__sidenav">
+          <!-- Left fixed vertical menu -->
+          <app-sidebar tabindex="1"></app-sidebar>
+
+          <!-- End Left fixed vertical menu -->
+        </div>
+        <!-- End Section-->
+        <div class="app-content__wrapper container-fluid">
+          <div class="app-content__wrapper--body">
+              <app-breadcrumbs *ngIf="!isHomePage"></app-breadcrumbs>
+           
+            <ng-container *ngIf="notPopup">
+              <app-toaster></app-toaster>
+            </ng-container>
+            
+            <!-- <app-loader></app-loader> -->
+            <router-outlet></router-outlet>
+          </div>
+        </div>
+        <!-- End Main Body Section-->
+
+        <!-- Footer Section-->
+        <div class="app-content__footer">
+          <app-footer></app-footer>
+        </div>
+        <!-- End Footer Section-->
+
+      </div>
+    </div>
+    <!-- End App content Section-->
+  </div>
+</div>

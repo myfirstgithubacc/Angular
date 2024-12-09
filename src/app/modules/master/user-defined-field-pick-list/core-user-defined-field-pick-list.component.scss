@@ -1,0 +1,82 @@
+.udfpicklist__dialog-popup.k-dialog-wrapper .k-window,
+.udfpicklist__dialog-popup-addedit .k-window {
+    width: 98%;
+    height: 93vh;
+    margin: auto;
+}
+
+.udfpicklist__dialog-popup.k-dialog-wrapper .k-window .k-dialog-titlebar,
+.udfpicklist__dialog-popup-addedit .k-window .k-dialog-titlebar {
+    border-color: transparent;
+    background-color: #ebeef1;
+}
+
+.udfpicklist__dialog-popup.k-dialog-wrapper .k-window .card .card::before,
+.udfpicklist__dialog-popup-addedit .k-window .card .card::before {
+    display: none;
+}
+
+.udfpicklist__dialog-popup.k-dialog-wrapper .k-dialog,
+.udfpicklist__dialog-popup-addedit .k-dialog {
+    background-color: #ebeef1;
+    width: 98%;
+    height: 93vh;
+}
+
+.udfpicklist__dialog-popup.k-dialog-wrapper .page-footer,
+.udfpicklist__dialog-popup-addedit .page-footer {
+    margin-bottom: 0;
+    padding: 0 0 10px;
+}
+
+.udfpicklist__dialog-popup .k-grid-content {
+    max-height: 215px;
+}
+
+.udfpicklist__dialog-popup .k-dialog-titlebar {
+    padding: 0;
+    position: absolute;
+    width: 100%;
+}
+
+.udfpicklist__dialog-popup .k-window-content {
+    padding-top: 16px;
+}
+
+.udfpicklist__dialog-popup .dailog__title {
+    margin-top: 0px;
+}
+
+.udfpicklist__dialog-popup.k-dialog-wrapper .k-window .k-button,
+.udfpicklist__dialog-popup-addedit.k-dialog-wrapper .k-window .k-button {
+    margin: 0 !important;
+}
+
+.udfpicklist__dialog-popup.k-dialog-wrapper .k-window .k-window-titlebar-actions.k-dialog-titlebar-actions .k-dialog-titlebar-action {
+    right: 10px;
+    top: 10px;
+}
+
+.udfpicklist__dialog-popup-addedit.k-dialog-wrapper .k-window-content {
+    overflow: auto;
+    max-height: 100vh;
+}
+
+.udfpicklist__dialog-popup-addedit.k-dialog-wrapper .k-window-content .card__body--subheading {
+    margin-bottom: 0px;
+    margin-top: 8px;
+    padding-bottom: 6px;
+}
+
+.udfpicklist__dialog-popup-addedit.k-dialog-wrapper .k-window-content .form-group.mt-4 {
+    margin-top: 18px !important;
+}
+
+.udfpicklist__dialog-popup.k-dialog-wrapper .page-footer .btn-box.btn-box--center .k-button,
+.udfpicklist__dialog-popup-addedit.k-dialog-wrapper .page-footer .btn-box.btn-box--center .k-button {
+    margin: 5px !important;
+}
+
+.udfpicklist__dialog-popup-addedit .page-footer {
+    padding-right: 15px;
+}

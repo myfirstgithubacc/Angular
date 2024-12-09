@@ -1,0 +1,33 @@
+<div class="row report__filters">
+    <kendo-filter #filterElement [ngClass]="'custom-filter-report'" [filters]="filters" [value]="selectedFilterList"
+        (valueChange)="onFilterChange($event)" title="Filter Conditions">
+    </kendo-filter>
+    <ng-template let-currentItem #template>
+        <div *ngFor="let dd of dropdownData">
+            <ng-container *ngIf="dd.hasForeignKey && currentItem.field == dd.field">
+                <kendo-dropdownlist *ngIf="currentItem.operator == 'eq'" [data]="dd.list" textField="Text" valueField="Id"
+                    (valueChange)="editorValueChange($event, currentItem, filterElement.value)" [(ngModel)]="currentItem.value">
+                </kendo-dropdownlist>
+                <kendo-multiselect *ngIf="currentItem.operator == 'contains' || currentItem.operator == 'doesnotcontain'" [data]="dd.list" textField="Text" valueField="Id" [(ngModel)]="currentItem.value"
+                    (valueChange)="editorMultiSelectValueChange($event, currentItem, filterElement.value)">
+                </kendo-multiselect>
+            </ng-container>
+            <ng-container *ngIf="dd.fieldType == 'DateTime' && currentItem.field == dd.field">
+                <!-- [value]="returnDate(currentItem.value)" -->
+                <kendo-datepicker calendarType="classic" [format]="dateFormat" [formatPlaceholder]="{ year: placeholderFormat.year, millisecond: 'S', month: placeholderFormat.month, day: placeholderFormat.day, hour: placeholderFormat.hour, minute: placeholderFormat.minute, second: placeholderFormat.second }" (valueChange)="editorValueChangeDatePicker($event, currentItem, filterElement.value)" [value]="returnDate(currentItem.value)">
+                </kendo-datepicker>
+            </ng-container>
+            <ng-container *ngIf="dd.fieldType == 'Double' && currentItem.field == dd.field">
+                <kendo-numerictextbox [autoCorrect]="true" [disabled]="currentItem.operator == 'isnull' || currentItem.operator == 'isnotnull'"
+                    [changeValueOnScroll]="false" [spinners]="false" (valueChange)="editorValueChangeNumericBox($event, currentItem, filterElement.value)" [value]="currentItem.value">
+                </kendo-numerictextbox>
+            </ng-container>
+            <ng-container *ngIf="dd.fieldType == 'VarChar' && currentItem.field == dd.field">
+                <kendo-textbox placeholder="" (valueChange)="editorTextBoxValueChange($event, currentItem, filterElement.value)" [value]="currentItem.value"></kendo-textbox><span class="text-danger" *ngIf="dd.isForceFilter" style="font-size: 11px !important;">This is Required Field.</span>
+            </ng-container>
+        </div>
+    </ng-template>
+</div>
+
+
+

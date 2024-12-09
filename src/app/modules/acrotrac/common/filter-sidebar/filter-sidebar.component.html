@@ -1,0 +1,66 @@
+<div class="offcanvas offcanvas-end show" tabindex="-1" aria-labelledby="timesheetFilter" [@inOutPaneAnimation]>
+	<div class="offcanvas-header">
+		<h5>{{sideBarHeader}}</h5>
+		<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" (click)="closeDialog()">
+		</button>
+	</div>
+	<div class="offcanvas-body">
+		<div class="row">
+			<form [formGroup]="AddEditExpenseEntryForm">
+				<div class="col-sm-12 col-md-12">
+					<div class="form-group">
+						<app-kendo-dropdown [list]="activeSectorList" [label]="'Sector'" [controlName]="'Sector'"
+							[placeholder]="'DdlSelect'" [isRequired]="true"
+							(onChange)="onSectorChangeGetRequiredData($event)">
+						</app-kendo-dropdown>
+					</div>
+				</div>
+				<div class=" col-sm-12 col-md-12">
+					<div class="form-group">
+						<div class="autocomplete-search">
+							<app-kendo-dropdown [userValues]="userValuesContractor" [searchText]="searchTextContractor"
+								[label]="'Contractor'" [apiAddress]="'contractor/select-contractor'"
+								[xrmEntityId]="entityId" [pageSize]="magicNumber.ten" [isApiGateway]="true" [isAdvanceSearch]="true"
+								[controlName]="'ContractorName'" [placeholder]="'SearchFor'" [isRequired]="true"
+								(onChange)="onSelectingContractor($event)" [isLoadOnDemand]="true"
+								>
+							</app-kendo-dropdown>
+						</div>
+					</div>
+				</div>
+				<div class=" col-sm-12 col-md-12">
+					<div class="form-group assignment--viewlink">
+						<div class="autocomplete-search">
+							<app-kendo-dropdown [isLoadOnDemand]="true" [userValues]="userValuesAssignment"
+								[apiAddress]="'assignment/select-valid-assignment'" [xrmEntityId]="entityId"
+								[label]="'AssignmentID'" [isAdvanceSearch]="true" [controlName]="'AssignmentId'"
+								[placeholder]="'SearchFor'" [isRequired]="true" (onChange)="selectedAssigment($event)"
+								>
+							</app-kendo-dropdown>
+						</div>
+					</div>
+				</div>
+				<div class=" col-sm-12 col-md-12">
+					<div class="form-group">
+						<app-kendo-dropdown [list]="weekendingList" [label]="'WeekendingDate' | translate"
+							[controlName]="'WeekendingDate'" [placeholder]="'DdlSelect'" [isRequired]="true"
+							(onChange)="onWeekendingDateChange($event)">
+						</app-kendo-dropdown>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="offcanvas-footer">
+		<div class="master-search__button-box">
+			<div class="col-sm-12 col-md-12">
+				<div class="button-group">
+					<button kendoButton themeColor="primary" (click)="navigate()">{{'Proceed' | translate}}</button>
+					<button kendoButton fillMode="outline" themeColor="primary" (click)="resetForm()">{{'Clear' |
+						translate}}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="offcanvas-backdrop fade show"></div>

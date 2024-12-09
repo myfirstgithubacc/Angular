@@ -1,0 +1,128 @@
+<app-toaster [isOnComponent]="true"></app-toaster>
+<app-submittal-shared-View [CurrentPage]="currentPage" (onDataLoaded)="manageButtons($event)" #child></app-submittal-shared-View>
+
+<div class="page-footer">
+  <div class="btn-box btn-box--center">
+      <button kendoButton fillMode="outline" themeColor="primary"
+          (click)="navigateBack()">{{'Cancel'|translate}}</button>
+
+      <button kendoButton fillMode="outline" themeColor="primary" data-bs-toggle="offcanvas" data-bs-target="#declineCommentSidebar"
+          (click)="declineForm()" [disabled]="isDeclineDisabled">{{'Decline'|translate}}</button>
+
+      <button kendoButton fillMode="outline" themeColor="primary" [disabled]="isReceiveDisabled"
+          (click)="receiveForm()">{{'Recieve'|translate}}</button>
+
+      <button kendoButton fillMode="outline" themeColor="primary" data-bs-toggle="offcanvas" data-bs-target="#withdrawCommentSidebar"
+          (click)="withdrawForm()" [disabled]="isWithdrawDisabled">{{'Withdraw'|translate}}</button>
+
+      <button kendoButton href="javascript:;" [disabled]="isForwardDisabled" themeColor="primary" (click)="forwardForm()">{{'Forward'|translate}}</button>
+  </div>
+</div>
+
+<!-- Decline Comment sidebar Starts -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="declineCommentSidebar" aria-labelledby="declineCommentSidebar">
+    <div class="offcanvas-header">
+        <h5>{{'DeclineComment'|translate}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+        </button>
+    </div>
+    <form [formGroup]="submittalDeclineForm">
+        <div class="offcanvas-body">
+            <div class="card">
+                <div class="card__body">
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <app-kendo-dropdown [isRequired]="true" [label]="'DeclineReason'" [list]="declineReasonList"
+                                [controlName]="'declineReason'" [placeholder]="'Select'">
+                            </app-kendo-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <app-kendo-switch [controlName]="'switchDNR'" [label]="'AddCandidateToDnrListing'" [onLabel]="'Yes'"
+                                [offLabel]="'No'" [tooltipVisible]="true" [tooltipTitle]="'DNRToolTip'">
+                            </app-kendo-switch>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <app-kendo-radio-button [label]="'DNRLevel'" [controlName]="'radioDNR'" *ngIf="isShowDnrLevel"
+                                [RadioGroup]="RadioValues" [name]="'radioDNR'" [isRequired]="true">
+                            </app-kendo-radio-button>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <app-kendo-textarea [controlName]="'declineComment'" [label]="'DeclineComment'"
+                                [isRequired]="true" [maxCharacters]="500"></app-kendo-textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="offcanvas-footer">
+        <div class="col-md-12">
+            <div class="button-group">
+                <button type="button" kendoButton themeColor="primary" (click)="declineSubmittal()">
+                    {{'Submit'| translate}}
+                </button>
+                <button type="button" kendoButton themeColor="primary" fillMode="outline" data-bs-dismiss="offcanvas"
+                    aria-label="Close">
+                    {{'Cancel'|translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Decline Comment sidebar ends -->
+
+
+<!-- Withdraw Comment sidebar starts-->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="withdrawCommentSidebar" aria-labelledby="withdrawCommentSidebar">
+    <div class="offcanvas-header">
+        <h5>{{'WithdrawcommentbyStaffingAgency' | translate}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+        </button>
+    </div>
+    <form [formGroup]="submittalWithdrawForm">
+        <div class="offcanvas-body">
+            <div class="card">
+                <div class="card__body">
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <app-kendo-dropdown [isRequired]="true" [label]="'WithdrawReason'" [list]="declineReasonList"
+                                [controlName]="'withdrawReason'" [placeholder]="'Select'">
+                            </app-kendo-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <app-kendo-textarea [controlName]="'withdrawComment'" [label]="'WithdrawcommentbyStaffingAgency'"
+                                [isRequired]="true" [maxCharacters]="500"></app-kendo-textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="offcanvas-footer">
+        <div class="col-md-12">
+            <div class="button-group">
+                <button type="button" kendoButton themeColor="primary" (click)="withdrawSubmittalByMsp()">
+                    {{'Submit'| translate}}
+                </button>
+                <button type="button" kendoButton themeColor="primary" fillMode="outline" data-bs-dismiss="offcanvas"
+                    aria-label="Close">
+                    {{'Cancel'|translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Withdraw Comment sidebar ends-->

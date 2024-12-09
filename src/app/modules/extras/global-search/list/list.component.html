@@ -1,0 +1,68 @@
+<div class="global_search-main">
+<div class="master-search">
+    <div class="row">
+      <div class="col-md-12 master-search__wapper">
+        <div class="master-search__search-box">
+          <div class="custom-search">
+            <div class="custom-search__input-box">
+              <kendo-textbox #searchTextBox appRestrictInput [allowLetter]="true" [allowNumber]="true" allowSpecialCharacter=" ."
+              [placeholder]="'GlobalSearchPlaceholder' | translate" [clearButton]="true"
+              (keyup)="OnEnterPress($event, searchTextBox.value)" (valueChange)="valueChangeTextBox(searchTextBox.value)"
+              [isSpecialCharacterAllowed]="true">
+
+              <ng-template kendoTextBoxSuffixTemplate>
+                <button type="button" kendoButton fillMode="solid" themeColor="primary" class="send-button" icon="zoom"
+                  (click)="search(searchTextBox.value)">
+                </button>
+              </ng-template>
+            </kendo-textbox>
+        </div>
+            <div class="custom-search__btn-box">
+              <app-advance-search
+              #advanceSearch 
+              [apiAddress]="'gbl-srch-advance-search-drpdwn'"
+              [isApiGateway]="true"
+              [menuId]="73"      
+              [EntityId]="entityId"
+              [searchText]="searchText"
+              [isServerSidePagingEnable]="true"
+              (selectedFilter)="OnFilterTriggered($event)"></app-advance-search>
+            </div>
+          </div>
+          <div class="custom-search__applied--Filters mx-2">
+            <div class="custom-search__applied--Filters"><app-kendo-label class="k-label"></app-kendo-label>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="row mb-2">
+      <form [formGroup]="searchTypeForm">
+        <app-kendo-radio-button  [controlName]="'searchType'"
+        [RadioGroup]="searchTypeList" (onChangeRadio)="onChangeSearchType($event)"></app-kendo-radio-button>
+      </form>
+    </div>
+  <div class="row">
+    <grid-view 
+    [isServerSidePagingEnable]="true"
+    [multiSelect]="false"
+    [isApiGateway]="true"
+    [showTabs]="false"
+    [kendoGridSelectedBy]="'UKey'"
+    [actionItemCategoryField]="getBindingField()" 
+    [apiAddress]='"gbl-srch-data/paged"'
+    [pageSize]="pageSize" 
+    [fileName]="entityName"
+    [entityId]="entityId"
+    [searchText]="searchText"
+    [advFilterData]="FilteredList" 
+    [columnOptions]="columnOptions"
+    [menuId]="73"
+    [actionSet]="actionSet[entityId]" 
+    [tabOptions]="getTabOption()"
+    [manageActionSets]="getManagedActionSet()"
+    ></grid-view>
+  </div>
+</div>

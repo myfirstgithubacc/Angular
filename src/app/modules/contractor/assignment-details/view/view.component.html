@@ -1,0 +1,727 @@
+<!-- Main Body Section-->
+<div class="app-content__body floating-layout floating-layout__view-layout">
+
+  <form [formGroup]="AddEditEventReasonForm">
+    <app-common-header [recordStatus]="recordStatus" [subEntityType]="subEntityType" [entityId]="entityID"
+      [buttonSet]="buttonSet" [statusData]="statusData" [isStatusEditable]="false"></app-common-header>
+  </form>
+
+  <!-- Contractor Tab Strip Start -->
+  <div class="contractor-tabs-main">
+    <kendo-tabstrip (tabSelect)="onClickRevisionTab($event)">
+      <kendo-tabstrip-tab title="{{'AssignmentDetails'|translate}}" [selected]="true" class="tabstrip-items">
+        <ng-template kendoTabContent>
+          <div class="content">
+            <!-- Start Card Section-->
+
+            <!-- Card Section Postion Details -->
+            <div class="card">
+              <!-- Card Header Section-->
+              <div class="card__header">
+                <h4 class="card__heading">{{'PositionDetails'|translate}}</h4>
+              </div>
+              <!-- End Card Header Section-->
+
+              <!-- Card Body Section-->
+              <div class="card__body">
+                <div class="row">
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'Sector'" [value]="assignmentDetails.SectorName"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'AssignmentType'"
+                        [value]="assignmentDetails.AssignmentTypeName"></app-kendo-label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="orglvlVisible[0]">
+                    <div class="form-group">
+                      <app-kendo-label [label]="orglvlNames[0]"
+                        [value]="assignmentDetails.OrgLevel1Name"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="orglvlVisible[1]">
+                    <div class="form-group">
+                      <app-kendo-label [label]="orglvlNames[1]"
+                        [value]="assignmentDetails.OrgLevel2Name"></app-kendo-label>
+                    </div>
+                  </div>
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="orglvlVisible[2]">
+                    <div class="form-group">
+                      <app-kendo-label [label]="orglvlNames[2]"
+                        [value]="assignmentDetails.OrgLevel3Name"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box End -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="orglvlVisible[3]">
+                    <div class="form-group">
+                      <app-kendo-label [label]="orglvlNames[3]"
+                        [value]="assignmentDetails.OrgLevel4Name"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box End -->
+                </div>
+
+
+                <div class="row">
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                      <!-- <app-kendo-label [label]="'Contractors Work Location'" [value]="'Contractors Work Location'"></app-kendo-label> -->
+                      <app-kendo-label [label]="'ContractorsWorkLocation'"
+                        [value]="assignmentDetails.WorkLocationName"></app-kendo-label>
+
+                      <app-kendo-label [label]="''" [value]="locationAdress"></app-kendo-label>
+
+                    </div>
+                  </div>
+                  <!-- input box start -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6">
+                    <div class="form-group" *ngIf="isFieldVisible('HireCode')">
+                      <app-kendo-label [label]="'HireCode'" [value]="assignmentDetails.HireCodeName"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'LaborCategory'"
+                        [value]="assignmentDetails.LaborCategoryName"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- end of input -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'JobCategory'"
+                        [value]="assignmentDetails.JobCategoryName"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box end -->
+
+                </div>
+                <div class="row">
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'PositionTitle'"
+                        [value]="assignmentDetails.PositionTitle"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="IsCandidateIDVisible">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'SecurityClearance'"
+                        [value]="assignmentDetails.SecurityClearanceName"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+                </div>
+
+
+                <div class="row">
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'StartDate'" [isDate]="true"
+                        [value]="assignmentDetails.AssignmentStartDate"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'EndDate'" [isDate]="true"
+                        [value]="assignmentDetails.AssignmentEndDate"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'IsAllowManualShift'"
+                        [value]="assignmentDetails.AssignmentShiftDetails?.[0]?.ShiftName"></app-kendo-label>
+                      <form [formGroup]="AddEditEventReasonForm" class="mb-2">
+                        <app-weekday-picker [dayInfo]="daysInfo" [isWeekdayEditMode]="false"
+                          [timeRangeProperties]="timeRange" [timeFormat]="'hh:mm a'"
+                          [startTimeControlName]="'startTimeControlName'" [endTimeControlName]="'endTimeControlName'"
+                          [isReadonly]="false">
+                        </app-weekday-picker>
+                      </form>
+
+                    </div>
+                  </div>
+                  <!-- input box start -->
+
+                  <div class="clearfix"></div>
+
+                  <!-- input box start -->
+                  <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'JobDuties'"
+                        [value]="assignmentDetails.PositionDescription"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- end of input -->
+
+                  <!-- page subheading -->
+                  <div class="col-sm-12 col-md-12"
+                    *ngIf="isFieldVisible('requestingManager') || isFieldVisible('primaryManager') || isFieldVisible('alternateManager')">
+                    <h4 class="card__body--subheading">{{'ClientInformation'|translate}}</h4>
+                  </div>
+                  <!-- page subheading -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('requestingManager')">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'RequestingManager'"
+                        [value]="assignmentDetails.RequestingManagerName"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- end of input -->
+
+                  <div class="clearfix"></div>
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('primaryManager')">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'IsPoSentToPm'"
+                        [value]="assignmentDetails.IsMultipleTimeApprovalNeeded?'Multiple':assignmentDetails.PrimaryManagerName"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('alternateManager')">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'AlternateManager'"
+                        [value]="assignmentDetails.IsMultipleTimeApprovalNeeded?'Multiple':assignmentDetails.AlternateManagerName"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+
+                  <!-- page subheading -->
+                  <div class="col-sm-12 col-md-12">
+                    <h4 class="card__body--subheading">{{'RequestDetails'|translate}}</h4>
+                  </div>
+                  <!-- page subheading -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="assignmentDetails?.AssignmentTypeId==84">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'RequestId'"></app-kendo-label>
+                      <a href="javascript:;" (click)="openRightSidePanel('LI')" class="add-more__link" class="ml-auto"
+                        class="request_id link-font" data-bs-toggle="offcanvas" data-bs-target="#assignmentDetails">
+                        {{assignmentDetails.RequestCode}}
+                      </a>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+
+                  <!--  input box start-->
+                  <div class="col-sm-6 col-md-6" *ngIf="IsCandidateIDVisible">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'CandidateOrSubmittalID'"></app-kendo-label>123
+                      <a href="javascript:;" class="add-more__link" class="ml-auto"
+                        class="link-font">{{assignmentDetails.CandidateCode}}</a>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+                </div>
+              </div>
+            </div>
+            <!-- End of Postion Details -->
+
+            <!-- Card Section Po Details -->
+            <div class="card no__inner-card" *ngIf="isFieldVisible('PODetails')">
+              <!-- Card Header Section-->
+              <div class="card__header">
+                <h4 class="card__heading">{{'PODetails'|translate}}</h4>
+              </div>
+              <!-- End Card Header Section-->
+
+              <!-- Card Body Section-->
+              <div class="card__body">
+                <div class="row">
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('poOwner')">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'IsPoSentToPoOwner'"
+                        [value]="assignmentDetails.POOwnerName"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+
+                  <grid-view [gridData]="POGridData" [showTabs]="false" [columnOptions]="POColumnOptions"
+                    [kendoGridSelectedBy]="'PoNumber'" [isActionColumnVisible]="false" [pageSize]="pageSize"
+                    [tabOptions]="tabOptions" [isExportHide]="true" [isColumnChooserVisible]="false"
+                    [isToolbarVisible]="false" [showPagination]="false"></grid-view>
+
+                </div>
+              </div>
+            </div>
+            <!-- End of Po Details -->
+
+            <!-- Card Section Rate Details -->
+            <div class="card no__inner-card">
+              <!-- Card Header Section-->
+              <div class="card__header">
+                <h4 class="card__heading">{{'RateDetails'|translate}}</h4>
+              </div>
+              <!-- End Card Header Section-->
+
+              <!-- Card Body Section-->
+              <div class="card__body">
+                <div class="row">
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('EffectiveDateForCurrentRate')">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'EffectiveDateForCurrentRate'" [isDate]="true"
+                        [value]="assignmentRates.RateEffectiveDateFrom"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('RateUnit')">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'RateUnit'" [value]="assignmentDetails.UnitTypeName"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+                  <div calss="clearfix"></div>
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('baseWageRate')">
+                    <div class="form-group">
+                      <app-kendo-label [label]="getDayHourLocalizationValue('ActualPayRate')"
+                        [value]="assignmentRates.BaseWageRate" [decimalPlaces]="2" [isNumber]="true"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('actualSTWageRate')">
+                    <div class="form-group">
+                      <app-kendo-label [label]="getDayHourLocalizationValue('STWageRate')"
+                        [value]="assignmentRates.ActualSTWageRate" [decimalPlaces]="2"
+                        [isNumber]="true"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+                  <div calss="clearfix"></div>
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                      <app-kendo-label [label]="getDayHourLocalizationValue('OTMultiper')"
+                        [value]="assignmentRates.OTMultiplier" [decimalPlaces]="4" [isNumber]="true"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                      <app-kendo-label [label]="getDayHourLocalizationValue('DTMultiper')"
+                        [value]="assignmentRates.DTMultiplier" [decimalPlaces]="4" [isNumber]="true"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('otWageRate')">
+                    <div class="form-group">
+                      <app-kendo-label [label]="getDayHourLocalizationValue('OTWageRate')"
+                        [value]="assignmentRates.OTWageRate" [decimalPlaces]="2" [isNumber]="true"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('dtWageRate')">
+                    <div class="form-group">
+                      <app-kendo-label [label]="getDayHourLocalizationValue('DTWageRate')"
+                        [value]="assignmentRates.DTWageRate" [decimalPlaces]="2" [isNumber]="true"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('submitMarkUp')">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'SubmittedMarkupPer'" [value]="assignmentRates.StaffingAgencyMarkup"
+                        [decimalPlaces]="3" [isNumber]="true"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('otHoursBilledAt')">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'OTHoursBilledAt'"
+                        [value]="assignmentDetails.OtRateTypeLocalizedKey"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('stBillRate')">
+                    <div class="form-group">
+                      <app-kendo-label [label]="getDayHourLocalizationValue('STBillRate')"
+                        [value]="assignmentRates.STBillRate" [decimalPlaces]="2" [isNumber]="true"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- end of input -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('otBillRate')">
+                    <div class="form-group">
+                      <app-kendo-label [label]="getDayHourLocalizationValue('OTBillRate')"
+                        [value]="assignmentRates.OTBillRate" [decimalPlaces]="2" [isNumber]="true"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('dtBillRate')">
+                    <div class="form-group">
+                      <app-kendo-label [label]="getDayHourLocalizationValue('DTBillRate')"
+                        [value]="assignmentRates.DTBillRate" [decimalPlaces]="2" [isNumber]="true"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('vendorSTRate')">
+                    <div class="form-group">
+                      <app-kendo-label [label]="getDayHourLocalizationValue('StaffingAgencySTBillRate')"
+                        [value]="assignmentRates.StaffingAgencySTBillRate" [decimalPlaces]="2"
+                        [isNumber]="true"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('vendorOTRate')">
+                    <div class="form-group">
+                      <app-kendo-label [label]="getDayHourLocalizationValue('StaffingAgencyOTBillRate')"
+                        [value]="assignmentRates.StaffingAgencyOTBillRate" [decimalPlaces]="2"
+                        [isNumber]="true"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('vendorDTRate')">
+                    <div class="form-group">
+                      <app-kendo-label [label]="getDayHourLocalizationValue('StaffingAgencyDTBillRate')"
+                        [value]="assignmentRates.StaffingAgencyDTBillRate" [decimalPlaces]="2"
+                        [isNumber]="true"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+
+                  <!-- page subheading -->
+                  <ng-container *ngIf="assignmentDetails?.BenefitAdders?.length! > 0">
+                    <div class="col-sm-12 col-md-12">
+                      <h4 class="card__body--subheading">{{'BenefitAdder'|translate}}</h4>
+                    </div>
+                    <!-- page subheading -->
+
+                    <!-- Grid Box Start -->
+                    <div class="col-sm-6 col-md-6">
+                      <grid-view [gridData]="BAGridData" [showTabs]="false" [columnOptions]="BAColumnOptions"
+                        [kendoGridSelectedBy]="'PoNumber'" [isActionColumnVisible]="false" [pageSize]="pageSize"
+                        [tabOptions]="tabOptions" [isExportHide]="true" [isColumnChooserVisible]="false"
+                        [isToolbarVisible]="false" [showPagination]="false"></grid-view>
+                    </div>
+                  </ng-container>
+
+                </div>
+              </div>
+            </div>
+            <!-- End of Rate Details -->
+
+            <!-- Card Section Time & Expense Configurations Details -->
+            <div class="card">
+              <!-- Card Header Section-->
+              <div class="card__header">
+                <h4 class="card__heading">{{'TimeExpenseConfiguration'|translate}}</h4>
+              </div>
+              <!-- End Card Header Section-->
+
+              <!-- Card Body Section-->
+              <div class="card__body">
+                <div class="row">
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('isTimeEntryAllowed')">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'AllowtoEnterTimeEntry'"
+                        [value]="assignmentDetails.AllowContractorToEnterTime==true?'Yes':'No'"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+                  <div calss="clearfix"></div>
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6"
+                    *ngIf="IsRateTypeHours && isFieldVisible('estimatedRegularHoursPerWeek')">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'EstimatedRegularHoursperWeek'"
+                        [value]="assignmentDetails.EstimatedRegularQuantityPerWeek.toFixed(2)"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'OTAllowed'"
+                        [value]="assignmentDetails.OTEligibility ? 'Yes' : 'No'"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="IsRateTypeHours && isFieldVisible('hourDistribution')">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'HourDistributionRule'"
+                        [value]="HoursDistributionData?.HourDistributionRuleName"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6"
+                    *ngIf="IsRateTypeHours && isFieldVisible('hourDistributionEffectiveDate')">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'HourDistributionRuleEffectiveDate'" [isDate]="true"
+                        [value]="hourDistributionRuleEffecDate"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="IsRateTypeHours && isFieldVisible('restMealBreak')">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'RestOrMealBreakConfiguration'" [isDate]="true"
+                        [value]="RestMealBreakData.MealBreakConfigurationName"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="IsRateTypeHours && isFieldVisible('restBreakEffectiveDate')">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'RestMealEffectiveDate'" [isDate]="true"
+                        [value]="restMealEffecDate"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+
+                  <!-- page subheading -->
+                  <div class="col-sm-12 col-md-12" *ngIf="IsRateTypeHours">
+                    <h4 class="card__body--subheading">{{'IncurredTimesheetDetail'|translate}}</h4>
+                  </div>
+                  <!-- page subheading -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'HoursYearTillDate'" [value]="assignmentDetails.HoursYTD"
+                        [decimalPlaces]="2" [isNumber]="true"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box start -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('WagesYearTillDate')">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'WagesYearTillDate'" [value]="assignmentDetails.WagesYTD"
+                        [isCurrency]="true" [decimalPlaces]="2" [isNumber]="true"></app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- end of input -->
+                </div>
+              </div>
+            </div>
+            <!-- End of Time & Expense Configurations Details -->
+
+            <!-- Card Section Cost Accounting  Details -->
+            <div class="card no__inner-card">
+              <!-- Card Header Section-->
+              <div class="card__header">
+                <h4 class="card__heading">{{'CostAccountingCodeInformation'|translate}}</h4>
+              </div>
+              <!-- End Card Header Section-->
+
+              <!-- Card Body Section-->
+              <div class="card__body">
+                <div class="row">
+                  <!-- Grid Box Start -->
+                  <!-- <div class="col-sm-12 col-md-12 list-view form-group grid-border">
+                    <div class="form-group"> -->
+                      <grid-view [gridData]="CostAccGridData" [showTabs]="false" [columnOptions]="CostAccColumnOptions"
+                        [kendoGridSelectedBy]="'PoNumber'" [isActionColumnVisible]="false" [pageSize]="pageSize"
+                        [tabOptions]="tabOptions" [isExportHide]="true" [isColumnChooserVisible]="false"
+                        [isToolbarVisible]="false" [showPagination]="false">
+                      </grid-view>
+
+                    <!-- </div>
+                  </div> -->
+                  <!-- Grid Box End -->
+                </div>
+              </div>
+            </div>
+            <!-- End of Cost Accounting Details -->
+
+            <!-- Card Section Onboarding Requirements -->
+            <ng-container *ngIf="assignmentDetails && assignmentDetails?.SectorId! > 0 && isFieldVisible('backgroundcheck')">
+              <app-onboarding-requirements #onboarding [entityId]="entityID" [sectorId]="assignmentDetails.SectorId"
+                [locationId]="getLocationId()!" [recordId]="getRecordId()" [isButtonVisible]="false"
+                [actionTypeId]="actionTypeId" [isDrugScreen]="isDrugScreen" [isBackgroundCheck]="isBackgroundCheck"
+                [isPendingResultSection]="isPendingResultSection">
+              </app-onboarding-requirements>
+
+            </ng-container>
+            <!-- End of Onboarding Requirement-->
+
+            <!-- Card Section UDF  Details -->
+            <ng-container>
+              <app-udf-implementation [entityId]="52" [recordId]="assignmentDetails.Id"
+                [sectorId]="assignmentDetails.SectorId" [recordUKey]="assignmentDetails.UKey"
+                [parentsInfos]="udfCommonMethods.getParentsInfo()" [actionTypeId]="3">
+              </app-udf-implementation>
+            </ng-container>
+            <!-- End of UDF Details -->
+
+            <!-- Card Section-->
+            <div class="card" [hidden]="!hasDMSLength">
+              <!-- Card Header Section-->
+              <div class="card__header">
+                <h4 class="card__heading">{{'Document'|translate}}</h4>
+              </div>
+              <!-- End Card Header Section-->
+
+              <div class="card__body">
+                <app-dms-implementation #dms [workFlowId]="entityID" [userGroupId]="userGroupId"
+                        [sectorId]="assignmentDetails.SectorId!" [uploadStageId]="uploadStageId"
+                        [actionTypeId]="actionTypeId" [recordId]="assignmentDetails.Id!" [showTitle]="false"
+                        [processingId]="processingId" [isTransactionScreen]="true"
+                        (hasDMSLength)="hasDMSLengthFn($event)">
+                      </app-dms-implementation>
+              </div>
+            </div>
+          </div>
+
+          <!--  Page Footer Section-->
+          <div class="page-footer">
+            <div class="btn-box btn-box--center">
+              <app-kendo-button [buttonName]="'Back'" (click)="navigate()"></app-kendo-button>
+            </div>
+          </div>
+          <div *ngIf="isFieldVisible('auditLog')">
+            <event-log [unitType]="unitType"></event-log>
+          </div>
+          <!-- End Footer Section-->
+        </ng-template>
+      </kendo-tabstrip-tab>
+
+      <!-- Start Revisions Tabstrip -->
+      <kendo-tabstrip-tab title="Revisions" class="tabstrip-items"
+        *ngIf="assignmentDetails?.LoggedInUserRoleGroupID ==2">
+        <ng-template kendoTabContent>
+          <div class="content">
+            <app-revision-list *ngIf="getRevisionTab().index==1"
+              [assignmentID]="assignmentDetails.Id!"></app-revision-list>
+            <app-revision-view *ngIf="getRevisionTab().index==2" [Ukey]="getRevisionTab().revisionId"
+              [assingmentId]="assignmentDetails.Id!"></app-revision-view>
+            <app-revision-review *ngIf="getRevisionTab().index==3" [Ukey]="getRevisionTab().revisionId"
+              [assingmentId]="assignmentDetails.Id!"></app-revision-review>
+            <app-revision-withdraw *ngIf="getRevisionTab().index==4" [Ukey]="getRevisionTab().revisionId"
+              [assingmentId]="assignmentDetails.Id!"></app-revision-withdraw>
+            <app-revision-process *ngIf="getRevisionTab().index==5" [Ukey]="getRevisionTab().revisionId"
+              [assingmentId]="assignmentDetails.Id!"></app-revision-process>
+          </div>
+        </ng-template>
+      </kendo-tabstrip-tab>
+      <!-- End Revisions Tabstrip -->
+
+      <!-- Start Time & Expense Sheet Tabstrip -->
+      <!-- <kendo-tabstrip-tab title="Time and Expense Sheet" class="tabstrip-items">
+        <ng-template kendoTabContent>
+          <div class="content">
+            <h4 class="page-heading__title">{{'TimeandExpenseDetails'|translate}}</h4>
+          </div>
+        </ng-template>
+      </kendo-tabstrip-tab> -->
+      <!-- Start Time & Expense Sheet Tabstrip -->
+
+    </kendo-tabstrip>
+  </div>
+  <!-- User Tab Strip End -->
+
+
+</div>
+
+<!-- <ng-container>
+      <app-audit-log></app-audit-log>
+  </ng-container> -->
+
+
+
+<!--- For Request ID -->
+
+<!-- Add Filter sidebar -->
+<div class="offcanvas offcanvas-end quick-view quick-view__assignmentDetails" tabindex="-1" id="assignmentDetails"
+  aria-labelledby="assignmentDetails">
+  <div class="offcanvas-header">
+    <h5>{{getRightPanelConfiguration().type=="LI"? 'Request Details': 'Candidate/Submittal Details'}}</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"
+      (click)="closeOpenPanel()"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div *ngIf="getRightPanelConfiguration().type=='LI'">
+      <app-li-request-quick-view [LIRequestData]="LIRequestData"
+        [dynamicLabelName]="dynamicLabelName"></app-li-request-quick-view>
+      <!-- <app-view-li [isVisible]="false" [ukey]="assignmentDetails?.RequestUKey"></app-view-li> -->
+    </div>
+    <div *ngIf="getRightPanelConfiguration().type=='Submittal'">
+      <h5>{{'Submittal' | translate}}</h5>
+    </div>
+    <!-- Footer Section-->
+    <div class="page-footer">
+      <div class="btn-box btn-box--center" *ngIf="isFieldVisible('MoreDetails')">
+        <button type="button" kendoButton themeColor="primary"
+          (click)="moreDetails()">{{'MoreDetails'|translate}}</button>
+      </div>
+    </div>
+    <!-- End Footer Section-->
+  </div>
+</div>
+<!-- End Add Filter sidebar -->
+
+<!--- For Request ID -->

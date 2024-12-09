@@ -1,0 +1,15 @@
+<kendo-textbox #searchTextBox appRestrictInput [allowLetter]="true" [allowNumber]="true" allowSpecialCharacter=" ."
+  [placeholder]="placeholder | translate" [clearButton]="true" [(ngModel)]="text" (valueChange)="onChange($event)"
+  (keyup)="OnEntrePress($event)" 
+  [isSpecialCharacterAllowed]="isSpecialCharacterAllowed" 
+  [specialCharactersAllowed]="specialCharactersAllowed"
+  [specialCharactersNotAllowed]="specialCharactersNotAllowed">
+
+  <ng-template kendoTextBoxSuffixTemplate>
+    <button type="button" kendoButton fillMode="solid" themeColor="primary" class="send-button"
+      (click)="search()">
+      <xrm-icon name="zoom" color="black-color" [size]="18" [strokeWidth]="1.4" ></xrm-icon>
+      {{ buttonNameSearch | translate }}
+    </button>
+  </ng-template>
+</kendo-textbox>

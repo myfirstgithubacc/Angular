@@ -1,0 +1,140 @@
+<div class="app-content__body">
+
+        <div class="card">
+            <form [formGroup]="EditCountry">
+            <div class="card__header">
+                <h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+                <div class="card__header-icon">
+                </div>
+            </div>
+
+            <div class="card__body">
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label 
+                            [label]="'CountryName'" 
+                            [value]="currentRecord.CountryName" 
+                            ></app-kendo-label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-textbox 
+                            [label]="'LabelOfZipCode'" 
+                            [isRequired]="true" 
+                            [controlName]="'ZipLabel'" 
+                            [isSpecialCharacterAllowed]="false"
+                            [maxCharacters]="50"
+                            ></app-textbox>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-textbox 
+                            [label]="'SeriesOfZipCode'" 
+                            [isRequired]="true" 
+                            [controlName]="'ZipLengthSeries'" 
+                            [isSpecialCharacterAllowed]="true"
+                            [specialCharactersAllowed]="[',']"
+                            [tooltipVisible]="true"
+                            [maxCharacters]="100"
+                            [tooltipTitle]="'SeriesOfZipCodeTooltip'"
+                            (onChangeTextBox)="zipCodeSeriesChange()"
+                            ></app-textbox>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-dropdown
+                            [label]="'FormatOfZipCode'" 
+                            [isRequired]="true" 
+                            [placeholder]="'DdlSelect'"
+                            [controlName]="'ZipFormat'" 
+                            [list]="ZipFormat"
+                            [isSpecialCharacterAllowed]="true"
+                            ></app-kendo-dropdown>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <kendo-label [text]="'PhoneExtFormat' | translate"><xrm-icon name="star" class="required"></xrm-icon>
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <app-textbox 
+                                            [controlName]="'PhoneFormat'" 
+                                            [isSpecialCharacterAllowed]="true"
+                                            [maxCharacters]="20"
+                                            [specialCharactersAllowed]="['#','(',')','-']"
+                                            [placeholder]="'(XXX)-XXX-XXXX'"
+                                            (onChangeTextBox)="phoneFormatChange()"
+                                            ></app-textbox>
+                                        </div>
+                                        <div class="col-4">
+                                            <app-textbox 
+                                            [controlName]="'PhoneExtFormat'" 
+                                            [isSpecialCharacterAllowed]="true"
+                                            [specialCharactersAllowed]="['#','(',')','-']"
+                                            [maxCharacters]="20"
+                                            [placeholder]="'Extension'"
+                                            (onChangeTextBox)="phoneFormatChange()"
+                                            ></app-textbox>
+                                        </div>
+                                    </div>
+                            </kendo-label>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-textbox 
+                            [label]="'LabelOfState'" 
+                            [isRequired]="true" 
+                            [controlName]="'StateLabel'" 
+                            [maxCharacters]="50"
+                            [isSpecialCharacterAllowed]="true"
+                            ></app-textbox>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-textbox 
+                            [label]="'CurrencyCode'" 
+                            [isRequired]="true" 
+                            [isEditMode]="true"
+                            [maxCharacters]="20"
+                            [controlName]="'CurrencyCode'" 
+                            [isSpecialCharacterAllowed]="true"
+                            ></app-textbox>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-md-6" *ngIf="currentRecord.DateFormat !== null">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'DateFormat'" [value]="currentRecord.DateFormat"
+                            ></app-kendo-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </form>
+        </div>
+    <div class="page-footer">
+        <div class="btn-box btn-box--center">
+            <button type="button" kendoButton fillMode="outline" themeColor="primary" 
+                (click)="redirectToList()">{{'Cancel' | translate}}</button>
+            <button type="button" kendoButton (click)="submitForm()" appFocusOnError [formName]="EditCountry"
+             [disabled]="EditCountry.pristine" x themeColor="primary">{{'Save' | translate}}</button>
+        </div>
+    </div>
+</div>
+
+

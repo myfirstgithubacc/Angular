@@ -1,0 +1,326 @@
+<form [formGroup]="performanceSurveyConfigForm">
+    <div class="card">
+        <!-- Card Header Section-->
+        <div class="card__header">
+            <h4 class="card__heading">{{ 'PerformanceSurveyConfigurations' | translate}}</h4>
+            <div class="card__header-icon">
+            </div>
+        </div>
+        <!-- End Card Header Section-->
+
+        <!-- Card Body Section-->
+        <!-- Card Body Section-->
+        <div class="card__body">
+            <!-- Card Sub Header Section-->
+            <div class="row">
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch 
+                            [controlName]="'SurveyForClosedReq'" 
+                            [tooltipVisible] = "true" 
+                            [tooltipTitle] = "'Satisfaction_Survey_For_Closed_Requisition_Tootip'"
+                            [onLabel]="'Yes'" 
+                            [offLabel]="'No'"
+                            [label]="'SurveyForClosedRequisition'" 
+                            (onChangeSwitch)="switchSurveyForClosedReq($event)">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch 
+                            [controlName]="'SurveyAllowedForAssignment'" 
+                            [tooltipVisible] = "true" 
+                            [tooltipTitle] = "'Survey_For_Assignment_Tooltip'"
+                            [onLabel]="'Yes'"
+                            [offLabel]="'No'" 
+                            [label]="'SurveyAllowedForAssignment'"
+                            (onChangeSwitch)="switchSurveyForAssignment($event)">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <!-- input box start -->
+                <div class="col-sm-12 col-md-12" >
+                <div class="row" *ngIf="isSwitchSurveyForAssignment">
+
+                    <div class="col-sm-12 col-md-12">
+                        <h4 class="card__body--subheading mt-0">{{'ScheduleOfPerformanceSurvey' | translate}}</h4>
+                    </div>
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-switch 
+                                [controlName]="'AfterAssignmentEndDate'" 
+                                [onLabel]="'Yes'" 
+                                [offLabel]="'No'"
+                                [tooltipVisible] = "true" 
+                                [tooltipTitle] = "'After_End_Of_Assignment_Tooltip'"
+                                [label]="'AfterAssignmentEndDate'">
+                            </app-kendo-switch>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-switch 
+                                [controlName]="'NoOfDaysAfterAssignmentStart'"
+                                [label]="'NoOfDaysAfterAssignmentStart'" 
+                                [onLabel]="'Yes'" 
+                                [offLabel]="'No'"
+                                [tooltipVisible] = "true" 
+                                [tooltipTitle] = "'DayAfterAssignmentStart'"
+                                (onChangeSwitch)="switchDaysAssignmentStart($event)">
+                            </app-kendo-switch>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <div class="clearfix"></div>
+
+                    <div class="col-sm-12 col-md-12 list-view list-view__border form-group" *ngIf="isSwitchDaysAssignmentStart">
+                        <app-list-view
+                            #NoOfDaysScheduleOfPerformance
+                            (formData)="getFormStatus($event)"
+                            [columnData] = "ScheduleOfPerformanceColumn"
+                            [columnConfigure] = "ScheduleOfPerformanceColumnConfig"
+                            [populatedData] = "NoOfSchedulePerformancePrefilledData">
+                        </app-list-view>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12">
+                        <div class="card__body--subheading mt-0 mb-0"></div>
+                    </div>
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-switch 
+                                [onLabel]="'Yes'" 
+                                [offLabel]="'No'"
+                                [controlName]="'ScheduleThroughoutLengthOfAssignment'"
+                                [label]="'ScheduleThroughoutLengthOfAssignment'"
+                                [tooltipVisible] = "true" 
+                                [tooltipTitle] = "'Schedule_Throughout_The_Length_Of_Assignment_Tooltip'"
+                                (onChangeSwitch)="switchScheduleLengthAssignment($event)">
+                            </app-kendo-switch>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <div class="clearfix"></div>
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="isSwitchScheduleLengthAssignment">
+                        <div class="form-group">
+                            <app-numeric-box 
+                                [label]="'ScheduledEvery'" 
+                                [controlName]="'LengthOfAssignment'"
+                                [placeholder]="''"
+                                [tooltipVisible]="true" 
+                                [tooltipTitle]="'Scheduled_Every_Tooltip'" 
+                                [decimals]="magicNumbers.zero"
+                                [min]="magicNumbers.zero"
+                                [isRequired]="true" 
+                                [maxlength]="magicNumbers.three">
+                            </app-numeric-box>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="isSwitchScheduleLengthAssignment">
+                        <div class="form-group">
+                            <app-kendo-dropdown 
+                                [list]="dropdowns" 
+                                [label]="'LengthOfAssignmentType'"
+                                [controlName]="'LengthOfAssignmentType'" 
+                                [placeholder]="'DdlSelect'"
+                                [isSpecialCharacterAllowed] = true
+                                [tooltipVisible] = "true" 
+                                [tooltipTitle] = "'Length_Of_Assignment_Type_Tooltip'"
+                                [isRequired]="true" >
+                            </app-kendo-dropdown>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <div class="clearfix"></div>
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-switch 
+                                [controlName]="'CanSurveyAnyTime'" 
+                                [onLabel]="'Yes'" 
+                                [offLabel]="'No'"
+                                [tooltipVisible] = "true" 
+                                [tooltipTitle] = "'Survey_At_Any_Time_Tooltip'"
+                                [label]="'CanSurveyAnyTime'">
+                            </app-kendo-switch>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <div class="clearfix"></div>
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-switch 
+                                [controlName]="'DisplayQuestion'" 
+                                [label]="'DisplayQuestion'"
+                                [tooltipVisible] = "true" 
+                                [tooltipTitle] = "'Display_Question_Tooltip'"
+                                [onLabel]="'Yes'" 
+                                [offLabel]="'No'" 
+                                (onChangeSwitch)="switchDisplayQuestion($event)">
+                            </app-kendo-switch>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="isSwitchDisplayQuestion">
+                        <div class="form-group">
+                            <app-textbox 
+                                [controlName]="'QuestionLabel'"
+                                [placeholder]="''" 
+                                [tooltipVisible] = "true" 
+                                [tooltipTitle] = "'Question_Label_Tooltip'"
+                                [maxCharacters]=magicNumbers.fifty
+                                [isSpecialCharacterAllowed] = true
+                                [label]="'QuestionLabel'"
+                                [isRequired]="true">
+                            </app-textbox>
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                    <div class="clearfix"></div>
+
+                    <!-- input box start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+
+                            <app-kendo-switch 
+                                [onLabel]="'Yes'" 
+                                [offLabel]="'No'"
+                                [controlName]="'DisplayNoThanks'"
+                                [tooltipVisible] = "true" 
+                                [tooltipTitle] = "'Display_No_Thanks_To_Skip_Survey_Tooltip'"
+                                [label]="'DisplayNoThanks'">
+                            </app-kendo-switch>
+
+                        </div>
+                    </div>
+                    <!-- input box start -->
+
+                </div>
+                </div>
+
+                <div class="col-sm-12 col-md-12" >
+                    <h4 class="card__body--subheading mt-0">{{'CLPSurveyScale' | translate}}</h4>
+                </div>
+                <!-- Card Sub Header Section-->
+
+                <div class="col-sm-12 col-md-12 list-view list-view__border form-group">
+                    <app-list-view
+                        #CLPSurveyScale
+                        (formData) = "getFormStatus($event)"
+                        [columnData] = "CLPSurveyScaleColumn"
+                        [columnConfigure] = "ColumnConfigCLP"
+                        [populatedData] = "CLPSurveyScalePrefilledData">
+                    </app-list-view>
+                </div>
+                <!-- input box start -->
+                <div class="col-sm-9 col-md-9">
+                    <div class="form-group">
+                        <app-kendo-switch 
+                            [onLabel]="'Yes'" 
+                            [tooltipVisible] = "true" 
+                            [tooltipTitle] = "'Display_Question_If_Avg_Score_Is_Less_Than_Please_Enter_Comments_In_Survey_To_Be_Completed_Tooltip'"
+                            [offLabel]="'No'"
+                            [controlName]="'IsAvgSurveyScoreAllowForComment'" 
+                            [label]="'IsAvgSurveyScoreAllowForComment'" 
+                            (onChangeSwitch)="switchDisplayQuestionScore($event)">
+                        </app-kendo-switch>
+
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-3 col-md-3" *ngIf="isSwitchDisplayQuestionScore">
+                    <div class="form-group">
+                        <app-numeric-box 
+                            [controlName]="'AvgSurveyScore'"
+                            [tooltipVisible] = "true"
+                            [maxlength]=magicNumbers.five 
+                            [decimals]=magicNumbers.two
+                            format = n2
+                            [min]="magicNumbers.zero"
+                            [tooltipTitle] = "'Define_Value_Of_X_Score_Tooltip'" 
+                            [label]="'AvgSurveyScore'"
+                            [isRequired]="true" >
+                        </app-numeric-box>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <div class="col-sm-12 col-md-12" *ngIf="isSwitchSurveyForClosedReq">
+                    <h4 class="card__body--subheading">{{'RequisitionSurveyScale' | translate}}
+                    </h4>
+                </div>
+
+                <div class="col-sm-12 col-md-12 list-view list-view__border" *ngIf="isSwitchSurveyForClosedReq" >
+                    <app-list-view
+                        #RequisitionSurveyScale
+                        (formData) = "getFormStatus($event)"
+                        [columnData] = "RequisitionSurveyScaleColumn"
+                        [columnConfigure] = "ReqSurveyScaleColumnConfig"
+                        [populatedData] = "ReqSurveyScaleDataPrefilledData">
+                    </app-list-view>
+                </div>
+
+                <div class="col-sm-12 col-md-12">
+                    <h4 class="card__body--subheading">{{'CLPPerformanceFactor' | translate}}
+                    </h4>
+                </div>
+
+                <div class="col-sm-12 col-md-12 list-view list-view__border">
+                    <app-list-view
+                        #CLPPerformanceFactor
+                        (formData) = "getFormStatus($event)"
+                        [columnData] = "CLPPerformanceFactorColumn"
+                        [columnConfigure] = "CLPPerformanceFactorColumnConfig"
+                        [populatedData] = "ClpPerformanceFactorsPrefilledData">
+                    </app-list-view>
+                </div>
+
+                <div class="col-sm-12 col-md-12" *ngIf="isSwitchSurveyForClosedReq" >
+                    <h4 class="card__body--subheading">
+                        {{'RequisitionPerformanceFactor' | translate}}
+                    </h4>
+                </div>
+
+                <div class="col-sm-12 col-md-12 list-view list-view__border" *ngIf="isSwitchSurveyForClosedReq" >
+                    <app-list-view
+                        #RequisitionPerformanceFactor
+                        (formData) = "getFormStatus($event)"
+                        [columnData] = "RequisitionPerformanceFactorColumn"
+                        [columnConfigure] = "ReqPerformanceFactorColumnConfig"
+                        [populatedData] = "ReqPerformanceFactorPrefilledData">
+                    </app-list-view>
+                </div>
+            </div>
+        </div>
+        <!-- End Card Body Section-->
+    </div>

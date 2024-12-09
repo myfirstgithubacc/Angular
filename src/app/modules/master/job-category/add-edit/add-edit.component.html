@@ -1,0 +1,116 @@
+<!-- Main Body Section-->
+<div class="app-content__body">
+
+  <form [formGroup]="AddEditJobCategoryForm">
+    <div class="card">
+      <!-- Card Header Section-->
+      <div class="card__header">
+        <h4 class="card__heading">{{'BasicDetails' | translate }}</h4>
+        <div class="card__header-icon">
+        </div>
+      </div>
+      <!-- End Card Header Section-->
+
+      <!-- Card Body Section-->
+      <div class="card__body">
+        <div class="row">
+
+          <!-- Dropdown box start -->
+          <div class="col-sm-6 col-md-6">
+            <div class="form-group">
+              <app-kendo-dropdown [list]="sectorDropDownList" [label]="'Sector'" [controlName]="'sectorName'"
+                [placeholder]="'DdlSelect'" [isRequired]="true" [isSpecialCharacterAllowed]="true"
+                [isEditMode]="isEditMode" (onChange)="onChange($event,'Sector')">
+              </app-kendo-dropdown>
+            </div>
+          </div>
+          <!-- Dropdown box end -->
+
+          <!-- Dropdown box start -->
+          <div class="col-sm-6 col-md-6">
+            <div class="form-group">
+              <app-kendo-dropdown [list]="laborCategoryDropDownList" [label]="'LaborCategory'"
+                [isSpecialCharacterAllowed]="true" [controlName]="'LCName'" [isEditMode]="isEditMode"
+                [placeholder]="'DdlSelect'" [isRequired]="true" (onChange)="onChange($event,'LaborCategory')">
+              </app-kendo-dropdown>
+            </div>
+          </div>
+          <!-- Dropdown box end -->
+
+          <!-- Text box start -->
+          <div class="col-sm-6 col-md-6">
+            <div class="form-group">
+              <app-textbox [controlName]="'JCName'"  [maxCharacters]="200" [label]="'JobCategory'" 
+              [isSpecialCharacterAllowed]="true" [isRequired]="true">
+              </app-textbox>
+            </div>
+          </div>
+          <!-- Text box end -->
+
+          <!-- Text box start -->
+          <div class="col-sm-6 col-md-6">
+            <div class="form-group">
+              <app-textbox [controlName]="'ClientJCCode'" [maxCharacters]="8" 
+              [isSpecialCharacterAllowed]="true" [label]="'ClientJobCode'">
+              </app-textbox>
+            </div>
+          </div>
+          <!-- Text box end -->
+
+          <!-- Switch box start -->
+          <div class="col-sm-6 col-md-6">
+            <div class="form-group">
+              <app-kendo-switch [tooltipVisible]="true" [tooltipTitle]="'AllowWageRateAdjustmentsToolTip'"
+                *ngIf="!isEditMode" [controlName]="'IsWageRateAdj'" [onLabel]="'Yes'" [offLabel]="'No'"
+                [label]="'AllowWageRateAdjustments'">
+              </app-kendo-switch>
+              <app-kendo-label *ngIf="isEditMode" [tooltipVisible]="true"
+                [tooltipTitle]="'AllowWageRateAdjustmentsToolTip'" [label]="'AllowWageRateAdjustments'"
+                [value]="jobCategoryDetails.IsWageRateAdj== true || jobCategoryDetails.IsWageRateAdj=='Yes' ?'Yes':'No'">
+              </app-kendo-label>
+            </div>
+          </div>
+          <!-- Switch box end -->
+
+          <!-- Radio Button box start -->
+          <div class="col-sm-6 col-md-6">
+            <div class="form-group">
+              <app-kendo-radio-button [controlName]="'OTHoursBilledAtId'" [RadioGroup]="OvertimeHours"
+                [label]="'OvertimeHoursBilledAt'">
+              </app-kendo-radio-button>
+            </div>
+          </div>
+          <!-- Radio Button box end -->
+        </div>
+      </div>
+      <!-- End Card Body Section-->
+    </div>
+
+
+    <ng-container *ngIf="sectorId > 0">
+      <app-udf-implementation [entityId]="entityId" [sectorId]="sectorId" [recordUKey]="recordUKey"
+        [recordId]="udfRecordId" [parentsInfos]="udfCommonMethods.getParentsInfo()" [actionTypeId]="actionTypeId"
+        (onDataPicked)="getUdfData($event)">
+      </app-udf-implementation>
+
+        </ng-container>
+        <!--  Page Footer Section-->
+        <div class="page-footer">
+            <div class="btn-box btn-box--center">
+                <button type="button" kendoButton fillMode="outline" themeColor="primary" (click)="navigateToList()">
+                  {{ "Cancel" | translate }}
+                </button>
+                <button *ngIf="isEditMode" type="button" kendoButton fillMode="outline" themeColor="primary" class="send-button"
+                  icon="plus" [disabled]="recordStatus ==='Inactive' || jobCategoryDetails.IsLCDisabled" (click)="redirectToReq()">
+                 {{'NewRequisitionLibraryForThisJobCategory' | translate }}
+                </button>
+                <button type="button" kendoButton (click)="AddData()" x themeColor="primary" appFocusOnError 
+                [formName]="AddEditJobCategoryForm" [isEditMode]="isEditMode" [controlIndex]="2"
+                    [disabled]="isEditMode ? AddEditJobCategoryForm.pristine : false " translate>
+                    {{ "Save" | translate }}
+                </button>
+      </div>
+    </div>
+    <!-- End Footer Section-->
+  </form>
+</div>

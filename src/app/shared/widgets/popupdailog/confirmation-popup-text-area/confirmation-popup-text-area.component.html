@@ -1,0 +1,11 @@
+<form [formGroup]="ReasonUpdate">
+  <xrm-icon name="circle-question-mark" color="dark-blue-color" [size]="40" class="text-primary dailog__icon sw-bolder"></xrm-icon>
+  <h3 class="dailog__title text-center">{{ messageTitle | translate }}</h3>
+  <app-kendo-textarea
+    (onChangeTextArea)="getTextareaValue()"
+    [controlName]="'ReasonForUpdate'"
+    [placeholder]="textareaPlaceHolder"
+    [maxCharacters]="maxCounts"
+    [isSpecialCharacterAllowed]="true"
+  ></app-kendo-textarea>
+</form>

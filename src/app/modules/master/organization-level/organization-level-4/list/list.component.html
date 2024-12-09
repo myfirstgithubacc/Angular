@@ -1,0 +1,60 @@
+<div class="master-search widget-filter__search">
+    <div class="row">
+        <div class="col-md-12 master-search__wapper">
+            <div class="master-search__search-box">
+                <div class="custom-search">
+                    <div class="custom-search__input-box">
+                        <app-search
+                        [isServerSidePagingEnable]="isServerSidePagingEnable"
+                        [placeholder]="'Search for...'"
+                        [EntityId]="entityId"
+                        (onSearch)="OnSearchTriggered($event)"
+                        [columnOptions]="columnOptions"
+
+                        ></app-search>
+                    </div>
+                    <app-advance-search
+                        [apiAddress]="advApiAddress"
+                        [EntityId]="entityId"
+                        (selectedFilter)="OnFilterTriggered($event)"
+                        [isServerSidePagingEnable]="isServerSidePagingEnable"
+                    ></app-advance-search>
+                </div>
+                <div class="custom-search__applied--Filters mx-2">
+
+
+
+                </div>
+            </div>
+            <div class="master-search__button-box master-search__button-box--right">
+                <app-kendo-button
+                    [xrmEntityId]="entityId"
+                    [buttonName]="'AddNewOrgLevel4'"
+                    (Click)="navigate()"
+                    [buttonIcon]="'plus'"
+                ></app-kendo-button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="row">
+    <grid-view
+        [isServerSidePagingEnable]="isServerSidePagingEnable"
+        [apiAddress]="apiAddress"
+        [searchText]="selectTextsearch"
+        [advFilterData]="appliedAdvFilters"
+        [columnOptions]="columnOptions"
+        [actionSet]="actionSet"
+        [tabOptions]="tabOptions"
+        [kendoGridSelectedBy]="'UKey'"
+        [fileName]="'Organization Level 4'"
+        [actionItemCategoryField]="'Disabled'"
+        (onGroupedAction)="onGroupedAction($event)"
+        [entityId]="entityId"
+        [pageSize]="pageSize"
+    ></grid-view>
+</div>

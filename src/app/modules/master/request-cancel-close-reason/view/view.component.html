@@ -1,0 +1,81 @@
+<!-- Main Body Section-->
+<div class="app-content__body floating-layout floating-layout__view-layout">
+
+    <!-- Status Card -->
+    <ng-container>
+    </ng-container>
+        <br>
+        <!-- Start Card Section-->
+        <div class="card">
+            <!-- Card Header Section-->
+            <div class="card__header">
+                <h4 class="card__heading">{{'BasicDetails'| translate }}</h4>
+            </div>
+            <!-- End Card Header Section-->
+
+            <!-- Card Body Section-->
+            <div class="card__body">
+                <div class="row">
+
+                    <!-- Text Box Start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'Sector'" [value]="currentObject.SectorName"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- Text Box End -->
+
+                    <!-- Text Box Start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'CancelCloseReason'" [value]="currentObject.CancelCloseReason"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- Text Box End -->
+
+                    <!-- Page Subheading -->
+                    <div class="col-sm-12 col-md-12">
+                        <h4 class="card__body--subheading">{{'ApplicableIn'|translate}}</h4>
+                    </div>
+                    <!-- Page Subheading -->
+
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [tooltipVisible]="true" [tooltipTitle]="'AddRequestCancelCloseReasonPSR'"
+                                [label]="'ProfessionalPsrRequest'" [value]="currentObject.ProfessionalPsrRequest"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- Input Box End -->
+                    <!-- Input Box Start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [tooltipVisible]="true"  [tooltipTitle]="'AddRequestCancelCloseReasonLI'" [label]="'LiRequest'"
+                                [value]="currentObject.LiRequest"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- Input Box End -->
+                    <!-- Input Box Start -->
+                    <div class="col-sm-6 col-md-6" *ngIf="isICSOWVisible">
+                        <div class="form-group">
+                            <app-kendo-label [tooltipVisible]="true" [tooltipTitle]="'AddRequestCancelCloseReasonICSOW'" [label]="'IcSowRequest'"
+                                [value]="currentObject.IcSowRequest"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- Input Box End -->
+
+                </div>
+            </div>
+
+        </div>
+
+        <!--  Page Footer Section-->
+        <div class="page-footer">
+            <div class="btn-box btn-box--center">
+                <button type="button" kendoButton themeColor="primary"
+                    routerLink="/xrm/master/request-cancel-close-reason/list">{{ "Back" }}
+                </button>
+            </div>
+        </div>
+
+        <!-- End Footer Section-->
+</div>

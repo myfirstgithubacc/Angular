@@ -1,0 +1,73 @@
+<div class="app-content__body floating-layout floating-layout__view-layout">
+    <br>
+    <div class="card">
+        <div class="card__header">
+            <h4 class="card__heading">{{'BasicDetails'|translate}}</h4>
+        </div>
+        <div class="card__body">
+            <div class="row">
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'Sector'" [value]="costAccountingCode.SectorName">
+                        </app-kendo-label>
+                    </div>
+                </div>
+                @for(label of labelName; let i = $index; track i) {
+                <ng-container>
+                    <div class="col-sm-6 col-md-6"
+                        *ngIf="label.LocalizedKey !== null && label.LocalizedKey !== undefined">
+                        <div class="form-group">
+                            <app-kendo-label [label]="label.LocalizedKey" [value]="costAccountingCode['Segment'+(i+1)]">
+                            </app-kendo-label>
+                        </div>
+                    </div>
+                </ng-container>
+                }
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <app-kendo-label class="floating-layout__view-layout--break" [label]="'Description'"
+                            class="floating-layout__view-layout--break" [value]="costAccountingCode.Description">
+                        </app-kendo-label>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6" *ngIf="isEffectivedateOn">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'EffectiveStartDate'"
+                            [value]="costAccountingCode.EffectiveStartDate | date:dateFormat">
+                        </app-kendo-label>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6" *ngIf="isEffectivedateOn">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'EffectiveEndDate'"
+                            [value]="costAccountingCode.EffectiveEndDate | date:dateFormat">
+                        </app-kendo-label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card" *ngIf="IsMultipleApprover">
+        <div class="card__header">
+            <h4 class="card__heading">{{'CostAccountingCodeApproverConfiguration' | translate}}</h4>
+        </div>
+        <div class="card__body pt-0">
+            <div class="row">
+                <div class="cac__approval-details">
+                    <grid-view [gridData]="costAccountingCode.CostAccountingCodeApproverConfiguration"
+                        [columnOptions]="columnOptions" [pageSize]="pageSize" [tabOptions]="tabOptions"
+                        [isColumnChooserVisible]="false" [isInternalSearch]="true" [isActionColumnVisible]="false"
+                        [pageHideOnServerSide]="true" [isPaginationVisible]="false" [isToolbarVisible]="false">
+                    </grid-view>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-footer">
+        <div class="btn-box btn-box--center">
+            <button type="button" kendoButton themeColor="primary" (click)="backToList()">
+                {{ "Back" | translate }}
+            </button>
+        </div>
+    </div>
+</div>

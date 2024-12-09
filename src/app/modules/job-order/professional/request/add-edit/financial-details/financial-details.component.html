@@ -1,0 +1,149 @@
+<kendo-expansionpanel [expanded]="true" class="card">
+    <ng-template kendoExpansionPanelTitleDirective>
+        <div (click)="$event.stopPropagation()">
+            <h4 class="card__heading">{{'RateDetails' | translate}}</h4>
+        </div>
+    </ng-template>
+    <form [formGroup]="rateDetailsFrom">
+        <div class="card__body">
+            <div class="row">
+                <!-- Input Box Start -->
+                <div *ngIf="isWageRateAdjustmentShow" class=" col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-numeric-box [controlName]="'BaseWageRate'" [label]="getBaseWageRateLabel()"
+                            [isEditMode]="isWageRateAdjustmentAllow" format="n2" [min]="0" [maxlength]="7"
+                            [decimals]="2" (onNumericBlur)="onBaseWageRateBlur($event)">
+                        </app-numeric-box>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- Input Box Start -->
+                <div class=" col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <!-- <app-textbox [controlName]="'RateUnitId'" [label]="'RateUnit'"
+                        [isEditMode]="true"></app-textbox> -->
+                        <app-kendo-label [label]="'RateUnit'"
+                            [value]="reqLibraryDetails?.RateUnitName"></app-kendo-label>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- Input Box Start -->
+                <div class=" col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-numeric-box [controlName]="'NewNteBillRate'" [label]="getNteBillRateLabel()"
+                            [isCurrency]="true" [decimals]="2" [isRequired]="true" [min]="0" [maxlength]="6"
+                            [isEditMode]="isRateExceptionAllowed" (onNumericBlur)="onNteBillRateChange()">
+                        </app-numeric-box>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- Input Box Start -->
+                <div class=" col-sm-6 col-md-6" *ngIf="isNteBillRateChange">
+                    <div class="form-group">
+                        <app-numeric-box [controlName]="'DeltaCost'" [label]="'DeltaCostOfException'"
+                            [isCurrency]="true" format="n2" [decimals]="2" [isRequired]="false" [isEditMode]="true">
+                        </app-numeric-box>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- Input Box Start -->
+                <div class=" col-sm-12 col-md-12" *ngIf="isNteBillRateChange">
+                    <div class="form-group">
+                        <app-kendo-textarea [label]="'ReasonForException'" [controlName]="'ReasonForException'"
+                            [isRequired]="true" [maxCharacters]="500"></app-kendo-textarea>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <div class="clearfix"></div>
+
+                <!-- input box start -->
+                <div class=" col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-dropdown [isRequired]="true" [label]="'HourDistribution'"
+                            [controlName]="'HourDistributionRuleId'" [placeholder]="'-Select-'" [list]="hdrList"
+                            (onChange)="hdrOnChange($event)"></app-kendo-dropdown>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start -->
+                <div class=" col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-numeric-box [controlName]="'EstimatedRegularHoursPerWeek'" [decimals]="2"
+                            [label]="'EstimatedRegularHoursPerWeek'" [isRequired]="true" [min]="1" [maxlength]="6"
+                            [max]="168" (onNumericBlur)="onEstRegHoursPerWeek($event)">
+                        </app-numeric-box>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <div class="clearfix"></div>
+
+                <!-- Input Box Start -->
+                <div class=" col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [label]="'OTHoursAllowed'" [controlName]="'IsOtExpected'" [onLabel]="'Yes'"
+                            [offLabel]="'No'" (onChangeSwitch)="onOTHoursAllowedChange($event)"></app-kendo-switch>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start -->
+                <div *ngIf="isOTHousBilledAtShow" class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-radio-button [controlName]="'OthoursBilledAt'" [RadioGroup]="overTimeHoursList"
+                            [label]="'OvertimeHoursBilledAt'" (onChangeRadio)="otBilledAtChange($event)">
+                        </app-kendo-radio-button>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div *ngIf="isEstimatedOtHoursPerWeekShow" class=" col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-numeric-box [controlName]="'EstimatedOtHoursPerWeek'" [label]="'EstimatedOTHoursPerWeek'"
+                            [min]="0" [maxlength]="6" [decimals]="2" [max]="128"
+                            [isEditMode]="isDisableEstimatedOtHoursPerWeek"
+                            (onNumericBlur)="onEstOtHoursPerWeek($event)">
+                        </app-numeric-box>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+                <!-- input box start -->
+                <!-- <div *ngIf="isBudgetHourShow" class=" col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-numeric-box [controlName]="'BudgetedHours'" [label]="'BudgetedHours'" [isRequired]="true"
+                            [min]="1" [maxlength]="7">
+                        </app-numeric-box>
+                    </div>
+                </div> -->
+                <!-- input box end -->
+
+                <div class="clearfix"></div>
+                <app-benefit-adder *ngIf="reqLibraryId || profRequestDetails?.ProfRequest?.RequestDetail?.RequestId"
+                    [reqLibraryId]="reqLibraryId"
+                    [requestId]="profRequestDetails?.ProfRequest?.RequestDetail?.RequestId" [entityId]="entityId"
+                    [sectorId]="sectorId" [locationId]="locationId" [isCreate]="!isEditMode"
+                    [isEntityBenefitAdderPatched]="isEntityBenefitAdderPatched"
+                    (onDataPicked)="getBenefitAdderData($event)"></app-benefit-adder>
+
+                <!-- Input Box Start -->
+                <div class=" col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-numeric-box [controlName]="'EstimatedCost'" [label]="'EstimatedCost'" [isCurrency]="true"
+                            [decimals]="2" [isRequired]="false" [isEditMode]="true">
+                        </app-numeric-box>
+                    </div>
+                </div>
+                <!-- input box end -->
+
+            </div>
+        </div>
+    </form>
+</kendo-expansionpanel>

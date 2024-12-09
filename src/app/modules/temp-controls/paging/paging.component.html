@@ -1,0 +1,70 @@
+<div *ngIf="isServerSidePagingEnable">
+  <div class="master-search widget-filter__search">
+    <div class="row">
+      <div class="col-md-12 master-search__wapper">
+        <div class="master-search__search-box">
+          <div class="custom-search">
+            <div class="custom-search__input-box">
+  
+              <app-search [isServerSidePagingEnable]="isServerSidePagingEnable" [placeholder]="'SearchFor'" [buttonNameSearch]="''" 
+                [EntityId]="entityId" (onSearch)="onSearch($event)" [isSpecialCharacterAllowed]="true">
+              </app-search>
+  
+            </div>
+  
+            <!-- <app-advance-search [EntityId]="entityId" [isServerSidePagingEnable]="isServerSidePagingEnable"
+              (selectedFilter)="onFilter($event)">
+            </app-advance-search> -->
+            
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <grid-view [isServerSidePagingEnable]="isServerSidePagingEnable" [entityId]="entityId"
+      [apiAddress]="apiAddress" [searchText]="searchText" [advFilterData]="appliedAdvFilters"
+      [columnOptions]="columnOptions" [actionSet]="actionSet" [tabOptions]="tabOptions" [kendoGridSelectedBy]="'UKey'"
+      [actionItemCategoryField]="'Disabled'" (selectedTab)="selectedTab($event)" [pageSize]="pageSize"
+      [isSortingAllowed]="true" [isFilteringAllowed]="true" [isActionColumnVisible]="true"
+      [fileName]="'LaborCategory'">
+    </grid-view>
+  </div>
+</div>
+
+<div *ngIf="!isServerSidePagingEnable">
+  <div class="master-search widget-filter__search">
+    <div class="row">
+      <div class="col-md-12 master-search__wapper">
+        <div class="master-search__search-box">
+          <div class="custom-search">
+            <div class="custom-search__input-box">
+  
+              <app-search [placeholder]="'SearchFor'" [buttonNameSearch]="''"  [list]="listLabCat" [columnOptions]="columnOptions"
+                [EntityId]="entityId" (onSearch)="onSearch($event)" [isSpecialCharacterAllowed]="true">
+              </app-search>
+  
+            </div>
+  
+            <!-- <app-advance-search [EntityId]="entityId" [list]="listLabCat"
+              (selectedFilter)="onFilter($event)">
+            </app-advance-search> -->
+            
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <grid-view [gridData]="listLabCatCopy" [entityId]="entityId"
+      [columnOptions]="columnOptions" [actionSet]="actionSet" [tabOptions]="tabOptions" [kendoGridSelectedBy]="'UKey'"
+      [actionItemCategoryField]="'Disabled'" (selectedTab)="selectedTab($event)" [pageSize]="pageSize"
+      [isSortingAllowed]="true" [isFilteringAllowed]="true" [isActionColumnVisible]="true"
+      [fileName]="'LaborCategory'">
+    </grid-view>
+  </div>
+</div>

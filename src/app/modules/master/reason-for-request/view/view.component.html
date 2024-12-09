@@ -1,0 +1,75 @@
+<div class="app-content__body floating-layout floating-layout__view-layout">
+  <div class="card">
+    <div class="card__header">
+      <h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+      <div class="card__header-icon"></div>
+    </div>
+    <div class="card__body">
+      <div class="row">
+        <div class="clearfix"></div>
+        <div class="col-sm-6 col-md-6">
+          <div class="form-group">
+            <div class="new-view">
+              <kendo-label text="{{'Sector' | translate}}"></kendo-label>
+              <p class="label-answere">{{reasonForRequestDetails.SectorName}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-6">
+          <div class="form-group">
+            <div class="new-view">
+              <kendo-label text="{{'ReasonForRequest' | translate}}"></kendo-label>
+              <p class="label-answere">{{reasonForRequestDetails.ReasonForRequest}}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-12 col-md-12">
+          <h4 class="card__body--subheading">{{'ApplicableIn' | translate}} </h4>
+        </div>
+
+        <div class="col-sm-6 col-md-6">
+          <div class="form-group">
+            <app-kendo-label [label]="'ProfessionalPsrRequest'"
+              [value]="reasonForRequestDetails.ProfessionalRequest ? 'Yes' : 'No'" [tooltipVisible]="true"
+              [tooltipTitle]="'ReasonForRequestProffRequestToolTip'">
+            </app-kendo-label>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-6" *ngIf="rfxSwitchconfig">
+          <div class="form-group">
+            <app-kendo-label [label]="'RfxSowRequest'" [value]="reasonForRequestDetails.RfxSowRequest ? 'Yes' : 'No'"
+              [tooltipVisible]="true" [tooltipTitle]="'ReasonForRequestRFxRequestToolTip'">
+            </app-kendo-label>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-6">
+          <div class="form-group">
+            <app-kendo-label [label]="'LiRequest'" [value]="reasonForRequestDetails.LiRequest ? 'Yes' : 'No'"
+              [tooltipVisible]="true" [tooltipTitle]="'ReasonForRequestLIRequestToolTip'">
+            </app-kendo-label>
+          </div>
+        </div>
+        <div *ngIf="reasonForRequestDetails.LiRequest" class="col-sm-12 col-md-12">
+          <h4 class="card__body--subheading">{{'LIConfiguration' | translate}}</h4>
+        </div>
+
+        <div *ngIf="reasonForRequestDetails.LiRequest" class="col-sm-6 col-md-6">
+          <div class="form-group">
+            <div class="new-view">
+              <kendo-label text="{{'ApprovalConfigured' | translate}}"></kendo-label>
+              <p class="label-answere">{{reasonForRequestDetails.ApprovalConfigured ? 'Yes' : 'No'}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <div class="btn-box btn-box--center">
+      <button type="button" kendoButton themeColor="primary" [routerLink]="navigationPaths.list">
+        {{"Back" | translate}}
+      </button>
+    </div>
+  </div>

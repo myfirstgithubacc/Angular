@@ -1,0 +1,68 @@
+<button (click)="showSuccess()">Show Success toaster</button>
+<button (click)="showError()">Show Erorr toaster</button>
+<button (click)="showWarning()">Show Warning toaster</button>
+<button (click)="showInfo()">Show Information toaster</button>
+
+
+{{listDDTreeData|json}}
+<form [formGroup]="form">
+  <div class="card">
+    <div class="row">
+      <div class="col-12">
+        <div style="margin: 50px;">
+
+            <app-weekday-picker 
+            [dayInfo]="daysInfo" 
+            [isWeekdayEditMode]="false"
+            [timeRangeProperties]="timeRange"
+            [startTimeControlName]="'startTimeControlName'"
+            [endTimeControlName]="'endTimeControlName'"
+            (selectedTimeChange)="updateSelectedTime($event)"
+            (daySelectionChanged)="updateDayInfo($event)"
+            (getWeekDayInfo)="getWeekData($event)"
+            (onCancel)="getStatus($event)"
+            [skipOnChanges]="skipOnChanges">
+            </app-weekday-picker>
+
+<br>
+<br>
+<button (click)="checkDisable()">checkDisable</button>
+            <app-kendo-switch [isDisable]="false" [controlName]="'switch'"
+                                [label]="'PreviouslyPlacedAtThisClient'" [onLabel]="'Yes'" [offLabel]="'No'">
+                            </app-kendo-switch>
+                            <app-textbox [label]="'Answer'" [isRequired]="true" [type]="'password'" [controlName]="'text'"></app-textbox>
+
+            <!-- Weekday Picker Widget End -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</form>
+
+
+<div class="card">
+  <div class="row">
+    <div class="col-6">
+      <div style="margin: 50px;">
+        <form [formGroup]="form">
+          <app-kendo-dropdown [list]="ddlValue" [tooltipVisible]="true" [tooltipTitle]="'Pre_defined_Work_Schedule_Tooltip_IsEditMode'" [label]="'file Extension'" [placeholder]="'DdlSelect'"
+            (onChange)="GetExtension($event)" [controlName]="'ddData'" [isHtmlContent]="true" [isEditMode]="false" [singleItemautoLable]="false"></app-kendo-dropdown>
+
+          <br>
+          <span>All multiple file upload =></span>
+          <input type="checkbox" formControlName="terms" kendoCheckBox #terms (change)="chkChange($event)" />
+          <br>
+          <app-kendo-fileselect [fileSelectTheme]="'secondary'" [controlName]="'files'" [label]="'File Upload'" [isRequired]="true"
+            [multiple]="isMultipleUpload" [dropFilesMessage]="'drop file here'"
+            [fileExtAllow]="extensionsAllow"></app-kendo-fileselect>
+          <button kendoButton themeColor="primary" type="submit" style="margin: 1em 0;" (click)="saveFile()">
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

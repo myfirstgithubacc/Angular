@@ -1,0 +1,24 @@
+<div *ngIf="isRendered">
+<div *ngIf="isEditMode; then thenTemplateName; else elseTemplateName"></div>
+<ng-template #thenTemplateName>
+  <app-kendo-label [label]="label" [value]="formControl.value" [tooltipPosition]=""
+    [labelLocalizeParam]="labelLocalizeParam"
+    [tooltipVisible]="tooltipVisible" [tooltipTitle]="tooltipTitle" [tooltipTitleLocalizeParam]="tooltipTitleLocalizeParam">
+  </app-kendo-label>
+</ng-template>
+<ng-template #elseTemplateName>
+  <kendo-formfield>
+    <tooltip-content [tooltipVisible]="tooltipVisible" [tooltipTitle]="tooltipTitle" [label]="label" [isRequired]="isRequired"
+      [tooltipPosition]="" [isHtmlContent]="isHtmlContent" [tooltipTitleLocalizeParam]="tooltipTitleLocalizeParam"
+      [labelLocalizeParam]="labelLocalizeParam">
+    </tooltip-content>
+    <input kendoTextBox [type]="type" class="widgetsClass" appRestrictInput [allowLetter]="true" [allowNumber]="true"
+      [isSpecialCharacterAllowed]="isSpecialCharacterAllowed" [specialCharactersAllowed]="specialCharactersAllowed"
+      [specialCharactersNotAllowed]="specialCharactersNotAllowed" [formControl]="controlName1?controlName1:formControl"
+      [placeholder]="placeholder | translate" [maxlength]="maxCharacters" (keyup)="restrictWord($event)"
+      (valueChange)="onChange($event)" (focus)="onFocus($event)" (blur)="onBlur($event)"
+      (inputFocus)="inputFocus($event)" (inputBlur)="inputBlur($event)" (focusout)="onfocusout($event)" />
+    <app-print-error-message [control]="controlName1?controlName1:formControl"></app-print-error-message>
+  </kendo-formfield>
+</ng-template>
+</div>

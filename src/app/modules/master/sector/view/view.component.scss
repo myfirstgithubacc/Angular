@@ -1,0 +1,174 @@
+.wrapping-needed {
+    overflow: visible;
+    white-space: normal;
+}
+
+.wizard {
+    ul {
+        margin: 0;
+        padding: 0;
+
+        li {
+            list-style-type: none;
+            margin-bottom: 8px;
+        }
+    }
+
+    .k-stepper {
+        background: var(--color-white);
+        box-shadow: var(--card-shadow);
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 24px;
+        width: 100%;
+    }
+}
+
+.k-stepper {
+    .k-step-indicator {
+        border-width: 2px;
+        width: 18px;
+        height: 18px;
+        background-color: var(--color-white) !important;
+        border-color: var(--light-border-color);
+        color: var(--color-default);
+    }
+
+    .k-step-label {
+        .k-step-text {
+            font-size: var(--base-font-size);
+            font-weight: 500;
+            color: var(--color-default);
+            overflow: inherit;
+        }
+    }
+
+    .k-step-link {
+        line-height: normal;
+    }
+
+    .k-step-current {
+        .k-step-label {
+            .k-step-text {
+                color: var(--orange-color);
+            }
+        }
+
+        .k-step-indicator {
+            border-color: var(--orange-color);
+        }
+    }
+
+    .k-step {
+        &.k-step-current {
+            .k-step-indicator-icon {
+                &.k-i-check {
+                    &:before {
+                        width: 5px;
+                        height: 5px;
+                        position: absolute;
+                        left: 50%;
+                        top: 50%;
+                        margin: auto;
+                        content: "";
+                        border-radius: 100px;
+                        transform: translate(-50%, -50%);
+                    }
+
+                    &::before {
+                        background: var(--orange-color);
+                    }
+                }
+            }
+
+            .k-step-indicator {
+                color: var(--orange-color);
+            }
+        }
+
+        .k-step-indicator-icon {
+            &.k-i-check {
+                &:before {
+                    content: "";
+                }
+            }
+        }
+    }
+
+    .k-step-done {
+        .k-step-indicator {
+            border-color: var(--green-color);
+            color: var(--color-white);
+            background-color: var(--green-color) !important;
+            color: var(--color-white);
+
+            .k-step-indicator-text {
+                display: none;
+            }
+
+            &::before {
+                content: "";
+                background-image: url(../../../../../assets/icon/xrm-icons/check.svg);
+                background-repeat: no-repeat;
+                background-size: 10px;
+                background-position: center;
+                -webkit-filter: brightness(0) invert(1);
+                filter: brightness(0) invert(1);
+            }
+        }
+
+        .k-step-label {
+            .k-step-text {
+                color: var(--green-color);
+            }
+        }
+    }
+
+    .text-error {
+        &.k-step-done {
+            .k-step-indicator {
+                border-color: var(--color-inactive);
+                color: white;
+                background-color: var(--color-inactive) !important;
+            }
+
+            .k-step-label {
+                .k-step-text {
+                    color: var(--color-inactive) !important;
+                }
+            }
+        }
+    }
+}
+
+.k-step-list-vertical {
+    .k-step {
+        &:last-child {
+            min-height: 38px;
+        }
+    }
+
+    &~.k-progressbar {
+        left: 31px;
+        top: -8px;
+    }
+}
+
+.k-progressbar {
+    .k-selected {
+        border-color: var(--green-color);
+        background-color: var(--green-color);
+    }
+}
+
+.k-stepper .k-step.k-step-done .k-step-indicator-icon.k-icon.k-i-check,
+.k-stepper .k-step.k-focus .k-step-indicator:after,
+.k-stepper .k-step-link:focus .k-step-indicator:after {
+    display: none;
+}
+
+.k-stepper .k-step-done:hover .k-step-indicator,
+.k-stepper .k-step-done.k-hover .k-step-indicator,
+.k-stepper .k-step-done.k-step-hover .k-step-indicator {
+    background-color: var(--green-color);
+}

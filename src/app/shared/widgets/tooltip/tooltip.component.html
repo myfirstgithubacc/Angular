@@ -1,0 +1,8 @@
+<kendo-label [text]="tooltipData.label" kendoTooltip [position]="tooltipData.tooltipPosition">
+  <ng-container *ngIf="tooltipData.tooltip">
+    <xrm-icon title="{{tooltipData.tooltipTitle | translate}}" name="info"></xrm-icon>
+  </ng-container>
+  <ng-container *ngIf="tooltipData.content">
+    <p class="label-answere">{{tooltipData.value}}</p>
+  </ng-container>
+</kendo-label>

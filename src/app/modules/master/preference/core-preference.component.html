@@ -1,0 +1,47 @@
+<form [formGroup]="AddEditEventReasonForm">
+    <app-common-header [recordName]="userDetails.UserFullName" [recordId]="userDetails.UserCode" [entityId]="16"
+        [recordIdTitle]="'UserRecordID'| translate"
+        [recordStatus]="userDetails.UserStatus == 1 ? 'Active' : 'Inactive'" [recordStatusTitle]="'Status'| translate"
+        [buttonSet]="[]" [isStatusEditable]="false"></app-common-header>
+</form>
+
+<div class="row">
+	<div class="col-sm-3">
+		<div class="card">
+			<div class="card__header">
+				<h4 class="card__heading">Profile Picture</h4>
+			</div>
+			<div class="card__body">
+			  <div class="avatar-upload">
+				  <div class="avatar-edit">
+					 <input type="file" class="ImageUploader" #imageUploads (change)="loadPicture($event)" id="123" accept=".png, .jpg, .jpeg" />
+					 <label for="ImageUploader"></label>
+				  </div>
+				  <div class="avatar-preview">
+						<img alt="user" id="output2" src="assets/images/users/3.jpg" />
+				  </div>
+				</div>
+				<div class="profile-upload__btn">
+				  <button class="profile__button" type="button" kendoButton themeColor="primary" [disabled]="!shouldUpload" (click)="uploadPicture()">Upload</button>
+				  <button class="profile__button" type="button" kendoButton themeColor="primary" *ngIf="!removeImage" fillMode="outline" (click)="removePicture()">Remove</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-9">
+		<app-preference [inputProperties]="{
+			proxyuserList: proxyUserDropdownList,
+			userDetails: userDetails,
+			proxyAuthorizationTypesList: proxyAuthorizationTypesList,
+			notificationoptionList:[],
+			notificationoptiondropdownList:notificationpreferenceoptiondropdownList,
+			securityQuestionList: securityQuestionList,
+			landingPageList:landingPageList,
+			timezonelist: timeZoneList,
+			languageList: languageList,
+			dateFormatList: dateFormatList,
+			cancelNavigationUrl: '/xrm/landing/home',
+      isFromProfile: true
+		}"></app-preference>
+	</div>
+</div>

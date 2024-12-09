@@ -1,0 +1,53 @@
+<div class="example">
+  <form class="k-form" [formGroup]="form">
+    <fieldset class="k-form-fieldset">
+      <kendo-formfield>
+        <kendo-label [for]="password" text="Password"> </kendo-label>
+        <kendo-textbox
+          formControlName="password"
+          #password
+          required
+          [clearButton]="true"
+        >
+          <ng-template kendoTextBoxSuffixTemplate>
+            <button
+              kendoButton
+              look="clear"
+              icon="eye"
+              (click)="toggleVisibility()"
+            ></button>
+          </ng-template>
+        </kendo-textbox>
+
+        <kendo-formhint>Your password</kendo-formhint>
+        <kendo-formerror>Error: Password is required</kendo-formerror>
+      </kendo-formfield>
+
+      <kendo-formfield>
+        <div class="k-checkbox-wrap">
+          <input
+            #loggedin
+            type="checkbox"
+            kendoCheckBox
+            formControlName="loggedin"
+          />
+          <kendo-label
+            [for]="loggedin"
+            class="k-checkbox-label"
+            text="Keep me logged in"
+          ></kendo-label>
+        </div>
+        <kendo-formhint
+          >Next time, you will be logged in automatically</kendo-formhint
+        >
+      </kendo-formfield>
+
+      <div class="k-form-buttons">
+        <button kendoButton themeColor="primary" (click)="login()">
+          Login
+        </button>
+        <button kendoButton (click)="clearForm()">Clear</button>
+      </div>
+    </fieldset>
+  </form>
+</div>

@@ -1,0 +1,76 @@
+<!-- Main Body Section-->
+<div class="app-content__body">
+      <!-- Card Section Start-->
+      <div class="card">
+        <!-- Card Header Section-->
+        <div class="card__header">
+          <h4 class="card__heading">{{'UploadDataList' | translate}}</h4>
+          <div class="card__header-icon"></div>
+        </div>
+        <!-- End Card Header Section-->
+        <div class="card__body">
+          <div class="row">
+            <div class="col-sm-6 col-md-6">
+              <div class="master-search__search-box">
+                <div class="custom-search">
+                <div class="custom-search__input-box ">
+                  <app-search
+                    (onSearch)="OnSearch($event)"
+                    [isServerSidePagingEnable]="false" [placeholder]="'SearchFor'" 
+                    [buttonNameSearch]="''"  [list]="listreadonly" 
+                    [EntityId]="entityId" [isSpecialCharacterAllowed]="true"
+                    [columnOptions]="columnOptions"                    
+                  >
+                  </app-search>
+                </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-sm-12 col-md-12 list-view card__card-remove bulkManagement__section">
+              <grid-view
+              [isServerSidePagingEnable]="true"
+              [apiAddress]="'blk-upld/get-upld-dt-lst'"
+              [entityId]="entityId"
+              [entityType]="'BulkDataMaster'"
+              [columnOptions]="columnOptions" 
+              [actionSet]="actionSet"
+              [kendoGridSelectedBy]="'UKey'" 
+              [multiSelect]="false" 
+              [searchText]="searchText"
+              [isApiGateway]="true"
+              [pageSize]="pageSize"
+              [pageHideOnServerSide]="true"
+              [showTabs]="false"
+              [isPaginationVisible]="false" 
+              [isExportHide]="true" 
+              [isColumnChooserVisible]="false" 
+              [isToolbarVisible]="false"
+              [tabOptions]="tabOptions" 
+              [isSortingAllowed]="true" 
+              [isFilteringAllowed]="true"
+              [isActionColumnVisible]="true"
+              ></grid-view>
+                      </div>
+          </div>
+        </div>
+        <!--Manager Section Section end-->
+      </div>
+      <!-- Card Section End-->
+
+    <!-- Footer Section-->
+    <div class="page-footer">
+      <div class="btn-box btn-box--center">
+        <button
+          type="button"
+          kendoButton
+          fillMode="outline"
+          themeColor="primary"
+          (click)="backToList()"
+          >
+          {{'Back' | translate}}
+        </button>
+      </div>
+    </div>
+    <!-- End Footer Section-->
+</div>

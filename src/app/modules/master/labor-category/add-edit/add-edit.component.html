@@ -1,0 +1,217 @@
+<!-- Main Body Section-->
+<div class="app-content__body">
+
+  <form [formGroup]="addEditForm" (ngSubmit)="submitForm()">
+    <div class="card">
+
+      <!-- Card Header Section-->
+      <div class="card__header">
+        <h4 class="card__heading">{{'BasicDetails' | translate}} </h4>
+        <div class="card__header-icon">
+        </div>
+      </div>
+      <!-- End Card Header Section-->
+
+      <!-- Card Body Section-->
+      <div class="card__body">
+        <div class="row">
+
+          <!-- Dropdown box start -->
+          <div class="col-sm-6 col-md-6" >
+            <div class="form-group">
+              <app-kendo-dropdown *ngIf="!isEditMode" class="remove-mt-1" [list]="sectorList" [label]="'Sector'" [controlName]="'SectorId'"
+                [placeholder]="'DdlSelect'" [isRequired]="true" [isEditMode]="isEditMode"
+                (onChange)="onChangeSectorDropdown($event)">
+              </app-kendo-dropdown>
+
+              <app-kendo-label  *ngIf="isEditMode" [label]="'Sector'" [value]="secName">
+              </app-kendo-label>
+            </div>
+          </div>
+          <!-- End Dropdown box end -->
+
+          <!-- Dropdown box start -->
+          <div class="col-sm-6 col-md-6">
+            <div class="form-group">
+              <app-textbox [controlName]="'LaborCategoryName'" [label]="'LaborCategory'" [isRequired]="true"
+                [maxCharacters]="50" appRestrictInput [isSpecialCharacterAllowed]="true">
+              </app-textbox>
+            </div>
+          </div>
+          <!-- End Dropdown box end -->
+
+          <!-- Dropdown box start -->
+          <div class="col-sm-6 col-md-6">
+            <div class="form-group">
+              <app-kendo-dropdown [list]="managerList" [label]="'MSPProgramManager'"
+                [controlName]="'MspProgramManagerId'" [placeholder]="'DdlSelect'" [isRequired]="true">
+              </app-kendo-dropdown>
+            </div>
+          </div>
+          <!-- End Dropdown box end -->
+
+          <div class="col-sm-6 col-md-6">
+            <div class="form-group" *ngIf="!isReqLib">
+              <app-kendo-dropdown [list]="laborCatTypeData" [label]="'LaborCategoryType'" [controlName]="'LaborCatType'"
+                [placeholder]="'DdlSelect'" [isRequired]="true" (onChange)="onChangeLaborCatTypeDdl($event)">
+              </app-kendo-dropdown>
+            </div>
+
+            <div class="form-group" *ngIf="isReqLib">
+              <app-kendo-label [value]="laborCategoryDetails.LaborCategoryTypeLocalizedKey"
+                [label]="'LaborCategoryType'">
+              </app-kendo-label>
+            </div>
+
+          </div>
+
+          <div class="clearfix"></div>
+          <!-- Dropdown box start -->
+          <div class="col-sm-6 col-md-6" *ngIf="showProfData">
+            <div class="form-group">
+              <app-numeric-box [controlName]="'MaxProfilesPerStaffing'" [label]="'MaximumProfilesPerStaffingAgency'"
+                [isRequired]="true" [maxlength]="4" appRestrictInput [isSpecialCharacterAllowed]="false" [min]="1">
+              </app-numeric-box>
+            </div>
+          </div>
+          <!-- End Dropdown box end -->
+
+          <!-- Dropdown box start -->
+          <div class="col-sm-6 col-md-6" *ngIf="showProfData">
+            <div class="form-group">
+              <app-numeric-box [controlName]="'MaxProfileTotal'" [label]="'MaximumProfilesTotalPerPosition'"
+                [isRequired]="true" [min]="1" [maxlength]="4" appRestrictInput [isSpecialCharacterAllowed]="false">
+              </app-numeric-box>
+            </div>
+          </div>
+          <!-- End Dropdown box end -->
+
+          <!-- Dropdown box start -->
+          <div class="col-sm-6 col-md-6" *ngIf="showProfData">
+            <div class="form-group">
+              <app-numeric-box [controlName]="'PayrollMarkUp'" [label]="'PayrollMarkUpPercentage'" [isRequired]="true"
+                [decimals]="3" [maxlength]="6" [format]="'n3'" [min]="0">
+              </app-numeric-box>
+            </div>
+          </div>
+          <!-- End Dropdown box end -->
+
+          <div class="clearfix"></div>
+          <!-- Switch box start -->
+          <div class="col-sm-6 col-md-6" *ngIf="showProfData">
+            <div class="form-group">
+              <app-kendo-switch [controlName]="'IsExpressLaborCategory'" [label]="'ExpressLaborCategory'"
+                [tooltipVisible]="true" [tooltipTitle]="'ExpressLaborCategoryTooltipMessage'" [onLabel]="'Yes'"
+                [offLabel]="'No'" (onChangeSwitch)="switchExpressLaborCategory($event)"></app-kendo-switch>
+            </div>
+          </div>
+          <!-- End Switch box end -->
+
+          <!-- Switch box start -->
+          <div class="col-sm-6 col-md-6" *ngIf="addEditForm?.get('IsExpressLaborCategory')?.value ">
+            <div class="form-group">
+              <app-kendo-radio-button [controlName]="'CandidateHiredBy'" [name]="'candidateHiredBy'"
+                [label]="'CandidateToBeSelectedBy'" [tooltipVisible]="true"
+                [tooltipTitle]="'CandidateToBeSelectedByTooltipMessage'"
+                [RadioGroup]="radioGroup"></app-kendo-radio-button>
+            </div>
+          </div>
+          <!-- End Switch box end -->
+        </div>
+      </div>
+    </div>
+    <!-- End Card Body Section-->
+
+    <!-- Card Section-->
+    <div class="card">
+
+      <!-- Card Header Section-->
+      <div class="card__header">
+        <h4 class="card__heading">{{'PricingModelConfiguration' | translate}}</h4>
+        <div class="card__header-icon">
+        </div>
+      </div>
+      <!-- End Card Header Section-->
+
+      <!-- Card Body Section-->
+      <div class="card__body">
+        <div class="row">
+          <div class="col-sm-6 col-md-6">
+            <div class="form-group">
+              <app-kendo-switch [controlName]="'IsAlternatePricingModel'" [label]="'AlternatePricingModelConfiguration'" [isDisable]="checkLIRequest()"
+                [onLabel]="'Yes'" [offLabel]="'No'" (onChangeSwitch)="switchPricingModel($event)"
+                [tooltipVisible]="true"
+                [tooltipTitle]="'AlternatePricingModelConfigurationTooltipMessage'"></app-kendo-switch>
+            </div>
+          </div>
+
+          <!-- Radio box start -->
+          <div class="col-sm-6 col-md-6" *ngIf="addEditForm.get('IsAlternatePricingModel')?.value">
+            <div class="form-group">
+              <app-kendo-radio-button [controlName]="'PricingModel'" [label]="'PricingModel'"
+                [RadioGroup]="radioGroupPricing" [tooltipVisible]="true" [tooltipTitle]="'Pricing_Model_Tooltip'"
+                [isHtmlContent]="true" [isSelected]="isSelected" [name]="'PricingModel'"
+                (onChangeRadio)="onPricingChangeRadio($event)"></app-kendo-radio-button>
+            </div>
+          </div>
+          <!-- End Radio box end -->
+
+          <!-- Radio box start -->
+          <div class="col-sm-6 col-md-6" *ngIf="addEditForm.get('IsAlternatePricingModel')?.value">
+            <div class="form-group">
+              <app-kendo-radio-button [controlName]="'BillRateValidation'" [label]="'BillRateValidation'"
+                [RadioGroup]="radioGroupBillRateValidation" [tooltipVisible]="true" [isHtmlContent]="true"
+                [tooltipTitle]="'Bill_Rate_Validation_Tooltip'" [name]="'BillRateValidation'"></app-kendo-radio-button>
+            </div>
+          </div>
+          <!-- End Radio box end -->
+
+          <!-- Radio box start -->
+          <div class="col-sm-6 col-md-6" *ngIf="addEditForm.get('IsAlternatePricingModel')?.value">
+            <div class="form-group">
+              <app-kendo-radio-button [controlName]="'CostEstimationType'" [label]="'CostEstimatingType'" [isEditMode]="IsLiCreated"
+                [RadioGroup]="radioGroupCosEstimatingType" [tooltipVisible]="true" [isHtmlContent]="true"
+                [tooltipTitle]="'Cost_Estimation_Type_Tooltip'" [name]="'CostEstimationType'"></app-kendo-radio-button>
+            </div>
+          </div>
+          <!-- End Radio box end -->
+          <!-- Dropdown box start -->
+
+          <div class="col-sm-6 col-md-6" *ngIf="addEditForm.get('IsAlternatePricingModel')?.value">
+            <div class="form-group">
+              <tooltip-content [tooltipVisible]="true" [label]="'OtRateCalcuatedBasedOn'" [isRequired]="true"
+                [isHtmlContent]="true" [tooltipTitle]="'OverTimeHoursBilledAtTooltipMessage'">
+
+              </tooltip-content>
+              <app-kendo-dropdown [list]="oTtypes" [controlName]="'OtRateTypes'" [placeholder]="'DdlSelect'"[isEditMode]="isBillBasedValue">
+              </app-kendo-dropdown>
+
+            </div>
+          </div>
+          <!-- End Dropdown box end -->
+        </div>
+      </div>
+
+    </div>
+
+    <ng-container *ngIf="sectorId > 0">
+      <app-udf-implementation [entityId]="entityID" [sectorId]="sectorId" [recordId]="udfRecordId"
+        [recordUKey]="recordUKey" [parentsInfos]="udfCommonMethods.getParentsInfo()" [actionTypeId]="actionTypeId"
+        (onDataPicked)="getUdfData($event)">
+      </app-udf-implementation>
+
+    </ng-container>
+
+    <div class="page-footer">
+      <div class="btn-box btn-box--center">
+        <button type="button" kendoButton fillMode="outline" themeColor="primary" (click)="navigate()">
+          {{ "Cancel" | translate }}
+        </button>
+        <button type="submit" kendoButton themeColor="primary" [disabled]="isEditMode ? addEditForm.pristine : false"
+          appFocusOnError [formName]="addEditForm">
+          {{ isEditMode ? ("Save" | translate) : ("Save" | translate) }}
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

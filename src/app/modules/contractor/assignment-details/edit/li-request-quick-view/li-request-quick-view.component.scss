@@ -1,0 +1,9 @@
+li {
+  &.list__data--item {
+    &.cost-accounting-panel-view {
+      .data-answere {
+        word-break: break-all;
+      }
+    }
+  }
+}

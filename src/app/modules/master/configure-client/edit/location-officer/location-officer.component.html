@@ -1,0 +1,12 @@
+	<div class="card__header">
+		<h4 class="card__heading">{{ "LocationOfficers" | translate }}</h4>
+		<div class="card__header-icon">
+		</div>
+	</div>
+	<div class="card__body">
+		<app-list-view #list (listData)="getLocationOfficersDatafromWidget($event)" (onDelete)="onDeleteLocationOfficer()"
+			(formData)="getLocationOfficerFormStatus($event)" [columnData]="columnLocationOfficers"
+			[columnConfigure]="columnConfigurationLocationOfficers" [populatedData]="prefilledDataLocationOfficers">
+		</app-list-view>
+	</div>
+	

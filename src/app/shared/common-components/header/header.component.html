@@ -1,0 +1,178 @@
+<header class="navbar navbar-expand-sm navbar-dark bg-dark bg-white header fixed-top">
+  <nav class="container-fluid">
+    <span>
+      <button type="button" class="side-collapse-button" [ngClass]="statuses ? 'toggleIconBtn' : ''"
+        (click)="sideToggleCollapse()" title="Expanded">
+        <xrm-icon name="align-left" class="side-menu__icon" color="gray-color" class="sw-bolder" [size]="30"></xrm-icon>
+      </button>
+    </span>
+
+    <a class="navbar-brand" href="#/administration/welcome" routerLink="/xrm/landing/home">
+      <img src="assets/images/XRM-logo.webp" alt="mdo" class="logo-firm">
+    </a>
+    <img src="assets/images/acrologo.webp" alt="mdo" class="logo-client">
+    <button class="d-none navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="mobile-user-profile">
+      <button type="button" class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle" data-bs-toggle="dropdown"
+        aria-expanded="false" data-bs-display="static">
+        <span class="user-avatar font-defination">
+          <img src="assets/images/users/4.png" alt="user">
+          <img *ngIf="isProfilePictureAvailable" [src]="profilePicture" alt="user">
+          <b class="centered" *ngIf="!isProfilePictureAvailable">{{getInitials()}}</b>
+        </span>
+      </button>
+
+      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+
+        <li class="dropdown-header">
+          <h6 class="mb-0">{{'Welcome' | translate}} {{ userName }}</h6>
+        </li>
+        <li>
+          <a class="dropdown-item" href="javascript:;">
+            <xrm-icon name="zoom" color="black-color" [size]="14"
+              routerLink="/xrm/landing/global-search/list"></xrm-icon>
+            {{'Search' | translate}}
+          </a>
+        </li>
+        <li><a class="dropdown-item" href="javascript:;" routerLink="/xrm/master/preference">
+            <xrm-icon name="setting" color="black-color" [size]="15" [strokeWidth]="1.3"></xrm-icon>
+            {{"Preferences" | translate}}</a></li>
+        <li><a class="dropdown-item" href="javascript:;" routerLink="/xrm/master/user/change-password">
+            <xrm-icon name="lock-circle" color="black-color" [size]="15" [strokeWidth]="1.3"></xrm-icon>
+            {{'ChangePassword' | translate}}</a></li>
+        <li><a class="dropdown-item" href="javascript:;" routerLink="/xrm/landing/messages/list">
+            <xrm-icon name="newsletter" color="black-color" [size]="14" [strokeWidth]="1.1"></xrm-icon>
+            {{'Messages' | translate}}</a></li>
+        <li><a class="dropdown-item" href="javascript:;" (click)="logOut()">
+            <xrm-icon name="logout" color="black-color" [size]="14" [strokeWidth]="1.3"></xrm-icon>
+            {{'SignOut'| translate}}</a></li>
+      </ul>
+
+    </div>
+
+
+    <div class="collapse navbar-collapse" id="mynavbar">
+      <ul class="navbar-nav main-top-menu flex-row flex-wrap ms-auto main-top-menu__icon">
+        <li class="nav-item search-main">
+          <span class="nav-link hybrid-theme-two" href="javascript:;">
+            <div class="search-wrapper" [ngClass]="{'active': isActive}">
+              <div class="input-holder">
+                <form [formGroup]="form">
+                  <input formControlName="searchText" type="text" #searchTextBox
+                    (keydown.enter)="searchroute(searchTextBox.value)" class="search-input"
+                    placeholder="{{'GlobalSearchPlaceholder' | translate}}" />
+                  <button class="search-icon" (click)="searchroute(searchTextBox.value)">
+                    <xrm-icon name="zoom" color="black-color" [size]="16"></xrm-icon>
+                  </button>
+                </form>
+              </div>
+              <span class="close" (click)="searchToggle(searchTextBox)"></span>
+            </div>
+          </span>
+        </li>
+
+
+        <li class="nav-item dropdown theme-dropdown">
+          <button type="button" class="btn btn-link nav-link py-2 px-0 px-lg-2" title="Dark/Light Theme 1"
+            (click)="toggleLightAndDarkThemeSwitcher()">
+            <span class="themeSwitch">
+              <xrm-icon [name]="webTheme" [svgPath]="dimension" color="black-color" [size]="15">
+              </xrm-icon>
+            </span>
+          </button>
+        </li>
+        <li class="nav-item dropdown header-message" (click)="toggleDropdown('recentAlert')">
+          <button type="button" class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle"
+            data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">
+            <xrm-icon name="newsletter" color="black-color" [size]="16" [strokeWidth]="1.1"></xrm-icon>
+
+          </button>
+          <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow recent_alert"
+            [class.show]="isRecentAlertListOpen">
+            <div class="dropdown-header">
+              <h6 class="mb-0">{{"Messages"| translate}}</h6>
+            </div>
+            <div class="header-dropdown-list message-menu ps">
+              <div *ngIf="(recentFiveMsg);else blank_list">
+                <a *ngFor="let message of recentFiveMsg" class="dropdown-item border-bottom"
+                  (click)="navigateToMessage(message)">
+                  <div class="d-flex align-items-center">
+                    <div class="d-flex">
+                      <div class="pl-3">
+                        <p class="fs-13 mb-0">{{ message.Subject }}</p>
+                        <div class="small text-muted">{{dateTimeTransform(message.ReceivedOn)}}</div>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <ng-template #blank_list>
+                <div class="header-dropdown-list message-menu ps">
+                  <div class="dropdown-item border-bottom">
+                    <div class="d-flex align-items-center">
+                      <div class="d-flex">
+                        <div class="pl-3">
+                          <p class="fs-13 mb-0">{{'NoRecentMsgAvailable' | translate}}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </ng-template>
+            </div>
+            <a class="seeAll" (click)="navigateToList()">{{"SeeAllMessages"| translate}}</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown header-user-guide" (click)="toggleDropdown('userGuide')">
+          <button type="button" class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle"
+            data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">
+            <xrm-icon name="book" color="black-color" [size]="16" [strokeWidth]="1.3"></xrm-icon>
+            <span class="pulse "></span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" [class.show]="isUserGuideListOpen">
+            <div *ngIf="dataItem.length > 0">
+              <li *ngFor="let dt of dataItem" class="dropdown-item">
+                <a (click)="downloadUserGuide(dt.DmsId,dt.DisplayName, dt.FileFormat)">{{dt.DisplayName}}</a>
+              </li>
+            </div>
+            <div *ngIf="dataItem?.length == 0">
+              <li class="dropdown-item">
+                <span>{{"NoUserGuideIsAvailable"| translate}}</span>
+              </li>
+            </div>
+          </ul>
+        </li>
+        <li class="nav-item dropdown" (click)="toggleDropdown('profile')">
+          <button type="button" class="btn btn-link nav-link py-2 px-0 px-lg-2 dropdown-toggle"
+            data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">
+
+            <span class="user-avatar font-defination">
+              <img src="assets/images/users/4.png" alt="user">
+              <img *ngIf="isProfilePictureAvailable" [src]="profilePicture" alt="user">
+              <b class="centered" *ngIf="!isProfilePictureAvailable">{{getInitials()}}</b>
+            </span>
+
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" [class.show]="isProfileListOpen">
+            <li class="dropdown-header">
+              <h6 class="mb-0">{{'Welcome' | translate}} {{ userName }}</h6>
+            </li>
+            <li><a class="dropdown-item" href="javascript:;" routerLink="/xrm/master/preference">
+                <xrm-icon name="setting" color="black-color" [size]="16" [strokeWidth]="1.3"></xrm-icon>
+                {{"Preferences" | translate}}</a></li>
+            <li><a class="dropdown-item" href="javascript:;" routerLink="/xrm/master/user/change-password">
+                <xrm-icon name="lock-circle" color="black-color" [size]="16" [strokeWidth]="1.3"></xrm-icon>
+                {{'ChangePassword' | translate}}</a></li>
+            <li><a class="dropdown-item" href="javascript:;" (click)="logOut()">
+                <xrm-icon name="logout" color="black-color" [size]="15" [strokeWidth]="1.3"></xrm-icon>
+                {{'SignOut'| translate}}</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>

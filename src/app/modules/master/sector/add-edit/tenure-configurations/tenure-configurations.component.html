@@ -1,0 +1,155 @@
+<form [formGroup]="tenureConfigForm">
+    <!--Tenure Configuration Section start-->
+    <div class="card">
+        <!-- Card Header Section-->
+        <div class="card__header">
+            <h4 class="card__heading">{{ 'TenureConfigurations' | translate }}</h4>
+            <div class="card__header-icon">
+            </div>
+        </div>
+        <!-- End Card Header Section-->
+
+        <!-- Card Body Section-->
+        <div class="card__body">
+            <div class="row">
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch 
+                            [controlName]="'TenurePolicyApplicable'" 
+                            [label]="'TenurePolicyApplicable'"
+                            (onChangeSwitch)="switchTenurePolicyApplicable($event)" 
+                            [onLabel]="'Yes'"
+                            [isDisable]="disableControls && !isDraft" 
+                            [offLabel]="'No'">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <div class="clearfix"></div>
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6" *ngIf="isSwitchTenurePolicyApplicableShow">
+                    <div class="form-group">
+                        <app-kendo-switch 
+                            [controlName] = "'IsTenureAllowRenewedAfterResetPeriod'"
+                            [onLabel] = "'Yes'"
+                            [offLabel] = "'No'"
+                            [tooltipVisible] = "true" 
+                            [tooltipTitle] = "'CLP_Allowable_Tenure_Is_Renewed_After_Reset_Period_Tooltip'"
+                            (onChangeSwitch)="switchIsTenureAllowRenewedAfterResetPeriod($event)"
+                            [label] = "'CLPAllowableTenureIsRenewedAfterResetPeriod'">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6" *ngIf="isSwitchTenurePolicyApplicableShow">
+                    <div class="form-group">
+                        <app-kendo-radio-button 
+                            [controlName] = "'TenureLimitType'" 
+                            [isEditMode] = 'disableControls && !isDraft'
+                            [RadioGroup] = "dropdown"
+                            [tooltipVisible] = "true" 
+                            [tooltipTitle] = "'Tenure_Limit_Type_Tooltip'"
+                            [label] = "'TenureLimitType'" 
+                            (onChangeRadio)="radioTenureLimitType($event)"
+                            [isRequired] = "true">
+                        </app-kendo-radio-button>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6" *ngIf="isSwitchTenurePolicyApplicableShow">
+                    <div class="form-group">
+                        <span class="textarea__count">{{ this.tenureLimitTypeMessage | translate}}</span>
+                        <app-numeric-box 
+                            [label] = "'ReqTenureLimit'" 
+                            [controlName] = "'ReqTenureLimit'"
+                            format = n
+                            [placeholder] = "''" 
+                            [isRequired] = "true" 
+                            [min] = 'magicNumbers.zero'
+                            [tooltipVisible] = "true" 
+                            [tooltipTitle] = "'Requisition_Tenure_Limit_Tooltip'"
+                            [maxlength] = 'magicNumbers.four'
+                            [decimals] = 'magicNumbers.zero'>
+                        </app-numeric-box>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6" *ngIf="isSwitchTenurePolicyApplicableShow">
+                    <div class="form-group">
+                        <span class="textarea__count">{{ tenureLimitTypeMessage | translate}}</span>
+                        <app-numeric-box 
+                            [label] = "'ExtTenureLimit'" 
+                            [controlName] = "'ExtTenureLimit'"
+                            [placeholder] = "''" 
+                            [isRequired] = "true" 
+                            [maxlength] = 'magicNumbers.four'
+                            [tooltipVisible] = "true" 
+                            [tooltipTitle] = "'Extension_Tenure_Limit_Tooltip'"
+                            [decimals] = 'magicNumbers.zero'
+                            format = n
+                            [min] = 'magicNumbers.zero'>
+                        </app-numeric-box>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6" *ngIf="isSwitchTenurePolicyApplicableShow">
+                    <div class="form-group">
+                        <span class="textarea__count">{{ tenureLimitTypeMessage | translate}}</span>
+                        <app-numeric-box 
+                            [label] = "'ClpTenureLimit'" 
+                            [controlName] = "'ClpTenureLimit'"
+                            [placeholder] = "''"  
+                            [min] = 'magicNumbers.zero'
+                            [tooltipVisible] = "true" 
+                            [tooltipTitle] = "'CLP_Tenure_Limit_Tooltip'"
+                            [maxlength] = 'magicNumbers.four'
+                            format = n
+                            [decimals] = 'magicNumbers.zero'
+                            [isRequired] = "true">
+                        </app-numeric-box>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6" *ngIf="isSwitchTenurePolicyApplicableShow">
+
+                    <div class="form-group">
+
+                        <app-numeric-box 
+                            [label] = "'TenureResetPeriod'"
+                            [controlName] = "'TenureResetPeriod'" 
+                            [placeholder] = "''" 
+                            [isRequired] = "false"
+                            [maxlength] = 'magicNumbers.four'
+                            [min] = 'magicNumbers.zero'
+                            [tooltipVisible] = "true" 
+                            [tooltipTitle] = "'Tenure_Reset_Period_Tooltip'"
+                            [isRequired] = "isDisableAllowableTenureResetPeriod"
+                            [decimals] = 'magicNumbers.zero'
+                            format = n >
+                        </app-numeric-box>
+
+                    </div>
+                </div>
+                <!-- input box start -->
+            </div>
+        </div>
+        <!-- End Card Body Section-->
+        <!-- Card Footer Section-->
+
+        <!--End Card Footer Section-->
+    </div>
+    <!--Tenure Configuration Section end-->
+</form>

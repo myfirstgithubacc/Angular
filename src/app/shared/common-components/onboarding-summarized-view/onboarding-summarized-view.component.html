@@ -1,0 +1,90 @@
+<ng-container *ngIf="isDrugScreen || isBackgroundCheck">
+<form [formGroup]="onboardingForm">
+    <div class="card__body">
+        <div class="card__body--inner-wrapper">
+
+            <ng-container *ngIf="isDrugScreen">
+                <div class="col-sm-12 col-md-12">
+                    <h4 class="card__body--subheading subheading__no-margin subheading__no-border">{{'DrugScreenId' |
+                        translate}}
+                    </h4>
+                </div>
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group"> 
+                        <app-kendo-radio-button [controlName]="'drugScreenResultId'" [RadioGroup]="drugScreenRadioGroupArray"
+                            [label]="'DrugScreenResult'" [name]="'DrugScreen'" [isEditMode]="isEditMode">
+                        </app-kendo-radio-button>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12"
+                    *ngIf="(onboardingForm?.get('drugScreenResultId')?.value == 88) || (onboardingForm?.get('drugScreenResultId')?.value == 198)">
+                    <div class="form-group">
+                        <app-kendo-datepicker [label]="'DrugResultDate'" [controlName]="'drugResultDate'"
+                            [isEditMode]="isEditMode"></app-kendo-datepicker>
+                    </div>
+                </div>
+            </ng-container>
+            
+            <ng-container *ngIf="isBackgroundCheck">
+                <div class="col-sm-12 col-md-12">
+                    <h4 class="card__body--subheading  subheading__no-border">{{'BackgroundChecksTitle' | translate}}
+                    </h4>
+                </div>
+                <div class="col-sm-12 col-md-12">
+                    <div class="row">
+                        <div class="col-sm-9 col-md-9">
+                            <div class="form-group">
+                                <app-kendo-radio-button [controlName]="'backgroundCheckScreen'"
+                                    [RadioGroup]="backgroundCheckRadioFroupArray" [label]="'BackgroundCheck'"
+                                    [name]="'backgroundCheckScreen'" [isEditMode]="isEditMode">
+                                </app-kendo-radio-button>
+                            </div>
+                        </div>
+                        <div *ngIf="backgroundChecksItemList.length" class="col-sm-3 col-md-3">
+                            <div class="form-group">
+                                <div class="new-view">
+                                    <span class="label-answere"><a href="javascript:;" data-bs-toggle="offcanvas"
+                                            data-bs-target="#backgroundDetailsSidebar">Background Check
+                                            Details</a></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12" *ngIf="(onboardingForm?.get('backgroundCheckScreen')?.value == 217)">
+                    <div class="form-group">
+                        <app-kendo-datepicker [label]="'BackgroundResultDate'" [controlName]="'backgroundResultDate'"
+                            [isEditMode]="isEditMode"></app-kendo-datepicker>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</form>
+</ng-container>
+
+
+<!-- Add Filter sidebar -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="backgroundDetailsSidebar"
+    aria-labelledby="backgroundDetailsSidebar">
+    <div class="offcanvas-header">
+        <h5>Background Check Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+        </button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="card floating-layout floating-layout__quickview-layout">
+            <div class="card__body">
+                <div class="row">
+                    <div *ngFor="let row of backgroundChecksItemList" class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <app-kendo-label [label]="row.BackgroundItemLocalizedKey | translate"
+                                [value]="row.ComplianceCheckValue ? 'Yes': 'No'"></app-kendo-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Add Filter sidebar -->

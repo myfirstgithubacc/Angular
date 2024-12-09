@@ -1,0 +1,432 @@
+<div class="app-content__body">
+    <div class="app-content__body">
+        <form [formGroup]="addEditUDFForm">
+            <!-- Basic Details -->
+
+            <div class="card">
+
+                <div class="card__header">
+                    <h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+                </div>
+
+                <div class="card__body">
+
+                    <div class="row">
+
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-textbox [controlName]="'ComplianceFieldName'" [label]="'ComplianceFieldName'"
+                                    [isEditMode]="true" [tooltipVisible]="true"
+                                    [tooltipTitle]="'UDFAutoGenerateValueToolTip'"></app-textbox>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-textbox [controlName]="'LabelText'" [label]="'DisplayName'" [isRequired]="true"
+                                    [tooltipVisible]="true" [isSpecialCharacterAllowed]="true"
+                                    [tooltipTitle]="'UserCanSetLabelTextForThisField'"></app-textbox>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- End Basic Details -->
+
+            <!-- Field Configuration -->
+
+            <div class="card">
+
+                <div class="card__header">
+                    <h4 class="card__heading">{{'FieldConfiguration' | translate}}</h4>
+                    <div class="card__header-icon" [hidden]="!addEditUDFForm.get('FieldType')?.value">
+                        <a class="link-color" (click)="onPreviewClick()"><span class="icon-group"><xrm-icon name="eye" [size]="18" color="dark-blue-color"></xrm-icon></span>
+                            {{'Preview' | translate}}
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card__body">
+                    <div class="row">
+
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-dropdown [controlName]="'FieldType'" [label]="'FieldType'"
+                                    [isRequired]="true" [placeholder]="'DdlSelect'" [list]="listFieldTypes"
+                                    [isSpecialCharacterAllowed]="true" [isEditMode]="uKey == null ? false : true"
+                                    (onChange)="loadFieldTypeConfig($event)">
+                                </app-kendo-dropdown>
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group" *ngIf="fieldTypeConfig?.VisibleIsNumeric">
+                                <app-kendo-switch [controlName]="'IsNumeric'" [label]="'IsNumeric'" [isDisable]="disableNumeric ? true: false"
+                                    [tooltipVisible]="true" [tooltipTitle]="'UDFFieldNumericValidation'"
+                                    (onChangeSwitch)="onIsNumericChange($event)" [onLabel]="'Yes'" [offLabel]="'No'">
+                                </app-kendo-switch>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6"
+                            *ngIf="!fieldTypeConfig.VisibleIsDate && fieldTypeConfig.VisibleMinOption">
+                            <div class="form-group">
+                                <app-numeric-box [label]="'SegmentMinLength'" [controlName]="'MinLength'"
+                                    [max]="maxLength" [tooltipVisible]="true" [isRequired]="addEditUDFForm.get('IsMandatory')?.value"
+                                    [tooltipTitle]="'MinimumLengthCharacterValidation'">
+                                </app-numeric-box>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6"
+                            *ngIf="!fieldTypeConfig.VisibleIsDate && fieldTypeConfig.VisibleMaxOption">
+                            <div class="form-group">
+                                <app-numeric-box [label]="'MaxLength'" [controlName]="'MaxLength'"
+                                    [isRequired]="true" [tooltipVisible]="true" [max]="maxLength"
+                                    [tooltipTitle]="'MaximumLengthCharacterValidation'">
+                                </app-numeric-box>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6" *ngIf="fieldTypeConfig.VisibleIsDate">
+                            <div class="form-group">
+                                <app-kendo-datepicker [controlName]="'MinDate'" [label]="'MinDate'">
+                                </app-kendo-datepicker>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6" *ngIf="fieldTypeConfig.VisibleIsDate">
+                            <div class="form-group">
+                                <app-kendo-datepicker [controlName]="'MaxDate'" [label]="'MaxDate'">
+                                </app-kendo-datepicker>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6" *ngIf="fieldTypeConfig.VisiblePredefinedPickList">
+                            <div class="form-group">
+                                <a href="javascript:;" (click)="openPopupPredefinedlist()" class="anchor_txt">{{ 'AddEditList' | translate }}</a>
+
+                                <app-kendo-dropdown [list]="preDefinedPickList" [label]="'PickList'"
+                                    [controlName]="'PredefinedLists'" [placeholder]="'DdlSelect'"
+                                    [tooltipVisible]="true" [isRequired]="true" [tooltipTitle]="'UdfPredefinedListInfoMessage'"
+                                    [isSpecialCharacterAllowed]="true" (onChange)="onPreDefinedListChange($event)">
+                                </app-kendo-dropdown>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6" *ngIf="fieldTypeConfig.VisiblePredefinedPickList">
+                            <div class="form-group">
+                                <app-kendo-dropdown [list]="preDefinedPickListItems" [label]="'DefaultValue'"
+                                    [controlName]="'DefaultPredefinedList'" [placeholder]="'DdlSelect'"
+                                    [tooltipVisible]="true" [tooltipTitle]="'AllowDefaultValuesForUDF'"
+                                    [isSpecialCharacterAllowed]="true"
+                                    [isRequired]="addEditUDFForm.get('IsViewOnly')?.value">
+                                </app-kendo-dropdown>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6"
+                            *ngIf="!fieldTypeConfig.VisiblePredefinedPickList && fieldTypeConfig.VisibleDefaultValue">
+
+                            <div class="form-group" *ngIf="isNumericDefaultValue">
+                                <app-numeric-box [controlName]="'DefaultValue'" [label]="'DefaultValue'"
+                                    [tooltipVisible]="true" [tooltipTitle]="'AllowDefaultValuesForUDF'"
+                                    [maxlength]="addEditUDFForm.get('MaxLength')?.value"
+                                    [isRequired]="addEditUDFForm.get('IsViewOnly')?.value"
+                                    (onNumericChange)="defaultValueChange($event)"></app-numeric-box>
+                            </div>
+
+                            <div class="form-group" *ngIf="!isNumericDefaultValue">
+                                <app-textbox [controlName]="'DefaultValue'" [label]="'DefaultValue'"
+                                    [tooltipVisible]="true" [tooltipTitle]="'AllowDefaultValuesForUDF'"
+                                    [isSpecialCharacterAllowed]="true" (onChangeTextBox)="defaultValueChange($event)"
+                                    [maxCharacters]="addEditUDFForm.get('MaxLength')?.value"
+                                    [isRequired]="addEditUDFForm.get('IsViewOnly')?.value">
+                                </app-textbox>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6" *ngIf="uKey == null">
+                            <div class="form-group">
+                                <app-kendo-radio-button [controlName]="'IsAppliesToAllSectors'"
+                                    [RadioGroup]="sectorLabel" [label]="'AppliesToSector'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'UDFSelectDropdownConfirmation'">
+                                </app-kendo-radio-button>
+                                <div class="tree-bxs">
+                                    <app-tree-view [hidden]="addEditUDFForm.get('IsAppliesToAllSectors')?.value"
+                                        [data]="listSectors" [textField]="'Text'" [checkedKeys]="sectorKey"
+                                        [treeViewType]="'approvalLevel'" (onCheckedTree)="getSelectedSectors($event)">
+                                    </app-tree-view>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6" *ngIf="uKey != null">
+                            <div class="form-group">
+                                <app-kendo-radio-button [controlName]="'IsAppliesToAllSectors'"
+                                    [RadioGroup]="sectorLabel" [label]="'AppliesToSector'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'UDFSelectDropdownConfirmation'" [isEditMode]=true>
+                                </app-kendo-radio-button>
+                                <div class="tree-bxs">
+                                    <app-tree-view [hidden]="addEditUDFForm.get('IsAppliesToAllSectors')?.value"
+                                        [data]="listSectors" [textField]="'Text'" [checkedKeys]="sectorKey"
+                                        [treeViewType]="'approvalLevel'" (onCheckedTree)="getSelectedSectors($event)">
+                                    </app-tree-view>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-switch [controlName]="'IsStoreAsEncrypeted'" [label]="'StoreAsEncrypted'"
+                                    [tooltipVisible]="true" [tooltipTitle]="'UDFStoreDataAsEncryptedForm'"
+                                    [onLabel]="'Yes'" [offLabel]="'No'">
+                                </app-kendo-switch>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-multiselect-dropdown [controlName]="'VisibleTo'" [list]="listVisibleTo"
+                                    [label]="'VisibleTo'" [placeholder]="'DdlSelect'" [isRequired]="true"
+                                    (onChange)="onVisibleToChange($event)" [isSpecialCharacterAllowed]="true">
+                                </app-kendo-multiselect-dropdown>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-switch [controlName]="'IsViewOnly'" [label]="'ViewOnly'"
+                                    (onChangeSwitch)="onViewOnlyChanged($event)" [onLabel]="'Yes'" [offLabel]="'No'">
+                                </app-kendo-switch>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6" *ngIf="!addEditUDFForm?.get('IsViewOnly')?.value">
+                            <div class="form-group">
+                                <app-kendo-multiselect-dropdown [label]="'EditingAllowedBy'" [list]="listVisibleTo"
+                                    [controlName]="'EditingAllowedBy'" [placeholder]="'DdlSelect'" [isRequired]="true"
+                                    (onChange)="onEditingAllowedByChange($event)" [isSpecialCharacterAllowed]="true">
+                                </app-kendo-multiselect-dropdown>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6" *ngIf="!addEditUDFForm?.get('IsViewOnly')?.value">
+                            <div class="form-group">
+                                <app-kendo-switch [controlName]="'IsMandatory'" [label]="'Mandatory'" [onLabel]="'Yes'"
+                                    [offLabel]="'No'" (onChangeSwitch)="onMandatoryChange($event)">
+                                </app-kendo-switch>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <app-kendo-textarea [controlName]="'ToolTipText'" [label]="'TooltipText'"
+                                    [isSpecialCharacterAllowed]="true" [maxCharacters]="1000" [tooltipVisible]="true" 
+                                    [tooltipTitle]="'UdfToolTipInfoMessage'" [allowBullets]="true">
+                                </app-kendo-textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- End Field Configuration -->
+
+            <!-- Start Screen-->
+
+            <div class="card">
+                <div class="card__header">
+                    <h4 class="card__heading">Screen</h4>
+                </div>
+
+                <div class="card__body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-dropdown [label]="'BaseScreen'" [controlName]="'BaseScreen'"
+                                    [isRequired]="true" [placeholder]="'DdlSelect'" [tooltipVisible]="true"
+                                    [list]="listBaseScreen" (onChange)="onBaseScreenChange($event)"
+                                    [tooltipTitle]="'ReturnValueOfUDFToUser'" [isSpecialCharacterAllowed]="true"
+                                    [isEditMode]="uKey == null ? false : true">
+                                </app-kendo-dropdown>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-12 list-view list-view__border udf__list-viewscreen"
+                            *ngIf="listViewRowsInfo.length > 0">
+                            <app-udf-list-view [rows]="listViewRowsInfo" [columnsInfo]="listViewColumnInfo"
+                                (switchChange)="onAppliesToChange($event)" (onDataPicked)="getListViewData($event)"
+                                (multiSelectChange)="onMultiSelectChange($event)" (dropDownChange)="onDropDownChange($event)">
+                            </app-udf-list-view>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- End Screen -->
+
+            <div class="page-footer">
+                <div class="btn-box btn-box--center">
+                    <button kendoButton type="button" fillMode="outline" themeColor="primary"
+                        routerLink="/xrm/master/user-defined-fields/list">
+                        {{ "Cancel" | translate }}
+                    </button>
+                    <app-kendo-button [buttonName]="'Save'" (Click)="confirmToSubmitForm()" appFocusOnError [listformName]="[addEditUDFForm,listViewForm]" 
+                    [isDisable]="uKey != null ? (addEditUDFForm.pristine && !sowKeyClicked && (listViewForm?.pristine ?? true)) : false"></app-kendo-button>
+
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <kendo-dialog class="preview-dialog-popup dailog dailog-center" (close)="onDecline()" *ngIf="isPreviewVisible"
+        [width]="420">
+        <a href="javascript:;" class="close-dailog" (click)="onPreviewAccept()"><xrm-icon name="x" color="black-color" [size]="18" [strokeWidth]="2.5"></xrm-icon></a>
+        <h3 class="dailog__title">Field Preview</h3>
+        <div class="card">
+            <div class="card__header">
+                <h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+                <div class="card__header-icon"></div>
+            </div>
+            <div class="card__body">
+                <div class="row">
+    
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <div class="skeleton skeleton__field-preview">
+                                <kendo-skeleton shape="text" animation="wave" width="40%"
+                                    [ngStyle]="{ marginBottom: '4px' }">
+                                </kendo-skeleton>
+    
+                                <kendo-skeleton shape="rectangle" animation="wave" width="100%" height="35px">
+                                </kendo-skeleton>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <div class="skeleton skeleton__field-preview">
+                                <kendo-skeleton shape="text" animation="wave" width="40%"
+                                    [ngStyle]="{ marginBottom: '4px' }">
+                                </kendo-skeleton>
+    
+                                <kendo-skeleton shape="rectangle" animation="wave" width="100%" height="35px">
+                                </kendo-skeleton>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <div class="skeleton skeleton__field-preview">
+                                <kendo-skeleton shape="text" animation="wave" width="40%"
+                                    [ngStyle]="{ marginBottom: '4px' }">
+                                </kendo-skeleton>
+    
+                                <kendo-skeleton shape="rectangle" animation="wave" width="100%" height="35px">
+                                </kendo-skeleton>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <div class="skeleton skeleton__field-preview">
+                                <kendo-skeleton shape="text" animation="wave" width="40%"
+                                    [ngStyle]="{ marginBottom: '4px' }">
+                                </kendo-skeleton>
+    
+                                <kendo-skeleton shape="rectangle" animation="wave" width="100%" height="35px">
+                                </kendo-skeleton>
+                            </div>
+                        </div>
+                    </div>
+    
+                </div>
+    
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="card__header">
+                <h4 class="card__heading">User Defined Fields</h4>
+                <div class="card__header-icon"></div>
+            </div>
+            <div class="card__body">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <div class="skeleton skeleton__field-preview">
+                                <kendo-skeleton shape="text" animation="wave" width="40%"
+                                    [ngStyle]="{ marginBottom: '4px' }">
+                                </kendo-skeleton>
+    
+                                <kendo-skeleton shape="rectangle" animation="wave" width="100%" height="35px">
+                                </kendo-skeleton>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <div class="skeleton skeleton__field-preview">
+                                <kendo-skeleton shape="text" animation="wave" width="40%"
+                                    [ngStyle]="{ marginBottom: '4px' }">
+                                </kendo-skeleton>
+    
+                                <kendo-skeleton shape="rectangle" animation="wave" width="100%" height="35px">
+                                </kendo-skeleton>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <form [formGroup]="previewForm">
+                            <div class="form-group">
+                                <app-textbox *ngIf="field == '1'" [controlName]="'TextBox'"
+                                    [label]="addEditUDFForm.value.LabelText" [isRequired]="addEditUDFForm.value.IsMandatory"
+                                    [tooltipVisible]="true" [tooltipTitle]="addEditUDFForm.value.ToolTipText"></app-textbox>
+    
+                                <app-kendo-textarea *ngIf="field == '2'" [controlName]="'TextArea'"
+                                    [label]="addEditUDFForm.value.LabelText" [isRequired]="addEditUDFForm.value.IsMandatory"
+                                    [tooltipVisible]="true" [allowBullets]="true"
+                                    [tooltipTitle]="addEditUDFForm.value.ToolTipText"></app-kendo-textarea>
+    
+                                <app-kendo-dropdown *ngIf="field == '3'" [controlName]="'DropDown'"
+                                    [list]="preDefinedPickListItems" [label]="addEditUDFForm.value.LabelText"
+                                    [placeholder]="'DdlSelect'" [isRequired]="addEditUDFForm.value.IsMandatory"
+                                    [tooltipVisible]="true"
+                                    [tooltipTitle]="addEditUDFForm.value.ToolTipText"></app-kendo-dropdown>
+    
+                                <app-kendo-datepicker *ngIf="field == '4'" [controlName]="'DatePicker'"
+                                    [label]="addEditUDFForm.value.LabelText" [isRequired]="addEditUDFForm.value.IsMandatory"
+                                    [tooltipVisible]="true" [tooltipTitle]="addEditUDFForm.value.ToolTipText"
+                                    [minDate]="addEditUDFForm.value.MinDate"
+                                    [maxDate]="addEditUDFForm.value.MaxDate"></app-kendo-datepicker>
+                            </div>
+                        </form>
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </kendo-dialog>

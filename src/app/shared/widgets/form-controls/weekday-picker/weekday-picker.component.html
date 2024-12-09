@@ -1,0 +1,68 @@
+<div class="dropdown__shift-range">
+    <div class="dropdown__shift-range--input">
+        <kendo-label class="achor__text" text="Shift Days/Time"> :
+            <span [ngClass]="isWeekdayEditMode ? 'achor__text' : 'achor__text--disabled'">
+                <ul class="dropdown__shift-range__days" kendoTooltip>
+                    <!-- <li *ngFor="let item of dayInfo; let i=index" (click)="toggleDaySelection(item)" 
+                    [ngClass]="{ 'activeDays': item.isSelected && isWeekdayEditMode,'activeDaysDisable': item.isSelected && !isWeekdayEditMode}" [title]="item.day">
+                        <span> {{ item.day[0].toUpperCase() }}</span>
+                    </li> -->
+                    <li *ngFor="let item of dayInfo; let i=index" (click)="toggleDaySelection(item)"
+                    [ngClass]="!isWeekdayEditMode? (!item.isSelected ? 'disable-day' : 'allDays event-day'): (item.isSelected ? 'activeDays event-day' : '')"
+                        [title]="item.day">
+                      <span> {{ item.day[0].toUpperCase() }}</span>
+                    </li>
+                </ul>
+
+    
+                <span>/</span>
+                <div class="timeRange__inline" *ngIf="!isEditMode">
+                    {{ label | translate : getObject(labelLocalizeParam) }}
+
+                    {{ formatTime(selectedTime?.startTime)}} - {{ formatTime(selectedTime?.endTime)}}
+
+                    <button *ngIf="isReadonly" #anchor type="button" kendoButton (click)="ChangeMode(0)"
+                        fillMode="solid" themeColor="base" class="editDaysBtn">
+                        <xrm-icon name="edit-3" [size]="14" color="dark-blue-color" class="sw-bolder"></xrm-icon>
+                    </button>
+                </div>
+                <div class="timeRange__inline" *ngIf="isEditMode">
+
+                    <!-- *********************************************** START Time ******************************** -->
+                    <div class="timeRange__inline--input">
+                        <kendo-timepicker id="timePicker" (valueChange)="onStartTimeChange($event)"
+                            [formControl]="startFormControl" [format]="timeFormat" [formatPlaceholder]="{ 
+      year: placeholderFormat.year,
+      month: placeholderFormat.month, 
+      day: placeholderFormat.day, 
+      hour: placeholderFormat.hour, 
+      minute: placeholderFormat.minute, 
+      second: placeholderFormat.second, millisecond: 'S' }"></kendo-timepicker>
+                        <app-print-error-message [control]="startFormControl"></app-print-error-message>
+                    </div>
+                    <span>-</span>
+                    <!-- *********************************************** END Time ******************************** -->
+                    <div class="timeRange__inline--input">
+                        <kendo-timepicker id="timePicker" (valueChange)="onEndTimeChange($event)"
+                            [formControl]="endFormControl" [format]="timeFormat" [formatPlaceholder]="{ 
+      year: placeholderFormat.year,
+      month: placeholderFormat.month, 
+      day: placeholderFormat.day, 
+      hour: placeholderFormat.hour, 
+      minute: placeholderFormat.minute, 
+      second: placeholderFormat.second, millisecond: 'S' }"></kendo-timepicker>
+                        <app-print-error-message [control]="endFormControl"></app-print-error-message>
+                    </div>
+                    <button #anchor type="button" kendoButton (click)="ChangeMode(1)" fillMode="solid" themeColor="base"
+                        class="editDaysBtn">
+                        <xrm-icon name="check" [size]="14" color="green-color" class="sw-bolder"></xrm-icon>
+                    </button>
+                    <button #anchor type="button" kendoButton (click)="ChangeMode(2)" fillMode="solid" themeColor="base"
+                        class="editDaysBtn">
+                        <xrm-icon name="x" [size]="13" color="red-color" class="sw-bolder"></xrm-icon>
+                    </button>
+                </div>
+            </span>
+        </kendo-label>
+    </div>
+</div>

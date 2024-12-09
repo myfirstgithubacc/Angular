@@ -1,0 +1,52 @@
+<form [formGroup]="benefitAdderConfigurationsForm">
+   <div class="card">
+      <!-- Card Header Section-->
+      <div class="card__header">
+         <h4 class="card__heading">{{'BenefitAdderConfigurations' | translate}}</h4>
+      </div>
+      <!-- End Card Header Section-->
+      <!-- Card Body Section-->
+      <div class="card__body">
+         <div class="row">
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group">
+                  <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                     [tooltipTitle]="'AlternateSectorConfigurationToolTip'"
+                     [isDisable]="oneTimeSettingForToggleSwitchToMakeDisable('AltBenefitAdderConfigurations')"
+                     [controlName]="'alternateBenefitAdderConfigurations'" [onLabel]="'Yes'" [offLabel]="'No'"
+                     [label]="'AlternateBenefitAdderConfiguration'"
+                     (onChangeSwitch)="onAlternateBenefitAdderConfigurationsChange($event)"></app-kendo-switch>
+               </div>
+            </div>
+            <!-- Input Box End -->
+            <div class="clearfix"></div>
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6"
+               *ngIf="benefitAdderConfigurationsForm?.get('alternateBenefitAdderConfigurations')?.value">
+               <div class="form-group">
+                  <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                     [tooltipTitle]="'RequireBenefitAddersToolTip'" [controlName]="'requireBenefitAdders'"
+                     [label]="'Require Benefit Adder(s)'"
+                     (onChangeSwitch)="onRequireBenefitAddersChange($event)"></app-kendo-switch>
+               </div>
+            </div>
+            <!-- Input Box End -->
+            <div class="clearfix"></div>
+            <div *ngIf="benefitAdderConfigurationsForm?.get('requireBenefitAdders')?.value">
+               <!-- <div> -->
+
+               <div class="list-view">
+
+                  <app-list-view #benefitAdderListView 
+                     (formData)="getBenefitAdderFormStatus($event)" [columnData]="benefitAdderColumn"
+                     [columnConfigure]="benefitAdderColumnConfiguration" [populatedData]="benefitAdderPrefilledData">
+                  </app-list-view>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- Benefit Adder Configuration Section End -->
+
+</form>

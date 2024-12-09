@@ -1,0 +1,30 @@
+<form [formGroup]="shiftConfigForm">
+    <!--Shift Configuration Section start-->
+    <div class="card">
+        <!-- Card Header Section-->
+        <div class="card__header">
+            <h4 class="card__heading">{{ "ShiftConfigurations" | translate }}</h4>
+            <div class="card__header-icon">
+            </div>
+        </div>
+        <!-- End Card Header Section-->
+
+        <!-- Card Body Section-->
+        <div class="card__body">
+            <div class="row">
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-radio-button [controlName]="'ShiftdifferentialMethod'"
+                            [RadioGroup]="sectorAllDropdowns" [label]="'ShiftDifferentialMethod'"
+                            [isEditMode]="(isEditMode && !isDraft)" [isRequired]="false" [tooltipVisible]="isTooltipVisible" [tooltipTitle]="'Shift_Differential_Method_Tooltip'">
+                        </app-kendo-radio-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Card Body Section-->
+    </div>
+    <!--Shift Configuration Section end-->
+
+</form>

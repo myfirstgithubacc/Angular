@@ -1,0 +1,73 @@
+<button type="button" kendoButton fillMode="outline" themeColor="primary" icon="copy" class="copy__btn"
+    data-bs-toggle="offcanvas" [attr.data-bs-target]="uniqueId ? ('#' + uniqueId) : '#loadMoreId'"
+    (click)="openPopup()">
+    {{buttonLabel | translate}}</button>
+<div class="offcanvas offcanvas-end offcanvas__sidebar offcanvas__sidebar--copy-canvas" tabindex="-1" [attr.id]="uniqueId ? uniqueId : 'loadMoreId'"
+    [attr.aria-labelledby]="uniqueId ? uniqueId : 'loadMoreId'">
+    <div class="offcanvas-header">
+        <h5>{{headerTitle | translate}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+        </button>
+    </div>
+    <div class="offcanvas-body">
+        <span *ngIf="!dataSource?.length" class="kendo-label no-previous-records">{{'NoPreviousRecord' |
+            translate}}</span>
+        <div *ngIf="isLoadMorePopupShow">
+            <kendo-listview [data]="dataSource" containerClass="k-d-flex k-flex-col k-flex-nowrap"
+                (scrollBottom)="loadMore()">
+
+                <ng-template kendoListViewHeaderTemplate *ngIf="dataSource?.length || isSearch">
+                    <div class="col-sm-12 col-md-12">
+                        <div class="master-search__search-box">
+                            <div class="custom-search">
+                                <div class="custom-search__input-box ">
+                                    <kendo-textbox appRestrictInput [allowLetter]="true" [allowNumber]="true"
+                                        allowSpecialCharacter=" ." [placeholder]="placeholder | translate"
+                                        [clearButton]="true" [(ngModel)]="text" (valueChange)="onChange($event)"
+                                        (keyup)="onEntrePress($event)"
+                                        [isSpecialCharacterAllowed]="isSpecialCharacterAllowed"
+                                        [specialCharactersAllowed]="specialCharactersAllowed"
+                                        [specialCharactersNotAllowed]="specialCharactersNotAllowed">
+
+                                        <ng-template kendoTextBoxSuffixTemplate>
+                                            <button type="button" kendoButton fillMode="solid" themeColor="primary"
+                                                class="send-button" icon="zoom" (click)="onSearch()">
+                                                {{ buttonNameSearch | translate }}
+                                            </button>
+                                        </ng-template>
+                                    </kendo-textbox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+
+                <ng-template kendoListViewItemTemplate let-dataItem="dataItem" let-isLast="isLast">
+                    <div class="card">
+                        <div class="card__header">
+                            <h4 class="card__heading card__heading--primary">{{dataItem.RequestCode ||
+                                dataItem.ReqLibCode}}</h4>
+                            <div class="card__header-icon">
+                                <button type="button" kendoButton fillMode="outline" themeColor="primary"
+                                    data-bs-dismiss="offcanvas" (click)="getCopyData(dataItem)">{{'Copy' |
+                                    translate}}</button>
+                            </div>
+                        </div>
+                        <div class="card__body pt-0">
+                            <div class="view__screen view__screen--sidebar">
+                                <ul class="list__data">
+                                    <li class="list__data--item" *ngFor="let item of columnOptions">
+                                        <strong class="kendo-label">{{item.columnHeader | translate}}</strong>
+                                        <app-kendo-label [hideIfCount]="500"
+                                                [value]="getNestedValue(dataItem, item.fieldName)?.toString()"></app-kendo-label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+
+            </kendo-listview>
+        </div>
+    </div>
+</div>

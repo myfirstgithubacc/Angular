@@ -1,0 +1,108 @@
+<!-- <div #vc></div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="card">
+  <div class="card__header">
+    <h4 class="card__heading">Div Structure Grid</h4>
+
+  </div>
+  <div class="card__body">
+    <app-list-view #list (listData)="getData($event)" (formData)="getFormStatus($event)" [columnData]="column"
+      [columnConfigure]="columnConfiguration" [populatedData]="prefilledData" (onChangeSwitch)="switchEvent($event)"
+      (onChangeText)="switchEvent1($event)" (onChangeTextArea)="switchEvent1($event)"
+      (onChangeNumeric)="numeric($event)" (onChangeRadio)="switchEvent1($event)"
+      (onChangeCheckbox)="switchEvent1($event)" (onChangeDropdown)="switchEvent1($event)"
+      (onChangeMultiDropdown)="switchEvent1($event)" (actionEvent)="actionClicked($event)">
+    </app-list-view>
+
+  </div>
+</div>
+
+<!-- <app-status-card [statusData]="statusCardData" (onLink)="getLinkParam($event)"></app-status-card> -->
+
+<button (click)="updateRow(5)">5</button>
+<button (click)="updateRow(4)">4</button>
+<button (click)="updateRow(3)">3</button>
+<button (click)="updateRow(2)">2</button>
+<button (click)="updateRow(1)">1</button>
+<button (click)="SaveList()">Save</button>
+
+<button routerLink="/xrm/demo/grid">dsd</button>
+<div class="row mt-5 mb-2">
+  <form [formGroup]="daterange">
+    <br>
+    <br>
+    {{ intl.formatDate(value,{ skeleton: "yMMMd"})}}
+    <br>
+    {{ intl.formatNumber(value1,numberformatOption)}}
+    <app-numeric-box [isCurrency]="true" [controlName]="'NoOfPreviousWeekending'" [label]="'NoOfPastWeekeding'"
+      [isRequired]="true" [decimals]="2" [formatOptions]="'n2'">
+    </app-numeric-box>
+
+    <app-kendo-masked-textbox [isEditMode]="true" (blurMask)="blurOnMask($event)" [controlName]="'maskedTextbox'"
+      [isDisabled]="true" [isZipCode]="true" [isRequired]="true" [label]="'Masked ZipCode'"></app-kendo-masked-textbox>
+
+    <app-kendo-datepicker [controlName]="'clockBufferToSetReportingDate'" [tooltipVisible]="true"
+      [tooltipTitle]="'ClockBufferToSetReportingDateToolTip'" [label]="'ClockBufferForReportingDate'"
+      [isRequired]="true" (onBlur)="getBlurData($event)" (onChange)="getDate($event)">
+    </app-kendo-datepicker>
+    Current Date & Time => {{currentDate}}
+    Apply EST Time Zone => {{ESTTimeZone}}
+    <app-kendo-phone [isEditMode]="true" [tooltipVisible]="true" [tooltipTitle]="'title'" [label]="'Phone'"
+      [phoneControlName]="'phone'" [phoneExtControlName]="'phoneExt'" [isExtension]="true"></app-kendo-phone>
+
+    <app-tree-view [textField]="'Text'" [isFiltered]="true" [treeViewType]="'approvalLevel'"
+      [childrenField]="'items'"></app-tree-view>
+    <button (click)="showPopup()" class="btn btn-primary">Show Popup</button>
+    <button (click)="showSuccessPopup()" class="btn btn-primary">
+      Show Success Popup
+    </button>
+    <button (click)="showErrorPopup()" class="btn btn-primary">
+      Show Error Popup
+    </button>
+    <br /><br /><br />
+    <h1>label with tooltip or content</h1>
+    <app-kendo-label [tooltipVisible]="true" [additionallabel]="'PoValidationMessage'"
+      [additionallabelLocalizeParam]="additionallabelLocalizeParam" [tooltipTitle]="'title'" [label]="'label1'"
+      [value]="'ShiftName'" [tooltipPosition]=""></app-kendo-label>
+
+
+    <br />
+    <h1>label with tooltip</h1>
+
+    <currency-widgets [currency]="'INR'" [value]="23" [tooltipVisible]="true"
+      [tooltipTitle]="'Currency'"></currency-widgets>
+
+
+    <tooltip-content [tooltipTitle]="'passKey'" [tooltipVisible]="true" [tooltipPosition]="'left'"></tooltip-content>
+    <br>
+    <br>
+    sdada
+    <app-kendo-daterangepicker [range]="range" [isEditMode]="false" [startDateControlName]="'letdateRangePicker'"
+      [endDateControlName]="'letdateRangePicker1'"></app-kendo-daterangepicker>
+
+
+    <!-- <app-kendo-daterangepicker [isEditMode]="true"></app-kendo-daterangepicker> -->
+  </form>
+</div>
+
+
+<button (click)="add()">add</button>
+<tooltip-content [tooltipTitle]="'passKey'" [tooltipVisible]="true" [tooltipPosition]="'left'"></tooltip-content>
+<div class="row">
+  <grid-view [gridData]="gridData" [columnOptions]="columnOptions" [actionSet]="actionSet"
+    [kendoGridSelectedBy]="'ukey'" [tabOptions]="tabOptions" [extraButtonSet]="extraButton"
+    (gridHeaderBtnType)="gridHeaderBtnEvent($event)">
+  </grid-view>
+</div>

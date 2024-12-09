@@ -1,0 +1,198 @@
+<form [formGroup]="timeAndExpenseConfigForm">
+    <!--T&E Configurations Section start-->
+    <div class="card">
+        <!-- Card Header Section-->
+        <div class="card__header">
+            <h4 class="card__heading">{{ "TAndEConfigurations" | translate }}</h4>
+            <div class="card__header-icon">
+            </div>
+        </div>
+        <!-- End Card Header Section-->
+
+        <!-- Card Body Section-->
+        <div class="card__body">
+            <div class="row">
+                <!-- input box start -->
+                <!-- <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [isDisable]="isEditMode && !isDraft" [onLabel]="'Yes'" [offLabel]="'No'"
+                            [controlName]="'IsClpJobRotationAllowed'"
+                            [label]="'IsClpJobRotationAllowed'" [tooltipVisible]="true"
+                            [tooltipTitle]="'CLPJobRotationAllowedToolTip'"
+                            (onChangeSwitch)="OnChangeIsClpJobRotationAllowedSwitch($event)">
+                        </app-kendo-switch>
+                    </div>
+                </div> -->
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'IsAllTimeAdjustmentApprovalRequired'" [onLabel]="'Yes'"
+                            [offLabel]="'No'" [label]="'IsAllTimeAdjustmentApprovalRequired'" [tooltipVisible]="true"
+                            [tooltipTitle]="'All_Time_Adjustments_Require_Approval_Tooltip'">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'AllowTimeUploadWithStOtDt'" [onLabel]="'Yes'"
+                            [offLabel]="'No'" [label]="'AllowTimeUploadWithStOtDt'" [tooltipVisible]="true"
+                            [tooltipTitle]="'Allow_Time_Upload_With_ST_OT_DT_Toottip'">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'ValidateApprovedAmountWithTimeRecords'" [onLabel]="'Yes'"
+                            [offLabel]="'No'" [label]="'ValidateApprovedAmountWithTimeRecords'" [tooltipVisible]="true"
+                            [tooltipTitle]="'Validate_Approved_Amount_With_Time_Records_Tooltip'">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'AllowStaffingAgencyInTandEApproval'" [onLabel]="'Yes'"
+                            [offLabel]="'No'" [label]="'AllowStaffingAgencyInTandEApproval'" [tooltipVisible]="true"
+                            [tooltipTitle]="'Allow_Staffing_Agency_In_T_And_E_Approval_Tooltip'">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'TimeUploadAsApprovedHours'" [onLabel]="'Yes'"
+                            [offLabel]="'No'" [tooltipVisible]="true"
+                            [tooltipTitle]="'Time_Upload_as_Approved_Hours_Tooltip'"
+                            [label]="'TimeUploadAsApprovedHours'"
+                            (onChangeSwitch)="switchTimeUploadApprovedHours($event)">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6" *ngIf="isAdjustmentUploadedAutoApproved">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'IsAutoApprovedAdjustment'" [onLabel]="'Yes'" [offLabel]="'No'"
+                            [label]="'IsAutoApprovedAdjustment'" [tooltipVisible]="true"
+                            [tooltipTitle]="'Adjustments_To_Uploaded_Hours_Are_Auto_Approved_Tooltip'">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <div class="clearfix"></div>
+
+                <div class="clearfix"></div>
+
+                <!-- input box start -->
+                <div class="col-sm-4 col-md-6">
+                    <div class="form-group">
+                        <tooltip-content [tooltipTitle]="" [label]="'SendPoDepletionNoticesTo'" [tooltipPosition]="">
+                            <xrm-icon name="star" class="required"></xrm-icon>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <app-kendo-switch [controlName]="'IsPoSentToPm'" [onLabel]="'Yes'"
+                                            [offLabel]="'No'" [label]="'IsPoSentToPm'">
+                                        </app-kendo-switch>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <app-kendo-switch [controlName]="'IsPoSentToPoOwner'" [onLabel]="'Yes'"
+                                            [offLabel]="'No'" [label]="'IsPoSentToPoOwner'">
+                                        </app-kendo-switch>
+                                    </div>
+                                </div>
+                                <ng-container *ngIf=" (timeAndExpenseConfigForm.controls.IsPoSentToPm || timeAndExpenseConfigForm.controls.IsPoSentToPoOwner) &&
+                                    (timeAndExpenseConfigForm.controls.IsPoSentToPm.errors || timeAndExpenseConfigForm.controls.IsPoSentToPoOwner.errors) &&
+                                    (timeAndExpenseConfigForm.controls.IsPoSentToPm.invalid || timeAndExpenseConfigForm.controls.IsPoSentToPoOwner.invalid) && 
+                                    ((timeAndExpenseConfigForm.controls.IsPoSentToPm.dirty || timeAndExpenseConfigForm.controls.IsPoSentToPoOwner.dirty) ||
+                                     (timeAndExpenseConfigForm.controls.IsPoSentToPm.touched || timeAndExpenseConfigForm.controls.IsPoSentToPoOwner.touched))">
+                                    <kendo-formerror> {{ 'PoDepletionNoticesSentTo' | translate }} </kendo-formerror>
+                                </ng-container>
+                            </div>
+                        </tooltip-content>
+                    </div>
+                </div>
+
+                <!-- input box start continue-->
+                <div class="col-sm-4 col-md-6">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <app-kendo-radio-button [controlName]="'PoType'" class="d-block"
+                                        [RadioGroup]="radioButton" [label]="'PoType'" [isRequired]="true"
+                                        [tooltipTitleLocalizeParam]="tooltipTitleParams" [tooltipTitle]="'Po_Tooltip'">
+                                    </app-kendo-radio-button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-4 col-md-6" *ngIf="isPORecruitment">
+                    <div class="form-group">
+                        <app-textbox [controlName]="'DefaultPoForRecruitment'" [label]="'DefaultPoForRecruitment'"
+                            [maxCharacters]=magicNumbers.eighteen [isRequired]="true">
+                        </app-textbox>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-4 col-md-6" *ngIf="isPORecruitment">
+                    <div class="form-group">
+                        <app-textbox [controlName]="'DefaultPoForPayroll'" [label]="'DefaultPoForPayroll'"
+                            [maxCharacters]=magicNumbers.eighteen [isRequired]="true">
+                        </app-textbox>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-dropdown [list]="dropdown"
+                            [label]="'NoConsecutiveWeekMissingEntry'" [controlName]="'NoConsecutiveWeekMissingEntry'"
+                            [tooltipVisible]="true" [isValuePrimitiveAllowed]="false"
+                            [tooltipTitle]="'Number_Of_ConsecutiveWeeks_With_Missing_Timesheet_Tooltip'"
+                            [placeholder]="'DdlSelect'" [isRequired]="true">
+                        </app-kendo-dropdown>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-numeric-box [controlName]="'DefaultPoDepletionForNewLocations'"
+                            [label]="'DefaultPoDepletionForNewLocations'" [tooltipVisible]="true"
+                            [tooltipTitle]="'Default_PO_Depletion_for_New_Locations_Tooltip'" [isRequired]="true"
+                            format="n2" [min]="magicNumbers.zero" [max]="magicNumbers.hundred" [maxlength]="magicNumbers.five" [decimals]="magicNumbers.two">
+                        </app-numeric-box>
+                    </div>
+                </div>
+                <!-- input box start -->
+            </div>
+        </div>
+        <!-- End Card Body Section-->
+    </div>
+    <!--T&E Configurations Section end-->
+</form>

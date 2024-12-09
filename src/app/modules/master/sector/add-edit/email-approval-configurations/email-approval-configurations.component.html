@@ -1,0 +1,32 @@
+<form [formGroup] = "emailApprovalConfigForm" >  
+
+    <div class="card">
+        <!-- Card Header Section-->
+        <div class="card__header">
+            <h4 class="card__heading">{{'EmailApprovalConfigurations' | translate}}</h4>
+            <div class="card__header-icon">
+            </div>
+        </div>
+        <!-- End Card Header Section-->
+
+        <!-- Card Body Section-->
+        <div class="card__body">
+            <div class="row">
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch 
+                            [controlName]="'IsQuickLinkToApprovalEmails'" 
+                            [onLabel]="'Yes'" 
+                            [tooltipVisible] = "true" 
+                            [tooltipTitle] = "'Add_Quick_Link_To_Approval_Emails_Tooltip'"
+                            [offLabel]="'No'"
+                            [label]="'IsQuickLinkToApprovalEmails'" >
+                        </app-kendo-switch>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Card Body Section-->
+    </div>
+</form> 

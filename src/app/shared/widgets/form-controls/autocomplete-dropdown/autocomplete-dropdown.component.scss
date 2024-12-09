@@ -1,0 +1,17 @@
+.autocomplete-search {
+	position: relative;
+	.k-i-search {
+		position: absolute;
+		right: 0px;
+		top: 0;
+		width: 40px;
+		height: 34px;
+		line-height: 34px;
+		text-align: center;
+	}
+	.k-i-loading {
+		position: absolute;
+		right: 30px;
+		top: 5px;
+	}
+}

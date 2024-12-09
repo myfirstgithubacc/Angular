@@ -1,0 +1,31 @@
+.tooltiptext {
+	max-width: 300px;
+	white-space: nowrap;
+	overflow: auto;
+	text-overflow: ellipsis;
+	max-height: 250px;
+
+	table {
+		tr {
+			td {
+				list-style: none;
+				text-align: left;
+				font-size: 11px;
+				color: var(--color-black);
+				border-bottom: #e2e2e24d solid 1px;
+				vertical-align: top;
+				white-space: normal;
+
+				p {
+					white-space: normal;
+					display: inline-block;
+					margin-right: 5px;
+
+					&>strong {
+						font-weight: 500;
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,10 @@
+<kendo-formfield>
+  <tooltip-content [tooltipVisible]="tooltipVisible" [tooltipTitle]="tooltipTitle"
+    [tooltipTitleLocalizeParam]="tooltipTitleLocalizeParam" [label]="label" [tooltipPosition]=""
+    [addOnLabelText]="addOnLabelText" [addOnLabelTextLocalizeParam]="addOnLabelTextLocalizeParam" [isRequired]="isRequired"
+    [isHtmlContent]="isHtmlContent" [labelLocalizeParam]="labelLocalizeParam">
+    <input type="checkbox" [checked]="true" [formControl]="listControlName ? listControlName : formControl"
+      kendoCheckBox class="mx-2" />
+  </tooltip-content>
+  <app-print-error-message [control]="listControlName ? listControlName : formControl"></app-print-error-message>
+</kendo-formfield>

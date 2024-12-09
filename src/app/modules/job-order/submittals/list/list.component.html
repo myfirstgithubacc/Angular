@@ -1,0 +1,66 @@
+
+<div class="master-search">
+    <div class="row">
+      <div class="col-md-12 master-search__wapper">
+        <div class="master-search__search-box">
+          <div class="custom-search">
+            <div class="custom-search__input-box">
+              <app-search
+              [isServerSidePagingEnable]="isServerSidePagingEnable"
+              [placeholder]="'Search for...'"
+              [EntityId]="entityId"
+              (onSearch)="onSearchTriggered($event)"
+              [columnOptions]="columnOptions">
+              </app-search>
+            </div>
+            <app-advance-search
+            [apiAddress]="advApiAddress"
+            [isApiGateway]="true"
+            [isServerSidePagingEnable]="isServerSidePagingEnable"
+            [EntityId]="entityId"
+            (selectedFilter)="onFilterTriggered($event)"
+            [userValues]="userValue"
+            [entityType]="entityType">
+            </app-advance-search>
+          </div>
+          <div class="custom-search__applied--Filters mx-2">
+            <div class="custom-search__applied--Filters"><app-kendo-label class="k-label"></app-kendo-label>
+            </div>
+          </div>
+        </div>
+
+        <div class="master-search__button-box master-search__button-box--right" *ngIf="isNewSubmittal">
+          <app-kendo-button  [buttonName]="'NewSubmittal'" [buttonIcon]="'plus'"
+          (click)="newSubmittal()">
+          </app-kendo-button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row li-list-view submittal__list">
+    <grid-view
+    [isServerSidePagingEnable]="isServerSidePagingEnable"
+    [apiAddress]="apiAddress"
+    [isApiGateway]="true"
+    [searchText]="selectTextsearch"
+    [advFilterData]="appliedAdvFilters"
+    [columnOptions]="columnOptions"
+    [actionSet]="actionSet"
+    [tabOptions]="tabOptions"
+    [fileName]="'Submittal'"
+    [kendoGridSelectedBy]="'SubmittalId'"
+    [actionItemCategoryField]="'SubmittalStatusId'"
+    [entityId]="entityId"
+    [pageSize]="pageSize"
+    [userValues]="userValue"
+    [multiSelect]="isShowCheckbox"
+    [forceMultiSelect]="isShowCheckbox"
+    [entityType]="entityType"
+    [manageActionSets]="manageActionSets"
+    [massActionButtonSet]="massActionButtonSet"
+    (onGroupedAction)="onGroupedAction($event)"
+    (selectedTab)="onTabChange($event)"
+    ></grid-view>
+  </div>

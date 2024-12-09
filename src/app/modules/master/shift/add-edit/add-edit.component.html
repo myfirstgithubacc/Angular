@@ -1,0 +1,178 @@
+<div class="app-content__body">
+    <br>
+    <form [formGroup]="addEditShiftForm">
+        <div class="card">
+            <div class="card__header">
+                <h4 class="card__heading">{{ "BasicDetails" | translate }}</h4>
+            </div>
+            <div class="card__body">
+                <div class="row">
+
+                    <div class="clearfix"></div>
+                    <div class="col-sm-6 col-md-6" *ngIf="!isEditMode">
+                        <div class="form-group">
+                            <app-kendo-dropdown [list]="sectorData" [label]="'Sector'" [controlName]="'sectorId'"
+                                [placeholder]="'DdlSelect'" [isRequired]="true" (onChange)="onSectorChange($event)">
+                            </app-kendo-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6" *ngIf="isEditMode">
+                        <div class="form-group">
+                            <kendo-label text="{{'Sector' | translate}}">
+                                <p class="label-answere">{{dataShift.SectorName}}</p>
+                            </kendo-label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6" *ngIf="!isEditMode">
+                        <div class="form-group">
+                            <app-textbox [controlName]="'shiftName'" [label]="'ShiftName'"
+                                [isSpecialCharacterAllowed]="true" [maxCharacters]="100" [isRequired]="true">
+                            </app-textbox>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6" *ngIf="isEditMode">
+                        <div class="form-group">
+                            <app-textbox [controlName]="'shiftName'" [label]="'ShiftName'" [isRequired]="true"
+                                [isSpecialCharacterAllowed]="true" [maxCharacters]="100">
+                            </app-textbox>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-6" *ngIf="!isEditMode">
+                        <div class="form-group">
+                            <app-kendo-switch [controlName]="'isLocationSpecific'"
+                                [label]="'ShiftUtilizedSpecificLocation'" [onLabel]="'Yes'" [offLabel]="'No'"
+                                (onChangeSwitch)="isLocationSwitch($event)" [tooltipVisible]="true"
+                                [tooltipTitle]="'ShiftUtilizedSpecificLocationTooltipMessage'">
+                            </app-kendo-switch>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6" *ngIf="isEditMode">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'ShiftUtilizedSpecificLocation'"
+                                [value]="dataShift.IsLocationSpecific? 'Yes' : 'No'" [tooltipVisible]="true"
+                                [tooltipTitle]="'ShiftUtilizedSpecificLocationTooltipMessage'"> </app-kendo-label>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-6" *ngIf="addEditShiftForm?.get('isLocationSpecific')?.value">
+                        <div class="form-group">
+                            <app-kendo-dropdown *ngIf="location.length != 1" [list]="location" [label]="'Location'"
+                                [controlName]="'locationId'" [placeholder]="'DdlSelect'" [isRequired]="true"
+                                [isEditMode]="isEditMode"   (onChange)="getLocationValue($event)">
+                            </app-kendo-dropdown>
+                            <app-kendo-label *ngIf="location.length == 1" [label]="'Location'"
+                                [value]="location[0].Text"></app-kendo-label>
+
+                            <p *ngIf="isEditMode" class="label-answere">{{dataShift.LocationName}}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="shiftConfigField">
+                    <div class="col-sm-12 col-md-12">
+                        <h4 class="card__body--subheading">{{'ShiftConfigurations' | translate}}</h4>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-radio-button [isEditMode]="isEditMode" [name]="'ShiftDifferential'" [controlName]="'ShiftDifferentialMethod'" [label]="'ShiftDifferentialMethod'" [tooltipVisible]="true" 
+                            [tooltipTitle]="'ShiftDifferentialMethodTooltipMessage'" [RadioGroup]="shiftDrp" (onChangeRadio)="shiftDifferentialChange($event)">
+                            </app-kendo-radio-button>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group" *ngIf="shiftDifferentialMethod==25">
+                            <app-numeric-box [controlName]="'adderOrMultiplierValue'"
+                                [countryId]="countryVal" [label]="'ShiftDifferentialValue'" [isRequired]="true"
+                                [maxlength]="10" [decimals]="4" [min]="0" format="n4" [tooltipVisible]="true"
+                                [tooltipTitle]="'ShiftDifferentialValueTooltipMessage'">
+                            </app-numeric-box>
+                        </div>
+
+                        <div class="form-group" *ngIf="shiftDifferentialMethod==24">
+                            <app-numeric-box [controlName]="'adderOrMultiplierValue'" [label]="'ShiftDifferentialValue'"
+                                [isCurrency]="true" [countryId]="countryVal" [isRequired]="true" [maxlength]="10"
+                                [decimals]="3" [min]="0" format="n3" [tooltipVisible]="true"
+                                [tooltipTitle]="'ShiftDifferentialValueTooltipMessage'">
+                            </app-numeric-box>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12" *ngIf="enableXrmTimeClock">
+                        <h4 class="card__body--subheading p-0"></h4>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-6" *ngIf="!isEditMode">
+                        <div class="form-group" *ngIf="enableXrmTimeClock">
+                            <app-kendo-radio-button [controlName]="'reportingDayType'" [tooltipVisible]="true"
+                                [tooltipTitle]="'PunchReportingDaySettingTooltipMessage'" [name]="'reportingDays'"
+                                [RadioGroup]="punchReportDaySetting" [label]="'PunchReportingDaySetting'">
+                            </app-kendo-radio-button>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6" *ngIf="isEditMode">
+                        <div class="form-group" *ngIf="enableXrmTimeClock">
+                            <app-kendo-label [label]="'PunchReportingDaySetting'" [value]="shiftReportingDayType"
+                                [tooltipVisible]="true" [tooltipTitle]="'PunchReportingDaySettingTooltipMessage'">
+                            </app-kendo-label>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12">
+                        <h4 class="card__body--subheading">{{'TimingDetails' | translate}}</h4>
+                    </div>
+
+                    <div class="col-sm-3 col-md-3">
+                        <div class="form-group">
+                            <app-kendo-timepicker [controlName]="'startTime'" [label]="'StartTime'" [isRequired]="true"
+                                [tooltipTitle]="'StartEndTimeTooltipMessage'" [tooltipVisible]="true"
+                                (valueChange)="validateStartTime($event)">
+                            </app-kendo-timepicker>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3 col-md-3">
+                        <div class="form-group">
+                            <app-kendo-timepicker [controlName]="'endTime'" [label]="'EndTime'" [isRequired]="true"
+                                [tooltipTitle]="'StartEndTimeTooltipMessage'" [tooltipVisible]="true">
+                            </app-kendo-timepicker>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-6">
+                        <app-weekday-time-picker #weekdayPicker
+                        [label]="'CLPWorkingDays'"  
+                        [dayInfo]="daysInfo"
+                        [tooltipVisible]="true"
+                        [tooltipTitle]="'CLPWorkingDaysTooltipMessage'"
+                        [isRequired]="true"
+                        [errorMessage]="[{Value: 'CLPWorkingDays', IsLocalizeKey: true }]"
+                        (daySelectionChanged)="handleDaySelectionChange($event)"
+                        >
+                        </app-weekday-time-picker>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="page-footer">
+            <div class="btn-box btn-box--center">
+                <button type="button" kendoButton fillMode="outline" themeColor="primary" (click)="navigate()"> {{ "Cancel"
+                    | translate }}
+                </button>
+                <button type="button" kendoButton (click)="submitForm()" themeColor="primary"
+                    [disabled]="isEditMode ? addEditShiftForm.pristine : false" appFocusOnError
+                    [formName]="addEditShiftForm">
+                    {{ "Save" | translate}}
+
+                </button>
+
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,4 @@
+<ng-container *ngIf="showStepper">
+    <app-kendo-stepper [translate]="'step.label'" [isOptional]="true" [steps]="steps" stepType="full" [currentStep]="currentStep" [linear]="false" (activate)="activate($event)" (stepChanged)="stepChanged($event)"></app-kendo-stepper>
+</ng-container>
+<router-outlet></router-outlet>

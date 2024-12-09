@@ -1,0 +1,36 @@
+<div class="master-search">
+  <div class="row">
+      <div class="col-md-12 master-search__wapper">
+          <div class="master-search__search-box">
+              <div class="custom-search">
+                  <div class="custom-search__input-box">
+                    <app-search [placeholder]="'SearchFor'"
+                    (onSearch)="OnSearch($event)"
+                    [EntityId]="entityId" 
+                    [columnOptions]="columnOptions"
+                    [isServerSidePagingEnable]="isServerSidePagingEnable"
+                    >
+                  </app-search>
+                  </div>
+                  <app-advance-search [EntityId]="entityId" (selectedFilter)="OnFilter($event)"
+                  [isServerSidePagingEnable]="isServerSidePagingEnable" [apiAddress]="advApiAddress"
+                  [isApiGateway]="true"
+                  ></app-advance-search>
+              </div>
+          </div>
+          <app-kendo-button 
+              [buttonName]="'New Worker Classification'" [buttonIcon]="'plus'"
+              (click)="addPageNavigation()">
+          </app-kendo-button>
+      </div>
+  </div>
+</div>
+
+<div class="row">
+    <grid-view [entityId]="entityId" [pageSize]="pageSize"
+    [columnOptions]="columnOptions" [isServerSidePagingEnable]="isServerSidePagingEnable" 
+    [actionSet]="actionSet" [tabOptions]="tabOptions" [kendoGridSelectedBy]="'UKey'" [fileName]="generateFileName()"
+     [searchText]="searchText" [advFilterData]="advFilterData" [isApiGateway]="true" 
+     [apiAddress]="apiAddress" [multiSelect]="false"
+    ></grid-view>
+</div>

@@ -1,0 +1,212 @@
+<!-- Main Body Section-->
+<div class="app-content__body floating-layout floating-layout__view-layout">
+
+  <!-- Card Section-->
+  <div class="card">
+    <!-- Card Header Section-->
+    <div class="card__header">
+      <h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+      <div class="card__header-icon">
+      </div>
+    </div>
+    <!-- End Card Header Section-->
+
+    <!-- Card Body Section-->
+    <div class="card__body">
+      <div class="row">
+        <!-- input box start -->
+        <div class="col-sm-6 col-md-6">
+          <div class="form-group">
+            <app-kendo-label [label]="'Sector'" [value]="requisitionLibrary.SectorName"> </app-kendo-label>
+          </div>
+        </div>
+        <!-- input box start -->
+
+        <!-- input box start -->
+        <div class="col-sm-6 col-md-6">
+          <div class="form-group">
+            <app-kendo-label [label]="'LaborCategory'" [value]="requisitionLibrary.LaborCategoryName">
+            </app-kendo-label>
+
+          </div>
+        </div>
+        <!-- input box start -->
+
+        <!-- input box start -->
+        <div class="col-sm-6 col-md-6">
+          <div class="form-group">
+          <app-kendo-label [label]="'JobCategory'" [value]="requisitionLibrary.JobCategoryName"> </app-kendo-label>
+          </div>
+        </div>
+        <!-- input box start -->
+
+        <!-- input box start -->
+        <div class="col-sm-6 col-md-6">
+          <div class="form-group">
+           <app-kendo-label [label]="'WorkLocation'" [value]="requisitionLibrary.LocationName"> </app-kendo-label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <!-- Card Header Section-->
+    <div class="card__header">
+      <h4 class="card__heading">{{'RateDetails' | translate}}</h4>
+      <div class="card__header-icon">
+    </div>
+    </div>
+    <!-- End Card Header Section-->
+
+    <!-- Card Body Section-->
+    <div class="card__body">
+      <div class="row">
+
+        <div class="col-sm-6 col-md-6" *ngIf="!hideNtePreLaunchRate">
+          <div class="form-group">
+            <app-kendo-label [label]="billRateLabel" [value]="requisitionLibrary.TargetRate" [tooltipVisible]="true"
+              [isCurrency]="true" [countryId]="countryVal" [decimalPlaces]="2" [tooltipTitle]="'NteTargetTooltipMessage'">
+            </app-kendo-label>
+          </div>
+        </div>
+        <!-- input box start -->
+
+        <!-- input box start -->
+        <div class="col-sm-6 col-md-6" *ngIf="!hideNtePreLaunchRate">
+          <div class="form-group">
+            <app-kendo-label [label]="'PreLaunchRate'" [value]="requisitionLibrary.PreLaunchRate"
+              [tooltipVisible]="true" [isCurrency]="true" [countryId]="countryVal" [decimalPlaces]="2"
+              [tooltipTitle]="'PreLaunchRateTooltipMessage'"> </app-kendo-label>
+
+          </div>
+        </div>
+
+        <!-- input box start -->
+        <div class="col-sm-6 col-md-6">
+          <div class="form-group">
+            <app-kendo-label [label]="'WageRate'" [value]="requisitionLibrary.WageRate" [tooltipVisible]="true" [decimalPlaces]="2"
+              [isCurrency]="true" [countryId]="countryVal" [tooltipTitle]="'WageRateTooltipMessage'"> </app-kendo-label>
+          </div>
+        </div>
+        <!-- input box start -->
+        <div class="col-sm-6 col-md-6">
+          <div class="form-group">
+            <app-kendo-label [label]="'RateUnit'" [value]="requisitionLibrary.RateUnitLocalizedKey"
+              [tooltipVisible]="true" [tooltipTitle]="'RateUnitTooltipMessage'"> </app-kendo-label>
+          </div>
+        </div>
+        <!-- input box start -->
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Card Section-->
+  <div class="card">
+    <!-- Card Header Section-->
+    <div class="card__header">
+      <h4 class="card__heading">{{'PositionDetails' | translate}}</h4>
+      <div class="card__header-icon"></div>
+    </div>
+    <!-- End Card Header Section-->
+
+    <!-- Card Body Section-->
+    <div class="card__body">
+      <div class="row">
+        <!-- input box start -->
+        <div class="col-sm-12 col-md-12">
+          <div class="form-group">
+            <app-kendo-label [label]="'PositionDescription'" [value]="requisitionLibrary.PositionDesc">
+            </app-kendo-label>
+          </div>
+        </div>
+        <!-- input box start -->
+      </div>
+
+      <div class="row">
+        <!-- input box start -->
+        <div class="col-sm-12 col-md-12">
+          <div class="form-group">
+            <app-kendo-label [label]="'SkillRequired'" [value]="requisitionLibrary.SkillDesc"> </app-kendo-label>
+          </div>
+        </div>
+        <!-- input box start -->
+      </div>
+
+      <div class="row">
+        <!-- input box start -->
+        <div class="col-sm-12 col-md-12">
+          <div class="form-group">
+            <app-kendo-label [label]="'EducationRequired'" [value]="requisitionLibrary.EducationDesc">
+            </app-kendo-label>
+          </div>
+        </div>
+        <!-- input box start -->
+      </div>
+
+      <div class="row">
+        <!-- input box start -->
+        <div class="col-sm-12 col-md-12">
+          <div class="form-group">
+            <app-kendo-label [label]="'ExperienceRequired'" [value]="requisitionLibrary.ExperienceDesc">
+            </app-kendo-label>
+          </div>
+        </div>
+        <!-- input box start -->
+      </div>
+
+    </div>
+    <!-- Card Body Section-->
+  </div>
+  <!-- Card Section-->
+
+  <!-- Card Section-->
+  <div class="card" *ngIf="isBenefitAdderDataValid()">
+    <!-- Card Header Section-->
+    <div class="card__header">
+      <h4 class="card__heading">{{'BenefitAdderConfiguration' | translate}}
+        <tooltip-content class="heading_tooltip" [tooltipTitle]="'BenefitAdderTooltipMessage'" [tooltipVisible]="true" [tooltipPosition]="'right'"></tooltip-content>
+      </h4>
+      <div class="card__header-icon"></div>
+    </div>
+    <!-- End Card Header Section-->
+
+    <!-- Card Body Section-->
+    <div class="card__body">
+      <div class="row">
+        <!-- input box start -->
+        <div class="col-sm-6 col-md-6" *ngFor="let adder of benefitAdderData">
+          <div class="form-group">
+            <div class="new-view">
+            <kendo-label [text]="adder['LabelLocalizedKey'] | translate">
+            </kendo-label>
+            <p class="label-answere">{{ adder["Value"]?.toFixed(2) ?? '0.00' }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- End Card Body Section-->
+      </div>
+    </div>
+  </div>
+  <!-- End Card Section-->
+  <ng-container *ngIf="sectorIdUDF > 0">
+    <app-udf-implementation [entityId]="entityID" [sectorId]="sectorIdUDF" [recordUKey]="recordUKey"
+      [parentsInfos]="udfCommonMethods.getParentsInfo()" [actionTypeId]="actionTypeId">
+    </app-udf-implementation>
+
+  </ng-container>
+
+
+  <div class="page-footer">
+    <div class="btn-box btn-box--center">
+      <button type="button" kendoButton themeColor="primary" [routerLink]="navigationPaths.list">
+        {{'Back' | translate}}
+      </button>
+    </div>
+  </div>
+
+</div>

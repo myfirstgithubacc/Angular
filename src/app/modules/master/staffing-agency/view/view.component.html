@@ -1,0 +1,408 @@
+<!-- Main Body Section-->
+<div class="app-content__body floating-layout floating-layout__view-layout">
+   
+   <!-- Card Section-->
+   <div class="row">
+      <div class="col-sm-12">
+         <div class="staffing-agency-section">
+            <div class="card">
+               <!-- Card Header Section-->
+               <div class="card__header">
+                  <h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+               </div>
+               <!-- End Card Header Section-->
+               <!-- Card Body Section-->
+               <div class="card__body">
+                  <div class="row">
+                     <!-- input box start -->
+
+                     <!-- input box end -->
+                     <div class="clearfix"></div>
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                           <app-kendo-label  [label]="'StaffingAgencyName'" [value]="staffingAgencyData.StaffingAgencyName"> </app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- input box end -->
+
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                           <app-kendo-label  [label]="'HomeCountry'" [value]="staffingAgencyData.HomeCountry"> </app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- input box end -->
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                           <app-kendo-label  [label]="'StaffingAgencyEin'" [value]="staffingAgencyData.StaffingAgencyEin"  [tooltipVisible]="false"
+                           [tooltipTitle]="'StaffingAgencyEinTooltipMessage'"> </app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- input box end -->
+
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                           <app-kendo-label  [label]="'AddressLine1'" [value]="staffingAgencyData.AddressLine1"> </app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- input box end -->
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                           <app-kendo-label  [label]="'AddressLine2'" [value]="staffingAgencyData.AddressLine2"> </app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- input box end -->
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                           <app-kendo-label  [label]="'City'" [value]="staffingAgencyData.City"> </app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- input box end -->
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                           <app-kendo-label  [label]="stateLabel" [value]="staffingAgencyData.State"> </app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- input box end -->
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                           <app-kendo-label  [label]="zipLabel" [value]="staffingAgencyData.ZipCode"> </app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- input box end -->
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                           <app-kendo-label  [label]="'TimeZoneId'" [value]="staffingAgencyData.TimeZone"> </app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- input box end -->
+
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                           <app-kendo-label  [label]="'Language'" [value]="staffingAgencyData.LanguageName"> </app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- input box end -->
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                           <app-kendo-label  [label]="'StaffingAgencyTierLevel'" [value]="staffingAgencyData.StaffingAgencyTierLevel"> </app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- input box end -->
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                           <app-kendo-label  [label]="'HomepageUrl'" [value]="staffingAgencyData.HomePageUrl"> </app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- input box end -->
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                           <app-kendo-label  [label]="'SecurityClearance'" [value]="staffingAgencyData.SecurityClearance"> </app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- input box end -->
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6" *ngIf="staffingAgencyData.CageCode">
+                        <div class="form-group">
+                           <app-kendo-label  [label]="'CageCode'" [value]="staffingAgencyData.CageCode"> </app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- input box end -->
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                           <app-kendo-label  [label]="'BusinessClassification'" [value]="staffingAgencyData.BusinessClassification"> </app-kendo-label>
+                        </div>
+                     </div>
+
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                           <app-kendo-label  [label]="'PaymentTypeId'" [value]="staffingAgencyData.PaymentTypeName"> </app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- input box end -->
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                           <app-kendo-label  [label]="'PreferenceNteRateMultiplier'" [value]="staffingAgencyData.PreferenceNteRateMultiplier"  [tooltipVisible]="true"
+                           [tooltipTitle]="'PreferenceNteRateMultiplierTooltipMessage'"> </app-kendo-label>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <!-- Card Body Section End-->
+            </div>
+            <!-- Card Section End-->
+         
+            <!-- Card Section-->
+            <div class="card">
+               <!-- Card Header Section-->
+               <div class="card__header">
+                  <h4 class="card__heading">{{'ContactDetails' | translate}}</h4>
+               </div>
+               <!-- End Card Header Section-->
+               <!-- Card Body Section-->
+               <div class="card__body">
+                  <div class="row">
+
+                     <div class="col-sm-12 col-md-12">
+                        <h4 class="card__body--subheading no__border"> {{'PrimaryContact' | translate}} </h4>
+                     </div>
+
+
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                           <div class="new-view">
+                           <app-kendo-label  [label]="'PrimaryContactName'"></app-kendo-label>
+                           <p class="label-answere" *ngIf="staffingAgencyData.IsPrimaryUserCreated"><a href="javascript:void(0)" (click)="openRightSidePanel(staffingAgencyData.PrimaryUkey)">{{staffingAgencyData.PrimaryContactName}}</a></p>
+                           <p class="label-answere" *ngIf="staffingAgencyData.IsPrimaryUserCreated == false">{{this.staffingAgencyData.PrimaryContactName}}</p> 
+                        </div>
+                        </div>
+                     </div>
+                     <!-- input box end -->
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                           <app-kendo-label  [label]="'PrimaryContactEmailAddress'" [value]="staffingAgencyData.PrimaryContactEmail" > </app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- input box end -->
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6">                        
+                        <form [formGroup]="showPhoneExt" class="form-group">                           
+                           <app-kendo-phone  [label]="'PrimaryPhoneNumber'" [isEditMode]="false"
+                            [phoneControlName]="'phoneControl'" [phoneExtControlName]="'phoneExt'" [isExtension]="primaryExt"></app-kendo-phone>
+                        </form>                     
+                     </div>
+                     <!-- input box end -->
+                     <div class="col-sm-12 col-md-12">
+                        <h4 class="card__body--subheading">{{'AlternateContact' | translate}}</h4>
+                     </div>
+
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                           <div class="new-view">
+                           <app-kendo-label  [label]="'AlternateContactName'" > </app-kendo-label>
+                           <p class="label-answere" *ngIf="!staffingAgencyData.IsAlternateUserCreated">{{staffingAgencyData.AlternateContactName}}</p>
+                           <p class="label-answere" *ngIf="staffingAgencyData.IsAlternateUserCreated"><a href="javascript:void(0)" (click)="openRightSidePanel(staffingAgencyData.AlternateUkey)">{{staffingAgencyData.AlternateContactName}}</a></p>
+                        </div>
+                     </div>
+                     </div>
+                     <!-- input box end -->
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                           <app-kendo-label  [label]="'AlternateContactEmailAddress'" [value]="staffingAgencyData.AlternateContactEmail" > </app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- input box end -->
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6">
+                        <form [formGroup]="showPhoneExt" class="form-group">
+                           <app-kendo-phone  [label]="'AlternatePhoneNumber'" [isEditMode]="false"
+                            [phoneControlName]="'altPhoneControl'" [phoneExtControlName]="'altPhoneExt'" [isExtension]="altExt"></app-kendo-phone>
+                         </form>
+                     </div>
+                     <!-- input box end -->
+                     <div class="col-sm-12 col-md-12">
+                        <h4 class="card__body--subheading"> {{'AccountingContact'|translate}} </h4>
+                     </div>
+
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                           <div class="new-view">
+                           <app-kendo-label  [label]="'AccountingContactName'" > </app-kendo-label>
+                           <p class="label-answere" *ngIf="!staffingAgencyData.IsAccountingUserCreated">{{staffingAgencyData.AccountingContactName}}</p>
+                           <p class="label-answere"*ngIf="staffingAgencyData.IsAccountingUserCreated"><a href="javascript:void(0)" (click)="openRightSidePanel(staffingAgencyData.AccountingUkey)">{{staffingAgencyData.AccountingContactName}}</a></p>
+                        </div>
+                        </div>
+                     </div>
+                     <!-- input box end -->
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                           <app-kendo-label  [label]="'AccountingContactEmailAddress'" [value]="staffingAgencyData.AccountingContactEmail" > </app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- input box end -->
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6">
+                        <form [formGroup]="showPhoneExt" class="form-group">
+                           <app-kendo-phone  [label]="'AccountingPhoneNumber'" [isEditMode]="false"
+                            [phoneControlName]="'acctPhoneControl'" [phoneExtControlName]="'acctPhoneExt'" [isExtension]="acctExt"></app-kendo-phone>
+                         </form>
+                     </div>
+                     <!-- input box end -->
+                  </div>
+               </div>
+               <!-- Card Body Section End-->
+            </div>
+            <!-- Card Section End-->
+            <!-- Card Section-->
+            <div class="card">
+               <!-- Card Header Section-->
+               <div class="card__header">
+                  <h4 class="card__heading">{{'ConfigurationOption'|translate}}</h4>
+               </div>
+               <!-- End Card Header Section-->
+               <!-- Card Body Section-->
+               <div class="card__body">
+                  <div class="row">
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                           <app-kendo-label  [label]="'PayrollStaffingAgency'" [value]="staffingAgencyData.IsAllowedForPayroll ? 'Yes' : 'No'"  [tooltipVisible]="true"
+                           [tooltipTitle]="'PayrollStaffingAgencyTooltipMessage'"> </app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- input box end -->
+
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                           <app-kendo-label  [label]="'AbleToAdministerIc'" [value]="staffingAgencyData.IsAllowedForIc ? 'Yes' : 'No'"  [tooltipVisible]="true"
+                           [tooltipTitle]="'AbleToAdministerIcTooltipMessage'"> </app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- input box end -->
+                     <div class="clearfix"></div>
+
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6"  *ngIf="staffingAgencyData.IsAllowedForIc" >
+                        <div class="form-group" >
+                           <app-kendo-label  [label]="'IcMarkup'" [value]="staffingAgencyData.IcMarkup" > </app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- input box end -->
+
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6" *ngIf="staffingAgencyData.IsAllowedForIc">
+                        <div class="form-group">
+                           <app-kendo-label  [label]="'SowIcMspFee'" [value]="staffingAgencyData.SowIcMspFee"  [tooltipTitle]="'SowIcMspFeeTooltipMessage'" [tooltipVisible]="false"   > </app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- input box end -->
+
+                       <!-- input box start -->
+                       <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                           <app-kendo-label  [label]="'LightIndustrialStaffingAgency'" [value]="staffingAgencyData.IsAllowedForLi ? 'Yes' : 'No'"
+                            [tooltipTitle]="'LightIndustrialStaffingAgencyTooltipMessage'" [tooltipVisible]="true"   > </app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- input box end -->
+
+                    
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6" *ngIf="staffingAgencyData.IsAllowedForLi">
+                        <div class="form-group">
+                           <app-kendo-label  [label]="'GetCandidatesFromAts'" [value]="staffingAgencyData.CanReceiveCandidateFromAts ? 'Yes' : 'No'"
+                            [tooltipTitle]="'GetCandidatesFromAtsTooltipMessage'" [tooltipVisible]="false" > </app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- input box end -->
+                     <div class="clearfix"></div>
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                           <app-kendo-label  [label]="'MspAffiliated'" [value]="staffingAgencyData.IsMspAfiiliated ? 'Yes' : 'No'"
+                           [tooltipTitle]="'MspAffiliatedTooltipMessage'" [tooltipVisible]="true" > </app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- input box end -->
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                           <app-kendo-label  [label]="'ApprovedForRfxSow'" [value]="staffingAgencyData.IsAllowedForRfxSow ? 'Yes' : 'No'"
+                           [tooltipTitle]="'ApprovedForRfxSowTooltipMessage'" [tooltipVisible]="true" > </app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- input box end -->
+                     <div class="clearfix"></div>
+                     <!-- input box start -->
+                     <div class="col-sm-6 col-md-6" *ngIf="staffingAgencyData.IsAllowedForRfxSow ">
+                        <div class="form-group">
+                            <app-kendo-label  [label]="'AccessibleSowLaborCategoryDyn'" [tooltipVisible]="true"
+                            [tooltipTitle]="'SowLaborCategoriesTooltipMessage'" [labelLocalizeParam]="sectorLabelTextParams"> </app-kendo-label>
+                           <div class="tree-bxs hide-tooltip-content">
+                              <app-tree-view-readonly [data]="laborCategory" [textField]="'Text'"
+                                 [childrenField]="'items'" [isFiltered]="false">
+                              </app-tree-view-readonly>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- input box end -->
+                  </div>
+               </div>
+               <!-- Card Body Section End-->
+            </div>
+            <!-- Card Section End-->
+            <!-- Card Section-->
+
+
+            <!-- Card Section End-->
+
+               <app-udf-implementation [entityId]="entityId" [sectorId]="sectorIdUDF" [recordUKey]="recordUKey"
+                  [parentsInfos]="udfCommonMethods.getParentsInfo()" [actionTypeId]="actionTypeId">
+               </app-udf-implementation>
+
+            <!-- Card Section-->
+            <div class="card">
+               <!-- Card Header Section-->
+               <div class="card__header">
+                  <h4 class="card__heading">{{'Comments'|translate}}</h4>
+               </div>
+               <!-- End Card Header Section-->
+               <!-- Card Body Section-->
+               <div class="card__body">
+                  <div class="row">
+                     <!-- input box start -->
+                     <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                           <app-kendo-label class="floating-layout__view-layout--break" [label]="'Comment'" [value]="staffingAgencyData.Comments" > </app-kendo-label>
+                        </div>
+                     </div>
+                     <!-- input box end -->
+                  </div>
+               </div>
+            </div>
+            <!-- Card Section End-->
+            <!-- Footer Section-->
+            <div class="page-footer">
+               <div class="btn-box btn-box--center">
+                  <button kendoButton (click)="navigate()" themeColor="primary">{{'Back' |
+                     translate}}</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- End Footer Section-->
+</div>
+<!-- Main Body Section End--->
+<div *ngIf="openRightPanel" class="offcanvas offcanvas-end show offcanvas-body--mobileview" tabindex="-1" id="errormessageSidebarsm" aria-labelledby="errormessageSidebarsm" [@slideInOut]>
+   <div class="offcanvas-header">
+      <h5></h5>
+      <button type="button" class="btn-close" (click)="closeOpenPanel()"></button>
+   </div>
+   <div class="offcanvas-body floating-layout floating-layout__quickview-layout">
+      <app-view-user [myInput]="existingUkey"></app-view-user>
+   </div>
+</div>
+<div *ngIf="openRightPanel" class="offcanvas__fade--show"></div>

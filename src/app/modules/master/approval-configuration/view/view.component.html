@@ -1,0 +1,443 @@
+<!-- Main Body Section-->
+<div
+    class="app-content__body approval-configuration  floating-layout floating-layout__view-layout approval__config-main">
+    <form [formGroup]="statusForm">
+        <app-common-header [controlName]="'status'" [entityId]="entityID"
+            [buttonSet]="offcanvasServc.offcanvasElement? buttonSet2: buttonSet" [recordStatus]="recordStatus"
+            [statusData]="statusData" [isStatusEditable]="false"></app-common-header>
+    </form>
+    <br>
+
+    <!-- Start Card Section-->
+    <div class="card">
+        <!-- Card Header Section-->
+        <div class="card__header">
+            <h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+        </div>
+        <!-- End Card Header Section-->
+
+        <!-- Card Body Section-->
+        <div class="card__body">
+            <div class="row">
+
+                <div class="clearfix"></div>
+                <!-- Text Box Start -->
+                <div class="col-sm-4 col-md-4">
+                    <div class="form-group">
+
+                        <app-kendo-label label="ApprovalProcessName"
+                            [value]="approvalConfigBasicDetails.ApprovalProcessName">
+                        </app-kendo-label>
+                    </div>
+                </div>
+                <!-- Text Box End -->
+
+                <!-- Text Box Start -->
+                <div class="col-sm-4 col-md-4">
+                    <div class="form-group">
+                        <app-kendo-label label="Workflow" value="{{WorkFlowTypeName| translate}}">
+                        </app-kendo-label>
+                    </div>
+                </div>
+                <!-- Text Box End -->
+
+                <!--Box Start -->
+                <div class="col-sm-4 col-md-4">
+                    <div class="form-group">
+                        <app-kendo-label label="ApprovalRequired"
+                            value="{{approvalConfigBasicDetails.ApprovalRequired[0].ApprovalRequiredName | translate}}">
+                        </app-kendo-label>
+                    </div>
+                </div>
+                <!-- Box End -->
+
+                <!--Box Start -->
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <app-kendo-label class="floating-layout__view-layout--break" [label]="'Comment'"
+                            [value]="approvalConfigBasicDetails.Comment">
+                        </app-kendo-label>
+                    </div>
+                </div>
+                <!-- Box End -->
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Start Card Section-->
+    <div class="card">
+        <!-- Card Header Section-->
+        <div class="card__header">
+            <h4 class="card__heading">{{'ApplicableIn' | translate}}</h4>
+        </div>
+
+        <!-- End Card Header Section-->
+        <!-- Card Body Section-->
+        <div class="card__body">
+            <div class="row">
+                <div class="col-sm-4 col-md-4">
+                    <div class="form-group no-dropdown-tree">
+                        <app-kendo-label [label]="'Sector'" [tooltipVisible]="true"
+                            tooltipTitle="AccessAllSectorsTooltipMessage"></app-kendo-label>
+                        <div class="tree-bxs">
+                            <app-kendo-label *ngIf="sectorAccess" value="All"></app-kendo-label>
+                            <kendo-treeview *ngIf="!sectorAccess && sectordata && sectordata.length > 0 "
+                                class="tree_view_appearance" [nodes]="sectordata" [textField]="'Text'"
+                                kendoTreeViewHierarchyBinding kendoTreeViewExpandable [childrenField]="'items'">
+                            </kendo-treeview>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4 col-md-4">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'Location'" [tooltipVisible]="true"
+                            tooltipTitle="AccessAllLocationTooltipMessage"></app-kendo-label>
+                        <div class="tree-bxs">
+                            <app-kendo-label *ngIf="locationAccess" value="All"></app-kendo-label>
+                            <kendo-treeview *ngIf="!locationAccess && locationData && locationData.length > 0 "
+                                class="tree_view_appearance" [nodes]="locationData" [textField]="'Text'"
+                                kendoTreeViewHierarchyBinding kendoTreeViewExpandable [childrenField]="'items'">
+                            </kendo-treeview>
+                        </div>
+                    </div>
+                </div>
+                <!-- Input Box End -->
+
+                <!-- Input Box Start -->
+                <div class="col-sm-4 col-md-4">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'OrgLevel1'" [tooltipVisible]="true"
+                            tooltipTitle="AccessAllOrganizationLevelTooltipMessage"></app-kendo-label>
+                        <div class="tree-bxs">
+                            <app-kendo-label *ngIf="organizationLevelAccess" value="All"></app-kendo-label>
+                            <kendo-treeview
+                                *ngIf="!organizationLevelAccess && organizationLevelData && organizationLevelData.length > 0 "
+                                class="tree_view_appearance" [nodes]="organizationLevelData" [textField]="'Text'"
+                                kendoTreeViewHierarchyBinding kendoTreeViewExpandable [childrenField]="'items'">
+                            </kendo-treeview>
+                        </div>
+                    </div>
+                </div>
+                <!-- Input Box End -->
+
+                <div class="col-sm-4 col-md-4">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'LaborCategory'" [tooltipVisible]="true"
+                            tooltipTitle="AccessAllLaborCategoryTooltipMessage"></app-kendo-label>
+                        <div class="tree-bxs">
+                            <app-kendo-label *ngIf="labaorCategoryAccess" value="All"></app-kendo-label>
+                            <kendo-treeview
+                                *ngIf="!labaorCategoryAccess && laborCategoryData && laborCategoryData.length > 0 "
+                                class="tree_view_appearance" [nodes]="laborCategoryData" [textField]="'Text'"
+                                kendoTreeViewHierarchyBinding kendoTreeViewExpandable [childrenField]="'items'">
+                            </kendo-treeview>
+                        </div>
+                    </div>
+                </div>
+                <!-- Input Box Start -->
+                <div class="col-sm-4 col-md-4" *ngIf="enableLiRequest">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'ReasonForRequest'" [tooltipVisible]="true"
+                            tooltipTitle="AccessAllReasonForRequestTooltipMessage"></app-kendo-label>
+                        <div class="tree-bxs">
+                            <app-kendo-label *ngIf="reasonForRequestAccess" value="All"></app-kendo-label>
+                            <kendo-treeview
+                                *ngIf="!reasonForRequestAccess && reasonForRequestData && reasonForRequestData.length > 0 "
+                                class="tree_view_appearance" [nodes]="reasonForRequestData" [textField]="'Text'"
+                                kendoTreeViewHierarchyBinding kendoTreeViewExpandable [childrenField]="'items'">
+                            </kendo-treeview>
+                        </div>
+                    </div>
+                </div>
+                <!-- Input Box End -->
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Start Card Section-->
+    <div class="card">
+        <!-- Card Header Section-->
+        <div class="card__header">
+            <h4 class="card__heading">{{'SetupApprovalConfigurations' | translate}}</h4>
+        </div>
+        <!-- End Card Header Section-->
+
+        <!-- Card Body Section-->
+        <div class="card__body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="approval__StepProgress end-StepProgress">
+                        <div >
+                            <kendo-expansionpanel *ngFor="let level of approvalLevel; let i = index" [expanded]="true" class="approval__card is-stepcount">
+                                <ng-template kendoExpansionPanelTitleDirective>
+                                    <h4 class="card__heading">
+                                        {{numericWords[i]}} {{'LevelApprover' | translate}}
+                                    </h4>
+
+                                </ng-template>
+                                <div class="content">
+                                    <ng-container *ngFor="let approver of level?.sublevel; let j=index">
+                                        <div class="approval__section" *ngIf="j == 0">
+                                            <div class="row">
+                                                <div class="col-sm-6 col-md-6">
+                                                    <div class="form-group">
+                                                        <app-kendo-label [label]="'ApproverType'"
+                                                            [value]="approver.approverType.ApproverTypeName | translate">
+                                                        </app-kendo-label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 col-md-6">
+                                                    <div class="form-group">
+                                                        <app-kendo-label [label]="'ApproverLabel'"
+                                                            [value]="approver.approverType.ApproverLabel">
+                                                        </app-kendo-label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 col-md-6"
+                                                    *ngIf="approver.approverType.IsVisibleRole">
+                                                    <div class="form-group">
+                                                    
+                                                        <div class="new-view">
+                                                            <kendo-label text="Approver Role"></kendo-label>
+                                                            <p class="label-answere">
+                                                                <ng-container
+                                                                    *ngFor="let role of approver.approverType.RolesDetail; index as i">
+
+                                                                    <span>{{role.Text}}</span> <span
+                                                                        *ngIf="approver.approverType.RolesDetail.length > 1 && 
+                                                                                            i < approver.approverType.RolesDetail.length-1">,
+                                                                    </span>
+
+                                                                </ng-container>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                                <div class="col-sm-6 col-md-6"
+                                                    *ngIf="approver.approverType.IsVisibleExceptionApprover">
+                                                    <div class="form-group">
+                                                        <app-kendo-label [label]="'ExceptionApproval'"
+                                                            [value]="approver.approverType.ExceptionApprovalRequired?'Yes':'No'"
+                                                            [tooltipVisible]="true"
+                                                            tooltipTitle="ExceptionApprovalTooltipMessage">
+                                                        </app-kendo-label>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-sm-6 col-md-6"
+                                                    *ngIf="approver.approverType.ExceptionApprovalRequired">
+                                                    <div class="form-group">
+                                                        <app-kendo-label [label]="'ExceptionPercentage'"
+                                                            [value]="approver.approverType.ExceptionPercentage"
+                                                            [tooltipVisible]="true"
+                                                            tooltipTitle="ExceptionPercentageTooltipMessage">
+                                                        </app-kendo-label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6 col-md-6"
+                                                    *ngIf="approver.approverType.IsVisibleFundingBased">
+                                                    <div class="form-group">
+                                                        <app-kendo-label [label]="'FundingBased'"
+                                                            [value]="approver.approverType.FundingBasedRequired?'Yes':'No'"
+                                                            [tooltipVisible]="true"
+                                                            tooltipTitle="FundingBasedTooltipMessage">
+                                                        </app-kendo-label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6 col-md-6"
+                                                    *ngIf="approver.approverType.FundingBasedRequired">
+                                                    <div class="form-group">
+                                                        <app-kendo-label [label]="'MinLimitUSD'"
+                                                            [value]="approver.approverType.FundingMinLimit.toFixed(2)">
+                                                        </app-kendo-label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6 col-md-6"
+                                                    *ngIf="approver.approverType.IsVisibleOrgLevel1Based">
+                                                    <div class="form-group">
+                                                        <app-kendo-label [label]="'OrganizationLevelOneBased'"
+                                                            [value]="approver.approverType.OrgLevel1BasedRequired?'Yes':'No'"
+                                                            [tooltipVisible]="true"
+                                                            tooltipTitle="OrganizationLevelOneBasedTooltipMessage">
+                                                        </app-kendo-label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6 col-md-6"
+                                                    *ngIf="approver.approverType.IsVisibleUser">
+                                                    <div class="form-group">
+                                                        <app-kendo-label [label]="'Users'"
+                                                            [value]="approver.approverType.UserName | translate">
+                                                        </app-kendo-label>
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix"></div>
+
+                                                <div class="col-sm-6 col-md-6"
+                                                    *ngIf="approver.approverType.IsVisibleUserType">
+                                                    <div class="form-group">
+                                                        <app-kendo-label [label]="'UserTypes'"
+                                                            [value]="approver.approverType.UserTypeName | translate">
+                                                        </app-kendo-label>
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row" *ngIf="j>0">
+                                            <div class="col-sm-12 col-md-12">
+                                                <div class="col-sm-6 col-md-6" >
+                                                    <div class="and__or-section">
+                                                        <span
+                                                            class="label-answere">{{level.sublevel[j-1].approverType.Condition}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="subapproval__section" >
+                                                    <div class="row">
+                                                        <div class="col-sm-6 col-md-6">
+                                                            <div class="form-group">
+                                                                <app-kendo-label [label]="'ApproverType'"
+                                                                    [value]="approver.approverType.ApproverTypeName | translate">
+                                                                </app-kendo-label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-6">
+                                                            <div class="form-group">
+                                                                <app-kendo-label [label]="'ApproverLabel'"
+                                                                    [value]="approver.approverType.ApproverLabel">
+                                                                </app-kendo-label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-6"
+                                                            *ngIf="approver.approverType.IsVisibleRole">
+                                                            <div class="form-group">
+                                                                <div class="new-view">
+                                                                    <kendo-label text="Approver Role"></kendo-label>
+                                                                    <p class="label-answere">
+                                                                        <ng-container
+                                                                            *ngFor="let role of approver.approverType.RolesDetail; index as i">
+
+                                                                            <span>{{role.Text}}</span> <span
+                                                                                *ngIf="approver.approverType.RolesDetail.length > 1 && 
+                                                                                 i < approver.approverType.RolesDetail.length-1">,
+                                                                            </span>
+
+                                                                        </ng-container>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                        <div class="col-sm-6 col-md-6"
+                                                            *ngIf="approver.approverType.IsVisibleExceptionApprover">
+                                                            <div class="form-group">
+                                                                <app-kendo-label [label]="'ExceptionApproval'"
+                                                                    [value]="approver.approverType.ExceptionApprovalRequired?'Yes':'No'"
+                                                                    [tooltipVisible]="true"
+                                                                    tooltipTitle="ExceptionApprovalTooltipMessage">
+                                                                </app-kendo-label>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-sm-6 col-md-6"
+                                                            *ngIf="approver.approverType.ExceptionApprovalRequired">
+                                                            <div class="form-group">
+                                                                <app-kendo-label [label]="'ExceptionPercentage'"
+                                                                    [value]="approver.approverType.ExceptionPercentage"
+                                                                    [tooltipVisible]="true"
+                                                                    tooltipTitle="ExceptionPercentageTooltipMessage">
+                                                                </app-kendo-label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-sm-6 col-md-6"
+                                                            *ngIf="approver.approverType.IsVisibleFundingBased">
+                                                            <div class="form-group">
+                                                                <app-kendo-label [label]="'FundingBased'"
+                                                                    [value]="approver.approverType.FundingBasedRequired?'Yes':'No'"
+                                                                    [tooltipVisible]="true"
+                                                                    tooltipTitle="FundingBasedTooltipMessage">
+                                                                </app-kendo-label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-sm-6 col-md-6"
+                                                            *ngIf="approver?.approverType?.FundingBasedRequired">
+                                                            <div class="form-group">
+                                                                <app-kendo-label [label]="'MinLimitUSD'"
+                                                                    [value]="approver.approverType.FundingMinLimit.toFixed(2)">
+                                                                </app-kendo-label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-sm-6 col-md-6"
+                                                            *ngIf="approver.approverType.IsVisibleOrgLevel1Based">
+                                                            <div class="form-group">
+                                                                <app-kendo-label [label]="'OrganizationLevelOneBased'"
+                                                                    [value]="approver?.approverType?.OrgLevel1BasedRequired?'Yes':'No'"
+                                                                    [tooltipVisible]="true"
+                                                                    tooltipTitle="OrganizationLevelOneBasedTooltipMessage">
+                                                                </app-kendo-label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-sm-6 col-md-6"
+                                                            *ngIf="approver.approverType.IsVisibleUser">
+                                                            <div class="form-group">
+                                                                <app-kendo-label [label]="'Users'"
+                                                                    [value]="approver.approverType.UserName | translate">
+                                                                </app-kendo-label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="clearfix"></div>
+                                                        <div class="col-sm-6 col-md-6"
+                                                            *ngIf="approver.approverType.IsVisibleUserType">
+                                                            <div class="form-group">
+                                                                <app-kendo-label [label]="'UserTypes'"
+                                                                    [value]="approver.approverType.UserTypeName | translate">
+                                                                </app-kendo-label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </kendo-expansionpanel>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--  Page Footer Section-->
+    <div class="page-footer">
+        <div class="btn-box btn-box--center">
+            <button type="button" kendoButton themeColor="primary" (click)="navigate()">
+                {{(offcanvasServc.offcanvasElement?'Close' : 'Back') | translate}}
+            </button>
+        </div>
+    </div>
+    <!-- End Footer Section-->
+    <div *ngIf="!offcanvasServc.offcanvasElement">
+        <event-log></event-log>
+    </div>
+</div>

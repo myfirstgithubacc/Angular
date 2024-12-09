@@ -1,0 +1,132 @@
+<div class="app-content__body">
+    <br>
+    <form [formGroup]="AddEditEventReasonForm" (ngSubmit)="submitForm()">
+        <div class="card">
+            <div class="card__header">
+                <h4 class="card__heading">{{'BasicDetails'|translate}}</h4>
+            </div>
+            <div class="card__body">
+                <div class="row">
+                    <div class=" col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-dropdown [label]="'Sector'" [isRequired]="true" [list]="getDropDownList"
+                                [controlName]="'Sector'" [placeholder]="'DdlSelect'"
+                                (onChange)="onChangeSectorDrodpdown($event)"
+                                [isEditMode]="isEditMode">
+                            </app-kendo-dropdown>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="isSectorValue">
+                    <ng-container>
+                        @for(segment of allSegmentList; let i = $index; track segment.Id) {
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-textbox [label]="segment?.localizeName ?? ''" [isSpecialCharacterAllowed]="true"
+                                    [specialCharactersNotAllowed]="['~']" [controlName]="segment?.controlName"
+                                    [isRequired]="true"
+                                    [maxCharacters]="segment.SegmentMaxLength ?? 0"
+                                    (keyup)="keyUpSegmentChange(segment.SegmentMinLength ?? magicNumber.zero ,segment.SegmentMaxLength ?? magicNumber.zero, segment.controlName ?? '')"
+                                    [isEditMode]="isAssigned">
+                                </app-textbox>
+                            </div>
+                        </div>
+                        }
+                    </ng-container>
+
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-textbox [label]="'Description'" [isSpecialCharacterAllowed]="true"
+                                [controlName]="'Description'" [maxCharacters]="magicNumber.hundred">
+                            </app-textbox>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="dataAfterChangedSector?.HasChargeEffectiveDate && isSectorValue">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-datepicker [controlName]="'EffectiveStartDate'" [isRequired]="true"
+                                [label]="'EffectiveStartDate'" [isEditMode]="isAssigned">
+                            </app-kendo-datepicker>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-datepicker [controlName]="'EffectiveEndDate'" [isRequired]="true"
+                                [label]="'EffectiveEndDate'">
+                            </app-kendo-datepicker>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <br>
+    <form [formGroup]="AddApproverForm">
+        <div class="card" *ngIf="isApproval">
+            <div class="card__header">
+                <h4 class="card__heading">{{'CostAccountingCodeApproverConfiguration' | translate}}</h4>
+                <div class="card__header-icon">
+                </div>
+            </div>
+            <div class="card__body">
+                <div class="row">
+                    <div class="col-md-4 col-sm-4">
+                        <div class="form-group">
+                            <app-kendo-dropdown [label]="'Shift'" [controlName]="'Shift'" [isRequired]="true"
+                                [list]="shiftDropdownList" [placeholder]="'DdlSelect'">
+                            </app-kendo-dropdown>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-3">
+                        <div class="form-group">
+                            <app-kendo-dropdown [list]="primaryapproverList" [isRequired]="true"
+                                [label]="'PrimaryApprover'" [controlName]="'PrimaryApprover'"
+                                [placeholder]="'DdlSelect'" (onChange)="onChangePrimaryAndAlternateApprover()">
+                            </app-kendo-dropdown>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-3">
+                        <div class="form-group">
+                            <app-kendo-dropdown [list]="alternateApproverList" [label]="'AlternateApprover'"
+                                [controlName]="'AlternateApprover'" [placeholder]="'DdlSelect'"
+                                (onChange)="onChangePrimaryAndAlternateApprover()">
+                            </app-kendo-dropdown>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-2 text-right">
+                        <div class="form-group">
+                            <app-kendo-button class="copy__btn" [buttonName]="isEdit ? 'Update': 'Add'"
+                                (Click)="addUpdateItemInGrid()">
+                            </app-kendo-button>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="list-view cac__approval-details">
+                            <div class="list-view__tab-item">
+                                <grid-view [gridData]="gridData" [columnOptions]="columnOptions" [pageSize]="pageSize"
+                                    [actionSet]="actionSet" [tabOptions]="tabOptions" [isColumnChooserVisible]="false"
+                                    [actionItemCategoryField]="'Disabled'" [isInternalSearch]="true"
+                                    [entityId]="entityId" [pageHideOnServerSide]="true" [isPaginationVisible]="false"
+                                    [isToolbarVisible]="false">
+                                </grid-view>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="page-footer">
+        <div class="btn-box btn-box--center">
+            <button type="button" kendoButton fillMode="outline" themeColor="primary" (click)="backToList()"> {{'Cancel' |
+                translate}}
+            </button>
+            <button type="button" kendoButton (click)="submitForm()" themeColor="primary" appFocusOnError
+                [formName]="AddEditEventReasonForm" [innerText]="'Save'"
+                [disabled]="isEditMode ? (AddEditEventReasonForm.pristine && AddApproverForm.pristine) : false">
+                {{'Save' | translate}}
+            </button>
+        </div>
+    </div>
+</div>

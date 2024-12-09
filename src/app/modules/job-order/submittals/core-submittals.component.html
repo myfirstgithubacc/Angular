@@ -1,0 +1,29 @@
+<div *ngIf="headerData">
+    <form [formGroup]="headerForm">
+      <app-common-header [statusData]="statusData" (onLink)="showRequestDetails($event)">
+      </app-common-header>
+
+      <app-kendo-stepper *ngIf="isShowStepper" [steps]="stepsForProgressBar" [currentStep]="currentStep"></app-kendo-stepper>
+    </form>
+  </div>
+<router-outlet></router-outlet>
+<event-log *ngIf="isShowAuditLog"></event-log>
+
+
+
+<div *ngIf="isShowRequestDetail" class="offcanvas offcanvas-end width-65 show" aria-modal="true" role="dialog" tabindex="-1" id="errormessageSidebarsm" aria-labelledby="errormessageSidebarsm" [@slideInOut]>
+  <div class="offcanvas-header">
+     <h5>{{'RequestDetails' | translate}}</h5>
+     <button type="button" class="btn-close" (click)="closePanel()"></button>
+  </div>
+  <div class="offcanvas-body">
+    <app-view [WidgetUkey]="profReqUkey" [ParentEntity]="'Submittal'"></app-view>
+    <div class="col-md-12 page-footer">
+      <div class="button-group btn-box--center">
+          <button type="button" kendoButton themeColor="primary" (click)="closePanel()">
+              {{'Close'|translate}}
+          </button>
+      </div>
+  </div>
+  </div>
+</div>

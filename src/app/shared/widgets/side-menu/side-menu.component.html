@@ -1,0 +1,17 @@
+<div class="card side-menu-tabs">
+    <div class="card__body">
+        <div class="row">
+            <ul>
+                <li *ngFor="let tab of TabList">
+                    <ng-container *ngIf="tab.isVisible">
+                        <a [class]="tab.isSelected ? 'active' : ''" (click)="onTapChange(tab)">
+                            <xrm-icon [name]='tab.iconLeft' class="menu-list-icon"></xrm-icon>
+                            {{tab.label}}
+                            <xrm-icon [name]='tab.iconRight' class="right-aro"></xrm-icon>
+                        </a>
+                    </ng-container>
+                </li> 
+            </ul>              
+        </div>
+    </div>
+</div>

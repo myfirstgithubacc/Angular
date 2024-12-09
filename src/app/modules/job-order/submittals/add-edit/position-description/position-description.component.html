@@ -1,0 +1,158 @@
+<form [formGroup]="positionDetailsForm">
+<!-- Start Card Position Description Section-->
+<kendo-expansionpanel [expanded]="isCardVisible" (expandedChange)="onExpandedCollapse($event)" class="card position__description-submittaloneone">
+    <ng-template kendoExpansionPanelTitleDirective>
+        <div (click)="$event.stopPropagation()">
+            <h4 class="card__heading">{{'PositionDescription' | translate}}</h4>
+        </div>
+    </ng-template>
+    <div class="floating-layout floating-layout__view-layout">
+        <div class="card__body">
+            <div class="row">
+                <!-- Text Box Start -->
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <div class="floating-layout__view-layout--break">
+                            <app-kendo-label [label]="'PositionDescription'"
+                                [value]="profReqData.PositionDescription">
+                            </app-kendo-label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Text Box End -->
+
+                <!-- Text Box Start -->
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <div class="floating-layout__view-layout--break">
+                            <app-kendo-label [label]="'RequisitionSkillsRequired'"
+                                [value]="profReqData.SkillsRequired">
+                            </app-kendo-label>
+                            <app-kendo-textarea [controlName]="'skillsRequiredValue'" [isRequired]="true" [label]="'CandidateRelatedSkills'"
+                                placeholder="EnterCandidateRelatedSkills" [maxCharacters]="2000">
+                            </app-kendo-textarea>
+                        </div>
+                    </div>
+                </div>
+                <!-- Text Box End -->
+
+                <div class="clearfix">
+                    <hr>
+                </div>
+
+
+                <!-- Text Box Start -->
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <div class="floating-layout__view-layout--break">
+                            <div class="new-viewBG">
+                                <app-kendo-label [label]="'RequisitionSkillsPreferred'"
+                                [value] = "profReqData.SkillsPreferred">
+                                </app-kendo-label>
+                            </div>
+                            <app-kendo-textarea [controlName]="'skillsPreferredValue'" [label]="'CandidateRelatedSkills'"
+                                placeholder="EnterCandidateRelatedSkills" [maxCharacters]="2000">
+                            </app-kendo-textarea>
+                        </div>
+                    </div>
+                </div>
+                <!-- Text Box End -->
+
+                <div class="clearfix">
+                    <hr>
+                </div>
+
+                <!-- Text Box Start -->
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <div class="floating-layout__view-layout--break">
+                            <app-kendo-label [label]="'ExperienceRequired'" [value]="profReqData.ExperienceRequired">
+                            </app-kendo-label>
+                            <app-kendo-textarea [controlName]="'experienceRequiredValue'" [isRequired]="true" [label]="'CandidateRelevantExperience'"
+                                placeholder="EnterCandidateRelevantExperience" [maxCharacters]="2000">
+                            </app-kendo-textarea>
+                        </div>
+                    </div>
+                </div>
+                <!-- Text Box End -->
+
+                <div class="clearfix">
+                    <hr>
+                </div>
+
+                <!-- Text Box Start -->
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <div class="floating-layout__view-layout--break">
+                            <app-kendo-label [label]="'ExperiencePreferred'" [value]="profReqData.ExperiencePreferred">
+                            </app-kendo-label>
+                            <app-kendo-textarea [controlName]="'experiencePreferredValue'" [label]="'CandidateRelevantExperience'"
+                                placeholder="EnterCandidateRelevantExperience" [maxCharacters]="2000">
+                            </app-kendo-textarea>
+                        </div>
+                    </div>
+                </div>
+                <!-- Text Box End -->
+
+                <div class="clearfix">
+                    <hr>
+                </div>
+
+                <!-- Text Box Start -->
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <div class="floating-layout__view-layout--break">
+                            <app-kendo-label [label]="'EducationRequired'" [value]="profReqData.EducationRequired">
+                            </app-kendo-label>
+                            <app-kendo-textarea [controlName]="'educationRequiredValue'" [isRequired]="true" [label]="'CandidateEducationDetails'"
+                                placeholder="EnterCandidateEducationalDetails" [maxCharacters]="2000">
+                            </app-kendo-textarea>
+                        </div>
+                    </div>
+                </div>
+                <!-- Text Box End -->
+
+                <div class="clearfix">
+                    <hr>
+                </div>
+
+                <!-- Text Box Start -->
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <div class="floating-layout__view-layout--break">
+                            <app-kendo-label [label]="'EducationPreferred'" [value]="profReqData.EducationPreferred">
+                            </app-kendo-label>
+                            <app-kendo-textarea [controlName]="'educationPreferredValue'" [label]="'CandidateEducationDetails'"
+                                placeholder="EnterCandidateEducationalDetails" [maxCharacters]="2000">
+                            </app-kendo-textarea>
+                        </div>
+                    </div>
+                </div>
+                <!-- Text Box End -->
+
+                <div class="clearfix">
+                    <hr>
+                </div>
+
+                <!-- Text Box Start -->
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group mb-4">
+                        <div class="floating-layout__view-layout--break">
+                            <app-kendo-label [label]="'AdditionalInformation'"
+                                [value]="profReqData.AdditionalInformation">
+                            </app-kendo-label>
+                            <app-kendo-textarea [controlName]="'additionalInfoValue'"
+                                placeholder="EnterCandidateRelevantInformation" [maxCharacters]="2000">
+                            </app-kendo-textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</kendo-expansionpanel>
+<!-- End Kendo Expansion Panel -->
+
+</form>

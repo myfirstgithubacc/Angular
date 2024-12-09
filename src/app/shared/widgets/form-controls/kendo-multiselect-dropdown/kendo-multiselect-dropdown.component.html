@@ -1,0 +1,49 @@
+<div *ngIf="isEditMode; then thenTemplateName; else elseTemplateName"></div>
+<ng-template #thenTemplateName>
+  <app-kendo-label [label]="label" [value]="listControlName ? listControlName.value : formControl.value"
+    [tooltipPosition]="" [labelLocalizeParam]="labelLocalizeParam" [addOnLabelText]="addOnLabelText"
+    [addOnLabelTextLocalizeParam]="addOnLabelTextLocalizeParam" [tooltipVisible]="tooltipVisible"
+    [tooltipTitle]="tooltipTitle" [tooltipTitleLocalizeParam]="tooltipTitleLocalizeParam">
+  </app-kendo-label>
+
+  <b *ngFor="let v of formControl.value; let i = index">
+    {{ v.text }}{{ i < formControl.value.length - 1 ? "," : "" }} </b>
+
+      <div class="mt-1">
+        <span class="achor__text">
+          {{ helpTexts.join(", ") }}
+        </span>
+      </div>
+
+</ng-template>
+<ng-template #elseTemplateName>
+  <kendo-formfield>
+    <tooltip-content [tooltipVisible]="tooltipVisible" [tooltipTitle]="tooltipTitle" [label]="label"
+      [addOnLabelText]="addOnLabelText" [addOnLabelTextLocalizeParam]="addOnLabelTextLocalizeParam"
+      [isRequired]="isRequired" [isHtmlContent]="isHtmlContent" [tooltipPosition]=""
+      [tooltipTitleLocalizeParam]="tooltipTitleLocalizeParam" [labelLocalizeParam]="labelLocalizeParam">
+    </tooltip-content>
+    <div [ngClass]="version == 'new' ? 'search-maltiselect' : '' ">
+      <kendo-multiselect #multiselect #multiselectElement class="k-multiselect" [disabled]="isDisabled" (valueChange)="OnChange($event)"
+        [data]="version == 'new' && !isLoadOnDemand ? data : list" textField="Text" valueField="Value" [placeholder]="placeholder | translate"
+        [popupSettings]="{ popupClass: 'font-reduced' }" [formControl]="listControlName ? listControlName : formControl"
+        [kendoDropDownFilter]="filterSettings" (filterChange)="OnFilter($event)" (focus)="focus()" (valueChange)="onValueChange($event)"
+        (open)="open()" (close)="close()" [loading]="loadOnDemandSrv.isLoading(getControlName())">
+        
+        <ng-template kendoMultiSelectItemTemplate let-dataItem *ngIf="isLocalizedData">
+          {{ dataItem.Text | translate }}
+        </ng-template>
+
+        <ng-template kendoMultiSelectNoDataTemplate>
+          {{ isLoadingMore ? ('Loading...' | translate) : ('NoDataFound' | translate) }}          
+        </ng-template>
+      </kendo-multiselect>
+    </div>
+    <div class="mt-1">
+      <span class="achor__text">
+        {{ helpTexts.join(", ") }}
+      </span>
+    </div>
+    <app-print-error-message [control]="listControlName ? listControlName : formControl"></app-print-error-message>
+  </kendo-formfield>
+</ng-template>

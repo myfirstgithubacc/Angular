@@ -1,0 +1,22 @@
+.custom-grid {
+  .k-grid-header {
+    th {
+      &:not(:first-child)::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(20%);
+        width: 1px;
+        height: 70%;
+        background-color: #ccc;
+        pointer-events: none;
+      }
+    }
+  }
+}
+
+.grouping__kendo-grid .k-grid-header .k-table-th .new-view,
+.grouping__kendo-grid .k-table-tbody .k-table-td .new-view {
+  display: inline-block;
+}

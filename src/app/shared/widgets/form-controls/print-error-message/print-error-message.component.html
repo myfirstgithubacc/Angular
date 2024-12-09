@@ -1,0 +1,10 @@
+<div
+  *ngIf="
+    control &&
+    control.errors &&
+    control.invalid &&
+    (control.dirty || control.touched)
+  "
+>
+<kendo-formerror>{{control.errors?.message | translate : getObject(control.errors?.dynamicParam) }}</kendo-formerror>
+</div>

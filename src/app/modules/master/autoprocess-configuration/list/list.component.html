@@ -1,0 +1,43 @@
+<div class="master-search">
+  <div class="row">
+      <div class="col-md-12 master-search__wapper">
+          <div class="master-search__search-box">
+              <div class="custom-search">
+                  <div class="custom-search__input-box">
+                      <app-search 
+                      [placeholder]="'SearchFor'"
+                      (onSearch)="OnSearch($event)" [EntityId]="entityId" [columnOptions]="columnOptions"
+                      [isServerSidePagingEnable]="isServerSidePagingEnable">
+                      </app-search>
+                  </div>
+                  <app-advance-search
+                  [EntityId]="entityId" [isApiGateway]="true"
+                  (selectedFilter)="OnFilter($event)"
+                  [isServerSidePagingEnable]="isServerSidePagingEnable" [apiAddress]="advApiAddress">
+                    
+                  </app-advance-search>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <grid-view 
+    [entityId]="entityId" 
+    [pageSize]="pageSize" 
+    [columnOptions]="columnOptions" 
+    [actionSet]="actionSet" 
+    [tabOptions]="tabOptions" 
+    [kendoGridSelectedBy]="'JobUkey'" 
+    [actionItemCategoryField]="'Status'" 
+    [isServerSidePagingEnable]="isServerSidePagingEnable" 
+    [isApiGateway]="true"
+    [apiAddress]="apiAddress" 
+    [searchText]="searchText" 
+    [multiSelect]="false"
+    [fileName]="generateFileName()"
+    [advFilterData]="advFilterData">
+  </grid-view>
+</div>

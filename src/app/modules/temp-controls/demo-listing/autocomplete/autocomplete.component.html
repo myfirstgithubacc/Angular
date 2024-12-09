@@ -1,0 +1,45 @@
+<!-- {{myForm.value | json}}
+<button (click)="patchValue()">Submit</button>
+<button (click)="removeValue()">removeValue</button> -->
+<button (click)="cdLog()">Submit</button>
+
+<form [formGroup]="myForm">
+
+
+<!-- 
+   <app-autocomplete-dropdown [controlName]="'gender'" [label]="'Approval Required'" [isRequired]="true"
+   [list]="securityLevel">
+   </app-autocomplete-dropdown> -->
+
+   
+
+   <!-- <app-kendo-dropdown-additional  [list]="securityLevel" [label]="'Additional Dropdown'"
+                                [controlName]="'sectorName1'" [placeholder]="'DdlSelect'" [isRequired]="false" >
+                            </app-kendo-dropdown-additional> -->
+
+
+    <app-kendo-dropdown  [list]="securityLevel" [version]="'new'" [label]="'Current Security Clearance Level'"
+                                [controlName]="'sectorName'" [placeholder]="'DdlSelect'" [isRequired]="false" >
+                            </app-kendo-dropdown>
+
+   <!-- <app-kendo-datepicker [controlName]="'datePicker1'" [tooltipVisible]="true"  [disabledDates]="disabledDates1" [isDisabled]="true"
+
+   [tooltipTitle]="'DatePicker1'" [label]="'DatePicker1'"
+
+   [isRequired]="true">
+
+ </app-kendo-datepicker> -->
+
+
+<!-- 
+   <app-kendo-datepicker [controlName]="'datePicker2'" [tooltipVisible]="true"[disabledDates]="disableDates" [isDisabled]="true"
+
+   [tooltipTitle]="'DatePicker2'" [label]="'DatePicker2'"
+
+   [isRequired]="true">
+
+ </app-kendo-datepicker> -->
+
+
+
+</form>

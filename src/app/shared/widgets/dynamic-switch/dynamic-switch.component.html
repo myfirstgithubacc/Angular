@@ -1,0 +1,27 @@
+<form [formGroup]="formGroup">
+
+  <div class="row">
+ 
+      <div class="col-sm-4 col-md-4" *ngFor = "let item of switchData">
+        <div class="form-group">
+        <app-kendo-switch
+        [controlName]="'switchValue'"
+        [label]="'switchValue'"
+        [onLabel]="'yes'"
+        [offLabel]="'no'"
+      >
+      </app-kendo-switch>
+      <app-tree-view
+
+        [data]="treeData" 
+        [isFiltered]="false"  
+        (onCheckedTree)="onTreeChecked($event)"
+      ></app-tree-view> 
+      </div>
+</div>
+  
+
+</div>
+  
+</form>
+ 

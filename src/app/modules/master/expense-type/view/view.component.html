@@ -1,0 +1,65 @@
+<div class="app-content__body floating-layout floating-layout__view-layout">
+    <div class="card">
+        <div class="card__header">
+            <h4 class="card__heading">{{'BasicDetails'| translate}}</h4>
+        </div>
+
+        <div class="card__body">
+            <div class="row">
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'Sector'" [value]="expenseTypeData.SectorName"></app-kendo-label>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'ExpenseType'"
+                            [value]="expenseTypeData.ExpenseTypeName"></app-kendo-label>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'Description'"
+                            [value]="expenseTypeData.Description"></app-kendo-label>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'ExpenseTypeCode'"
+                            [value]="expenseTypeData.ExpenseTypeCode"></app-kendo-label>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'AvailableToClp'" [value]="expenseTypeData.AvailableToClp | yesNo"
+                            [tooltipVisible]="true" [tooltipTitle]="'AvailableToContractorTooltip'">
+                        </app-kendo-label>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'AmountToBeEnteredWithMspFee'"
+                            [value]="expenseTypeData.IsMspFeeAdded | yesNo" [tooltipVisible]="true"
+                            [tooltipTitle]="'AmountToBeEnteredWithMspFeeTooltip'">
+                        </app-kendo-label>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <tooltip-content [label]="'NatureofExpense'" [value]="expenseTypeData.NatureExpense"
+                            [tooltipTitle]="'NatureofExpenseTooltipMessage'" [tooltipVisible]="true"
+                            [isHtmlContent]="true">
+                        </tooltip-content>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-footer">
+        <div class="btn-box btn-box--center">
+            <app-kendo-button [buttonName]="'Back' | translate" (Click)="backToList()">
+            </app-kendo-button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,82 @@
+<div class="app-content__body">
+    <form [formGroup]="addEditReasonForRequestForm">
+        <div class="card">
+            <div class="card__header">
+                <h4 class="card__heading">{{'BasicDetails' | translate}} </h4>
+                <div class="card__header-icon">
+                </div>
+            </div>
+            <div class="card__body">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-dropdown [list]="sectorList" [label]="'Sector'" [controlName]="'SectorName'"
+                                [placeholder]="'DdlSelect'" [isRequired]="true" [isEditMode]="isEditMode"
+                                [isSpecialCharacterAllowed]="true" (onChange)="onChangeSectorDropdown($event)">
+                            </app-kendo-dropdown>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-textbox [controlName]="'ReasonForRequest'" [label]="'ReasonForRequest'"
+                                [specialCharactersNotAllowed]="specialCharsNotAllowed"
+                                [isSpecialCharacterAllowed]="true" [isRequired]="true" [maxCharacters]="maxChar">
+                            </app-textbox>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12">
+                        <h4 class="card__body--subheading">{{'ApplicableIn' | translate}}</h4>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-switch [controlName]="'ProfessionalRequest'" [label]="'ProfessionalPsrRequest'"
+                                [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                                [tooltipTitle]="'ReasonForRequestProffRequestToolTip'">
+                            </app-kendo-switch>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6" *ngIf="Rfxswitchconfig">
+                        <div class="form-group">
+                            <app-kendo-switch [controlName]="'RfxSowRequest'" [label]="'RfxSowRequest'"
+                                [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                                [tooltipTitle]="'ReasonForRequestRFxRequestToolTip'">
+                            </app-kendo-switch>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-switch [controlName]="'LiRequest'" [label]="'LiRequest'" [tooltipVisible]="true"
+                                [onLabel]="'Yes'" [offLabel]="'No'" [tooltipTitle]="'ReasonForRequestLIRequestToolTip'">
+                            </app-kendo-switch>
+                        </div>
+                    </div>
+                    <div *ngIf="isEditMode && (addEditReasonForRequestForm?.get('LiRequest')?.value)"
+                        class="col-sm-12 col-md-12">
+                        <h4 class="card__body--subheading">{{'LIConfiguration' | translate}}</h4>
+                    </div>
+                    <div *ngIf="isEditMode && (addEditReasonForRequestForm?.get('LiRequest')?.value)"
+                        class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <kendo-label text="{{'ApprovalConfigured' | translate}}">
+                                <p class="label-answere">{{(reasonForRequestDetails.ApprovalConfigured ? 'Yes' : 'No')
+                                    | translate}}</p>
+                            </kendo-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-footer">
+            <div class="btn-box btn-box--center">
+                <button type="button" kendoButton fillMode="outline" themeColor="primary"
+                    [routerLink]="navigationPaths.list">{{"Cancel" | translate}}</button>
+
+                <button type="button" (click)="onSubmitForm()" kendoButton themeColor="primary" appFocusOnError
+                    [formName]="addEditReasonForRequestForm" [innerText]="'Save' | translate"
+                    [disabled]="isEditMode ? addEditReasonForRequestForm.pristine : false">
+                    {{ "Save" | translate}}</button>
+            </div>
+        </div>
+    </form>
+</div>

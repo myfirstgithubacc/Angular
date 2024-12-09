@@ -1,0 +1,90 @@
+<form [formGroup]="form">
+  <app-kendo-stepper [steps]="steps" stepType="full" [currentStep]="currentStep" [linear]="false"
+    (stepChanged)="onStepChanged($event)" (completed)="onStepperCompleted()" (canceled)="onStepperCanceled()"
+    (activate)="handleActivateEvent($event)"></app-kendo-stepper>
+
+  <div class="page-footer">
+    <div class="btn-box btn-box--center">
+      <button type="submit" kendoButton themeColor="primary" (click)="onStepChanged(6)">
+        {{'Submit'| translate}}
+      </button>
+    </div>
+  </div>
+
+
+  <!-- weekday picker -->
+  <span>Week day picker</span>
+  <app-weekday-picker [dayInfo]="selectedDays" (daySelectionChanged)="updateDayInfo($event)"
+    [timeRangeProperties]="timeRange" (selectedTimeChange)="updateSelectedTime($event)"></app-weekday-picker>
+
+
+  <!-- weekday picker -->
+
+
+
+  <br>
+  <hr>
+  <div class="card">
+    <div class="card__header">
+      <h4 class="card__heading">{{'Culture Testing' | translate}}</h4>
+    </div>
+    <div class="card__body">
+      <div class="row">
+
+        <div class="col-md-4 col-sm-4">
+          <div class="form-group">
+            <app-kendo-label [label]="'Value Items in Label'" [value]="'Akash'"></app-kendo-label>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-sm-4">
+          <div class="form-group">
+            <app-kendo-dropdown [controlName]="'country'" [list]="listItems" [label]="'Country'"
+              [helpTexts]="[countryId]" (onChange)="onCountryChange($event)" [isEditMode]="false">
+            </app-kendo-dropdown>
+          </div>
+        </div>
+
+        <div class=" col-md-4 col-sm-4">
+          <div class="form-group">
+            <app-kendo-masked-textbox [isZipCode]="true" [controlName]="'zipCode'" [countryId]="countryId"
+              [label]="zipLable">
+            </app-kendo-masked-textbox>
+          </div>
+        </div>
+
+        <div class=" col-md-4 col-sm-4">
+          <div class="form-group">
+            <app-kendo-phone [phoneControlName]="'phone'" [phoneExtControlName]="'phoneExt'" [countryId]="countryId"
+              [isEditMode]="true" [isExtension]="true" [label]="'Phone No.'"></app-kendo-phone>
+          </div>
+        </div>
+
+        <div class=" col-md-4 col-sm-4">
+          <div class="form-group">
+            <app-kendo-timepicker [controlName]="'time'" [label]="'Time'"></app-kendo-timepicker>
+          </div>
+        </div>
+
+        <div class=" col-md-4 col-sm-4">
+          <div class="form-group">
+            <app-kendo-label [label]="'Number'" [value]="1000000.25" [isNumber]="true"></app-kendo-label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <div class="btn-box btn-box--center">
+      <button type="submit" kendoButton themeColor="primary" [innerText]="'Submit'" (click)="submitForm()">
+        Submit
+      </button>
+    </div>
+  </div>
+
+</form>
+
+{{ stateLabel +' ,' }}
+{{ zipLable }}

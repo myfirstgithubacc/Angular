@@ -1,0 +1,144 @@
+<form [formGroup]="backgroundChecksForm">
+   <!--Background Checks Section Start-->
+   <div class="card">
+      <!-- Card Header Section -->
+      <div class="card__header">
+         <h4 class="card__heading">{{'OnboardingRequirements' | translate}}</h4>
+      </div>
+      <!-- End Card Header Section-->
+      <!-- Card Body Section-->
+      <div class="card__body">
+         <div class="row">
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6">
+               <div class="form-group">
+                  <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                     [tooltipTitle]="'AlternateSectorConfigurationToolTip'"
+                     [controlName]="'AlternateDrugsAndBackgroundChecksConfigurations'"
+                     [label]="'AlternateDrugsAndBackgroundChecksConfigurations'"
+                     [isDisable]="oneTimeSettingForToggleSwitchToMakeDisable('AltDandBChecksConfigurations')"
+                     (onChangeSwitch)="onAlternateDrugsAndBackgroundChecksConfigurationsChange($event)"></app-kendo-switch>
+               </div>
+            </div>
+            <!-- Input Box End -->
+            <div class="clearfix"></div>
+
+            <div class="col-sm-12 col-md-12"
+               *ngIf="backgroundChecksForm?.get('AlternateDrugsAndBackgroundChecksConfigurations')?.value">
+               <h4 class="card__body--subheading">{{'IsDrugScreenItemEditable' | translate}}</h4>
+            </div>
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6"
+               *ngIf="backgroundChecksForm?.get('AlternateDrugsAndBackgroundChecksConfigurations')?.value">
+               <div class="form-group">
+                  <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [controlName]="'isDrugResultVisible'"
+                     [label]="'Visible'" (onChangeSwitch)="onIsDrugResultVisibleChange($event)"></app-kendo-switch>
+               </div>
+            </div>
+            <!-- Input Box End -->
+
+
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6"
+               *ngIf="backgroundChecksForm?.get('AlternateDrugsAndBackgroundChecksConfigurations')?.value && backgroundChecksForm?.get('isDrugResultVisible')?.value">
+               <div class="form-group">
+                  <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                     [tooltipTitle]="'IsDrugScreenEditableOnReqCreationToolTip'"
+                     [controlName]="'isDrugScreenItemEditable'" [label]="'DrugScreenEditable'"></app-kendo-switch>
+               </div>
+            </div>
+            <!-- Input Box End -->
+
+            <!-- input box start -->
+            <div class="col-sm-6 col-md-6"
+               *ngIf="backgroundChecksForm?.get('AlternateDrugsAndBackgroundChecksConfigurations')?.value && backgroundChecksForm?.get('isDrugResultVisible')?.value">
+               <div class="form-group">
+                  <app-kendo-radio-button [controlName]="'defaultDrugResultValue'" [RadioGroup]="radioButtonArray"
+                     [name]="'DefaultDrugResultValue'" [label]="'DefaultValue'" [isRequired]="false">
+                  </app-kendo-radio-button>
+               </div>
+            </div>
+            <!-- input box start -->
+
+            <!-- Input Box Start -->
+            <div class="col-sm-12 col-md-12"
+               *ngIf="backgroundChecksForm?.get('AlternateDrugsAndBackgroundChecksConfigurations')?.value">
+               <h4 class="card__body--subheading">{{'IsBackGroundItemEditable' | translate}}</h4>
+            </div>
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6"
+               *ngIf="backgroundChecksForm?.get('AlternateDrugsAndBackgroundChecksConfigurations')?.value">
+               <div class="form-group">
+                  <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [controlName]="'isBackGroundCheckVisible'"
+                     [label]="'Visible'" (onChangeSwitch)="onIsBackGroundCheckVisibleChange($event)"></app-kendo-switch>
+               </div>
+            </div>
+            <!-- Input Box End -->
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6"
+               *ngIf="backgroundChecksForm?.get('AlternateDrugsAndBackgroundChecksConfigurations')?.value && backgroundChecksForm?.get('isBackGroundCheckVisible')?.value">
+               <div class="form-group">
+                  <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                     [tooltipTitle]="'IsBackScreenCheckEditableReqCreationToolTip'"
+                     [controlName]="'isBackGroundItemEditable'" [label]="'BackgroundCheckEditable'"></app-kendo-switch>
+               </div>
+            </div>
+            <!-- Input Box End -->
+
+            <!-- input box start -->
+            <div class="col-sm-6 col-md-6"
+               *ngIf="backgroundChecksForm?.get('AlternateDrugsAndBackgroundChecksConfigurations')?.value && backgroundChecksForm?.get('isBackGroundCheckVisible')?.value">
+               <div class="form-group">
+                  <app-kendo-radio-button [controlName]="'defaultBackGroundCheckValue'" [RadioGroup]="radioButtonArray"
+                     [name]="'DefaultBackGroundCheckValue'" [label]="'DefaultValue'" [isRequired]="false">
+                  </app-kendo-radio-button>
+               </div>
+            </div>
+            <!-- input box start -->
+
+            <div class="clearfix"></div>
+            <h4 class="card__body--subheading"
+               *ngIf="backgroundChecksForm?.get('AlternateDrugsAndBackgroundChecksConfigurations')?.value"></h4>
+
+
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6"
+               *ngIf="backgroundChecksForm?.get('AlternateDrugsAndBackgroundChecksConfigurations')?.value">
+               <div class="form-group">
+                  <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                     [tooltipTitle]="'PendingDrugAndBackChecksAllowedLICLPsToolTip'"
+                     [controlName]="'allowToFillCandidateWithPendingCompliance'"
+                     [label]="'AllowToFillCandidateWithPendingCompliance'"></app-kendo-switch>
+               </div>
+            </div>
+            <!-- Input Box End -->
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6"
+               *ngIf="backgroundChecksForm?.get('AlternateDrugsAndBackgroundChecksConfigurations')?.value">
+               <div class="form-group">
+                  <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                     [tooltipTitle]="'AttachSelectedCandidatePreEmploymentFormsToClientEmailToolTip'"
+                     [controlName]="'allowAttachPreEmploymentDocToClientEmail'"
+                     [label]="'AllowAttachPreEmploymentDocToClientEmail'"></app-kendo-switch>
+               </div>
+            </div>
+            <!-- Input Box End -->
+
+            <!-- start -->
+            <div class="col-sm-12 col-md-12 list-view list-view__border"
+               *ngIf="backgroundChecksForm?.get('AlternateDrugsAndBackgroundChecksConfigurations')?.value">
+
+               <app-list-view #backgroundChecksListView (formData)="getBackgroundChecksFormStatus($event)"
+                  (onChangeSwitch)="switchChange($event)" [labelText]="['']" [columnData]="backgroundChecksColumn"
+                  [columnConfigure]="backgroundChecksColumnConfiguration"
+                  [populatedData]="backgroundChecksPrefilledData">
+               </app-list-view>
+            </div>
+            <!-- end -->
+
+         </div>
+      </div>
+      <!-- Card Body Section End-->
+   </div>
+   <!--Background Checks Section End-->
+</form>

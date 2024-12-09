@@ -1,0 +1,11 @@
+.submittal__list .show-actions >span>span>span>span:nth-child(1)>.show-status .activateLabel {
+    color: var(--dark-blue-color);
+}
+
+.submittal__list .show-actions >span>span>span>span:nth-child(2)>.show-status .activateLabel {
+    color: var(--orange-color);
+}
+.submittal__list .show-status{ 
+	display: inline-flex;
+	margin-right: 5px;
+}

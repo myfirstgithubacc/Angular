@@ -1,0 +1,195 @@
+.myCss {
+	position: fixed !important;
+	z-index: 1000;
+	width: 90%;
+	margin: 0 0 0;
+	top: 10%;
+	left: 5%;
+}
+
+.alert {
+	animation: fadeIn ease 0.8s;
+	-webkit-animation: fadeIn ease 0.8s;
+	-moz-animation: fadeIn ease 0.8s;
+	-o-animation: fadeIn ease 0.8s;
+	-ms-animation: fadeIn ease 0.8s;
+}
+
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+@-moz-keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+@-webkit-keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+@-o-keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+@-ms-keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+.alert__toast {
+	position: relative;
+	border-radius: 8px;
+	padding: 12px 15px;
+	box-shadow: var(--card-shadow);
+	border: 1px solid;
+	margin-bottom: 15px;
+	z-index: 9;
+
+	&::before {
+		content: "";
+		position: absolute;
+		left: 0px;
+		top: 11px;
+		padding: 1px;
+		border-radius: 0 4px 4px 0;
+		height: 20px;
+	}
+
+	.alert__toast__text {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		font-weight: 500;
+		padding-right: 15px;
+
+		ul {
+			margin-bottom: 0;
+			padding-left: 24px;
+		}
+	}
+
+	.alert__toast__items {
+		.alert__toast__close {
+			cursor: pointer;
+			margin-left: auto;
+			position: absolute;
+			right: -14px;
+			padding: 12px;
+			margin-top: -12px;
+		}
+	}
+
+	.alert__toast__icon {
+		margin-right: 5px;
+	}
+}
+
+.alert__toast__items {
+	position: relative;
+}
+
+.alert__toast__wrapper {
+	display: flex;
+	align-items: baseline;
+}
+
+.alert__toast .alert__toast__text {
+	font-size: var(--base-font-size);
+}
+
+.alert__toast .alert__toast__text,
+.alert__toast .alert__toast__close {
+	color: #000;
+}
+
+.alert__toast--fixed {
+	position: fixed;
+	top: 90px;
+	width: calc(100% - 140px);
+}
+
+.alert__danger {
+	background: #FEF3F2;
+	border-color: #D92D20;
+
+	&::before {
+		background-color: #D92D20;
+	}
+}
+
+.alert__danger xrm-icon {
+	stroke: #D92D20;
+}
+
+.alert__warning {
+	background: #FFFAEB;
+	border-color: #F79009;
+
+	&::before {
+		background-color: #F79009;
+	}
+}
+
+.alert__warning xrm-icon {
+	stroke: #F79009;
+}
+
+.alert__info {
+	background: #F8F9FC;
+	border-color: #4E5BA6;
+
+	&::before {
+		background-color: #4E5BA6;
+	}
+}
+
+.alert__info xrm-icon {
+	stroke: #4E5BA6;
+}
+
+.alert__success {
+	background: #ECFDF3;
+	border-color: #039855;
+
+	&::before {
+		background-color: #039855;
+	}
+}
+
+.alert__success xrm-icon {
+	stroke: #039855;
+}
+
+.cursorpointer {
+	cursor: pointer;
+	float: left;
+}

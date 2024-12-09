@@ -1,0 +1,73 @@
+<div class="app-content__body">
+  <div class="row">
+    <div class="col-md-3 mobile-none mt-0">
+      <div class="wizard">
+        <kendo-stepper appFocusOnError [formName]="selectForm(currentStep)" [steps]="steps"
+          (activate)=stepChangeFn($event) stepType="full" [(currentStep)]="currentStep" [linear]="false"
+          orientation="vertical">
+          <ng-template kendoStepperLabelTemplate let-step>
+            <span class="step-progress"></span>
+            <span class="k-step-text">{{ step.label | translate}}</span>                    
+          </ng-template>
+        </kendo-stepper>
+      </div>
+    </div>
+
+    <div class="col-md-9 basic">
+      <div *ngIf="currentStep === 0 ">
+        <app-basic-details [form]="addEditConfigureClientForm" ></app-basic-details>
+      </div>
+
+      <div class="card" *ngIf="currentStep === 1 ">
+        <app-system-messages [form]="systemMessageForm"  ></app-system-messages>
+      </div>
+
+      <div class="card" *ngIf="currentStep === 2 ">
+        <app-security-clearance [form]="securityClearanceformStatus" ></app-security-clearance>
+      </div>
+
+      <div class="card" *ngIf="currentStep == 3 ">
+       <app-staffing-agency [form]="staffingAgencyForm"></app-staffing-agency>
+      </div>
+
+      <div class="card" *ngIf="currentStep === 4 ">
+        <app-location-officer [form]="locationOfficerformStatus"></app-location-officer>
+      </div>
+
+      <div class="card" *ngIf="currentStep === 5 ">
+          <app-login-method></app-login-method>
+      </div>
+
+      <div class="card" *ngIf="currentStep === 6 ">
+        <app-password-policy [form]="passwordPolicyForm"></app-password-policy>
+      </div>
+
+      <div class="page-footer stepper-button">
+        <div class="stepper-button__prev">
+          <button kendoButton appFocusOnError [formName]="selectForm(currentStep)"
+            href="javascript:;" fillMode="outline" themeColor="primary" *ngIf="currentStep !== 0"
+            (click)="onNextAndPreviousClick(-1)">
+            <xrm-icon name="chevron-left" [size]="15" color="dark-blue-color" class="sw-bold"></xrm-icon>
+            {{ "Previous" | translate }}
+          </button>
+        </div>
+        <div class="stepper-button__next">
+
+          <button kendoButton appFocusOnError [formName]="selectForm(currentStep)" href="#"
+            themeColor="primary" (click)="submit()" fillMode="outline" *ngIf="currentStep != 5"
+            [disabled]="!isupdateButtonEnableOrDisable(currentStep)">
+            {{ "Save" | translate }}
+          </button>
+          <button kendoButton appFocusOnError [formName]="selectForm(currentStep)" href="#"
+            themeColor="primary" *ngIf="currentStep !== 6" (click)="onNextAndPreviousClick(1)">
+            {{ "Next" | translate }} <xrm-icon name="chevron-right" [size]="15" color="white-color" class="sw-bolder"></xrm-icon>
+
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <event-log></event-log>
+  </div>
+</div>

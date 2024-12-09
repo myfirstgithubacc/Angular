@@ -1,0 +1,291 @@
+<form [formGroup]="UserDetailsForm">
+  <div class="card">
+    <div class="card__header">
+      <h4 class="card__heading">{{'BasicDetails'|translate}}</h4>
+      <div class="card__header-icon">
+      </div>
+    </div>
+    <div class="card__body">
+      <div class="row">
+        <div class="col-sm-6 col-md-6">
+          <div class="form-group">
+            <app-kendo-dropdown [label]="'UserType'" [isEditMode]="true"
+              [controlName]="'RoleGroupId'" [isRequired]="true" [list]="inputProperties.userTypeList"
+              (onChange)="onChangeUserGroupDropdown($event)" [placeholder]="'-Select-'">
+            </app-kendo-dropdown>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-sm-6 col-md-6"
+          *ngIf="UserDetailsForm?.get('RoleGroupId')?.value?.Value == userRole?.StaffingAgency">
+          <div class="form-group">
+            <app-kendo-dropdown [list]="inputProperties.staffingAgencyList"
+              [isEditMode]="inputProperties.isEditMode || inputProperties.isStaffingAgencyUserLogin"
+              [label]="'StaffingAgency'" [controlName]="'StaffingAgencyId'" [placeholder]="'-Select-'"
+              [isRequired]="true" (onChange)="onChangeStaffingAgencyDropdown($event)">
+            </app-kendo-dropdown>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="col-sm-6 col-md-6">
+          <div class="form-group">
+            <kendo-label [text]="'UserName'|translate"> <xrm-icon name="star" class="required"></xrm-icon>
+              <div class="row">
+                <div class="col-4">
+                  <app-textbox [controlName]="'UserLastName'" [placeholder]="'LastName'"
+                    [isSpecialCharacterAllowed]="true" [specialCharactersAllowed]="['.', '\'']"
+                    [maxCharacters]="100"></app-textbox>
+                </div>
+                <div class="col-4">
+                  <app-textbox [controlName]="'UserFirstName'" [maxCharacters]="100"
+                  [isSpecialCharacterAllowed]="true" [specialCharactersAllowed]="['.', '\'']"
+                  [placeholder]="'FirstName'"></app-textbox>
+                </div>
+                <div class="col-4">
+                  <app-textbox [controlName]="'UserMiddleName'" [maxCharacters]="100"
+                   [isSpecialCharacterAllowed]="true" [specialCharactersAllowed]="['.', '\'']"
+                   [placeholder]="'MiddleInitial'"></app-textbox>
+                </div>
+              </div>
+            </kendo-label>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-6">
+          <div class="form-group">
+            <app-textbox [fieldName]="'Email'" [entityType]="inputProperties.entityType"
+              [xrmEntityId]="inputProperties.entityId" [isEditMode]="inputProperties.isEditMode" [controlName]="'Email'"
+              [maxCharacters]="50" [label]="'EmailAddress'" [isRequired]="true">
+            </app-textbox>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-6">
+          <div class="form-group">
+            <app-kendo-phone [fieldName]="'ContactNumber'" [entityType]="inputProperties.entityType"
+              [xrmEntityId]="inputProperties.entityId" [label]="'ContactNumber'" [phoneControlName]="'phoneNumber'"
+              [isExtension]="true" [countryId]="UserDetailsForm.get('CountryId')?.value?.Value"
+              [phoneExtControlName]="'phoneNumberExt'" [isRequired]="true" (onPhoneChange)="onPhoneChange($event)"
+              (onPhoneExtChange)="onPhoneExtChange($event)"></app-kendo-phone>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-6">
+          <div class="form-group">
+            <!-- *ngIf="UserDetailsForm?.get('RoleGroupId')?.value?.Text !== 'Staffing Agency'" -->
+            <app-kendo-dropdown [list]="inputProperties.homeCountrylist"
+              [isAppend]="inputProperties.isEditMode ? true : false"
+              [isEditMode]="UserDetailsForm.get('StaffingAgencyId')?.value?.Value" [label]="'CountryId'"
+              [controlName]="'CountryId'" [placeholder]="'-Select-'" [isRequired]="true"
+              (onChange)="onChangeCountryDropdown($event)">
+            </app-kendo-dropdown>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-6">
+          <div class="form-group">
+            <app-kendo-dropdown [list]="inputProperties.languageList"
+              [isAppend]="false" [label]="'Language1'"
+              [controlName]="'UserLanguageId'" [placeholder]="'-Select-'" [isRequired]="true">
+            </app-kendo-dropdown>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-6">
+          <div class="form-group">
+            <app-kendo-dropdown [list]="inputProperties.timezonelist" [label]="'TimeZone'"
+              [isAppend]="inputProperties.isEditMode ? true : false" [controlName]="'UserTimezoneId'"
+              [placeholder]="'-Select-'" [isRequired]="true">
+            </app-kendo-dropdown>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-6"
+          *ngIf="UserDetailsForm.get('RoleGroupId')?.value?.Value == userRole.StaffingAgency">
+          <div class="form-group">
+            <app-textbox [controlName]="'UserAddressLine1'" [label]="'AddressLine1'" [maxCharacters]="200">
+            </app-textbox>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-6"
+          *ngIf="UserDetailsForm.get('RoleGroupId')?.value?.Value == userRole.StaffingAgency">
+          <div class="form-group">
+            <app-textbox [controlName]="'UserAddressLine2'" [label]="'AddressLine2'" [maxCharacters]="200">
+            </app-textbox>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-6"
+          *ngIf="UserDetailsForm.get('RoleGroupId')?.value?.Value == userRole.StaffingAgency">
+          <div class="form-group">
+            <app-textbox [controlName]="'UserCity'" [label]="'City'" [maxCharacters]="100">
+            </app-textbox>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-6"
+          *ngIf="UserDetailsForm.get('RoleGroupId')?.value?.Value == userRole.StaffingAgency">
+          <div class="form-group">
+            <app-kendo-dropdown [list]="inputProperties.homeStatelist" [label]="inputProperties.stateLabel"
+              [isAppend]="inputProperties.isEditMode ? true : false" [controlName]="'UserStateId'"
+              [placeholder]="'-Select-'">
+            </app-kendo-dropdown>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-6"
+          *ngIf="UserDetailsForm.get('RoleGroupId')?.value?.Value == userRole.StaffingAgency">
+          <div class="form-group">
+            <app-kendo-masked-textbox [controlName]="'UserZipCode'" [isZipCode]="true"
+              [label]="inputProperties.zipLabel"
+              [countryId]="UserDetailsForm.get('CountryId')?.value?.Value"></app-kendo-masked-textbox>
+          </div>
+        </div>
+
+
+        <div class="clearfix"></div>
+        <div class="col-sm-6 col-md-6">
+          <div class="form-group">
+            <app-kendo-dropdown [list]="inputProperties.loginList" [label]="'LoginMethod'"
+              [isAppend]="inputProperties.isEditMode ? true : false" [isEditMode]="inputProperties.isEditMode"
+              [controlName]="'LoginMethod'" [placeholder]="'-Select-'" [tooltipVisible]="true"
+              [tooltipTitle]="inputProperties.isEditMode ? 'AuthenticationTypeExplanation':'LoginMethodAddAllUser'"
+              (onChange)="onChangeLoginMethodDropdown($event)" [isRequired]="true">
+            </app-kendo-dropdown>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-6"
+          *ngIf="UserDetailsForm.get('LoginMethod')?.value?.Value && UserDetailsForm.get('Email')?.value">
+          <div class="form-group">
+            <app-textbox [isEditMode]="inputProperties.isEditMode" [controlName]="'UserName'" [label]="'LoginID'"
+              [isEditMode]="(UserDetailsForm.get('LoginMethod')?.value?.Value != xrmCredential.XrmCredentialId || inputProperties.isEditMode) ? true : false"
+              [isRequired]="true" [isSpecialCharacterAllowed]="true" [specialCharactersAllowed]="['-','.','_', '@']"
+              [maxCharacters]="50" (onChangeTextBox)="onChangeUseridTextBox($event)">
+            </app-textbox>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-6" *ngIf="inputProperties.isEditMode">
+          <div class="form-group">
+            <app-kendo-label [label]="'PasswordExpiryDate'" [value]="getDateTransformed(UserDetailsForm.get('PasswordExpiryDate')?.value)">
+            </app-kendo-label>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-6" *ngIf="inputProperties.isEditMode">
+          <div class="form-group">
+            <app-kendo-label [label]="'XRMAcknowledgementStatementAcceptedOn'"
+              [value]="getDateTransformed(UserDetailsForm.get('AcknowledgementAcceptedOnDate')?.value)" >
+            </app-kendo-label>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-6"
+          *ngIf="inputProperties.isEditMode  && UserDetailsForm.get('LoginMethod')?.value?.Value == '1' && !inputProperties.userDetails?.EmailConfirmed">
+          <div class="form-group mt-3">
+            <button type="button" kendoButton fillMode="outline"
+              [disabled]="inputProperties.disableResendActivationLinkButton" themeColor="primary"
+              (click)="reSendActivationLink()">{{'ResendAccountActivationEmail' | translate}}</button>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+
+  </div>
+
+
+
+  <div class="card" *ngIf="UserDetailsForm.get('RoleGroupId')?.value">
+
+    <div class="card__header">
+      <h4 class="card__heading">{{'UserAccountConfiguration' | translate}}</h4>
+    </div>
+
+    <div class="card__body">
+
+      <div class="row">
+        <div class="col-sm-6 col-md-6">
+          <div class="form-group">
+            <app-kendo-dropdown [list]="inputProperties.userRoleList" [label]="'UserRole'"
+              [isAppend]="inputProperties.isEditMode ? true : false" [controlName]="'RoleNo'" [isRequired]="true"
+              [tooltipVisible]="true"
+              [tooltipTitle]="inputProperties.isEditMode ? 'UserRoleEditAllUser' : 'UserRoleAddAllUser'"
+              [placeholder]="'-Select-'">
+            </app-kendo-dropdown>
+          </div>
+        </div>
+        <ng-container *ngIf="UserDetailsForm.get('RoleGroupId')?.value?.Value == userRole.MSP">
+          <div class="col-sm-6 col-md-6">
+            <div class="form-group">
+              <app-kendo-radio-button [controlName]="'IsAllSectorAccessible'"
+                [RadioGroup]="inputProperties.accessSectorRadioGroupList" [label]="'SectorAccessibility'"
+                [tooltipVisible]="true" [tooltipTitle]="'SectorTreeAddEditMSPStaffing'" [name]="'Sector Applicable'"
+                (onChangeRadio)="onChangeSectorRadio($event)">
+              </app-kendo-radio-button>
+              <div *ngIf="!UserDetailsForm.controls['IsAllSectorAccessible']?.value">
+                <div class="tree-bxs">
+                  <app-tree-view [data]="inputProperties.allSectorList" [textField]="'Text'" [isFiltered]="true"
+                    [treeViewType]="'multileveltreeview'" [childrenField]="'items'"
+                    [checkedKeys]="inputProperties.selectedKey" [selectedKeys]="inputProperties.selectedKey"
+                    [selectedItems]="inputProperties.selectedActionList"
+                    [selectedItemsIndex]="inputProperties.selectedKey"
+                    (onCheckedTree)="selectedItems($event)"></app-tree-view>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="UserDetailsForm.get('RoleGroupId')?.value?.Value == userRole.StaffingAgency">
+          <div class="row">
+            <div class="col-sm-6 col-md-6">
+              <div class="form-group">
+                <app-kendo-radio-button [controlName]="'IsAllSectorAccessible'"
+                  [RadioGroup]="inputProperties.accessSectorRadioGroupList" [label]="'SectorAccessibility'"
+                  [tooltipVisible]="true" [tooltipTitle]="'SectorTreeAddEditMSPStaffing'" [name]="'Sector Applicable'"
+                  (onChangeRadio)="onChangeSectorRadio($event)">
+                </app-kendo-radio-button>
+                <div *ngIf="!UserDetailsForm.controls['IsAllSectorAccessible']?.value">
+                  <div class="tree-bxs">
+                    <app-tree-view [data]="inputProperties.allSectorList" [textField]="'Text'" [isFiltered]="true"
+                      [treeViewType]="'multileveltreeview'" [checkedKeys]="inputProperties.selectedKey"
+                      [selectedKeys]="inputProperties.selectedKey" [selectedItems]="inputProperties.selectedActionList"
+                      [selectedItemsIndex]="inputProperties.selectedKey" (onCheckedTree)="selectedItems($event)"
+                      [isViewApprovalCase]="true"></app-tree-view>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-6"
+              *ngIf="UserDetailsForm.get('RoleGroupId')?.value?.Value == userRole.StaffingAgency">
+              <div class="form-group">
+                <app-kendo-radio-button [controlName]="'IsAllLocationAccessible'"
+                  [RadioGroup]="inputProperties.accessLocationRadioGroupList" [label]="'LocationAccessibility'"
+                  [tooltipVisible]="true" [tooltipTitle]="'LocationTreeAddEditStaffing'" [name]="'Location Applicable'"
+                  (onChangeRadio)="onChangeLocationRadio($event)">
+                </app-kendo-radio-button>
+                <div *ngIf="!UserDetailsForm.controls['IsAllLocationAccessible']?.value">
+                  <div class="tree-bxs">
+                    <app-tree-view [data]="inputProperties.locationSectorGroupingList" [isFiltered]="true"
+                      [textField]="'Text'" (onCheckedTree)="selectedItemsLocation($event)"
+                      [checkedKeys]="inputProperties.selectedKeyLocation" [childrenField]="'location'"
+                      [expandedKeys]="inputProperties.expandedKeys" [isViewApprovalCase]="true"
+                      [treeViewType]="'multileveltreeview'"></app-tree-view>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="UserDetailsForm.get('RoleGroupId')?.value?.Value == userRole.Client">
+          <div class="col-sm-6 col-md-6">
+            <div class="form-group">
+              <app-kendo-dropdown [list]="inputProperties.dataAccessList" [label]="'DataAccessRights'"
+                [isAppend]="inputProperties.isEditMode ? true : false" [controlName]="'UserDataAccessRight'"
+                [placeholder]="'-Select-'" [tooltipVisible]="true"
+                [tooltipTitle]="inputProperties.isEditMode ? 'DataAccessRightEditClient' : 'DataAccessRightAddClient'"
+                [isRequired]="true" (onChange)="resetTree($event)">
+              </app-kendo-dropdown>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</form>

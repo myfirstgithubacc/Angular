@@ -1,0 +1,138 @@
+<form [formGroup]="hrdMockForm">
+    <div class="card card-mockup">
+        <!-- Card Header Section-->
+        <div class="card__header">
+            <h4 class="card__heading">{{'Hour Distribution Engine Mockup Screen'}}</h4>
+        </div>
+        <div class="card__body">
+            <div class="row">
+
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <app-kendo-datepicker [label]="'Weekending Date'" [controlName]="'WeekendingDate'"
+                            [isRequired]="true" (onChange)="onDateChange($event)"></app-kendo-datepicker>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <app-kendo-multiselect-dropdown [list]="holidayListofWeek" [label]="'Holidays'"
+                            [controlName]="'WeekHolidayDates'"></app-kendo-multiselect-dropdown>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <app-kendo-dropdown [list]="hoursDistributionRuleData" [label]="'Hour Distribution Rule'"
+                            [controlName]="'RuleId'" [isRequired]="true"
+                            (onChange)="newColum($event)"></app-kendo-dropdown>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <app-numeric-box [label]="'Rest/Meal Break (Additional) Hour'"
+                            [controlName]="'AdditionalHour'"></app-numeric-box>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <app-kendo-datepicker [label]="'Assignment Start date'" [controlName]="'assignmentStartDate'"
+                            [isRequired]="true"></app-kendo-datepicker>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <app-kendo-datepicker [label]="'Assignment End date'" [controlName]="'assignedEndDate'"
+                            [isRequired]="true"></app-kendo-datepicker>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6" *ngIf="isShowWeekOneDate">
+                    <div class="form-group">
+                        <app-kendo-datepicker [label]="'Week 1'" [controlName]="'WeekOneDate'"></app-kendo-datepicker>
+                    </div>
+                </div>
+
+                <!-- <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <app-kendo-datepicker [label]="'Effective date of HDR'" [controlName]="'EffectivedateofHDR'"></app-kendo-datepicker>
+                        </div>
+                    </div> -->
+
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <app-kendo-multiselect-dropdown [list]="holidayListofWeek" [label]="'Non Working Days'"
+                            [controlName]="'WeekNonWorkingDates'"></app-kendo-multiselect-dropdown>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <app-kendo-switch [label]="'Contractor OT Eligibility'" [onLabel]="'Yes'"
+                        [offLabel]="'No'" [controlName]="'IsOtEligible'"></app-kendo-switch>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <app-kendo-switch [label]="'Allow Contractor to enter Hours on Holidays'"
+                        [onLabel]="'Yes'" [offLabel]="'No'" [controlName]="'IsHolidayWorkAllowed'"></app-kendo-switch>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="list-view">
+                        <h4 class="card__body--first__subheading">{{'Weekly Hour Details'}}</h4>
+                        <div class="list-view">
+                            <div class="row">
+                                <div class=" col-sm-12 col-md-12">
+                                    <div class="grid">
+                                        <app-list-view #lsit (formData)="getFormStatus($event)" [columnData]="columns"
+                                            [columnConfigure]="ColumnConfigs" [populatedData]="predefinedFilledData">
+                                        </app-list-view>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-sm-6 col-md-3">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'ST Total Hours'" [value]="calculatedSTTotal"></app-kendo-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'OT Total Hours'" [value]="calculatedOTTotal"></app-kendo-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'DT Total Hours'" [value]="calculatedDTTotal"></app-kendo-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'Total Hours'" [value]="calculatedGrandTotal"></app-kendo-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-footer">
+        <!-- <div class="btn-box btn-box--center">
+            <button type="button" kendoButton (click)="getHours()" themeColor="primary" [innerText]="'Calculate Hours'">
+            </button>
+        </div> -->
+        <div class="button-submit-animation-one">
+            <button type="submit" class="button" [ngClass]="{ 'active': isActive, 'loading': isLoading }" (click)="getHours()">
+                Calculate Hours
+            </button>
+        </div>
+    </div>
+</form>

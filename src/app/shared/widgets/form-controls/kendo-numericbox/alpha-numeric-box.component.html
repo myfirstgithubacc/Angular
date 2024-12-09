@@ -1,0 +1,23 @@
+
+<div *ngIf="isEditMode; then thenTemplateName; else elseTemplateName"></div>
+<ng-template #thenTemplateName>
+  <app-kendo-label [label]="label" [value]="(listControlName ? listControlName.value : formControl.value)" [isNumber]="true" [decimalPlaces]="decimals"
+    [tooltipPosition]="" [isCurrency]="isCurrency" [countryId]="countryId"
+    [labelLocalizeParam]="labelLocalizeParam" 
+    [addOnLabelText]="addOnLabelText" [addOnLabelTextLocalizeParam]="addOnLabelTextLocalizeParam"
+    [tooltipVisible]="tooltipVisible" [tooltipTitle]="tooltipTitle" [tooltipTitleLocalizeParam]="tooltipTitleLocalizeParam">
+  </app-kendo-label>
+</ng-template><ng-template #elseTemplateName>
+  <kendo-formfield>
+    <tooltip-content [tooltipVisible]="tooltipVisible" [tooltipTitle]="tooltipTitle" [label]="label" [isCurrency]="isCurrency"
+      [tooltipPosition]="" [tooltipTitleLocalizeParam]="tooltipTitleLocalizeParam" [isHtmlContent]="isHtmlContent"  [countryId]="countryId"
+      [addOnLabelText]="addOnLabelText" [addOnLabelTextLocalizeParam]="addOnLabelTextLocalizeParam" [isRequired]="isRequired"
+      [labelLocalizeParam]="labelLocalizeParam">
+    </tooltip-content>
+    <kendo-numerictextbox [formControl]="listControlName ? listControlName  : formControl" [readonly]="isReadOnly" [autoCorrect]="isAutoCorrect"
+      [changeValueOnScroll]="false" [placeholder]="placeholder | translate" [format]="formatOptions" [min]="min"
+      [max]="max" [spinners]="false" [maxlength]="maxlength" [decimals]="decimals" [readonly]="isReadOnly" [disabled]="isDisable" (valueChange)="onChange($event)" (blur)="onBlur($event)" (afterValueChanged)="onAfterValueChange($event)">
+    </kendo-numerictextbox>
+    <app-print-error-message [control]="listControlName ? listControlName : formControl"></app-print-error-message>
+  </kendo-formfield>
+</ng-template>

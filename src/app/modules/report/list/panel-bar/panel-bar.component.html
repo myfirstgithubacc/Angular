@@ -1,0 +1,102 @@
+<div class="card__body">
+	<div class="drag-drop-feilds">
+		<kendo-panelbar cssClass="report_panelbar" (select)="onPanelTabChange($event, 'reportLibrary')"
+			[items]="reportLibraryView"></kendo-panelbar>
+		<div class="col-sm-12 col-md-12">
+			<div class="sub__header">
+				<h4 class="card__body--subheading mt-3">{{'Reports' | translate}}</h4>
+				<a *ngIf="isManageFolderPermission" href="javascript:;" class="add__folder_icon" (click)="folderAdd()"
+					kendoTooltip>
+					<img src="./assets/images/add-new-folder__custom-report.svg" width="24px" title="Add New Folder"
+						alt="">
+				</a>
+			</div>
+		</div>
+		<div class="folder__fields">
+			<kendo-panelbar (select)="onPanelTabChange($event, 'report')">
+				<kendo-panelbar-item [selected]="reportView[0].selected" [disabled]="reportView[0].disabled"
+					[id]="reportView[0].id" [expanded]="reportView[0].expanded"
+					[title]="reportView[0].title | translate">
+					<ng-template kendoPanelBarItemTitle>
+						<div class="report__panelbar-item">
+							<p> <xrm-icon class="" name="folder" color="black-color folder-icon" fill="#FCD354"
+									[size]="12"></xrm-icon>{{reportView[0].title | translate}}
+							</p>
+						</div>
+					</ng-template>
+					<kendo-panelbar-item [id]="reportView[0].children[0].id"
+						[selected]="reportView[0].children[0].selected" [disabled]="reportView[0].children[0].disabled"
+						[expanded]="reportView[0].children[0].expanded"
+						[title]="reportView[0].children[0].title| translate">
+						<ng-template kendoPanelBarItemTitle>
+							<div class="report__panelbar-item">
+								<p> <xrm-icon class="" name="folder" color="black-color folder-icon" fill="#FCD354"
+										[size]="12"></xrm-icon>
+									{{reportView[0].children[0].title | translate}}
+								</p>
+							</div>
+						</ng-template>
+					</kendo-panelbar-item>
+				</kendo-panelbar-item>
+				@if(reportView[1].children.length === 0) {
+				<kendo-panelbar-item *ngIf="!Remove" [selected]="reportView[1].selected" [id]="reportView[1].id"
+					[title]="reportView[1].title | translate" [expanded]="reportView[1].expanded">
+					<ng-template kendoPanelBarItemTitle>
+						<div class="report__panelbar-item">
+							<p> <xrm-icon class="" name="folder" color="black-color folder-icon" fill="#FCD354"
+									[size]="12"></xrm-icon> {{reportView[1].title| translate}}
+							</p>
+						</div>
+					</ng-template>
+
+					<ng-template kendoPanelBarContent>
+						<div class="report__panelbar-item record-not-found">
+							{{'GridNoRecordAvailable' | translate}}
+						</div>
+					</ng-template>
+				</kendo-panelbar-item>
+				}
+
+				@else {
+				<kendo-panelbar-item *ngIf="!Remove" [selected]="reportView[1].selected" [id]="reportView[1].id"
+					[title]="reportView[1].title | translate" [expanded]="reportView[1].expanded">
+					<ng-template kendoPanelBarItemTitle>
+						<div class="report__panelbar-item">
+							<p> <xrm-icon class="" name="folder" color="black-color folder-icon" fill="#FCD354"
+									[size]="12"></xrm-icon> {{reportView[1].title| translate}}
+							</p>
+						</div>
+					</ng-template>
+					@for(item of reportView[1].children; let i = $index; track reportView[1].children) {
+					<kendo-panelbar-item [title]="item.title" [selected]="item.selected" [id]="item.id"
+						[content]="item.content">
+						<ng-template kendoPanelBarItemTitle>
+							<div class="report__panelbar-item">
+								<p>
+									<xrm-icon class="" name="folder" color="black-color folder-icon" fill="#FCD354"
+										[size]="12"></xrm-icon>
+									{{item.title}}
+								</p>
+								<div *ngIf="isManageFolderPermission" class="delete__folder_icon">
+									<a href="javascript:;" kendoTooltip>
+										<xrm-icon [name]="'edit-3'" class="sw-bold" [color]="'orange-color'" [size]="14"
+											(click)="folderEdit(item)" title="Edit"></xrm-icon>
+									</a>
+									<a href="javascript:;" kendoTooltip>
+										<xrm-icon [name]="'trash-2'" class="sw-bold" [color]="'red-color'" [size]="14"
+											(click)="folderDelete(item)" title="Delete"></xrm-icon>
+									</a>
+								</div>
+							</div>
+						</ng-template>
+					</kendo-panelbar-item>
+					}
+
+				</kendo-panelbar-item>
+				}
+			</kendo-panelbar>
+		</div>
+	</div>
+	<app-manage-folder [(handleDialogBox)]="openDialog" [isEditMode]="isEditMode" [payload]="payload"
+		(getFolderList)="getFolderList($event)"></app-manage-folder>
+</div>

@@ -1,0 +1,134 @@
+export class assignmentRate{
+	assignmentRateId: number;
+	rateEffectiveDateFrom: string| null;
+	mspFee: any;
+	staffingAgencyMarkup: number;
+	baseWageRate: number;
+	actualStWageRate: number;
+	otWageRate: number;
+	dtWageRate: number;
+	stBillRate: number;
+	otBillRate: number;
+	dtBillRate: number;
+	dtMultiplier: any;
+	otMultiplier: any;
+	staffingAgencySTBillRate: number;
+	staffingAgencyOTBillRate: number;
+	staffingAgencyDTBillRate: number;
+	comments: string;
+}
+export interface assignmentCostAccountingCode {
+	CostAccountingCode: string;
+	Description?: string;
+	description?: string|undefined;
+	assignmentCostAccountingCodeId?: number;
+	CostAccountingCodeId: string | number;
+	EffectiveFrom?: string|undefined|null;
+	EffectiveTo?: string|undefined|null;
+	AssignmentCostAccountingCodeId?: number;
+	assignmentCostAccoutingCodeId?:number;
+	RefCostAccountingCode?: string;
+	Segment1?: string | null;
+	Segment2?: string | null;
+	Segment3?: string | null;
+	Segment4?: string | null;
+	Segment5?: string | null;
+	segment1?: string | null;
+	segment2?: string | null;
+	segment3?: string | null;
+	segment4?: string | null;
+	segment5?: string | null;
+	DefaultCostAccountingCode?: boolean;
+	Disabled?: boolean;
+	isTempSaved?:boolean;
+	EffectiveStartDate?: string|Date;
+	EffectiveEndDate?: string|Date;
+	Text?: string;
+	Value?: string;
+  }
+export interface assignmentShiftDetails {
+	ShiftId?: number|null;
+	ShiftName?: string;
+	Sun: boolean;
+	Mon: boolean;
+	Tue: boolean;
+	Wed: boolean;
+	Thu: boolean;
+	Fri: boolean;
+	Sat: boolean;
+	StartTime?: string|Date;
+	EndTime?: string|Date;
+	CLPWorkingDays?: string;
+	assignmentShiftDetailId?:string|number;
+	AdderOrMultiplierValue?:string|number;
+	ShiftDifferentialMethod?:string|number;
+  }
+export class assignmentDetailsUpdate {
+	assignmentId: number;
+	orgLevel1Id: number;
+	orgLevel2Id: number;
+	orgLevel3Id: number;
+	orgLevel4Id: number;
+	statusId: number;
+	contractorId: number;
+	workLocationId: number;
+	laborCategoryId: number;
+	jobCategoryId: number;
+	shiftId: number;
+	shiftChanged: boolean;
+	positionTitle: string;
+	positionDescription: string;
+	otRateTypeId: number;
+	assignmentStartDate: any;
+	assignmentEndDate: any;
+	estimatedRegularQuantityPerWeek: number;
+	hireCodeId: number;
+	hourDistributionRuleId: number;
+	hourDistributionRuleEffectiveDate: string | null;
+	mealBreakConfigurationId: number;
+	mealBreakConfigurationEffectiveDate: string | null;
+	allowContractorToEnterTime: boolean;
+	poOwnerId: number;
+	NewPONumber: any;
+	terminatedRevisionId: string;
+	primaryManagerId: any;
+	alternateManagerId: any;
+	securityClearanceId: number;
+	requestingManagerId: number;
+	comments: string;
+	assignmentRate: assignmentRate;
+	assignmentCostAccountingCodes: assignmentCostAccountingCode[];
+	assignmentShiftDetail: assignmentShiftDetails;
+	dmsFieldRecords: any;
+	udfFieldRecords: [];
+	complianceDetail:any;
+	isDNRRequested: boolean;
+	DnrOptions: number | null;
+	revisedRatedate:string | null;
+	modifyPOApprovedAmountBasedOnRevisedRates:boolean;
+	modifyPObasedOnNewEndDate:boolean;
+	terminationReasonId: string;
+	terminatedAssignment: boolean;
+	radioDNR: boolean;
+	staffingAgencyList: string;
+	revisedPOFunds:any;
+	revisedFundByRateChange:any;
+	revisedFundByEndDateChange:any;
+	approvalDetails:any;
+	backfillRequired:boolean;
+	startDateforBackfillPosition:any;
+	endDateforBackfillPosition:any;
+	notifyToStaffingAgency:any;
+	poAdjustmentType:any;
+	poAdjust: boolean;
+	assignmentShiftDetailId:any;
+	rateModified: boolean;
+	revisedEndDate: boolean;
+	OTEligibility: boolean;
+	NewPOEffectiveFromDate: any;
+
+	constructor(init?: Partial<assignmentDetailsUpdate>) {
+		Object.assign(this, init);
+	}
+}
+

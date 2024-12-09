@@ -1,0 +1,103 @@
+<ng-container *ngIf="isDrugScreen || isBackgroundCheck">
+    <form [formGroup]="onboardingForm">
+        <div class="card">
+
+            <div class="card__header">
+                <h4 class="card__heading">{{'OnboardingRequirements' | translate}}</h4>
+                <div class="card__header-icon">
+                </div>
+            </div>
+
+            <div class="card__body">
+                <div class="row">
+                    <div *ngIf="isPendingResultSection && isPendingResult" class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <app-kendo-switch [controlName]="'pendingResult'" [label]="'Pending Result'"
+                                [onLabel]="'Yes'" [offLabel]="'No'" [isEditMode]="!isEditMode"
+                                (onChangeSwitch)="pendingResultModel()"></app-kendo-switch>
+                        </div>
+                    </div>
+
+                    <ng-container *ngIf="isDrugScreen">
+                        <div class="col-sm-12 col-md-12">
+                            <h4
+                                [ngClass]="isPendingResultSection && isPendingResult ? 'card__body--subheading' : 'card__body--subheading mt-0'">
+                                {{'DrugScreenId' | translate}}</h4>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-radio-button [controlName]="'drugScreenResultId'"
+                                    [RadioGroup]="dynamicRadioGroupArray" [label]="'DrugScreenResult'"
+                                    (onChangeRadio)="onDrugResultChange($event)" [name]="'DrugScreen'"
+                                    [isEditMode]="isEditMode" [isRequired]="true">
+                                </app-kendo-radio-button>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6"
+                            *ngIf="(onboardingForm?.get('drugScreenResultId')?.value == 88) || (onboardingForm?.get('drugScreenResultId')?.value == 198)">
+                            <div class="form-group">
+                                <app-kendo-datepicker [label]="'DrugResultDate'" [controlName]="'drugResultDate'"
+                                    [isEditMode]="isEditMode" [isRequired]="true"></app-kendo-datepicker>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="isBackgroundCheck">
+                        <div class="col-sm-12 col-md-12">
+                            <h4 class="card__body--subheading">{{'BackgroundChecksTitle' | translate}}</h4>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-radio-button [controlName]="'backgroundCheckScreen'"
+                                    [RadioGroup]="dymamicBackgroundCheckRadioGroupArray" [label]="'BackgroundCheck'"
+                                    (onChangeRadio)="onBackgroundCheckChange($event)" [name]="'backgroundCheckScreen'"
+                                    [isEditMode]="isEditMode" [isRequired]="true">
+                                </app-kendo-radio-button>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group"
+                                *ngIf="(onboardingForm?.get('backgroundCheckScreen')?.value == 217)">
+                                <app-kendo-datepicker [label]="'BackgroundResultDate'"
+                                    [controlName]="'backgroundResultDate'" [isEditMode]="isEditMode"
+                                    [isRequired]="true"></app-kendo-datepicker>
+                            </div>
+                        </div>
+
+                        <div formArrayName="sectorBackgroundsArray">
+                            <ng-container
+                                *ngIf="(onboardingForm?.get('backgroundCheckScreen')?.value == 217) || (onboardingForm?.get('backgroundCheckScreen')?.value == 211)">
+                                <ng-container *ngFor="let time of fa.controls; let i = index; trackBy: trackByFn">
+                                    <div [formGroupName]="i" class="row">
+                                        <div class="col-md-6 col-sm-6" *ngFor="let row of rowsInfo; let index = index">
+                                            <div class="form-group">
+                                                <app-kendo-label *ngIf="isViewMode"
+                                                    [label]="row.BackgroundItemLocalizedKey | translate"
+                                                    [value]="row.ComplianceCheckValue ? 'Yes': 'No'"></app-kendo-label>
+
+                                                <kendo-label *ngIf="!isViewMode"
+                                                    [text]="(row.BackgroundItemLocalizedKey | translate )">
+                                                    <xrm-icon name="star" class="required"></xrm-icon>
+                                                    <kendo-switch [onLabel]="'Yes'" [offLabel]="'No'"
+                                                        formControlName="{{ row.SectorComplianceItemId }}">
+                                                    </kendo-switch>
+                                                </kendo-label>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                    </ng-container>
+
+                </div>
+            </div>
+
+        </div>
+    </form>
+</ng-container>

@@ -1,0 +1,11 @@
+<form [formGroup]="orgStructureForm">
+  <div class="card__header" id="organization-structure">
+    <h4 class="card__heading">{{'OrganizationStructure' | translate }}</h4>
+  </div>
+  <br>
+  <div class="card__body">
+    <app-list-view #list (listData)="getData($event)" (formData)="getFormStatus($event)" [columnData]="column"
+      [columnConfigure]="columnConfiguration" [populatedData]="populatedData" (onChangeSwitch)="switchEvent($event)">
+    </app-list-view>
+  </div>
+</form>

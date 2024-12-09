@@ -1,0 +1,48 @@
+<div *ngIf="isRendered">
+  <div *ngIf="isEditMode; then thenTemplateName; else elseTemplateName"></div>
+</div>
+<ng-template #thenTemplateName>
+  <kendo-formfield>
+    <tooltip-content [tooltipVisible]="tooltipVisible" [tooltipTitle]="tooltipTitle" [label]="label"
+      [addOnLabelText]="addOnLabelText" [addOnLabelTextLocalizeParam]="addOnLabelTextLocalizeParam" [tooltipPosition]=""
+      [tooltipTitleLocalizeParam]="tooltipTitleLocalizeParam" [isRequired]="isRequired"
+      [labelLocalizeParam]="labelLocalizeParam" [isHtmlContent]="isHtmlContent">
+    </tooltip-content>
+
+    <div class="group-input-field">
+      <div *ngIf="phoneMask!=null">
+        <kendo-maskedtextbox [style.width.px]="170" [formControl]="phoneControl" [mask]="phoneMask"
+          [maskValidation]="true" (valueChange)="onValueChangePhone($event)">
+        </kendo-maskedtextbox>
+        <div class="row">
+          <app-print-error-message [control]="phoneControl"></app-print-error-message>
+        </div>
+      </div>
+
+      <div *ngIf="isExtension && phoneExtMask!=null">
+        <kendo-maskedtextbox [style.width.px]="70" [maskValidation]="isMaskValidation" [formControl]="phoneExtControl"
+          [mask]="phoneExtMask" (valueChange)="onValueChangePhoneExt($event)">
+        </kendo-maskedtextbox>
+        <div class="row">
+          <app-print-error-message [control]="phoneExtControl"></app-print-error-message>
+        </div>
+      </div>
+
+    </div>
+    <div class="group-input-field">
+
+
+    </div>
+
+
+  </kendo-formfield>
+</ng-template>
+
+<ng-template #elseTemplateName>
+  <app-kendo-label [countryId]="countryId ? +countryId : null" [isExtension]="isExtension" [label]="label" [isPhone]="true"
+    [value]="phoneControl.value" [extValue]="phoneExtControl.value" [tooltipPosition]=""
+    [labelLocalizeParam]="labelLocalizeParam" [addOnLabelText]="addOnLabelText"
+    [addOnLabelTextLocalizeParam]="addOnLabelTextLocalizeParam" [tooltipVisible]="tooltipVisible"
+    [tooltipTitle]="tooltipTitle" [tooltipTitleLocalizeParam]="tooltipTitleLocalizeParam">
+  </app-kendo-label>
+</ng-template>

@@ -1,0 +1,235 @@
+<div class="app-content__body">
+    <form [formGroup]="BasicDetailsForm">
+
+        <div class="card">
+
+            <div class="card__header">
+                <h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+                <div class="card__header-icon">
+                </div>
+            </div>
+
+            <div class="card__body">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label 
+                                [label]="'JobName'" 
+                                [value]="jobDetails.JobName">
+                            </app-kendo-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <app-kendo-label 
+                                [label]="'Description'"
+                                [value]="jobDetails.JobDetails">
+                            </app-kendo-label>
+                        </div>
+                    </div>    
+                    <div class="col-sm-12 col-md-12">
+                      <div class="form-group">
+                          <app-kendo-switch [controlName]="'isEmailReq'" [label]="'IsEmailRequired'" 
+                          [onLabel]="'Yes'" [offLabel]="'No'" (onChangeSwitch)="isEmailReqSwitch($event)">
+                          </app-kendo-switch>
+                      </div>
+                  </div>  
+                  <div class="col-sm-6 col-md-6" *ngIf="isEmailReq">
+                    <div class="form-group">
+                        <app-textbox [controlName]="'SuccessEmail'" [label]="'SuccessEmail'"
+                            [isSpecialCharacterAllowed]="true" [maxCharacters]="150" [isSpecialCharacterAllowed]="true"
+                            [specialCharactersAllowed]="['-', '_', '.', ',', '@']"                          
+                            (onBlurTextBox)="onChangeTextBox('SuccessEmail')" (onChangeTextBox)="savebtnEnable()">
+                    </app-textbox>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6" *ngIf="isEmailReq">
+                  <div class="form-group">
+                      <app-textbox [controlName]="'ExceptionEmail'" [label]="'ExceptionEmail'"
+                          [isSpecialCharacterAllowed]="true" [maxCharacters]="150" 
+                          [isSpecialCharacterAllowed]="true"
+						  [specialCharactersAllowed]="['-', '_', '.', ',', '@']"
+                          (onBlurTextBox)="onChangeTextBox('ExceptionEmail')" (onChangeTextBox)="savebtnEnable()">
+                  </app-textbox>
+                  </div>
+              </div>       
+                </div>
+            </div>
+        </div>
+        </form>
+
+        <form [formGroup]="AddEditAutoProcessForm">
+        <div class="card">
+            <div class="card__header">
+                <h4 class="card__heading">{{'Configuration'|translate}}</h4>
+                <div class="card__header-icon">
+                    <a class="color-primary" href="javascript:;" data-bs-toggle="offcanvas"
+                    data-bs-target="#executionHistory" (click)="executionHistoryData()">{{'ExecutionHistory'|translate}}</a>
+                </div>
+            </div>
+
+            <div class="card__body">
+                <div class="row">
+                  <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                      <app-kendo-dropdown 
+                            [label]="'SchedulingType'" 
+                            [isRequired]="true"
+                            [list]="schedulingType" 
+                            [controlName]="'JobIntervalType'"
+                            [placeholder]="'DdlSelect'" 
+                            [isEditMode]="isEditMode"
+                            (onChange)="triggerRequired($event)">
+                      </app-kendo-dropdown>
+                  </div>
+                  </div>
+  
+                  <div class="clearfix"></div>
+ 
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-datepicker 
+                                [label]="'StartDate'"
+                                [controlName]="'JobStartDate'"
+                                [isRequired]="true"
+                                (onChange)="checkEndDateValidity($event)">
+                            </app-kendo-datepicker>
+                        </div>
+                    </div>
+
+                     <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-datepicker 
+                                [label]="'EndDate'" 
+                                [controlName]="'JobEndDate'"
+                                [isRequired]="true"
+                                (onChange)="checkEndDateValidity($event)">
+                            </app-kendo-datepicker>
+                        </div>
+                    </div>
+ 
+                    <div class="col-sm-6 col-md-6" *ngIf="triggerDayInterval">
+                        <div class="form-group">
+                            <app-numeric-box 
+                                [label]="'DayIntervalRecurEvery'"
+                                [controlName]="'DaysInterval'"
+                                [isRequired]="true" [maxlength]="4">
+                            </app-numeric-box>
+                        </div>
+                    </div>
+    
+                    <div class="col-sm-6 col-md-6" *ngIf="selectWeekDay">
+                        <app-weekday-time-picker #weekdayPicker
+                            [label]="'Scheduled On'"  
+                            [dayInfo]="daysInfo"
+                            [isRequired]="true"
+                            (daySelectionChanged)="handleDaySelectionChange($event)"
+                            >
+                        </app-weekday-time-picker>
+                    </div>
+
+                    <div class="col-sm-6 col-md-6" *ngIf="triggerMonth">
+                        <div class="form-group">
+                            <app-kendo-multiselect-dropdown 
+                            [label]="'ScheduledOn'"
+                            [controlName]="'JobInterval'"
+                            [isRequired]="true"
+                            [list]="monthdays">
+                        </app-kendo-multiselect-dropdown>
+                        </div>
+                    </div>
+             
+                    <div class="col-sm-6 col-md-6" *ngIf="triggerStartTime">
+                        <div class="form-group">
+                            <app-kendo-timepicker  
+                                [controlName]="'JobStartTime'" 
+                                [label]="'ScheduledTime'"
+                                [isRequired]="true">
+                            </app-kendo-timepicker>
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+                    
+                    <div class="page-footer">
+                      <div class="col-sm-12 col-md-12 text-right">
+                        <div class="form-group" *ngIf="!editListItems">
+                          <button type="button" kendoButton fillMode="outline" themeColor="primary" 
+                          (click)="addToList()"
+                          >{{'AddToList'| translate}}
+                        </button>
+                        </div>
+                        <div class="form-group" *ngIf="editListItems">
+                          <button kendoButton themeColor="primary" class="copy__btn"
+                          (click)="EditList()" [disabled]="this.AddEditAutoProcessForm.pristine">{{'Update'|translate}}</button>
+                        </div>
+                      </div>
+                    </div>
+            
+                  <div class="list-view">
+                    <h4 class="card__body--first__subheading">{{'TriggerConfigurationDetails' | translate}}</h4>     
+                    <grid-view  class="trigger"
+                    [entityId]="76" 
+                    [gridData]="triggersDetailsData"
+                    [showTabs]="false"
+                    [isInternalSearch]='true' 
+                    [isServerSidePagingEnable]="false"
+                    [isApiGateway]="false"
+                    [kendoGridSelectedBy]="'Ukey'" 
+                    [pageSize]="pageSize" 
+                    [isExportHide]="true"
+                    [actionItemCategoryField]="'_Disabled'"
+                    [columnOptions]="triggerColumnOptions" 
+                    [actionSet]="actionSet" 
+                    [tabOptions]="tabOptions" 
+                    [fileName]="'generateFileName'"
+                    >
+                  </grid-view>
+                    
+                  </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+        <div class="page-footer">
+            <div class="btn-box btn-box--center">
+                <button type="button" kendoButton fillMode="outline" themeColor="primary"
+                    routerLink="/xrm/master/auto-process/list" (click)="onCancelClick()">{{'Cancel'|translate}}
+                </button>
+                <button type="button" class="save" kendoButton (click)="submitForm()" appFocusOnError
+                [formName]="BasicDetailsForm"
+                    themeColor="primary" [disabled]="!saveBtnEnable">{{'Save'|translate}}
+                </button>
+            </div>
+        </div>
+
+</div>
+
+<div class="offcanvas offcanvas-end execution-popup" tabindex="-1" id="executionHistory"
+    aria-labelledby="executionHistory">
+    <form [formGroup]="executionForm">
+        <div class="offcanvas-header">
+            <h5>{{'ExecutionHistory'|translate}}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+            </button>
+        </div>
+        <div class="offcanvas-body">
+            <grid-view  class="trigger"
+            [gridData]="executionDetails"
+            [showTabs]="false"
+            [isInternalSearch]='true' 
+            [isExportHide]="true"
+            [isServerSidePagingEnable]="false"
+            [isApiGateway]="false"
+            [pageSize]="pageSize" 
+            [tabOptions]="tabOptions" 
+            [columnOptions]="executionHisCO" 
+            [isActionColumnVisible]="false"
+            [tabOptions]="tabOptions" 
+            [isExportHide]="true"
+            >
+            </grid-view>
+        </div>  
+    </form>     
+</div>

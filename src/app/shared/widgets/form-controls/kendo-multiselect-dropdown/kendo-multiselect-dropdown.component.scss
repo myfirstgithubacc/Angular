@@ -1,0 +1,58 @@
+.k-chip-md, .k-chip-actions .k-icon.k-i-x-circle {
+	font-size: 12px;
+}
+.k-chip-solid-base {
+    background-color: transparent;
+    border: 1px solid #f0f0f0;
+	padding: 6px 6px;
+    border-radius: 4px;
+}
+.k-chip .k-i-x-circle::before {
+    content: "\e11b";
+}
+kendo-multiselect.k-multiselect {
+	position: relative;
+}
+.font-reduced li {
+	font-size: var(--base-font-size)
+}
+kendo-multiselect {
+	&.k-multiselect {
+		&:before {
+			position: absolute;
+			right: 8px;
+			top: 50%;
+			transform: translateY(-50%);
+			background: url('../../../../../assets/images/add-list.png') transparent no-repeat;
+			background-size: 20px;
+			width: 20px;
+			height: 20px;
+			color: #666;
+			content: "";
+			cursor: pointer;
+			z-index: 2;
+		}
+	}
+}
+.search-maltiselect {
+	kendo-multiselect {
+		&.k-multiselect {
+			&:before {
+				position: absolute;
+				right: 8px;
+				top: 50%;
+				transform: translateY(-50%);
+				background: url('../../../../../assets/images/add-search-list.png') transparent no-repeat;
+				background-size: 20px;
+				width: 20px;
+				height: 20px;
+				color: #666;
+				content: "";
+			}
+		}
+	}
+}
+.k-list-item.k-selected, .k-selected.k-list-optionlabel, .k-list-item.k-selected:hover, .k-selected.k-list-optionlabel:hover {
+	background: var(--color-primary-light);
+	color: var(--color-primary);
+}

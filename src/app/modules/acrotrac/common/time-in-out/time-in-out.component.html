@@ -1,0 +1,195 @@
+
+<div class="offcanvas offcanvas-end list-sidebar show" tabindex="-1" *ngIf="isShow">
+    <form [formGroup]="TimeInOutForm">
+        <div class="offcanvas-header">
+            <h5>{{'InOutDetails' | translate}}</h5>
+            <button type="button" class="btn-close" (click)="cancel()"
+                aria-label="Close"></button>
+        </div>
+
+        <div class="offcanvas-body">
+            <div class="master-search__filter-box">
+                <div class="card time_in_out-screen">
+                    <!-- Card Header Section-->
+                    <div class="card__header">
+                        <h4 class="card__heading">
+                            <xrm-icon name="calendar" color="light-blue-color" [size]="18"></xrm-icon> {{ selectedDate |
+                            date: 'EEE, M/d' }}
+                        </h4>
+                        <div class="card__header-icon">
+                            <a href="javascript:;" data-bs-target="#demo" data-bs-slide="prev"
+                                [class.disabled]="isPrevDisabled">
+                                    <xrm-icon name="chevron-left" (click)="prev(selectedDate)" [size]="15" color="dark-blue-color"
+                                    class="sw-bolder"></xrm-icon>
+                                </a>
+                            <a href="javascript:;" data-bs-target="#demo" data-bs-slide="next"
+                                [class.disabled]="isNextDisabled">
+                                    <xrm-icon name="chevron-right" (click)="next(selectedDate)" [size]="15" color="dark-blue-color"
+                                    class="sw-bolder"></xrm-icon>
+                                </a>
+                        </div>
+                    </div>
+                    <!-- End Card Header Section-->
+                    <!-- Card Body Section-->
+                    <div class="card__body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group time-select">
+                                    <div class="time-select__input">
+                                        <app-kendo-timepicker [controlName]="'EntryTimeIn'" [label]="'TimeIn'"
+                                        (blur)="resetFormExceptEntryTimes($event);totalHoursCalculate(); calculateTotalBillableHours();calculatePenaltyHours(this.TimeInOutForm.get('IsRestBreakUsed')?.value)"
+                                            (valueChange)=" resetFormExceptEntryTimes($event);totalHoursCalculate(); calculateTotalBillableHours();calculatePenaltyHours(this.TimeInOutForm.get('IsRestBreakUsed')?.value)">
+                                        </app-kendo-timepicker>
+                                    </div>
+                                    <div class="time-select__input">
+                                        <app-kendo-timepicker [controlName]="'EntryTimeOut'" [label]="'TimeOut'"
+                                        (blur)=" resetFormExceptEntryTimes($event);totalHoursCalculate();calculateTotalBillableHours();calculatePenaltyHours(this.TimeInOutForm.get('IsRestBreakUsed')?.value)"
+                                            (valueChange)=" resetFormExceptEntryTimes($event);totalHoursCalculate();calculateTotalBillableHours();calculatePenaltyHours(this.TimeInOutForm.get('IsRestBreakUsed')?.value)">
+                                        </app-kendo-timepicker>
+                                    </div>
+                                    <div class="time-select__input" *ngIf="!isManual">
+                                        <kendo-label text="" kendoTooltip>
+                                            <button type="button" kendoButton fillMode="outline" themeColor="primary"
+                                                class="time-copy-button" (click)="copy()" title="Copy previous day">
+                                                <xrm-icon [name]="'copy'" [color]="'dark-blue-color'"
+                                                    [size]="10"></xrm-icon> {{'Copy' | translate}}</button>
+                                        </kendo-label>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-12" *ngIf="mealBreakConfigurationData.RestBreakPenalty">
+                                <div class="form-group">
+                                    <app-kendo-switch [label]="'RestBreaksTaken'" [controlName]="'IsRestBreakUsed'"
+                                        [onLabel]="'Yes'" [offLabel]="'No'"
+                                        (onChangeSwitch)="takeRestBreak($event,'IsRestBreakUsed');calculatePenaltyHours(this.TimeInOutForm.get('IsRestBreakUsed')?.value)"></app-kendo-switch>
+                                </div>
+                            </div>
+                            <div class="col-sm-12"
+                                *ngIf="!mealBreakConfigurationData.MealBreakPenalty && !mealBreakConfigurationData.AllowInOutMealBreak">
+                                <div class="form-group">
+                                    <app-kendo-switch [label]="'MealBreakTaken'" [controlName]="'IsMealBreakUsed'"
+                                        [onLabel]="'Yes'" [offLabel]="'No'"
+                                        (onChangeSwitch)="changeMealBreakValue($event);takeRestBreak($event,'IsMealBreakUsed');calculateTotalBillableHours();calculatePenaltyHours(this.TimeInOutForm.get('IsRestBreakUsed')?.value);"></app-kendo-switch>
+                                </div>
+                            </div>
+                            <ng-container formArrayName="MealBreakDetails"
+                                *ngIf="mealBreakConfigurationData.AllowInOutMealBreak">
+                                <div *ngFor="let break of mealBreakDetails.controls; let i = index" [formGroupName]="i">
+                                    <div class="col-sm-12" *ngIf="!mealBreakConfigurationData.MealBreakPenalty">
+                                        <div class="form-group">
+                                            <app-kendo-switch
+                                                *ngIf="i==0 || ( i>0 && getMealBreakControlValue(i-1,'MealSwitch'))"
+                                                [label]="mealBreakNumber[i]"
+                                                [listControlName]="getMealBreakControlName(i,'MealSwitch')"
+                                                [onLabel]="'Yes'"
+                                                (onChangeSwitch)="calculateTotalBillableHours();calculatePenaltyHours(this.TimeInOutForm.get('IsRestBreakUsed')?.value)"
+                                                [offLabel]="'No'">
+                                            </app-kendo-switch>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12" *ngIf="mealBreakConfigurationData.MealBreakPenalty">
+                                        <div class="form-group">
+
+                                            <app-kendo-radio-button
+                                                [listControlName]="getMealBreakControlName(i,'MealBreakTypeId')"
+                                                [RadioGroup]="mealBreakType" [label]="mealBreakNumber[i]"
+                                                [name]="i.toString()"
+                                                (onChangeRadio)="checkMealTakenTypes($event,i);calculateTotalBillableHours();calculatePenaltyHours(this.TimeInOutForm.get('IsRestBreakUsed')?.value)">
+                                            </app-kendo-radio-button>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12"
+                                        *ngIf="(!mealBreakConfigurationData.MealBreakPenalty && getMealBreakControlValue(i,'MealSwitch')) || (mealBreakConfigurationData.MealBreakPenalty && (checkMealBreakType(i,'MealBreakTypeId')))">
+                                        <div class="form-group time-select meal_break-time">
+                                            <div class="time-select__input">
+                                                <app-kendo-timepicker
+                                                    [listControlName]="getMealBreakControlName(i,'MealIn')"
+                                                    [label]="'TimeIn'"
+                                                    (blur)="onMealTimeChange(i,'MealIn',$event);calculateTotalMealInandMealOut(i);calculatePenaltyHours(this.TimeInOutForm.get('IsRestBreakUsed')?.value);calculateTotalBillableHours()"
+                                                    (valueChange)="onMealTimeChange(i,'MealIn',$event);calculateTotalMealInandMealOut(i);calculatePenaltyHours(this.TimeInOutForm.get('IsRestBreakUsed')?.value);calculateTotalBillableHours()">
+                                                </app-kendo-timepicker>
+                                            </div>
+                                            <div class="time-select__input">
+                                                <app-kendo-timepicker
+                                                    [listControlName]="getMealBreakControlName(i,'MealOut')"
+                                                    [label]="'TimeOut'"
+                                                    (blur)="onMealTimeChange(i,'MealOut',$event);calculateTotalMealInandMealOut(i);calculatePenaltyHours(this.TimeInOutForm.get('IsRestBreakUsed')?.value);calculateTotalBillableHours()"
+                                                    (valueChange)="onMealTimeChange(i,'MealOut',$event);calculateTotalMealInandMealOut(i);calculatePenaltyHours(this.TimeInOutForm.get('IsRestBreakUsed')?.value);calculateTotalBillableHours()">
+                                                </app-kendo-timepicker>
+                                            </div>
+                                            <div class="time-select__input">
+                                                <app-numeric-box
+                                                    [listControlName]="getMealBreakControlName(i,'MealBreakTime')"
+                                                    [label]="'Minutes'" [max]="99.99" [min]="0"
+                                                    [className]="'total-minuts'" [isEditMode]="true"></app-numeric-box>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <div class="col-md-12 mt-2">
+                                <div class="form-group inline-form">
+                                    <app-numeric-box [controlName]="'TotalMealBreakHours'" [max]="99.99"
+                                        [min]="0" [label]="'TotalMealBreakInMin'"
+                                        [isEditMode]="!TimeInOutForm.get('IsMealBreakUsed')?.value"
+                                        (afterValueChanged)="calculateMealBreakUsedMinutes($event)">
+                                    </app-numeric-box>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group inline-form">
+                                    <app-numeric-box [controlName]="'TotalBillableHours'" [decimals]="2" [max]="99.99"
+                                        [isEditMode]="true" [min]="0" [label]="'TotalBillableHours'"
+                                        [className]="'total-minuts'">
+                                    </app-numeric-box>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group inline-form" *ngIf="mealBreakConfigurationData.MealBreakPenalty || mealBreakConfigurationData.RestBreakPenalty">
+                                    <app-numeric-box [controlName]="'PenaltyHours'" [decimals]="2" [max]="99.99"
+                                        [isEditMode]="true" [min]="0" [label]="'PenaltyHours'"
+                                        [className]="'total-minuts'">
+                                    </app-numeric-box>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="offcanvas-footer">
+            <div class="col-md-12">
+                <div class="master-search__button-box">
+                    <div class="button-group">
+                        <button type="button" aria-label="Close" kendoButton
+                            themeColor="primary" (click)="ApplyFilter()">{{'Apply' | translate}}</button>
+                        <button type="button" aria-label="Close" kendoButton
+                            themeColor="primary" fillMode="outline" (click)="ClearTimeInOut()">{{'Clear' | translate}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Save Information dialog -->
+      
+        <!-- Save Information dialog -->
+    </form>
+</div>
+<kendo-dialog class="dailog dailog-center" (close)="closeDialog()" *ngIf="saveData" [width]="420">
+    <a href="javascript:;" class="close-dailog" (click)="closeDialog()"><i class="fa-solid fa-xmark"></i></a>
+    <i class="fa-solid fa-circle-question text-primary dailog__icon"></i>
+    <h3 class="dailog__title">{{'UpdateConfirmation' | translate}}</h3>
+    <div class="dailog__button">
+        <button type="button" (click)="saveDialogChanges()" kendoButton fillMode="solid"
+            themeColor="primary">{{'Yessave'| translate}}</button>
+        <button type="button" kendoButton fillMode="outline" themeColor="primary"
+            (click)="closeDialog()">{{'Nosave' | translate}}</button>
+    </div>
+</kendo-dialog>
+<!-- End day Details sidebar -->
+<div class="offcanvas-backdrop fade show" *ngIf="isShow"></div>

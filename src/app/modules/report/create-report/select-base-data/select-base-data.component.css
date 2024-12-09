@@ -1,0 +1,15 @@
+.under-development-page {
+    text-align: center;
+    font-size: var(--base-font-size);
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+}
+ 
+.k-tabstrip-content:focus {
+    outline: none;
+}
+
+.list-group-item.odd {
+    background: #e9ebf240;
+}

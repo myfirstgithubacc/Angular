@@ -1,0 +1,66 @@
+<div class="notification-view">
+    <div class="app-content__body">
+        <!-- Card Section Start -->
+        <div class="card">
+            <!-- Card Header Start -->
+            <div class="card__header">
+                <h4 class="card__heading">{{this.emailContent.Subject}}</h4>
+                <div class="card__header-icon">
+                    <xrm-icon [name]="'calendar-clock'" [color]="'gray-color'" [size]="14"></xrm-icon>
+                    {{dateTimeTransform(this.emailContent.ReceivedOn)}}
+                </div>
+            </div>
+            <!-- Card Header End -->
+
+            <!-- Card Body Start -->
+            <div class="card__body">   
+                <!-- Text Box Start -->            
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group">   
+                        <div class="text-muted">From: {{this.emailContent.From}}</div>                  
+                        <div class="text-muted">To: {{this.emailContent.To}}</div>
+                        <div class="text-muted">Cc: {{this.emailContent.Cc}}</div>
+                    </div>
+                </div>
+                <!-- Text Box End -->
+                <div *ngIf="emailAttachments.length > 0 && emailAttachments!==null" >
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">   
+                        <div class="recent_messages_attachment">
+                            <div class="attachment-file2">
+                                <a *ngFor="let attachment of emailAttachments" href="javascript:;" kendoButton title="Download" (click)="downloadRecords(attachment)">
+                                    <div class="file-icon">
+                                        <img [src]="getIconUrl(attachment.FileExtension)" [alt]="getAltText(attachment.FileExtension)" height="26">
+                                    </div>
+                                    <div class="file-type">
+                                        <span>{{attachment.FileName}}</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <div class="recent_messages__body">
+                            <div [innerHTML]="this.emailContent.Body | safe:'html'"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Text Box End -->
+
+            </div>
+            <!-- Card Body End -->
+        </div>
+        <!-- Card Section End -->
+
+        <!--  Page Footer Section-->
+        <div class="page-footer">
+            <div class="btn-box btn-box--center">
+                <app-kendo-button [buttonName]="'Back'" (click)="navigateToList()"></app-kendo-button>
+            </div>
+        </div>
+        <!-- End Footer Section-->
+    </div>
+</div>

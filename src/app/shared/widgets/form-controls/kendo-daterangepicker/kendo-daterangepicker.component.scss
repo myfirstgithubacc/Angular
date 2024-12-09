@@ -1,0 +1,54 @@
+:host {
+	--dynamic-color: #000;
+	::ng-deep {
+		.k-input-inner {
+			color: var(--dynamic-color) !important;
+		}
+		.custom-highlight-light {
+			color: #bfbfbf !important;
+		}
+		.custom-highlight-dark {
+			color: #383c40 !important;
+		}
+	}
+}
+:host ::ng-deep .k-input-md .k-input-inner, .k-picker-md .k-input-inner {
+	color: var(--dynamic-color) !important;
+}
+.k-calendar .k-calendar-td.k-selected .k-calendar-cell-inner,
+.k-calendar .k-calendar-td.k-selected .k-link {
+	border-color: rgba(0, 0, 0, 0.08);
+	color: white;
+	background-color: var(--color-primary);
+}
+.k-calendar .k-calendar-td.k-selected:hover .k-calendar-cell-inner,
+.k-calendar .k-calendar-td.k-selected:hover .k-link,
+.k-calendar .k-calendar-td.k-selected.k-hover .k-calendar-cell-inner,
+.k-calendar .k-calendar-td.k-selected.k-hover .k-link {
+	color: white;
+	background-color: var(--color-primary);
+}
+.k-calendar {
+	.k-calendar-view {
+		.k-today {
+			color: var(--color-primary);
+		}
+	}
+}
+.k-calendar .k-nav-today,
+.k-calendar .k-calendar-nav-today {
+	color: var(--color-primary);
+}
+.inner-wrapper .k-calendar,
+.inner-wrapper .k-calendar table thead,
+.inner-wrapper .k-calendar,
+.inner-wrapper .k-calendar table td {
+	color: var(--color-primary);
+}
+.inner-wrapper .k-calendar,
+.inner-wrapper .k-calendar table {
+	background-color: var(--color-primary);
+}
+:host ::ng-deep  .k-floating-label-container.k-invalid>.k-floating-label {
+    color: #000000 !important; 
+}

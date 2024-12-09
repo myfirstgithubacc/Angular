@@ -1,0 +1,48 @@
+<form [formGroup]="recruiterDetailForm">
+    <kendo-expansionpanel [expanded]="isCardVisible" (expandedChange)="onExpandedCollapse($event)" class="card">
+        <ng-template kendoExpansionPanelTitleDirective>
+            <div (click)="$event.stopPropagation()">
+                <h4 class="card__heading">{{'RecruiterDetails' | translate}}</h4>
+            </div>
+        </ng-template>
+        <div class="card__body">
+            <div class="row">
+                <!-- Text Box Start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-dropdown [isRequired]="true" [label]="getLocaliseMessage('RecruiterName')"
+                            [list]="recruiterNameList" [controlName]="'recruiterName'"
+                            [placeholder]="'-Select-'">
+                        </app-kendo-dropdown>
+                    </div>
+                </div>
+                <!-- Text Box End -->
+      
+                <!-- Text Box Start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-12">
+                                <app-kendo-phone [fieldName]="'RecruiterPhoneNumber'" [countryId]="countryId"
+                                        [xrmEntityId]="entityId" [label]="getLocaliseMessage('RecruiterPhoneNumber')" [phoneControlName]="'recruiterPhoneNumber'"
+                                        [isExtension]="true" [countryId]="1" [isMaskValidation] = "false"
+                                        [phoneExtControlName]="'recruiterPhoneNumberExt'" [isRequired]="true" [isMaskValidation]="false"
+                            ></app-kendo-phone>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Text Box End -->
+      
+                <!-- Text Box Start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-textbox [isRequired]="true" [label]="getLocaliseMessage('RecruiterEmail')"
+                            [controlName]="'recruiterEmail'"></app-textbox>
+                    </div>
+                </div>
+                <!-- Text Box End -->
+            </div>
+        </div>
+      </kendo-expansionpanel>
+</form>

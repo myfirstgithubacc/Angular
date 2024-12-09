@@ -1,0 +1,106 @@
+<kendo-label *ngIf="AppliedfilterCount>0" [text]="label | translate" kendoTooltip kendoPopoverAnchor
+  class="appliedFilters" showOn="hover" [popover]="myPopover" [position]="position" (click)="getDataFromFilter()">
+  <ng-container>
+  </ng-container>
+  <span style="color: var(--color-primary) !important;"><b> ({{AppliedfilterCount}})</b></span>
+</kendo-label>
+<div class="one" #one></div>
+<kendo-popover #myPopover position="bottom">
+  <ng-template kendoPopoverBodyTemplate>
+    <div class="tooltiptext" *ngIf="AppliedfilterCount>0">
+      <table>
+        <caption></caption>
+        <tr>
+          <th></th>
+        </tr>
+        <tr *ngFor="let item of SelectedAdvanceFilter">
+          <td class="advanceTooltipLabel">
+            <strong *ngIf="entityId == sectorEntityId">
+              {{ transformLocalizedKey(item.columnHeader) }}
+            </strong>
+
+            <strong *ngIf="entityId != sectorEntityId">
+              {{ getColumnHeader(item) }}
+            </strong>
+          </td>
+          <td class="advanceTooltipcolonSpace">:</td>
+          <td class="advanceTooltipData">
+            <ng-container *ngIf="item.controlType == controltype.multiselect">
+
+              <ng-container *ngIf="entityId == xrmEntityId.StaffingAgencyMarkup">
+                <p *ngFor="let dt of item.value; let i=index">
+                  {{dt.Text}}
+                  <span *ngIf="(item.value.length - 1) > i">, &nbsp;</span>
+                </p>
+              </ng-container>
+
+              <p *ngIf="entityId != xrmEntityId.StaffingAgencyMarkup">
+                {{ item.value.join(', ') }}
+              </p>
+
+            </ng-container>
+
+            <ng-container *ngIf="item.controlType == controltype.input || item.controlType == controltype.dropdonwlist">
+              <p>
+                {{item.value}}
+              </p>
+            </ng-container>
+
+            <ng-container *ngIf="item.controlType == controltype.timepicker">
+              <p>
+                {{transformTime(item.value)}}
+              </p>
+            </ng-container>
+
+            <ng-container *ngIf="item.controlType == controltype.datePicker">
+              <p>
+                {{ transformDate(item.value) }}
+              </p>
+            </ng-container>
+
+            <ng-container *ngIf="item.controlType == controltype.timerange">
+              <p>
+                <strong>
+                  {{ 'FromLabel' | translate }}
+                </strong> : {{ transformTime(item.value[0]) }} &nbsp;
+              </p>
+              <p>
+                <strong>
+                  {{ 'ToLabel' | translate }}
+                </strong> : {{ transformTime(item.value[1]) }}
+              </p>
+            </ng-container>
+
+            <ng-container *ngIf="item.controlType == controltype.integerrange ">
+              <p>
+                <strong>
+                  {{ 'FromLabel' | translate }}
+                </strong> : {{item.value[0]}} &nbsp;&nbsp;
+              </p>
+              <p>
+                <strong>
+                  {{ 'ToLabel' | translate }}
+                </strong> : {{item.value[1]}}
+              </p>
+            </ng-container>
+
+            <ng-container *ngIf="item.controlType == controltype.daterange">
+              <p *ngIf="item.value[0]">
+                <strong>
+                  {{ 'FromDate' | translate }}
+                </strong> : {{ transformDate(item.value[0]) }} &nbsp;&nbsp;
+              </p>
+              <p *ngIf="item.value[1]">
+                <strong>{{ 'ToDate' | translate }}
+                </strong> : {{ transformDate(item.value[1]) }}
+              </p>
+            </ng-container>
+
+          </td>
+
+        </tr>
+      </table>
+    </div>
+  </ng-template>
+
+</kendo-popover>

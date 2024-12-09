@@ -1,0 +1,94 @@
+<!-- Main Body Section-->
+<div class="app-content__body">
+    <form [formGroup]="AddEditEventReasonForm">
+        <!-- Start Card Section-->
+        <div class="card">
+            <!-- Card Header Section-->
+            <div class="card__header">
+                <h4 class="card__heading">{{'BasicDetails' | translate }}</h4>
+            </div>
+            <!-- End Card Header Section-->
+
+            <!-- Card Body Section-->
+            <div class="card__body">
+                <div class="row">
+
+                    <!-- Text Box Start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-dropdown [list]="sectorDropDownList"
+                                [label]="'Sector'" [controlName]="'Sector'"
+                                [isValuePrimitiveAllowed]="true"
+                                [placeholder]="'DdlSelect'" [isRequired]="true" [isEditMode]="isEditMode"
+                                >
+                            </app-kendo-dropdown>
+                        </div>
+                    </div>
+                    <!-- Text Box End -->
+
+                    <!-- Text Box Start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-textbox [controlName]="'EventReasonName'" [label]="'EventReason'"
+                                [isRequired]="true" [isSpecialCharacterAllowed]="true" [maxCharacters]="50">
+                        </app-textbox>
+                        </div>
+                    </div>
+                    <!-- Text Box End -->
+
+                    <!-- Page Subheading -->
+                    <div class="col-sm-12 col-md-12">
+                        <h4 class="card__body--subheading">{{'ApplicableIn' | translate}}</h4>
+                    </div>
+                    <!-- Page Subheading -->
+
+                    <!-- Input Box Start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-switch [controlName]="'ProfessionalContractor'" [label]="'ProfessionalCLP'" 
+                            [onLabel]="'Yes'" [offLabel]="'No'">
+                            </app-kendo-switch>
+                        </div>
+                    </div>
+                    <!-- Input Box End -->
+
+                    <!-- Input Box Start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-switch [controlName]="'LIContractor'" [label]="'IsLightIndustrialContractor'"
+                            [onLabel]="'Yes'" [offLabel]="'No'">
+                            </app-kendo-switch>
+                        </div>
+                    </div>
+                    <!-- Input Box End -->
+            </div>
+        </div>                
+</div>
+
+<!--  Page Footer Section-->
+<div class="page-footer">
+    <div class="btn-box btn-box--center">
+        <button
+        type="button"
+        kendoButton
+        fillMode="outline"
+        themeColor="primary"
+        (click)="listNavigation()"
+    >
+        {{ "Cancel"|translate }}
+    </button>
+    <button
+        type="button"
+        kendoButton
+        (click)="save()"
+        themeColor="primary"
+        [innerText]="'Save'"
+        [disabled]="AddEditEventReasonForm.pristine && isEditMode"
+    >
+        {{"Save"|translate }}
+    </button>
+    </div>
+</div>
+<!-- End Footer Section-->
+</form>
+</div>

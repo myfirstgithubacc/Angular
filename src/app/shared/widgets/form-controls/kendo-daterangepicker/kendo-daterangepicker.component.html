@@ -1,0 +1,52 @@
+<div *ngIf="isEditMode; then thenTemplateName; else elseTemplateName"></div>
+<ng-template #thenTemplateName>
+  <app-kendo-label [label]="label" [value]="kendoDateRangePickerLable" [tooltipPosition]=""
+  [addOnLabelText]="addOnLabelText" [addOnLabelTextLocalizeParam]="addOnLabelTextLocalizeParam"
+    [labelLocalizeParam]="labelLocalizeParam" [tooltipVisible]="tooltipVisible" [tooltipTitle]="tooltipTitle"
+    [tooltipTitleLocalizeParam]="tooltipTitleLocalizeParam">
+  </app-kendo-label>
+</ng-template>
+<ng-template #elseTemplateName>
+  <tooltip-content [tooltipVisible]="tooltipVisible" [tooltipTitle]="tooltipTitle" [label]="label" [tooltipPosition]=""
+  [addOnLabelText]="addOnLabelText" [addOnLabelTextLocalizeParam]="addOnLabelTextLocalizeParam"
+    [tooltipTitleLocalizeParam]="tooltipTitleLocalizeParam" [isHtmlContent]="isHtmlContent"
+    [labelLocalizeParam]="labelLocalizeParam">
+  </tooltip-content>
+  <kendo-daterange #daterange>
+    <kendo-floatinglabel text="{{ fromLabel | translate }}" [ngStyle]="{'color': '#000000'}">
+      <kendo-dateinput kendoDateRangeStartInput
+        [formControl]="listControlStartDateName ? listControlStartDateName : formControlStartDate" id="startDate"
+        [disabled]="isDisable" [min]="minDate" [max]="maxDate" [format]="dateFormat" 
+        (focus)="dateRangePopupOpen($event)"
+        [formatPlaceholder]="{ year: placeholderFormat.year, millisecond: 'S', month: placeholderFormat.month, day: placeholderFormat.day, 
+          hour: placeholderFormat.hour, minute: placeholderFormat.minute, second: placeholderFormat.second }"
+        (valueChange)="OnChange($event,'from')" [ngClass]="customClass"
+        [style.--dynamic-color]="dynamicColor">
+      </kendo-dateinput>
+    </kendo-floatinglabel>
+    <kendo-floatinglabel text="{{toLabel | translate }}">
+      <kendo-dateinput kendoDateRangeEndInput
+        [formControl]="listControlEndDateName ? listControlEndDateName : formControlEndDate" id="endDate"
+        (focus)="dateRangePopupOpen($event)" [disabled]="isDisable" [min]="minDate" [max]="maxDate" [format]="dateFormat"
+        autoCorrectOn="none"
+        [formatPlaceholder]="{ year: placeholderFormat.year, millisecond: 'S', month: placeholderFormat.month, day: placeholderFormat.day, 
+          hour: placeholderFormat.hour, minute: placeholderFormat.minute, second: placeholderFormat.second }"
+        (valueChange)="OnChange($event,'to')"  [ngClass]="customClassTo" [style.--dynamic-color]="dynamicColorTo">
+      </kendo-dateinput>
+
+    </kendo-floatinglabel>
+
+    <kendo-daterange-popup #popup1 *ngIf="isPopupOpen" (open)="dateRangePopupOpen($event)" (close)="dateRangePopupClose($event)" (blur)="dateRangeBlur($event)">
+      <ng-template kendoDateRangePopupTemplate>
+        <button type="reset" kendoButton themeColor="primary" class="btn" (click)="resetDateControl()">
+          Reset
+        </button>
+        <kendo-multiviewcalendar kendoDateRangeSelection [autoCorrectOn]="'none'">
+        </kendo-multiviewcalendar>
+      </ng-template>
+    </kendo-daterange-popup>
+
+  </kendo-daterange>
+  <app-print-error-message
+    [control]="listControlStartDateName ? listControlStartDateName : formControlStartDate"></app-print-error-message>
+</ng-template>

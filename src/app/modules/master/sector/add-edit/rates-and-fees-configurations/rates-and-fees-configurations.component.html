@@ -1,0 +1,182 @@
+<form [formGroup]="ratesAndFeesConfigForm">
+    <!-- Rates Configuration Section start-->
+    <div class="card">
+        <!-- Card Header Section-->
+        <div class="card__header">
+            <h4 class="card__heading">{{ "RatesFeesConfigurations" | translate }}</h4>
+            <div class="card__header-icon">
+            </div>
+        </div>
+        <!-- End Card Header Section-->
+
+        <!-- Card Body Section-->
+        <div class="card__body">
+            <div class="row">
+
+                <!-- page subheading -->
+                <div class="col-sm-12 col-md-12">
+                    <h4 class="card__body--subheading mt-0">{{ "RatesConfigurations" | translate }}</h4>
+                </div>
+                <!-- page subheading -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <!--  -->
+                        <app-kendo-dropdown [isEditMode]="((ShowAll) 
+                            ? pricingModelConfigForm.controls.PricingModel.value === billRateBasedValue && ratesAndFeesConfigForm.controls.OtRateType.value?.Value === otRateTypeValue
+                            : storedPricingModelData === billRateBasedValue &&  ratesAndFeesConfigForm.controls.OtRateType.value?.Value === otRateTypeValue)"
+                            [list]="sectorAllDropdowns" [label]="'OtRateCalcuatedBasedOn'" [controlName]="'OtRateType'"
+                            [placeholder]="'DdlSelect'" [isRequired]="true" [tooltipVisible]="true"
+                            [isValuePrimitiveAllowed]="false"
+                            [tooltipTitle]="'OT_DT_Rates_Calculated_Based_On_Tooltip'">
+                        </app-kendo-dropdown>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-numeric-box [label]="'OtWageMultiplier'" [controlName]="'OtWageMultiplier'"
+                            [placeholder]="'0.000'" [isRequired]="true" [tooltipVisible]="true"
+                            [tooltipTitle]="'OT_Wage_Multiplier_Tooltip'" format="n3" [min]="magicNumbers.zero" [maxlength]="magicNumbers.six"
+                            [decimals]="magicNumbers.three">
+                        </app-numeric-box>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-numeric-box [label]="'DtWageMultiplier'" [controlName]="'DtWageMultiplier'"
+                            [placeholder]="'0.000'" [isRequired]="true" [tooltipVisible]="true" format="n2" [min]="magicNumbers.zero"
+                            [maxlength]="magicNumbers.five" [decimals]="magicNumbers.three" [tooltipTitle]="'DT_Wage_Multiplier_Tooltip'">
+                        </app-numeric-box>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-numeric-box [controlName]="'OtBillMultiplier'" [isCurrencyType]="true"
+                            [label]="'OtBillMultiplier'" [isRequired]="true" appRestrictInput [placeholder]="'0.0000'"
+                            format="n4" [isSpecialCharacterAllowed]="true" [decimals]="magicNumbers.four" [tooltipVisible]="true"
+                            [min]="magicNumbers.zero" [maxlength]="magicNumbers.six" [tooltipTitle]="'OT_Bill_Multiplier_Tooltip'">
+                        </app-numeric-box>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-numeric-box [controlName]="'DtBillMultiplier'" [isCurrencyType]="true"
+                            [label]="'DtBillMultiplier'" [isRequired]="true" appRestrictInput [placeholder]="'0.0000'"
+                            format="n4" [isSpecialCharacterAllowed]="true" [decimals]="magicNumbers.four" [tooltipVisible]="true"
+                            [min]="magicNumbers.zero" [maxlength]="magicNumbers.six" [tooltipTitle]="'DT_Bill_Multiplier_Tooltip'">
+                        </app-numeric-box>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- page subheading -->
+                <div class="col-sm-12 col-md-12">
+                    <h4 class="card__body--subheading">{{ "FeesConfigurations" | translate }}</h4>
+                </div>
+                <!-- page subheading -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-numeric-box [label]="'RecruitedLiMspFeePercent'" [controlName]="'RecruitedLiMspFee'"
+                            [placeholder]="'0.000'" [isRequired]="true" [tooltipVisible]="true"
+                            [tooltipTitle]="'Recruited_LI_MSP_Fee_Tooltip'" [min]="magicNumbers.zero" [decimals]="magicNumbers.three" [maxlength]="magicNumbers.six"
+                            [format]="'n3'">
+                        </app-numeric-box>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-numeric-box [label]="'PayrolledMspFeePercent'" [controlName]="'PayrolledMspFee'"
+                            [placeholder]="'0.000'" [isRequired]="true" [tooltipVisible]="true"
+                            [tooltipTitle]="'Payrolled_MSP_Fee_Tooltip'" [min]="magicNumbers.zero" [decimals]="magicNumbers.three" [maxlength]="magicNumbers.six"
+                            [format]="'n3'">
+                        </app-numeric-box>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-numeric-box [label]="'VendorFeeMultiplier'" [controlName]="'VendorFeeMultiplier'"
+                            [placeholder]="'0.00'" [isRequired]="true" [min]="magicNumbers.zero" [decimals]="magicNumbers.two" [maxlength]="magicNumbers.five"
+                            [format]="'n2'" [tooltipVisible]="true" [tooltipTitle]="'Vendor_Fee_Multiplier_Tooltip'">
+                        </app-numeric-box>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-numeric-box [label]="'RecruitedAdminFee'" [controlName]="'RecruitedAdminFee'"
+                            [placeholder]="'0.00'" [isRequired]="false" [min]="magicNumbers.zero" [decimals]="magicNumbers.two" [maxlength]="magicNumbers.five"
+                            [format]="'n2'" [tooltipVisible]="true" [tooltipTitle]="'Recruited_Admin_Fee_Tooltip'">
+                        </app-numeric-box>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-numeric-box [label]="'PayrolledAdminFee'" [controlName]="'PayrolledAdminFee'"
+                            [placeholder]="'0.00'" [isRequired]="false" [min]="magicNumbers.zero" [decimals]="magicNumbers.two" [maxlength]="magicNumbers.five"
+                            [format]="'n2'" [tooltipVisible]="true" [tooltipTitle]="'Payroll_Admin_Fee_Tooltip'">
+                        </app-numeric-box>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-numeric-box [label]="'StandardRecruitedMarkup'" [controlName]="'StandardRecruitedMarkup'"
+                            [placeholder]="'0.000'" [isRequired]="true" format="n3" [min]="magicNumbers.zero" [maxlength]="magicNumbers.six"
+                            [decimals]="magicNumbers.three" [tooltipVisible]="true" [tooltipTitle]="'Standard_Recruited_Markup_Tooltip'">
+                        </app-numeric-box>
+                    </div>
+                </div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'MaskOtFieldsInSystem'" [label]="'MaskOtFieldsInSystem'"
+                            [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                            [tooltipTitle]="'Limit_Available_Weekending_Dates_in_Time_Entry_Tooltip'"
+                            [tooltipVisible]="true" [tooltipTitle]="'Mask_OT_Fields_in_System_Tooltip'">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <!-- input box start -->
+            </div>
+        </div>
+        <!-- End Card Body Section-->
+    </div>
+    <!--Rates Configuration Section end-->
+</form>

@@ -1,0 +1,51 @@
+<div class="master-search widget-filter__search">
+    <div class="row">
+      <div class="col-md-12 master-search__wapper">
+        <div class="master-search__search-box">
+          <div class="custom-search">
+            <div class="custom-search__input-box">
+              <app-search [placeholder]="'SearchFor'" [isServerSidePagingEnable]="true" [columnOptions]="columnOptions"
+                [EntityId]="entityId" (onSearch)="onSearchTriggered($event)"
+                [entityType]="getRoleGroupId() ? 'AssignmentStaffingList' : contractorId === undefined ? 'AssignmentDetailList' : 'ContractorAssignmentList'">
+              </app-search>
+            </div>
+            <app-advance-search
+            [apiAddress]="'assgmt-advance-search-drpdwn/'"
+            [isApiGateway]="true"
+            [EntityId]="entityId"
+            [entityType]="getRoleGroupId() ? 'AssignmentStaffingList' : contractorId === undefined ? 'AssignmentDetailList' : 'ContractorAssignmentList'"
+            [contractorId]="contractorId"
+            [isServerSidePagingEnable]="true"
+            [userValues]="contractorId === undefined ? null : {ContractorId:contractorId}"
+            (selectedFilter)="onFilterTriggered($event)"></app-advance-search>
+
+          </div>
+          <div class="custom-search__applied--Filters mx-2">
+            <div class="custom-search__applied--Filters">
+              <app-kendo-label class="k-label"></app-kendo-label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- [gridData]="userList" -->
+  <div class="row">
+    <grid-view
+    [isServerSidePagingEnable]="true"
+    [isApiGateway]="true"
+    [apiAddress]="'assgmt-all'"
+    [entityType]="getRoleGroupId() ? 'AssignmentStaffingList' : contractorId === undefined ? 'AssignmentDetailList' : 'ContractorAssignmentList'"
+    [subEntityType]="'All'"
+    [contractorId]="contractorId"
+    [IsPreviousAssignment]="false"
+    [searchText]="selectTextsearch"
+    [advFilterData]="appliedAdvFilters"
+    [multiSelect]="false"
+    [columnOptions]="columnOptions"
+    [actionSet]="actionSet" [tabOptions]="tabOptions"
+    [pageSize]="pageSize" [fileName]="'Assignment-Details'"
+    [entityId]="entityId"
+    [userValues]="contractorId === undefined ? null : {ContractorId:contractorId}"
+    ></grid-view>
+  </div>

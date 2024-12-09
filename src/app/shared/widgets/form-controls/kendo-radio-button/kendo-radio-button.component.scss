@@ -1,0 +1,28 @@
+.radio-input {
+	margin-right: 15px;
+	margin-top: 0;
+	.mx-1 {
+		margin-left: 0 !important;
+	}
+	.k-label {
+		color: var(--color-black);
+		font-weight: 500;
+	}
+}
+.k-radio {
+	border-color: var(--k-input-border-color);
+	background-color: var(--color-white);
+	margin-right: 8px;
+}
+.k-radio:checked,
+.k-radio.k-checked {
+	border-color: var(--color-primary);
+	color: var(--color-white);
+	background-image: url(../../../../../assets/images/black-circle.png);
+	background-position: center center;
+	background-size: 8px;
+}
+.k-radio:checked:focus,
+.k-radio.k-checked.k-focus {
+	box-shadow: 0 0 0 2px var(--color-primary-light);
+}

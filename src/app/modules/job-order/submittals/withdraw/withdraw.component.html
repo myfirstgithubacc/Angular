@@ -1,0 +1,10 @@
+<app-submittal-shared-View [CurrentPage]="currentPage" #child></app-submittal-shared-View>
+
+<div class="page-footer">
+  <div class="btn-box btn-box--center">
+      <button kendoButton fillMode="outline" themeColor="primary"
+          (click)="navigateBack()">{{'Cancel'|translate}}</button>
+
+      <button kendoButton href="javascript:;" [disabled]="isButtonDisable" themeColor="primary" (click)="withdrawForm()">{{'Withdraw'|translate}}</button>
+  </div>
+</div>

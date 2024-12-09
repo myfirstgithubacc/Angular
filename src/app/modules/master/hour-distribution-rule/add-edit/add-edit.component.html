@@ -1,0 +1,259 @@
+<div class="app-content__body">
+    <div class="card" *ngIf="!isEditMode">
+        <div class="card__header">
+            <h4 class="card__heading">{{copyFromExistingHDRText}}</h4>
+        </div>
+        <div class="card__body">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <form [formGroup]="CopyFromExistingRuleForm">
+                            <app-kendo-dropdown #CopyValues [list]="hdrCopyDrodown" [controlName]="'IsCopyHDR'"
+                                [placeholder]="'DdlSelect'" [label]="'SelectExistingSector'"
+                                [labelLocalizeParam]="ruleNameLocalizeParam" (onChange)="onSelectingExistingRule()">
+                            </app-kendo-dropdown>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group" *ngIf="!isEditMode">
+                        <app-kendo-button class="copy__btn" data-bs-toggle="offcanvas"
+                            [buttonName]="'CopyFromSelectedSector'" [buttonIcon]="'copy'"
+                            [buttonLocalizeParam]="labelLocalizeParam" fillMode="outline"
+                            (click)="OnCopyExistingRuleName(CopyValues.formControl.value)">
+                        </app-kendo-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form [formGroup]="AddEditHourAdjustmentForm">
+        <div class="card">
+            <div class="card__header">
+                <h4 class="card__heading">{{'BasicDetails' | translate }}</h4>
+            </div>
+            <div class="card__body">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <app-textbox [controlName]="'RuleName'" [label]="'RuleName'" [isRequired]="true"
+                                [isEditMode]="isEditMode" [isSpecialCharacterAllowed]="true"
+                                [tooltipVisible]="isTooltipVisible" [maxCharacters]="magicNumber.hundred"
+                                [tooltipTitle]="'Rule_Name_Tooltip'">
+                            </app-textbox>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6" *ngIf="hdrAllDropdowns?.PreDefinedSchedules">
+                        <div class="form-group">
+                            <app-kendo-dropdown [list]="hdrAllDropdowns.PreDefinedSchedules"
+                                [label]="'PreDefinedWorkSchedule'" [controlName]="'PreDefinedWorkScheduleId'"
+                                [placeholder]="'DdlSelect'" [isSpecialCharacterAllowed]=true [isRequired]="!isEditMode"
+                                [isEditMode]="isEditMode" [tooltipVisible]="true" [isHtmlContent]="true"
+                                [isHtmlContent]="true" (onChange)="onPreDefinedWorkScheduleChange($event)"
+                                [tooltipTitle]="isEditMode ? 'Pre_defined_Work_Schedule_Tooltip_IsEditMode':'Pre_defined_Work_Schedule_Tooltip'">
+                            </app-kendo-dropdown>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <app-kendo-textarea [controlName]="'RuleDescription'" [label]="'RuleDescription'"
+                                [isRequired]="false" [isSpecialCharacterAllowed]="true"
+                                [maxCharacters]="magicNumber.twoThousand">
+                            </app-kendo-textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-switch [controlName]="'ManualOtDtEntry'" [label]="'ManualOtDtEntry'"
+                                [onLabel]="'Yes'" [offLabel]="'No'" [isDisable]="isEditMode"
+                                (onChangeSwitch)="onChangeEnableManualEntry($event)">
+                            </app-kendo-switch>
+                        </div>
+                    </div>
+                    <ng-template [ngIf]="!isManualEntry">
+                        <div class="col-md-6 col-sm-6" *ngIf="!isEditMode">
+                            <div class="form-group">
+                                <app-kendo-dropdown [list]="CalculationMethod" [label]="'OTCalculationMethod'"
+                                    [controlName]="'OtCalculation'" [isRequired]="true" [placeholder]="'DdlSelect'"
+                                    [tooltipVisible]="true" [isDisabled]="isOtCalculation"
+                                    [tooltipTitle]="'Ot_Calculation_Tooltip'" [isEditMode]="isEditMode"
+                                    (onChange)="onOTCalculationMethodChange($event, this.AddEditHourAdjustmentForm.controls['PreDefinedWorkScheduleId'].value)">
+                                </app-kendo-dropdown>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <app-numeric-box [controlName]="'RegularStHoursPerWeek'"
+                                    [label]="'RegularStHoursPerWeek'" [isRequired]="true" [tooltipVisible]="true"
+                                    format="n2" [decimals]="magicNumber.two" [maxlength]="magicNumber.six"
+                                    [min]="magicNumber.zero"
+                                    [tooltipTitle]="'Regular_ST_Hours_Allowed_Per_Week_Tooltip'">
+                                </app-numeric-box>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <app-numeric-box [controlName]="'MaxStHourAllowed'" [label]="'MaxStHourAllowed'"
+                                    [isRequired]="true" [tooltipVisible]="true" format="n2" [decimals]="magicNumber.two"
+                                    [maxlength]="magicNumber.six" [min]="magicNumber.zero"
+                                    [tooltipTitle]="'Max_ST_Hours_Allowed_Per_Week_Tooltip'">
+                                </app-numeric-box>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <app-numeric-box [controlName]="'MaxOtHourAllowed'" [label]="'MaxOtHourAllowed'"
+                                    [isRequired]="true" [tooltipVisible]="true" format="n2" [decimals]="magicNumber.two"
+                                    [maxlength]="magicNumber.six" [min]="magicNumber.zero"
+                                    [tooltipTitle]="'Max_OT_Hours_Allowed_Per_Week_Tooltip'">
+                                </app-numeric-box>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <app-numeric-box [controlName]="'MaxDtHourAllowed'" [label]="'MaxDtHourAllowed'"
+                                    [isRequired]="true" [tooltipVisible]="true" format="n2" [decimals]="magicNumber.two"
+                                    [maxlength]="magicNumber.six" [min]="magicNumber.zero"
+                                    [tooltipTitle]="'Max_DT_Hours_Allowed_Per_Week_Tooltip'">
+                                </app-numeric-box>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <app-numeric-box [controlName]="'MaxTotalHourAllowed'" [isRequired]="true"
+                                [label]="'MaxTotalHourAllowed'" format="n2" [decimals]="magicNumber.two"
+                                [maxlength]="magicNumber.six" [min]="magicNumber.zero"
+                                [tooltipTitle]="'Max_Total_Hours_Allowed_Per_Week_Tooltip'" [tooltipVisible]="true">
+                            </app-numeric-box>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <ng-template [ngIf]="!isManualEntry">
+            <div class="card hrsDistributionConfiguration">
+                <!-- Card Header Section-->
+                <div class="card__header">
+                    <h4 class="card__heading">{{'HourDistributionConfiguration' | translate}}</h4>
+                </div>
+                <div class="card__body">
+                    <div class="row">
+                        <div class="list-view">
+                            <h4 class="card__body--first__subheading">{{((selectedPreScheduled == nineby80Id) ?
+                                'Week1Rule'
+                                :
+                                'RuleType') | translate}}</h4>
+                            <div class="list-view">
+                                <div class="row">
+                                    <div class=" col-sm-12 col-md-12">
+                                        <app-list-view #WeekDaysRule [labelText]="WeekDayRuleFirstColumnText"
+                                            (formData)="getFormStatus($event)" [labelText]="WeekDayRuleFirstColumnText"
+                                            [columnData]="WeekDayColumns" [columnConfigure]="WeekDaysColumnConfigs"
+                                            [populatedData]="WeekDayPrefilledData">
+                                        </app-list-view>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h4 class="card__body--first__subheading mt-3"
+                                *ngIf="(selectedPreScheduled == nineby80Id) ? true : false">{{'Week2Rule' | translate}}
+                            </h4>
+                            <div class="list-view" *ngIf="(selectedPreScheduled == nineby80Id) ? true : false">
+                                <div class="row">
+                                    <div class=" col-sm-12 col-md-12">
+                                        <app-list-view #Week2Rule (formData)="getFormStatus($event)"
+                                            [labelText]="nineBy80Week2FirstColumnText" [columnData]="WeekDayColumns"
+                                            [columnConfigure]="Week2RuleColumnConfigs"
+                                            [populatedData]="nineBy80Week2PrefilledData">
+                                        </app-list-view>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template [ngIf]="!isManualEntry">
+            <!-- Additional Rule Grid -->
+            <div class="card hrsDistributionConfiguration">
+                <!-- Card Header Section-->
+                <div class="card__header">
+                    <h4 class="card__heading" kendoTooltip>{{'AdditionalRulesOptional' | translate}}
+                        <tooltip-content [tooltipTitle]="'Additional_Rule_Tooltip'" [tooltipVisible]="true">
+                        </tooltip-content>
+                    </h4>
+                </div>
+                <div class="card__body">
+                    <div class="row">
+                        <div class="list-view">
+                            <div class="row">
+                                <div class=" col-sm-12 col-md-12 list-view">
+                                    <app-list-view #AdditionalRule [labelText]="AdditionalRuleFirstColumnText"
+                                        (formData)="getFormStatus($event)" [columnData]="AdditionalRuleColumns"
+                                        [columnConfigure]="AdditionalRuleColumnConfigs"
+                                        [populatedData]="AdditionalRulePrefilledData">
+                                    </app-list-view>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </ng-template>
+        <ng-template [ngIf]="!isManualEntry">
+            <!-- Special Day Rule Grid -->
+            <div class="card hrsDistributionConfiguration">
+                <!-- Card Header Section-->
+                <div class="card__header">
+                    <h4 class="card__heading">{{'Special day Rule' | translate}}</h4>
+                </div>
+                <div class="card__body">
+                    <div class="row">
+                        <div class="list-view">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-12">
+                                    <div class="form-group">
+                                        <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'"
+                                            [controlName]="'SpecialDayRule'" [label]="'Special Day Rules Required'"
+                                            [tooltipTitle]="'Special_Rule_Tooltip'" [tooltipVisible]="true"
+                                            (onChangeSwitch)="onSpecialDayRuleChange($event)">
+                                        </app-kendo-switch>
+                                    </div>
+                                </div>
+                                <div class="list-view">
+                                    <div class="row">
+                                        <div class=" col-sm-12 col-md-12 list-view" *ngIf="isSpecialDayRuleOn">
+                                            <app-list-view #SpecialRule (formData)="getFormStatus($event)"
+                                                (onDelete)="onDelete()" (onChangeDropdown)="onChangeDropdown($event)"
+                                                [columnData]="SpecialRuleColumns"
+                                                [columnConfigure]="SpecialRuleColumnConfigs"
+                                                [populatedData]="SpecialRulePrefilledData">
+                                            </app-list-view>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </ng-template>
+        <div class="page-footer">
+            <div class="btn-box btn-box--center">
+                <button type="button" kendoButton (click)="backToList()" fillMode="outline" themeColor="primary"
+                    [innerText]="'Cancel' | translate">
+                </button>
+                <button type="button" kendoButton (click)="submitForm()" themeColor="primary"
+                    [disabled]="(isEditMode ? (AddEditHourAdjustmentForm.pristine ? true : false) : false)"
+                    appFocusOnError [formName]="AddEditHourAdjustmentForm" [innerText]="'Save' | translate">
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

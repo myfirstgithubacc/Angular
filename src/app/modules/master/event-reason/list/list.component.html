@@ -1,0 +1,42 @@
+<div class="master-search">
+    <div class="row">
+      <div class="col-md-12 master-search__wapper">
+        <div class="master-search__search-box">
+          <div class="custom-search">
+            <div class="custom-search__input-box">
+              <app-search [placeholder]="'SearchFor'"
+                (onSearch)="OnSearch($event)" [EntityId]="entityId" [columnOptions]="columnOptions"
+                [isServerSidePagingEnable]="isServerSidePagingEnable"></app-search>
+            </div>
+            <app-advance-search [EntityId]="entityId" [isApiGateway]="true"
+            (selectedFilter)="OnFilter($event)"
+            [isServerSidePagingEnable]="isServerSidePagingEnable" [apiAddress]="advApiAddress"></app-advance-search>
+          </div>
+        </div>
+
+        <div class="master-search__button-box master-search__button-box--right">
+          <app-kendo-button [buttonName]="'NewEventReason'"
+          (Click)="navigate()" [buttonIcon]="'plus'"></app-kendo-button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+      <grid-view 
+      [entityId]="entityId" [pageSize]="pageSize" [columnOptions]="columnOptions" 
+      [actionSet]="actionSet" [tabOptions]="tabOptions" [kendoGridSelectedBy]="'UKey'" 
+      (gridHeaderBtnType)="openCopy()" [extraButtonSet]="extraButton"
+      [isServerSidePagingEnable]="isServerSidePagingEnable" [isApiGateway]="true"
+      [apiAddress]="apiAddress" [searchText]="searchText" [fileName]="generateFileName()"
+      [multiSelect]="false" [advFilterData]="advFilterData">
+    </grid-view>
+  </div>
+  
+  
+  
+  
+  
+     
+     
+  

@@ -1,0 +1,120 @@
+.loader {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	position: fixed;
+	overflow: hidden;
+	width: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 99999;
+	& > div {
+		width: 100%;
+		height: 100vh;
+		-webkit-box-flex: 0;
+		-ms-flex: 0 0 25%;
+		flex: 0 0 25%;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
+		margin: 0;
+		position: relative;
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-pack: center;
+		-ms-flex-pack: center;
+		justify-content: center;
+		-webkit-box-align: center;
+		-ms-flex-align: center;
+		align-items: center;
+		overflow: hidden;
+		&:before {
+			content: "";
+			position: absolute;
+			z-index: -1;
+			background: #fff;
+			width: 100%;
+			height: 100%;
+			opacity: .5;
+		}
+	}
+}
+.loader__spinner {
+	position: absolute;
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	background-color: transparent;
+	border: 2px solid transparent;
+	border-top: 2px solid #b62c2c6b;
+	border-left: 2px solid #b62c2c6b;
+	animation: 2.5s spin linear infinite;
+}
+.loader__spinner--2 {
+	border: 2px solid transparent;
+	border-right: 2px solid #02c0ce;
+	border-bottom: 2px solid #346989;
+	animation: 1s spin linear infinite;
+}
+.loader__spinner__body {
+	.loader__spinner__img {
+		width: 54px;
+	}
+	.loader__spinner__text {
+		font-size: 11px;
+		font-weight: 600;
+		color: #dc3545;
+	}
+}
+ 
+  @-webkit-keyframes spin {
+    from {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+  
+    to {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes spin {
+    from {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+  
+    to {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  
+  @media only screen and (max-width: 968px) {
+    .loader>div {
+      -webkit-box-flex: 0;
+      -ms-flex: 0 0 33.3333333%;
+      flex: 0 0 33.3333333%;
+    }
+  }
+  
+  @media only screen and (max-width: 768px) {
+    .loader>div {
+      -webkit-box-flex: 0;
+      -ms-flex: 0 0 50%;
+      flex: 0 0 50%;
+    }
+  }
+  
+  @media only screen and (max-width: 568px) {
+    .loader>div {
+      -webkit-box-flex: 0;
+      -ms-flex: 0 0 100%;
+      flex: 0 0 100%;
+    }
+  }

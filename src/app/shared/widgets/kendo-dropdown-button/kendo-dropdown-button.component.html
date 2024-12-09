@@ -1,0 +1,8 @@
+<kendo-dropdownbutton [data]="actionSet" [disabled]="isDisabled" (itemClick)="onItemClick($event)">
+    <xrm-icon name="chevron-down" color="black-color" [size]="15"></xrm-icon>
+    <ng-template kendoDropDownButtonItemTemplate let-dataItem>
+        <xrm-icon [name]='dataItem.icon' [color]='dataItem.color' [size]="15" class="xrm-icons sw-bold"></xrm-icon>
+            <span class="dropdown-items-label">{{ dataItem.title }}</span>
+    </ng-template>
+</kendo-dropdownbutton>
+

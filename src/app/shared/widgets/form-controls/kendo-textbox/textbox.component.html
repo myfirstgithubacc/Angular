@@ -1,0 +1,30 @@
+<div *ngIf="isRendered">
+<div *ngIf="isEditMode; then thenTemplateName; else elseTemplateName"></div>
+<ng-template #thenTemplateName>
+  <app-kendo-label [label]="label" [value]="listControlName ? listControlName.value : formControl.value"
+    [tooltipPosition]="" [labelLocalizeParam]="labelLocalizeParam" 
+    [addOnLabelText]="addOnLabelText" [addOnLabelTextLocalizeParam]="addOnLabelTextLocalizeParam"
+    [tooltipVisible]="tooltipVisible" [tooltipTitle]="tooltipTitle" [tooltipTitleLocalizeParam]="tooltipTitleLocalizeParam">
+  </app-kendo-label>
+</ng-template>
+<ng-template #elseTemplateName>
+  <kendo-formfield>
+    <tooltip-content [tooltipVisible]="tooltipVisible" [tooltipTitle]="tooltipTitle" [label]="label"
+      [tooltipPosition]="" [tooltipTitleLocalizeParam]="tooltipTitleLocalizeParam" [isRequired]="isRequired"
+      [addOnLabelText]="addOnLabelText" [addOnLabelTextLocalizeParam]="addOnLabelTextLocalizeParam"
+      [labelLocalizeParam]="labelLocalizeParam" [isHtmlContent]="isHtmlContent">
+    </tooltip-content>
+    <div class="input-parent">
+    <input kendoTextBox autocomplete="name" [type]="type" class="widgetsClass" appRestrictInput [allowLetter]="true" [allowNumber]="true"
+      [isSpecialCharacterAllowed]="isSpecialCharacterAllowed" [specialCharactersAllowed]="specialCharactersAllowed"
+      [specialCharactersNotAllowed]="specialCharactersNotAllowed"
+      [formControl]="listControlName ? listControlName : formControl" [placeholder]="placeholder | translate"
+      [maxlength]="maxCharacters" (keyup)="restrictWord($event)" (valueChange)="onChange($event)"
+      (focus)="onFocus($event)" (blur)="onBlur($event)" (inputFocus)="inputFocus($event)"
+      (inputBlur)="inputBlur($event)" (focusout)="onfocusout($event)" />
+      <xrm-icon [name]="eyeStyle" [svgPath]="dimension" [color]="'gray-color'" class="eye-icon sw-bold" *ngIf="passwordType" [size]="17" (click)="eyeOnOff()"></xrm-icon>
+</div>
+    <app-print-error-message [control]="listControlName ? listControlName : formControl"></app-print-error-message>
+  </kendo-formfield>
+</ng-template>
+</div>

@@ -1,0 +1,631 @@
+<!-- Main Body Section-->
+<div class="app-content__body floating-layout floating-layout__view-layout app-content__kendoexpansion-main">
+    <form [formGroup]="SubmittalViewForm">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Start Kendo Expansion Panel -->
+                <kendo-expansionpanel [expanded]="true" class="card">
+                    <ng-template kendoExpansionPanelTitleDirective>
+                        <div (click)="$event.stopPropagation()">
+                            <h4 class="card__heading">
+                                {{ showOnInterview ? 'Submittals Details' : ('CandidateDetails' | translate) }}
+                            </h4>
+                        </div>
+                        <div class="card__header-icon">
+                            <div class="card__header-icon--success">
+                                <i class="fa-solid fa-circle-check"></i>
+                            </div>
+                            <div class="card__header-icon--error">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <div class="card__body">
+                        <div class="row">
+                            <!-- Input Box Start -->
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'CandidateName'|translate" [value]="this.UkeyData.FullName"></app-kendo-label>
+                                </div>
+                            </div>
+                            <!-- input box end -->
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <!-- <app-kendo-label [label]="'Recruiter Phone Number'"
+                                        [value]="this.UkeyData?.RecruiterPhone"></app-kendo-label> -->
+                                        <!-- <div class="col-sm-6 col-md-6">
+                                            <form [formGroup]="showPhoneExt" class="form-group"> -->
+                                    <app-kendo-phone  [label]="'ContactPhone'|translate" [isEditMode]="false"
+                                    [phoneControlName]="'canPhoneControl'" [phoneExtControlName]="'canPhoneExt'" [isExtension]="canExt"></app-kendo-phone>
+                                             <!-- </form>
+                                         </div> -->
+                                </div>
+                            </div>
+                            <!-- Text Box End -->
+
+                            <!-- Text Box Start -->
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'ContactEmail'|translate"
+                                        [value]="this.UkeyData.Email"></app-kendo-label>
+                                </div>
+                            </div>
+                            <!-- Input Box Start -->
+                            <div class="col-sm-12 col-md-12" *ngIf="roleGroupId != '4'">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'ContractorUId'|translate" [value]="this.UkeyData.UId"></app-kendo-label>
+                                </div>
+                            </div>
+
+                            <!-- input box start -->
+                            <div class="col-sm-12 col-md-12" *ngIf="roleGroupId != '4'">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'WorkerClassification'|translate"
+                                        [value]="this.UkeyData.WorkerClassification"></app-kendo-label>
+                                </div>
+                            </div>
+                            <!-- input box end -->
+
+                            <div class="clearfix"></div>
+
+                            <!-- input box start -->
+                            <div class="col-sm-12 col-md-12" *ngIf="roleGroupId != '4'">
+                                <div class="form-group">
+                                        <app-kendo-label [label]="'SubVendorName'"
+                                            [value]="this.UkeyData.WcSubCategory"></app-kendo-label>
+                                </div>
+                            </div>
+                            <!-- input box end -->
+
+                            <!-- input box start -->
+                            <div class=" col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label
+                                        [label]="getLocaliseMessage('CandidateAlreadyWorkedForOrganisation')"
+                                        [value]="this.UkeyData.HasWorkedPreviouslyAtClient===true?getLocaliseMessage('Yes'):getLocaliseMessage('No')"></app-kendo-label>
+                                </div>
+                            </div>
+                            <!-- input box end -->
+
+                            <!-- input box start -->
+                            <div class=" col-sm-12 col-md-12" *ngIf="this.UkeyData.HasWorkedPreviouslyAtClient===true">
+                                <div class="form-group">
+                                    <app-kendo-label
+                                        [label]="'ProvidePreviousWorkHistory'|translate"
+                                        [value]="this.UkeyData.PreviousExperienceDescription"></app-kendo-label>
+                                </div>
+                            </div>
+                            <!-- input box end -->
+
+                            <!-- input box start -->
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label
+                                        [label]="'CandidateWorkingEnterEndDate'|translate" [isDate]="true"
+                                        [value]="this.UkeyData.PreviousAssignmentEndDate"></app-kendo-label>
+                                </div>
+                            </div>
+                            <!-- input box end -->
+
+                            <div class="clearfix"></div>
+
+                            <!-- input box start -->
+                            <div class="col-sm-12 col-md-12" *ngIf="!showOnInterview">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="getLocaliseMessage('InterviewAvailability')"
+                                        [value]="this.UkeyData.InterviewAvailability"></app-kendo-label>
+                                </div>
+                            </div>
+                            <!-- input box end -->
+
+                            <!-- input box start -->
+                            <div class=" col-sm-12 col-md-12" *ngIf="!showOnInterview">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="getLocaliseMessage('StartAvailability')"
+                                        [value]="this.UkeyData.StartAvailability"></app-kendo-label>
+                                </div>
+                            </div>
+                            <!-- input box end -->
+
+                        </div>
+                    </div>
+                </kendo-expansionpanel>
+                <!-- End Kendo Expansion Panel -->
+
+                <!-- Start Card Section *ngIf="this.UkeyData.IsRateMarkupBasedVariant" -->
+                <kendo-expansionpanel  [expanded]="false" class="card" *ngIf="!showOnInterview">
+                    <ng-template kendoExpansionPanelTitleDirective>
+                        <div (click)="$event.stopPropagation()">
+                            <h4 class="card__heading">{{'RateDetails'|translate}}</h4>
+                        </div>
+                    </ng-template>
+                    <div class="card__body">
+                        <div class="row">
+                            <ng-container *ngIf="this.UkeyData.IsRateMarkupBasedVariant">
+                            <!-- Text Box Start -->
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="getLocaliseMessage('BaseWageRate','USD')" [value]="this.UkeyData.BaseWageRate.toFixed(2)"></app-kendo-label>
+                                </div>
+                            </div>
+                            <!-- Text Box End -->
+                            <!-- title="{{'AssignmentDetails'|translate}}" -->
+                            <!-- Text Box Start -->
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="getLocaliseMessage('ShiftDifferential',this.UkeyData.ShiftDifferential,'USD')"
+                                        [value]="UkeyData.ShiftDifferential == 'Adder'? UkeyData.AdderOrMultiplierValue.toFixed(3) : UkeyData.AdderOrMultiplierValue.toFixed(4)"></app-kendo-label>
+                                </div>
+                            </div>
+                            <!-- Text Box End -->
+
+                            <!-- Text Box Start -->
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="getLocaliseMessage('ActualWageRateWithShiftDiff','USD')"
+                                        [value]="this.UkeyData.ActualStWageRate.toFixed(2)"></app-kendo-label>
+                                </div>
+                            </div>
+                            <!-- Text Box End -->
+
+                            <!-- Text Box Start -->
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="getLocaliseMessage('MarkUpPer')" [value]="this.UkeyData.SubmittedMarkup.toFixed(3)"></app-kendo-label>
+                                    <!-- <span class="achor__text">Mark up NTE % : 79.38</span> -->
+                                </div>
+                            </div>
+                            <!-- Text Box End -->
+
+                            <!-- Text Box Start -->
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="getLocaliseMessage('BillRateCurr','USD')" [value]="this.UkeyData.BidRate.toFixed(2)"></app-kendo-label>
+                                    <!-- <span class="achor__text">Requisition's NTE or Target Bill Rate : 28.70</span> -->
+                                </div>
+                            </div>
+                            <!-- Text Box End -->
+
+                            <!-- Text Box Start -->
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="getLocaliseMessage('OTHoursBilledAt')"
+                                        [value]="this.UkeyData.OtHoursBilledAtId===61?'Straight Time (Exempt)':'Time and One Half (Non-Exempt)'"></app-kendo-label>
+                                </div>
+                            </div>
+                            <!-- Text Box End -->
+
+                             <!-- Text Box Start -->
+                             <div class="col-sm-12 col-md-12" *ngIf="UkeyData.EstimatedCost">
+                                <div class="form-group">
+                                    <app-kendo-label [label]= "'Estimated Cost (USD)'"
+                                        [value]="estimatedCost"></app-kendo-label>
+                                </div>
+                            </div>
+                            <!-- Text Box End -->
+
+                           <ng-container  *ngIf="BAGridData.length > 0">
+                            <div class="col-sm-12 col-md-12">
+                              <h4 class="card__body--subheading">{{'BenefitAdder'|translate}}</h4>
+                            </div>
+                            <!-- page subheading -->
+        
+                            <!-- Grid Box Start -->
+                            <div class="col-sm-6 col-md-6">
+                              <grid-view [gridData]="BAGridData" [showTabs]="false" [columnOptions]="BAColumnOptions"
+                               [isActionColumnVisible]="false" [pageSize]="pageSize"
+                                [tabOptions]="tabOptions" [isExportHide]="true" [isColumnChooserVisible]="false"
+                                [isToolbarVisible]="false" [showPagination]="false"></grid-view>
+                            </div>
+                          </ng-container>
+                            <!-- Text Box End -->
+
+                            <!-- Input Box Start -->
+                            
+                            <!-- Input Box End -->
+                        </ng-container>
+                        <ng-container *ngIf="!this.UkeyData.IsRateMarkupBasedVariant">
+                            <!-- Text Box Start -->
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="getLocaliseMessage('BidRate','USD')" [value]="this.UkeyData.BidRate.toFixed(2)"></app-kendo-label>
+                                    <!-- <span class="achor__text"> Requisition's NTE or Target bill rate : 28.70 </span> -->
+                                </div>
+                            </div>
+                            <!-- Text Box End -->
+
+                            <!-- Input Box Start -->
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="getLocaliseMessage('OTHoursBilledAt')"
+                                        [value]="this.UkeyData.OtHoursBilledAtId===61?'Straight Time (Exempt)':'Time and One Half (Non-Exempt)'"></app-kendo-label>
+                                </div>
+                            </div>
+                            <!-- Input Box End -->
+                            <ng-container>
+                                <div class="col-sm-12 col-md-12">
+                                  <h4 class="card__body--subheading">{{'BenefitAdder'|translate}}</h4>
+                                </div>
+                                <!-- page subheading -->
+            
+                                <!-- Grid Box Start -->
+                                <div class="col-sm-6 col-md-6">
+                                  <grid-view [gridData]="BAGridData" [showTabs]="false" [columnOptions]="BAColumnOptions"
+                                   [isActionColumnVisible]="false" [pageSize]="pageSize"
+                                    [tabOptions]="tabOptions" [isExportHide]="true" [isColumnChooserVisible]="false"
+                                    [isToolbarVisible]="false" [showPagination]="false"></grid-view>
+                                </div>
+                              </ng-container>
+                            <!-- Text Box End -->
+
+                            
+                        </ng-container>
+
+
+                        </div>
+                    </div>
+                </kendo-expansionpanel>
+                <!-- End Kendo Expansion Panel -->
+
+                
+
+                <!-- Start Card Position Description Section-->
+                <kendo-expansionpanel [expanded]="showOnInterview ? true : false" class="card position__description-submittalone">
+                    <ng-template kendoExpansionPanelTitleDirective>
+                        <div (click)="$event.stopPropagation()">
+                            <h4 class="card__heading">
+                                {{ showOnInterview ? 'Submittal Skill Set' : ('PositionDescription' | translate) }}
+                            </h4>                            
+                        </div>
+                    </ng-template>
+                    <div class="floating-layout floating-layout__view-layout">
+                        <div class="card__body">
+                            <div class="row">
+
+                                <!-- Text Box Start -->
+                                <div class="col-sm-12 col-md-12" *ngIf="!showOnInterview">
+                                    <div class="form-group">
+                                        <div class="floating-layout__view-layout--break">
+                                            <app-kendo-label [label]="'PositionDescription'" [value]="UkeyData.JobDescription">
+                                            </app-kendo-label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Text Box End -->
+
+                                <!-- Text Box Start -->
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <div class="floating-layout__view-layout--break">
+                                            <div class="new-viewBG" *ngIf="!showOnInterview">
+                                                <kendo-label [text]="getLocaliseMessage('RequisitionSkillsRequired')">
+                                                    <p class="data-answere">
+                                                        <span [ngClass]="{'show__more-height': !showMore[0]}">
+                                                            {{UkeyData.SkillsRequired}}
+                                                        </span>
+                                                        <span class="show__more-button" (click)="showToggleText(0)">
+                                                            <xrm-icon 
+                                                            [name]="showMore[0] ? 'minus' : 'plus'"
+                                                            [svgPath]="showMore[0] ? minus : plus" [size]="14"
+                                                            color="dark-blue-color"
+                                                            [strokeWidth]="2.8"></xrm-icon>
+                                                        </span>
+                                                    </p>
+                                                </kendo-label>
+                                            </div>
+                                            <app-kendo-label [label]="'CandidateRelatedSkills'"
+                                                    [value]="UkeyData.CanSkillsRequired">
+                                            </app-kendo-label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Text Box End -->
+
+                                <!-- Text Box Start -->
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <div class="floating-layout__view-layout--break">
+                                            <div class="new-viewBG" *ngIf="!showOnInterview">
+                                                <kendo-label [text]="getLocaliseMessage('RequisitionSkillsPreferred')">
+                                                    <p class="data-answere">
+                                                        <span [ngClass]="{'show__more-height': !showMore[1]}">
+                                                            {{this.UkeyData.SkillsPreferred}}
+                                                        </span>
+                                                        <span class="show__more-button" (click)="showToggleText(1)">
+                                                            <xrm-icon
+                                                            [name]="showMore[1] ? 'minus' : 'plus'"
+                                                            [svgPath]="showMore[1] ? minus : plus" [size]="14"
+                                                            color="dark-blue-color"
+                                                            [strokeWidth]="2.8"></xrm-icon>
+                                                        </span>
+                                                    </p>
+                                                </kendo-label>
+                                            </div>
+                                            <app-kendo-label [label]="'CandidateRelatedSkills'"
+                                                    [value]="UkeyData.CanSkillsPreferred">
+                                            </app-kendo-label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Text Box End -->
+
+                                <!-- Text Box Start -->
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <div class="floating-layout__view-layout--break">
+                                            <div class="new-viewBG" *ngIf="!showOnInterview">
+                                                <kendo-label [text]="getLocaliseMessage('ExperienceRequired')">
+                                                    <p class="data-answere">
+                                                        <span [ngClass]="{'show__more-height': !showMore[2]}">
+                                                            {{this.UkeyData.ExperienceRequired}}
+                                                        </span>
+                                                        <span class="show__more-button" (click)="showToggleText(2)">
+                                                            <xrm-icon
+                                                            [name]="showMore[2] ? 'minus' : 'plus'"
+                                                            [svgPath]="showMore[2] ? minus : plus" [size]="14"
+                                                            color="dark-blue-color"
+                                                            [strokeWidth]="2.8"></xrm-icon>
+                                                        </span>
+                                                    </p>
+                                                </kendo-label>
+                                            </div>
+                                                <app-kendo-label [label]="'CandidateRelevantExperience'"
+                                                [value]="UkeyData.CanExperienceRequired">
+                                        </app-kendo-label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Text Box End -->
+
+                                <!-- Text Box Start -->
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <div class="floating-layout__view-layout--break">
+                                            <div class="new-viewBG" *ngIf="!showOnInterview">
+                                                <kendo-label [text]="getLocaliseMessage('ExperiencePreferred')">
+                                                    <p class="data-answere">
+                                                        <span [ngClass]="{'show__more-height': !showMore[3]}">
+                                                            {{this.UkeyData.ExperiencePreferred}}
+                                                        </span>
+                                                        <span class="show__more-button" (click)="showToggleText(3)">
+                                                            <xrm-icon
+                                                            [name]="showMore[3] ? 'minus' : 'plus'"
+                                                            [svgPath]="showMore[3] ? minus : plus" [size]="14"
+                                                            color="dark-blue-color"
+                                                            [strokeWidth]="2.8"></xrm-icon>
+                                                        </span>
+                                                    </p>
+                                                </kendo-label>
+                                            </div>
+                                            <app-kendo-label [label]="'CandidateRelevantExperience'"
+                                            [value]="UkeyData.CanExperiencePreferred">
+                                            </app-kendo-label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Text Box End -->
+
+                                <!-- Text Box Start -->
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <div class="floating-layout__view-layout--break">
+                                            <div class="new-viewBG">
+                                                <kendo-label [text]="getLocaliseMessage('EducationRequired')">
+                                                    <p class="data-answere">
+                                                        <span [ngClass]="{'show__more-height': !showMore[4]}">
+                                                            {{this.UkeyData.EducationRequired}}
+                                                        </span>
+                                                        <span class="show__more-button" (click)="showToggleText(4)">
+                                                            <xrm-icon
+                                                            [name]="showMore[4] ? 'minus' : 'plus'"
+                                                            [svgPath]="showMore[4] ? minus : plus" [size]="14"
+                                                            color="dark-blue-color"
+                                                            [strokeWidth]="2.8"></xrm-icon>
+                                                        </span>
+                                                    </p>
+                                                </kendo-label>
+                                            </div>
+                                            <app-kendo-label [label]="'CandidateEducationDetails'"
+                                                    [value]="UkeyData.CanEducationRequired">
+                                            </app-kendo-label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Text Box End -->
+
+                                <!-- Text Box Start -->
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <div class="floating-layout__view-layout--break">
+                                            <div class="new-viewBG" *ngIf="!showOnInterview">
+                                                <kendo-label [text]="getLocaliseMessage('EducationPreferred')">
+                                                    <p class="data-answere">
+                                                        <span [ngClass]="{'show__more-height': !showMore[5]}">
+                                                            {{this.UkeyData.EducationPreferred}}
+                                                        </span>
+                                                        <span class="show__more-button" (click)="showToggleText(5)">
+                                                            <xrm-icon
+                                                            [name]="showMore[5] ? 'minus' : 'plus'"
+                                                            [svgPath]="showMore[5] ? minus : plus" [size]="14"
+                                                            color="dark-blue-color"
+                                                            [strokeWidth]="2.8"></xrm-icon>
+                                                        </span>
+                                                    </p>
+                                                </kendo-label>
+                                            </div>
+                                            <app-kendo-label [label]="'CandidateEducationDetails'"
+                                                    [value]="UkeyData.CanEducationPreferred">
+                                            </app-kendo-label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Text Box End -->
+
+                                <!-- Text Box Start -->
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <div class="floating-layout__view-layout--break">
+                                            <div class="new-viewBG" *ngIf="!showOnInterview">
+                                                <kendo-label [text]="getLocaliseMessage('AdditionalInformation')">
+                                                    <p class="data-answere">
+                                                        <span [ngClass]="{'show__more-height': !showMore[6]}">
+                                                            {{this.UkeyData.AdditionalInformation}}
+                                                        </span>
+                                                        <span class="show__more-button" (click)="showToggleText(6)">
+                                                            <xrm-icon
+                                                            [name]="showMore[6] ? 'minus' : 'plus'"
+                                                            [svgPath]="showMore[6] ? minus : plus" [size]="14"
+                                                            color="dark-blue-color"
+                                                            [strokeWidth]="2.8"></xrm-icon>
+                                                        </span>
+                                                    </p>
+                                                </kendo-label>
+                                            </div>
+                                            <app-kendo-label [label]="'Candidate\'s Relevant Information'"
+                                                    [value]="UkeyData.CanRelevantInformation">
+                                            </app-kendo-label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </kendo-expansionpanel>
+                <!-- End Kendo Expansion Panel -->
+
+                <!-- Start Card Section-->
+                <kendo-expansionpanel [expanded]="false" class="card" *ngIf="!showOnInterview && roleGroupId != '4'">
+                    <ng-template kendoExpansionPanelTitleDirective>
+                        <div (click)="$event.stopPropagation()">
+                            <h4 class="card__heading">{{'RecruiterDetails'|translate}}</h4>
+                        </div>
+                    </ng-template>
+                    <div class="card__body">
+                        <div class="row">
+                            <!-- Text Box Start -->
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'RecruiterName'|translate" [value]="this.UkeyData.RecruiterName">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                            <!-- Text Box End -->
+
+                            <!-- Text Box Start -->
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-phone  [label]="'RecruiterPhoneNumber'|translate" [isEditMode]="false"
+                                    [phoneControlName]="'altPhoneControl'" [phoneExtControlName]="'altPhoneExt'" [isExtension]="altExt"></app-kendo-phone>
+                                </div>
+                            </div>
+                            <!-- Text Box End -->
+
+                            <!-- Text Box Start -->
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'RecruiterEmail'|translate"
+                                        [value]="this.UkeyData.RecruiterEmail"></app-kendo-label>
+                                </div>
+                            </div>
+                            <!-- Text Box End -->
+                        </div>
+                    </div>
+                </kendo-expansionpanel>
+                <!-- End Kendo Expansion Panel -->
+
+                <!-- Start Card Section-->
+                <kendo-expansionpanel [hidden]="!hasUdfData" [expanded]="false"
+                 class="card card--inverse floating-layout floating-layout__view-layout" *ngIf="!showOnInterview">
+                    <ng-template kendoExpansionPanelTitleDirective>
+                        <div (click)="$event.stopPropagation()">
+                            <h4 class="card__heading">{{'OtherDetailsUDF' | translate}}</h4>
+                        </div>
+                    </ng-template>
+                    <div class="card__body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 list-view">
+                                <!-- <div class="form-group"> -->
+                                    <ng-container>
+                                        <app-udf-implementation [entityId]="pcEntityId" [recordId]="this.UkeyData.SubmittalId"
+                                          [sectorId]="this.UkeyData.SectorId" [recordUKey]="this.UkeyData.SubmittalUkey"
+                                          [showTitle]="false"
+                                          [parentsInfos]="udfCommonMethods.getParentsInfo()" [actionTypeId]="actionTypeId" 
+                                          (hasUDFLength)="getUDFlength($event)">
+                                        </app-udf-implementation>
+                                      </ng-container>
+                                <!-- </div> -->
+                              </div>
+                        </div>
+                    </div>
+                </kendo-expansionpanel>
+                <!-- End Kendo Expansion Panel -->
+
+                <!-- Start Card Section-->
+                 
+                <kendo-expansionpanel [hidden]="!hasDMSLength" [expanded]="false" class="card" *ngIf="!showOnInterview">
+                    <ng-template kendoExpansionPanelTitleDirective>
+                        <div (click)="$event.stopPropagation()">
+                            <h4 class="card__heading">{{'DocumentsUpload'|translate}}</h4>
+                        </div>
+                    </ng-template>
+                    <div class="card__body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 list-view">
+                                <div class="form-group">
+                                  <app-dms-implementation #dms [workFlowId]="pcEntityId" [userGroupId]="numericRGI"
+                                    [sectorId]="3" [uploadStageId]="uploadStageId"
+                                    [actionTypeId]="actionTypeId" [recordId]="this.UkeyData.SubmittalId" [showTitle]="false"
+                                    [processingId]="processingId" [isTransactionScreen]="true"
+                                    (hasDMSLength)="hasDMSLengthFn($event)">
+                                  </app-dms-implementation>
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                </kendo-expansionpanel>
+                <kendo-expansionpanel [expanded]="isCommentExpanded" class="card" *ngIf="(UkeyData.MspComments?.length || UkeyData.StaffingAgencyComments || CurrentPage == 'Withdraw') && !showOnInterview">
+                    <ng-template kendoExpansionPanelTitleDirective>
+                        <div (click)="$event.stopPropagation()">
+                            <h4 class="card__heading">{{'Comment'|translate}}</h4>
+                        </div>
+                    </ng-template>
+                    <ng-container>
+                    <div class="card__body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-textarea *ngIf="(UkeyData.StaffingAgencyComments || CurrentPage == 'Withdraw') && roleGroupId != '4'" [isEditMode]="CurrentPage != 'Withdraw'" [isRequired]="true"  [label]="'WithdrawcommentbyStaffingAgency'|translate"
+                                        [maxCharacters]="2000" [controlName]="'staffingComment'"></app-kendo-textarea>
+
+                                        <app-multi-level-comments *ngIf="UkeyData.MspComments?.length"
+                                        [label]="'ReviewerComment'" [allComments]="UkeyData.MspComments"
+                                        [dateKey]="'Date'" [commentsKey]="'Comment'">
+
+                                        <div class=" col-sm-12 col-md-12" *ngIf="roleGroupId == '4'">
+                                            <div class="form-group">
+                                                <app-kendo-textarea [controlName]="'clientComments'"
+                                                    [label]="'Client Comments (Not Viewable by Staffing Agency)'"
+                                                    [maxCharacters]="2000">
+                                                </app-kendo-textarea>
+                                            </div>
+                                        </div>
+                                    </app-multi-level-comments>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                </kendo-expansionpanel>
+                <!-- End Kendo Expansion Panel -->
+
+            </div>
+        </div>
+
+        <div *ngIf="CurrentPage == 'View' && !showOnInterview" class="page-footer">
+            <div class="btn-box btn-box--center">
+                <button kendoButton themeColor="primary" (click)="navigateBack()">{{'Back' | translate}}</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,84 @@
+<!-- {{rowsInfo | json}} -->
+<form [formGroup]="udfListForm">
+    <div class="col-sm-12 col-md-12 list-view list-view__border">
+        <div class="card__body border mb-3 rounded custom-listgrid-view">
+
+            <div class="row border-bottom py-2 custom-listgrid-header">
+                <ng-container *ngFor="let col of columnsInfo">
+                    <div class="custom-border col-sm-{{ col.Span }}">
+                        <p class="text-dark">{{ col.Name | translate }}</p>
+                    </div>
+                </ng-container>
+            </div>
+
+            <div formArrayName="Fields" class="scroll">
+                <div *ngFor="let time of fa.controls; let i = index; trackBy: trackByFn">
+                    <div [formGroupName]="i" class="row custom-body py-2">
+                        <ng-container *ngFor="let row of rowsInfo; let index = index">
+                            <div class="custom-body-border col-{{ row.Span }}">
+
+                                <app-kendo-label *ngIf="row.ControlType == 'label'"
+                                    [label]="row.DefaultValue"></app-kendo-label>
+
+                                <ng-container *ngIf="row.ControlType == 'switch'">
+                                    <app-kendo-label *ngIf="row.IsReadOnly"
+                                        [label]="row.DefaultValue ? row.OnLabel: row.OffLabel"></app-kendo-label>
+
+                                    <kendo-switch *ngIf="!row.IsReadOnly" formControlName="{{ row.ControlName }}"
+                                        [onLabel]="'Yes'" [offLabel]="'No'"
+                                        (valueChange)="onSwitchChange($event, row)"
+                                         [ngClass]="{'disabled-control': row.IsDisable}" [readonly]="row.IsDisable" 
+                                         [tabindex]="row.IsDisable ? -1 : 0"></kendo-switch>
+
+                                </ng-container>
+
+                                <ng-container *ngIf="row.ControlType == 'dropdown'">
+                                    <app-kendo-label *ngIf="row.IsReadOnly"
+                                        [label]="row.DefaultValue"></app-kendo-label>
+
+                                    <kendo-formfield *ngIf="!row.IsReadOnly">
+                                        <kendo-combobox #combobox [data]="row.Data" textField="Text" valueField="Value"
+                                            [valuePrimitive]="false" [placeholder]="'DdlSelect' | translate" (click)="onControlClick(combobox)"
+                                            formControlName="{{ row.ControlName }}"  [ngClass]="{'disabled-control': row.IsDisable}" 
+                                            [readonly]="row.IsDisable" [tabindex]="row.IsDisable ? -1 : 0" (valueChange)="onDropDownChange($event, row)">
+                                        </kendo-combobox>
+                                        <app-print-error-message
+                                            [control]="time.get(row.ControlName)"></app-print-error-message>
+                                    </kendo-formfield>
+
+                                </ng-container>
+
+                                <ng-container *ngIf="row.ControlType == 'multiselect_dropdown'">
+                                    <ng-container *ngIf="row.IsReadOnly">
+                                        <label> {{getCommonSeparatedItems(row.DefaultValue) }} </label>
+                                    </ng-container>
+                                    <kendo-formfield *ngIf="!row.IsReadOnly">
+                                        <kendo-multiselect #multiselect #multiselectElement [data]="row.Data" textField="Text" valueField="Value"
+                                            formControlName="{{ row.ControlName }}" (valueChange)="onMultiSelectChange($event, row)"
+                                            [placeholder]="'DdlSelect' | translate"  [ngClass]="{'disabled-control': row.IsDisable}" 
+                                            [tabindex]="row.IsDisable ? -1 : 0" [readonly]="row.IsDisable">
+                                        </kendo-multiselect>
+                                        <app-print-error-message
+                                            [control]="time.get(row.ControlName)"></app-print-error-message>
+                                    </kendo-formfield>
+                                </ng-container>
+
+                                <ng-container *ngIf="row.ControlType == 'radio'">
+                                    <div class="radio-input d-inline-block">
+                                        <input kendoRadioButton type="radio" [id]="'radio' + i"
+                                            [checked]="row.DefaultValue" [name]=" row.ControlName"
+                                            [ngClass]="{'disabled-control': row.IsDisable}" [readonly]="row.IsDisable"
+                                            [tabindex]="row.IsDisable ? -1 : 0" [formControl]=" row.ControlName" />
+                                    </div>
+                                </ng-container>
+
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</form>

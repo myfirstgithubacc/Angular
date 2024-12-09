@@ -1,0 +1,57 @@
+<div class="app-content__body floating-layout floating-layout__view-layout">
+    <form [formGroup]="AddEditEventReasonForm">
+        <div class="card">
+            <div class="card__header">
+                <h4 class="card__heading">{{'BasicDetails'|translate}}</h4>
+            </div>
+            <div class="card__body">
+                <div class="row">
+
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'Sector'" [value]="selectionReasonDetails.SectorName"></app-kendo-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'SelectionReason'"
+                                [value]="selectionReasonDetails.CandidateSelectionReason"></app-kendo-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12">
+                        <h4 class="card__body--subheading">{{'ApplicableIn'|translate}}</h4>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [tooltipVisible]="true"
+                                [tooltipTitle]="'SelectionReasonProfessionalRequestToolTip'"
+                                [label]="'ProfessionalPsrRequest'"
+                                [value]="selectionReasonDetails.ProfessionalRequest ? 'Yes':'No'"></app-kendo-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [tooltipVisible]="true" [tooltipTitle]="'SelectionReasonLiRequestToolTip'"
+                                [label]="'LiRequest'" [value]="selectionReasonDetails.LiRequest ? 'Yes':'No'"></app-kendo-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6" *ngIf="rfxSowSwitchConfig">
+                        <div class="form-group">
+                            <app-kendo-label [tooltipVisible]="true"
+                                [tooltipTitle]="'SelectionReasonICSOWRequestToolTip'" [label]="'IcSowRequest'"
+                                [value]="selectionReasonDetails.RfxSowRequest ? 'Yes':'No'"></app-kendo-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-footer">
+            <div class="btn-box btn-box--center">
+                <button type="button" kendoButton themeColor="primary" [routerLink]="navigationPaths.list">
+                    {{ 'Back' |translate }}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

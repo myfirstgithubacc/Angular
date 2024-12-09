@@ -1,0 +1,462 @@
+<div class="app-content__body app-content__body--li-view">
+    <form [formGroup]="liRequestForm">
+        <div class="col-xs-12 col-md-12 LI-industrial__stepper">
+            <app-status-bar-li [statusId]="statusId" [approverlength]="approverLength"
+                [isEditMode]="isEditMode"></app-status-bar-li>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card--info">
+                    <div class="card__header" (click)="onRequisitionAction()">
+                        <h4 class="card__heading">{{'RequisitionQuickView' | translate}}</h4>
+                        <div class="card__header-icon">
+                            <div class="card__header-icon--error">
+                                <xrm-icon name="alert-triangle" color="red-color" [size]="18"
+                                    class="sw-bold"></xrm-icon>
+                            </div>
+                            <div>
+                                <xrm-icon name="chevron-down" [size]="18" color="black-color" class="sw-bold"
+                                    *ngIf="requisitionicondown"></xrm-icon>
+                                <xrm-icon name="chevron-up" [size]="18" color="black-color" class="sw-bold"
+                                    *ngIf="requisitioniconup"></xrm-icon>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card__body" *ngIf="showRequisitioncard">
+                        <div class="card__body--inner-wrapper">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="view__screen">
+                                        <ul class="list__data">
+                                            <li class="list__data--item"> <strong class="kendo-label">{{'RequestId'
+                                                    | translate}}</strong>
+                                                <span class="data-answere">{{liRequestDetails.RequestCode}}</span>
+                                            </li>
+                                            <li class="list__data--item"> <strong
+                                                    class="kendo-label">{{'RequestingPrimaryManagerName'
+                                                    | translate}}</strong>
+                                                <span
+                                                    class="data-answere">{{liRequestDetails.RequestingManagerName}}</span>
+                                            </li>
+                                            <li class="list__data--item"> <strong class="kendo-label">{{'JobCategory'
+                                                    | translate}}</strong>
+                                                <span class="data-answere">{{liRequestDetails.JobCategoryName}}</span>
+                                            </li>
+                                            <li class="list__data--item"> <strong class="kendo-label">{{'Location'
+                                                    | translate}}</strong>
+
+                                                <span class="data-answere">{{liRequestDetails.WorkLocationName}} <br>
+                                                    <span class="achor__text">
+                                                        {{liRequestDetails.LocationAddress}}</span></span>
+                                            </li>
+                                            <li class="list__data--item"> <strong
+                                                    class="kendo-label">{{'NoofContractorFillReq' | translate}}</strong>
+                                                <span
+                                                    class="data-answere">{{liRequestDetails.NoOfContractorFilled}}/{{liRequestDetails.PositionNeeded}}</span>
+                                            </li>
+                                            <li class="list__data--item"> <strong class="kendo-label">{{'Shift'
+                                                    | translate}}</strong>
+                                                <span
+                                                    class="data-answere">{{liRequestDetails.RequestShiftDetailGetAllDto.ShiftName}}<br>
+                                                    <app-weekday-picker [dayInfo]="daysInfo" [isWeekdayEditMode]="false"
+                                                        [timeRangeProperties]="timeRange" [timeFormat]="'hh:mm a'"
+                                                        [startTimeControlName]="'startTimeControlName'"
+                                                        [endTimeControlName]="'endTimeControlName'"
+                                                        [isReadonly]="false">
+                                                    </app-weekday-picker>
+                                                </span>
+                                            </li>
+                                            <li class="list__data--item"> <strong
+                                                    class="kendo-label">{{'HourDistribution'
+                                                    | translate}}</strong>
+                                                <span
+                                                    class="data-answere">{{liRequestDetails.HourDistributionRuleName}}</span>
+                                            </li>
+                                            <li class="list__data--item"> <strong class="kendo-label">{{'StartDate' |
+                                                    translate}}</strong>
+                                                <span class="data-answere">{{startDate}}</span>
+                                            </li>
+                                            <li class="list__data--item"> <strong
+                                                    class="kendo-label">{{'ReasonForRequest'
+                                                    | translate}}</strong>
+                                                <span
+                                                    class="data-answere">{{liRequestDetails.ReasonForRequestName}}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card--info">
+                    <div class="card__header" (click)="onBroadcastAction()">
+                        <h4 class="card__heading">{{'JobDetails' | translate}}</h4>
+                        <div class="card__header-icon">
+                            <div class="card__header-icon--error">
+                                <xrm-icon name="alert-triangle" color="red-color" [size]="18"
+                                    class="sw-bold"></xrm-icon>
+                            </div>
+                            <div>
+                                <xrm-icon name="chevron-down" [size]="18" color="black-color" class="sw-bold"
+                                    *ngIf="broadcasticondown"></xrm-icon>
+                                <xrm-icon name="chevron-up" [size]="18" color="black-color" class="sw-bold"
+                                    *ngIf="broadcasticonup"></xrm-icon>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card__body" [hidden]="showBroadcastcard">
+                        <div class="card__body--inner-wrapper">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="view__screen">
+                                        <ul class="list__data">
+                                            <li class="list__data--item"> <strong class="kendo-label">{{'SubmissionDate'
+                                                    | translate}}</strong>
+                                                <span class="data-answere">{{submissionDate}}</span>
+                                            </li>
+                                            <li class="list__data--item"> <strong class="kendo-label">{{'Sector'
+                                                    | translate}}</strong>
+                                                <span class="data-answere">{{liRequestDetails.SectorName}}</span>
+                                            </li>
+                                            <ng-container
+                                                *ngIf="orgType1Data || orgType2Data || orgType3Data || orgType4Data">
+                                                <ng-container *ngIf="orgType1Data && orgType1Data?.IsVisible">
+                                                    <li class="list__data--item"> <strong
+                                                            class="kendo-label">{{orgType1Data.OrgName}}
+                                                        </strong>
+                                                        <span
+                                                            class="data-answere">{{liRequestDetails.Orglevel1Name}}</span>
+                                                    </li>
+                                                </ng-container>
+                                                <ng-container *ngIf="orgType2Data && orgType2Data?.IsVisible">
+                                                    <li class="list__data--item"> <strong
+                                                            class="kendo-label">{{orgType2Data.OrgName}}</strong>
+                                                        <span
+                                                            class="data-answere">{{liRequestDetails.Orglevel2Name}}</span>
+                                                    </li>
+                                                </ng-container>
+                                                <ng-container *ngIf="orgType3Data && orgType3Data?.IsVisible">
+                                                    <li class="list__data--item">
+                                                        <strong class="kendo-label">{{ orgType3Data.OrgName}}</strong>
+                                                        <span
+                                                            class="data-answere">{{liRequestDetails.Orglevel3Name}}</span>
+                                                    </li>
+                                                </ng-container>
+                                                <ng-container *ngIf="orgType4Data && orgType4Data?.IsVisible">
+                                                    <li class="list__data--item"> <strong
+                                                            class="kendo-label">{{orgType4Data.OrgName}}</strong>
+                                                        <span
+                                                            class="data-answere">{{liRequestDetails.Orglevel4Name}}</span>
+                                                    </li>
+                                                </ng-container>
+                                            </ng-container>
+                                            <li class="list__data--item"> <strong class="kendo-label">{{'LaborCategory'|
+                                                    translate}}</strong>
+                                                <span
+                                                    class="data-answere">{{liRequestDetails.LaborCategoryName}}</span>
+                                            </li>
+                                            <li class="list__data--item"> <strong
+                                                    class="kendo-label">{{'CostAccountingCode' | translate}}</strong>
+                                                <span
+                                                    class="data-answere">{{liRequestDetails.CostAccountingCode}}</span>
+                                            </li>
+                                            <li class="list__data--item"> <strong
+                                                    class="kendo-label">{{'CostAccountingCodeDescription' |
+                                                    translate}}</strong>
+                                                <span
+                                                    class="data-answere">{{liRequestDetails.DefaultCostCenterDescription}}</span>
+                                            </li>
+                                            <li class="list__data--item"> <strong
+                                                    class="kendo-label">{{'StartDateNoLaterThan' | translate }}</strong>
+                                                <span
+                                                    class="data-answere">{{liRequestDetails.StartDateNoLaterThan}}</span>
+                                            </li>
+                                            <li class="list__data--item" *ngIf="!isCACHaveSpecificApprovers"> <strong
+                                                    class="kendo-label">{{'PrimaryApprover' |
+                                                    translate}}</strong>
+                                                <span
+                                                    class="data-answere">{{liRequestDetails.PrimaryTimeApproverName}}</span>
+                                            </li>
+                                            <li class="list__data--item" *ngIf="isCACHaveSpecificApprovers"> <strong
+                                                    class="kendo-label">{{'PrimaryApprover' |
+                                                    translate}}</strong>
+                                                <span class="data-answere">{{'MultipleApprover' | translate}}</span>
+                                            </li>
+                                            <li class="list__data--item" *ngIf="!isCACHaveSpecificApprovers"> <strong
+                                                    class="kendo-label">{{'AlternateApprover' |
+                                                    translate}}</strong>
+                                                <span
+                                                    class="data-answere">{{liRequestDetails.AlternateTimeApproverName}}</span>
+                                            </li>
+                                            <li class="list__data--item" *ngIf="isCACHaveSpecificApprovers"> <strong
+                                                    class="kendo-label">{{'AlternateApprover' |
+                                                    translate}}</strong>
+                                                <span class="data-answere">{{'MultipleApprover' | translate}}</span>
+                                            </li>
+
+                                            <ng-container *ngIf="showDrugField()">
+                                                <li class="list__data--item"> <strong
+                                                        class="kendo-label">{{'DrugScreenId' | translate}}</strong>
+                                                    <span class="data-answere">{{liRequestDetails.IsDrugTestRequired ?
+                                                        'Yes' : 'No'}}</span>
+                                                </li>
+                                            </ng-container>
+                                            <ng-container *ngIf="showaBackgroundField()">
+                                                <li class="list__data--item"> <strong
+                                                        class="kendo-label">{{'BackgroundChecksTitle' |
+                                                        translate}}</strong>
+                                                    <span
+                                                        class="data-answere">{{liRequestDetails.IsBackgrounCheckRequired
+                                                        ? 'Yes' : 'No'}}</span>
+                                                </li>
+                                            </ng-container>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <div class="audit-log">
+                                        <div class="list-view">
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-12 list-view list-view__border">
+                                                    <app-contractor-details [isEditMode]="isEditMode"
+                                                        [isViewMode]="true" [parentData]="contractorGridData"
+                                                        [lastTbdSequenceNo]="liRequestDetails.LastTbdSequenceNo"
+                                                        [startDate]="liRequestDetails.StartDate"
+                                                        [startDateNoLaterThan]="liRequestDetails.StartDateNoLaterThan"
+                                                        [tenurePolicyApplicable]="tenurePolicyApplicable"
+                                                        [tenureLimitType]="tenureLimitType"
+                                                        [requsitionTenure]="requsitionTenure" [wageRate]="baseWageRate"
+                                                        [shiftDetails]="shiftDetails" [weekDaysArray]="weekDaysArray"
+                                                        [benefitAdderList]="benefitAdderList">
+                                                    </app-contractor-details>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-md-4">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'NoOfRequestedContractor'"
+                                        [value]="liRequestDetails.PositionNeeded"></app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6"></div>
+                            <div class="col-sm-2 col-md-2">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'NoOfContractorsFilled'"
+                                        [value]="liRequestDetails.NoOfContractorFilled"></app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-md-4">
+                                <app-benefit-adder *ngIf="liRequestDetails?.RequestId"
+                                    [requestId]="liRequestDetails.RequestId" [entityId]="entityId"
+                                    [reqLibraryId]="liRequestDetails.ReqLibraryId"
+                                    [sectorId]="liRequestDetails.SectorId"
+                                    [locationId]="liRequestDetails.WorkLocationId"
+                                    (onDataPicked)="getBenefitAdderData($event)"></app-benefit-adder>
+                            </div>
+                            <div class="col-sm-6"></div>
+                            <div class="col-sm-2 col-md-2">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'EstimatedCost'" [isCurrency]="true"
+                                        [value]="liRequestDetails.EstimatedCost"></app-kendo-label>
+                                </div>
+                            </div>
+                            <ng-container *ngIf="isBroadcastActionAllowed">
+                                <div class="col-sm-12 col-md-12"
+                                    *ngIf="!liRequestDetails?.IsMspProcessRequired && !liRequestDetails?.IsManualBroadcastRequired">
+                                    <div class="form-group">
+                                        <app-kendo-label [label]="'ManualBroadcast' | translate"
+                                            [value]="liRequestDetails.IsManualBroadcast ? 'Yes': 'No'"
+                                            [tooltipTitle]="'ManualBroadcastToolTipmsg'"
+                                            [tooltipVisible]="true"></app-kendo-label>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <div class="card__body--inner-wrapper">
+                                <div class="card__body--inner-wrapper">
+                                    <div class="col-sm-12 col-md-12">
+                                        <div class="view__screen">
+                                            <ul class="list__data">
+                                                <li class="list__data--item d-block">
+                                                    <app-kendo-label [label]="'PositionDescription'"
+                                                        [allowMultilineText]="true" class="data-answere"
+                                                        [value]="liRequestDetails.PositionDescription">
+                                                    </app-kendo-label>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card--info" [hidden]="hasApproverDataLength">
+                    <div class="card__header" (click)="onApproversAction()">
+                        <h4 class="card__heading">{{'ApproverDetails' | translate}}</h4>
+                        <div class="card__header-icon">
+                            <div class="card__header-icon--error">
+                                <xrm-icon name="alert-triangle" color="red-color" [size]="18"
+                                    class="sw-bold"></xrm-icon>
+                            </div>
+                            <div>
+                                <xrm-icon name="chevron-down" [size]="18" color="black-color" class="sw-bold"
+                                    *ngIf="approvericondown"></xrm-icon>
+                                <xrm-icon name="chevron-up" [size]="18" color="black-color" class="sw-bold"
+                                    *ngIf="approvericonup"></xrm-icon>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card__body" [hidden]="!showApproverscard">
+                        <div class="card__body--inner-wrapper">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="view__screen">
+                                        <ul class="list__data">
+                                            <ng-container *ngIf="liRequestDetails.SectorId > 0">
+                                                <app-approval-widget-v2 [entityId]="entityId" [isView]="true"
+                                                    [isRecordId]="liRequestDetails.RequestId"
+                                                    [approvalInfo]="ApprovalConfigWidgetData"
+                                                    [sector]="liRequestDetails.SectorId" [isheading]="false"
+                                                    (onApproverSubmitReq)="onApproverSubmit($event)"
+                                                    [heading]="'ApproverDetails'"></app-approval-widget-v2>
+                                            </ng-container>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card--info" [hidden]="!hasUDFLength">
+                    <div class="card__header" (click)="onOtherDetailsAction()">
+                        <h4 class="card__heading">{{'OtherDetailsUDFs' | translate}}</h4>
+                        <div class="card__header-icon">
+                            <div class="card__header-icon--error">
+                                <xrm-icon name="alert-triangle" color="red-color" [size]="18"
+                                    class="sw-bold"></xrm-icon>
+                            </div>
+                            <div>
+                                <xrm-icon name="chevron-down" [size]="18" color="black-color" class="sw-bold"
+                                    *ngIf="otherdetailsicondown"></xrm-icon>
+                                <xrm-icon name="chevron-up" [size]="18" color="black-color" class="sw-bold"
+                                    *ngIf="otherdetailsiconup"></xrm-icon>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card__body" [hidden]="!showOtherDetailscard">
+                        <div class="card__body--inner-wrapper">
+                            <app-udf-implementation [entityId]="entityId" [sectorId]="liRequestDetails.SectorId"
+                                [recordId]="liRequestDetails.RequestId" [recordUKey]="recordUKey"
+                                [actionTypeId]="actionTypeId" [showTitle]="false" (hasUDFLength)="getUDFLength($event)">
+                            </app-udf-implementation>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" [ngClass]="getCardClassCommentSection()">
+                    <div class="card__header" (click)="onCommentAction()">
+                        <h4 class="card__heading">{{'ApproverComments' | translate}}</h4>
+                        <div class="card__header-icon">
+                            <div *ngIf="!showCommentsUploadscard" class="card__header-icon--error">
+                                <xrm-icon name="alert-triangle" color="red-color" [size]="18"
+                                    class="sw-bold"></xrm-icon>
+                            </div>
+                            <div>
+                                <xrm-icon name="chevron-down" [size]="18" color="black-color" class="sw-bold"
+                                    *ngIf="commenticondown"></xrm-icon>
+                                <xrm-icon name="chevron-up" [size]="18" color="black-color" class="sw-bold"
+                                    *ngIf="commenticonup"></xrm-icon>
+                            </div>
+                        </div>
+                    </div>
+                    <div #commentSection class="card__body" [hidden]="!showCommentsUploadscard">
+                        <div class="card__body--inner-wrapper">
+                            <div class="row">
+                                <app-multi-level-comments *ngIf="reviewComments.length"
+                                    [label]="'PreviousApproverComments'" [allComments]="reviewComments"
+                                    [dateKey]="'ReviewedOnDate'" [labelKey]="'ApproverLabel'"
+                                    [commentsKey]="'ApproverComments'">
+                                </app-multi-level-comments>
+
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <app-kendo-textarea [label]="'ApproverComment'" [maxCharacters]="2000"
+                                             [allowBullets]="true" [isEditMode]="!liRequestDetails.IsReviewActionRequired"
+                                            [controlName]="'approverComment'"></app-kendo-textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card--info" [hidden]="!hasDMSLength">
+                    <div class="card__header" (click)="onDocumentAction()">
+                        <h4 class="card__heading">{{'Documents' | translate}}</h4>
+                        <div class="card__header-icon">
+                            <div class="card__header-icon--error">
+                                <xrm-icon name="alert-triangle" color="red-color" [size]="18"
+                                    class="sw-bold"></xrm-icon>
+                            </div>
+                            <div>
+                                <xrm-icon name="chevron-down" [size]="18" color="black-color" class="sw-bold"
+                                    *ngIf="documenticondown"></xrm-icon>
+                                <xrm-icon name="chevron-up" [size]="18" color="black-color" class="sw-bold"
+                                    *ngIf="documenticonup"></xrm-icon>
+                            </div>
+                        </div>
+                    </div>
+                    <div [hidden]="!showDocumentUploadscard">
+                        <div class="row">
+                            <ng-container>
+                                <app-dms-implementation [workFlowId]="entityId" [userGroupId]="userGroupId"
+                                    [sectorId]="liRequestDetails.SectorId" [uploadStageId]="uploadStageId"
+                                    [actionTypeId]="actionTypeId" [recordId]="liRequestDetails.RequestId"
+                                    [showTitle]="false" [processingId]="processingId"
+                                    (hasDMSLength)="getDMSLength($event)">
+                                </app-dms-implementation>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Section-->
+                <div class="page-footer">
+                    <div class="btn-box text-end">
+                        <button type="button" kendoButton fillMode="outline" themeColor="primary"
+                            (click)="cancelForm()">{{'Back' |
+                            translate}}</button>
+                        <ng-container *ngIf="liRequestDetails?.IsReviewActionRequired">
+                            <span *ngIf="(liRequestDetails?.StatusId != 117) && (liRequestDetails?.StatusId != 118)">
+                                <button type="button" kendoButton fillMode="outline" (click)="declineForm()"
+                                    themeColor="primary">Decline</button>
+                                <button type="button" kendoButton (click)="selectForm()"
+                                    themeColor="primary">Approve</button>
+                            </span>
+                        </ng-container>
+                    </div>
+                </div>
+                <!-- End Footer Section-->
+
+                <div>
+                    <event-log></event-log>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>

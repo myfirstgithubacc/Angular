@@ -1,0 +1,54 @@
+<form [formGroup]="AddEditUserForm">
+  <div class="card temporary_card">
+    <div class="card__body">
+      <div class="row">
+        <div class="col-sm-6 col-md-6">
+          <div class="form-group">
+            <app-kendo-dropdown [label]="'Logged In User Type'" [isSingleSelect]="true" [isEditMode]="false" [controlName]="'RoleGroupId'"
+              [list]="userTypeList" [placeholder]="'-Select-'"
+              (onChange)="onChangeUserGroup($event)">
+            </app-kendo-dropdown>
+          </div>
+        </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="card temporary_card" >
+    <div class="card__header">
+      <h4 class="card__heading">{{'BasicDetails' |translate}}</h4>
+    </div>
+
+    <div class="card__body">
+      <div class="row">
+           <div class="col-sm-6 col-md-6">
+          <div class="form-group">
+            <app-textbox [fieldName]="'UserEmail'" [entityType]="entityType" [xrmEntityId]="entityId"
+              [isEditMode]="isEditMode" [controlName]="'UserEmail'" [maxCharacters]="256" [label]="'EmailAddress'"
+              [isRequired]="true" [isSpecialCharacterAllowed]="true"
+              [specialCharactersAllowed]="['@','.','-','_','*','!','#','$','%']">
+            </app-textbox>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-6">
+          <div class="form-group">
+            <app-textbox [fieldName]="'UserAlternatePhoneNumber'" [entityType]="entityType" [xrmEntityId]="entityId"
+            [isEditMode]="isEditMode" [controlName]="'UserAlternatePhoneNumber'" [maxCharacters]="256" [label]="'UID'"
+            [isRequired]="true" [isSpecialCharacterAllowed]="true" [isSpecialCharacterAllowed]="true" [specialCharactersAllowed]="['.']">
+          </app-textbox>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-6">
+          <div class="form-group">
+            <app-textbox [fieldName]="'UserName'" [entityType]="entityType" [xrmEntityId]="entityId"
+              [isEditMode]="isEditMode" [controlName]="'UserName'" [maxCharacters]="10" [label]="'MSP Bill Rate'"
+              [isRequired]="true">
+            </app-textbox>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,150 @@
+<div class="auth auth__user-activation alert__auth">
+    <main class="container-fluid">
+        <div class="row">
+            <div class="col-sm-4 auth__left-panel">
+                <div class="auth__user-activation--bg">
+                    <div class="auth auth__msg-card__wpr">
+                        <p class="auth__msg-card">
+                            <strong>{{'Hello' | translate}}</strong> <br>
+                            {{'WelcomeToUserRecoveryProcess' | translate}}
+                            <br />{{'ContactMSPProgramManager' | translate}}
+                        </p>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="col-sm-8 auth__right-panel">
+                <div class="auth__form-card__wpr">
+
+                    <app-toaster [isOnComponent]="true"></app-toaster>
+
+                    <div class="auth__header">
+                        <img class="logo-firm" src="./assets/images/XRM-logo.webp" alt="logo">
+                        <img class="logo-client" src="assets/images/acrologo.webp" alt="logo">
+                    </div>
+
+                    <div class="auth__form screen">
+                        <h1 class="auth__form--heading">
+                            {{'ForgotUserID' | translate}}
+                        </h1>
+
+                        <form [formGroup]="AddEditEventReasonForm">
+                            <div class="user__activation">
+                                <div class="col-sm-12 col-md-12">
+                                    <app-kendo-stepper [steps]="steps" stepType="label" [currentStep]="currentStep"
+                                        [linear]="false">
+                                        <ng-template kendoStepperLabelTemplate let-step>
+                                            <span class="step-progress"></span>
+                                            <span>{{ step.label }}</span>
+                                        </ng-template>
+                                    </app-kendo-stepper>
+                                </div>
+
+                                <div class="" *ngIf="currentStep === 0" [attr.id]='steps'>
+                                    <!-- Card Header Section-->
+                                    <div class="user__activation__header">
+                                        <h4 class="user__activation__heading"> {{'Verification' | translate}} </h4>
+                                    </div>
+                                    <!-- End Card Header Section-->
+
+                                    <!-- Card Body Section-->
+                                    <div class="user__activation__body">
+
+
+                                        <!-- row start -->
+                                        <div class="row">
+
+                                            <div class="col-sm-12 col-md-12">
+                                                <div class="form-group">
+                                                    <app-textbox [label]="'EmailAddress'" [isRequired]="true"
+                                                        [isSpecialCharacterAllowed]="true"
+                                                        [controlName]="'email'"></app-textbox>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12 col-md-12">
+                                                <div class="form-group">
+                                                    <app-textbox [label]="'LastName'" [isRequired]="true"
+                                                        [isSpecialCharacterAllowed]="false" [maxCharacters]="100"
+                                                        [controlName]="'lastName'"></app-textbox>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="" *ngIf="currentStep === 1">
+                                    <!-- Card Header Section-->
+                                    <div class="user__activation__header">
+                                        <h4 class="user__activation__heading" kendoTooltip>{{'SecurityQuestion' |
+                                            translate}}</h4>
+                                    </div>
+                                    <!-- End Card Header Section-->
+
+                                    <!-- Card Body Section-->
+                                    <div class="user__activation__body">
+
+
+                                        <!-- row start -->
+                                        <div class="row">
+
+                                            <div class="col-sm-12 col-md-12">
+                                                <div class="form-group"> <a href="javascript:;" kendoTooltip
+                                                        (click)="changeQuestion()" class="refersh-question"><xrm-icon
+                                                            [title]="'ChangeSecurityQuestion' | translate"
+                                                            name="refresh" [size]="16" color="white-color"
+                                                            class="sw-bolder"></xrm-icon></a>
+                                                    <kendo-label text="Question">
+                                                        <p class="label-answere">
+                                                            <strong>{{question[randomIndex].Question}}</strong>
+                                                        </p>
+                                                    </kendo-label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12 col-md-12">
+                                                <div class="form-group">
+                                                    <app-textbox [label]="'Answer'" [isRequired]="true"
+                                                        [controlName]="'securityQues'"
+                                                        [maxCharacters]="41"></app-textbox>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="user__activation__footer page-footer stepper-button">
+                                    <div class="stepper-button__prev">
+                                        <button (click)="prev()" [disabled]="isButtonDisabledExplicitly" type="button"
+                                            kendoButton href="javascript:;" fillMode="outline" themeColor="primary">
+                                            <xrm-icon name="chevron-left" [size]="15" color="dark-blue-color"
+                                                class="sw-bold"></xrm-icon>
+                                            {{'Back'|translate}}
+                                        </button>
+                                    </div>
+                                    <div class="stepper-button__next">
+                                        <button type="submit" (click)="verifyUser()" kendoButton
+                                            *ngIf="currentStep === 0" themeColor="primary"
+                                            [disabled]="hasEmailAndLastName()">{{'Verify' | translate}}</button>
+                                        <button type="submit" kendoButton href="javascript:;" themeColor="primary"
+                                            *ngIf="currentStep === 1" (click)="verifyAnswer()"
+                                            [disabled]="isButtonDisabledExplicitly || hasSecurityQues()">{{'Submit' |
+                                            translate}}</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</div>

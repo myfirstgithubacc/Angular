@@ -1,0 +1,10 @@
+.request_id {
+    cursor: pointer;
+    font-size: var(--base-font-size);
+    position: relative;
+    left: -10px;
+}
+
+.app-content__kendoexpansion-main .card .k-expander-content {
+    padding-inline: var(--kendo-spacing-4, 1rem) !important;
+}

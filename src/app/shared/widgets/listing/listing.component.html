@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="col-4">
+    <app-search
+      [placeholder]="placeholder | translate"
+      [buttonNameSearch]="buttonNameSearch | translate"
+      (onSearch)="onSearch($event)"
+    ></app-search>
+  </div>
+  <div class="col-2 d-flex align-items-center">
+    <app-advance-search
+      [JsonData]="JsonData"
+      (selectedFilter)="selectedFilter($event)"
+    ></app-advance-search>
+  </div>
+  <div class="col-6 d-flex justify-content-end">
+    <button
+      type="button"
+      kendoButton
+      fillMode="solid"
+      themeColor="primary"
+      class="send-button"
+      icon="plus"
+      (click)="navigate()"
+    >
+      {{ buttonName | translate }}
+    </button>
+  </div>
+</div>
+<div class="row my-2">
+  <grid-view
+    [gridData]="gridData"
+    [columnOptions]="columnOptions"
+    [actionSet]="actionSet"
+    [tabOptions]="tabOptions"
+    [kendoGridSelectedBy]="gridSelectedBy"
+  ></grid-view>
+</div>

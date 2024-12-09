@@ -1,0 +1,9 @@
+<div class="col-sm-12 col-md-12">
+    <div class="form-group">
+        <app-kendo-label [label]="label"></app-kendo-label>
+        <div class="label-answere mb-2" *ngFor="let detail of allComments">
+            <p><span>{{ detail[dateKey] | date: dateFormat }}</span></p>
+            <p><span>{{ detail[commentsKey] }} <span *ngIf="labelKey!=null"> - {{ detail[labelKey] }} </span></span></p>
+        </div>
+    </div>
+</div>

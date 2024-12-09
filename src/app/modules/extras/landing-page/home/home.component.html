@@ -1,0 +1,139 @@
+<div class="home-main">
+    <!-- page Header Section-->
+    <div class="page-heading">
+        <h1 class="page-heading__title">{{('Welcome' | translate) + ' ' + UserName}}</h1>
+    </div>
+    <!-- End page Header Section-->
+    <div class="row">
+        <!-- Start Message Board -->
+        <div class="col-md-8 home-main__message-board">
+            <div class="card custom-card">
+                <div class="card__header">
+                    <h4 class="card__heading">{{"MessageBoard" | translate}}</h4>
+                </div>
+                <div class="card-body">
+                    <kendo-scrollview #myCarousel [data]="items" [width]="'100%'" [height]="'340px'"
+                        [pageable]="!containsSingleMessage  || items.length === 0" [arrows]="false"
+                        [endless]="!containsSingleMessage" [animate]="true" (mouseenter)="setPauseAndPlay()"
+                        (mouseleave)="setPauseAndPlay()">
+                        <ng-template let-item="item">
+                            <div *ngIf="item.MessageBoardContentTypeId === 185" class="carousel-caption"
+                                [innerHTML]="(item.MessageLocalizedKey | translate) | safe:'html'">
+                            </div>
+                            <div *ngIf="item.MessageBoardContentTypeId === 186" class="carousel-caption">
+                                <img alt="{{item.MessageAltTextLocalizedKey | translate}}" src="{{item.Base64String}}">
+                            </div>
+                        </ng-template>
+                    </kendo-scrollview>
+                </div>
+            </div>
+        </div>
+        <!-- End Message Board -->
+        <!-- Start Tab -->
+        <div class="col-md-4">
+            <div class="card custom-card">
+                <div class="card__header">
+                    <ul class="nav nav-tabs nav-tabs-custom nav-success nav-justified" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" data-bs-toggle="tab" href="#actionitems" role="tab"
+                                aria-selected="true">
+                                {{"MyActionItems" | translate}}
+                            </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" data-bs-toggle="tab" href="#favorites" role="tab" aria-selected="false"
+                                tabindex="-1">
+                                {{"Favorites" | translate}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content text-muted custom-card">
+                        <div class="tab-pane active show" id="actionitems" role="tabpanel">
+                            <div class="actionItems simplebar-scrollable-y" data-simplebar="init">
+                                <ul class="list-group" *ngIf="myActionItemsList.length > 0">
+                                    <ng-container *ngFor="let item of myActionItemsList">
+                                        <li *ngIf="item.count != 0" class="list-group-item">
+                                            <a href="javascript:;" (click)="routerLink(item)">
+                                                <div *ngIf="item.count == undefined">
+                                                    <kendo-skeleton shape="text" animation="pulse"
+                                                        width="15%"></kendo-skeleton>
+                                                </div>
+                                                <div *ngIf="item.count != undefined">
+                                                    <span
+                                                        [innerHTML]="'MyActionItemList' | translate: getObject([{ Value: '<strong>' + item.count + '</strong>', IsLocalizeKey: false }, { Value: item.ActionItemName, IsLocalizeKey: true }])"></span>
+                                                </div>
+
+
+                                            </a>
+                                        </li>
+                                    </ng-container>
+                                </ul>
+                                <ul class="list-group">
+                                    <li class="list-group-item"
+                                        *ngIf="myActionItemsList.length <= 0 || isEveryActionItemCountZero()">
+                                        <span>
+                                            {{'ThereAreNoItemsPendingForAction' | translate}}
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="tab-pane favorite-tabs" id="favorites" role="tabpanel">
+                            <div class="actionItems" data-simplebar="init">
+                                <ul class="list-group">
+                                    <div *ngIf="(favoritesList.length??0 > 0 && isEmpty());else other_content">
+                                        <li *ngFor="let item of favoritesList; let i = index"
+                                            [class.removelistfavorite]="item.Disabled" class="list-group-item"
+                                            [class.odd]="i % 2 !== 0">
+                                            <a href="javascript:;" [routerLink]="item.EntityIdUrl">
+                                                {{ item.label}}</a>
+                                            <button class="badge float-end" position="right"
+                                                title="{{'RemoveFavourite' | translate}}"
+                                                (click)="homeFavoriteToggle(i)"
+                                                [ngClass]="!item.Disabled ? 'active' : ''">
+                                                <xrm-icon name="favorites" fill="black-color"></xrm-icon>
+                                            </button>
+                                        </li>
+                                    </div>
+                                    <ng-template #other_content>
+                                        <li class="list-group-item list-group-item__no-hover">
+                                            <span>{{'NoFavoriteInFavoritesListMsg' | translate}}</span>
+                                        </li>
+                                    </ng-template>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Tab -->
+    </div>
+</div>
+
+<kendo-dialog title="Please confirm" *ngIf="isDialogBoxVisible" [minWidth]="250" [width]="680"
+    class="user-activation-popup">
+    <h3>Privacy Policy Acknowledgment</h3>
+
+    <div class="confirm__activation confirm__activation_msg">
+        <div class="confirm__activation-inner" [innerHTML]="ConfirmationMessage| translate | safe: 'html'">
+        </div>
+
+    </div>
+    <kendo-label class="kendo-label__change kendo-label__change--all confirm__switch"
+        text="I have read and agree to the Terms and Conditions">
+        <kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" (click)="toggleDisabled()"></kendo-switch>
+    </kendo-label>
+    <kendo-dialog-actions>
+        <button type="button" (click)="markAcknowledge()" kendoButton themeColor="primary" fillMode="solid"
+            [toggleable]="true" [disabled]="!isUserAcknowledged">
+            <span class="button__name">{{'AgreeAndContinue' | translate}}
+            </span>
+        </button>
+        <button fillMode="outline" kendoButton (click)="logout()">
+            {{'Decline' | translate}}
+        </button>
+    </kendo-dialog-actions>
+</kendo-dialog>

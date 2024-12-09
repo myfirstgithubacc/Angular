@@ -1,0 +1,135 @@
+<div [hidden]="isPreview" class="app-content__body app-content__kendoexpansion-main">
+    <form [formGroup]="professionalRequestForm">
+
+        <div class="col-xs-12 col-md-12" *ngIf="!isPreview">
+            <app-status-bar-proff [statusId]="statusId" [isEditMode]="false"
+                [approverlength]="approverLength"></app-status-bar-proff>
+        </div>
+
+        <div class="row" *ngIf="!isPreview">
+            <div class="col-sm-12">
+                <div class="form-group text-end mb-1">
+                    <kendo-label class="kendo-label__change kendo-label__change--all"
+                        text="{{'ShowAllSections' | translate}}">
+                        <kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" (valueChange)="onChange($event)"
+                            [checked]="showAllSectionsSwitch"></kendo-switch>
+                    </kendo-label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 col-sm-3 mobile-none" *ngIf="!isPreview">
+                <div class="wizard">
+                    <kendo-stepper [steps]="steps" stepType="full" [(currentStep)]="currentStep" [linear]="false"
+                        orientation="vertical" (activate)=stepperEvent($event)>
+                    </kendo-stepper>
+                </div>
+            </div>
+
+            <div class="col-md-9 col-sm-9">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Step 1 -->
+                        <div *ngIf="(currentStep === 0 || resetStep ) && !isPreview">
+                            <app-job-details [childFormGroup]="professionalRequestForm" [isEditMode]="isEditMode"
+                                [profRequestDetails]="profRequestDetails" [statusId]="statusId"
+                                [destroyAllSubscriptions$]="destroyAllSubscriptions$"
+                                (sectorChange)="getSectorChange($event)" (locationChange)="getLocationChange($event)"
+                                (reqLibraryChange)="getReqLibraryChange($event)"
+                                (copyPrevReq)="getPrevReqCopy($event)"></app-job-details>
+                        </div>
+                        <!-- Step 1 -->
+
+                        <!-- Step 2 -->
+                        <div *ngIf="(currentStep === 1 || resetStep) && !isPreview">
+                            <app-assignment-details #assignmentDetails [childFormGroup]="professionalRequestForm"
+                                [isEditMode]="isEditMode" [isCopyReq]="isCopyReq" [isDraft]="isDraft"
+                                [profRequestDetails]="profRequestDetails" [sectorId]="sectorId"
+                                [locationId]="locationId" [reqLibraryId]="reqLibraryId" [statusId]="statusId"
+                                [destroyAllSubscriptions$]="destroyAllSubscriptions$"
+                                (targetEndDateChange)="getTargetEndDateChange($event)"
+                                (shiftChange)="getShiftChange($event)"
+                                (shiftDaysChange)="getShiftDaysChange($event)"
+                                (positionNeededChange)="getPositionNeededChange($event)"></app-assignment-details>
+                        </div>
+                        <!-- Step 2 -->
+
+                        <!-- Step 3 -->
+                        <div *ngIf="(currentStep === 2 || resetStep) && !isPreview">
+                            <app-financial-details [childFormGroup]="professionalRequestForm" [isEditMode]="isEditMode"
+                                [isCopyReq]="isCopyReq" [isDraft]="isDraft" [profRequestDetails]="profRequestDetails"
+                                [sectorId]="sectorId" [locationId]="locationId" [reqLibraryId]="reqLibraryId"
+                                [targetEndDate]="targetEndDate" [shiftId]="shiftId" [shiftDays]="shiftDays" [positionNeeded]="positionNeeded"
+                                [destroyAllSubscriptions$]="destroyAllSubscriptions$"></app-financial-details>
+                        </div>
+                        <!-- Step 3 -->
+
+                        <!-- Step 4 -->
+                        <div [hidden]="!(currentStep === 3 || resetStep) && !isPreview">
+                            <app-approver-other-details [childFormGroup]="professionalRequestForm"
+                                [isEditMode]="isEditMode" [isCopyReq]="isCopyReq"
+                                [profRequestDetails]="profRequestDetails" [isDraft]="isDraft">
+                            </app-approver-other-details>
+                        </div>
+                        <!-- Step 4 -->
+
+                    </div>
+                </div>
+                <div class="page-footer stepper-button" *ngIf="!resetStep && !isPreview">
+                    <div class="stepper-button__prev">
+                        <button kendoButton href="javascript:;" fillMode="outline" themeColor="primary"
+                            *ngIf="currentStep !== 0" (click)="prev()"><i class="fa-solid fa-chevron-left"></i>
+                            {{'Previous' | translate}}</button>
+                    </div>
+                    <div class="stepper-button__next">
+                        <button kendoButton href="javascript:;" fillMode="outline" themeColor="primary"
+                            (click)="onCancel()"> {{'Cancel' | translate}}</button>
+
+                        <button *ngIf="!isEditMode || (isEditMode && statusId == 235)" kendoButton href="javascript:;"
+                            fillMode="outline" themeColor="primary" appFocusOnError [formName]="directiveForms"
+                            (click)="saveAndContinueLater()">
+                            {{ 'SaveContinueLater'| translate}}</button>
+                        <button kendoButton href="javascript:;" themeColor="primary" *ngIf="currentStep !== 3"
+                            appFocusOnError [formName]="directiveForms"
+                            (click)="next(steps[currentStep].name ?? '', 1)">{{'Next' | translate}} <i
+                                class="fa-solid fa-chevron-right"></i></button>
+
+                        <button kendoButton href="javascript:;" themeColor="primary" *ngIf="currentStep === 3"
+                            (click)="previewSubmit()">Preview & Submit</button>
+                    </div>
+                </div>
+
+                <div class="page-footer stepper-button" *ngIf="resetStep && !isPreview">
+                    <div class="stepper-button__prev">
+                        <button kendoButton href="javascript:;" fillMode="outline" themeColor="primary"
+                            (click)="onCancel()"> {{'Cancel' | translate}} </button>
+                    </div>
+                    <div *ngIf="!isEditMode || (isEditMode && statusId == 235)" class="stepper-button__next">
+                        <button kendoButton href="javascript:;" themeColor="primary" (click)="saveAndContinueLater()">{{
+                            'SaveContinueLater' | translate}}
+                        </button>
+                        <button kendoButton href="javascript:;" themeColor="primary" (click)="submitForm()">
+                            {{ 'Submit' | translate }}
+                        </button>
+                    </div>
+                    <div *ngIf="isEditMode && (statusId != 235)" class="stepper-button__next">
+                        <button kendoButton href="javascript:;" themeColor="primary"
+                            (click)="submitFormEdit()">{{'Submit'
+                            | translate}}
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <ng-container *ngIf="isEditMode && !isPreview">
+            <event-log></event-log>
+        </ng-container>
+
+    </form>
+</div>
+
+<app-preview *ngIf="isPreview" [isEditMode]="isEditMode" [uKey]="uKey" [statusId]="statusId"
+    (backClicked)="closePreview()"></app-preview>

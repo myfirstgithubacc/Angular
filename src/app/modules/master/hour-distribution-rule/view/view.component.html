@@ -1,0 +1,605 @@
+<div class="app-content__body HDR__screens floating-layout floating-layout__view-layout">
+    <div class="card">
+        <div class="card__header">
+            <h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+        </div>
+        <div class="card__body">
+            <div class="row">
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'RuleName'" [value]="hourDistributionRuleData.RuleName"
+                            [tooltipVisible]="true" [tooltipTitle]="'Rule_Name_Tooltip'"></app-kendo-label>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <tooltip-content [label]="'PreDefinedWorkSchedule'"
+                            [value]="hourDistributionRuleData.PreDefinedWorkScheduleName"
+                            [tooltipTitle]="'Pre_defined_Work_Schedule_Tooltip_IsEditMode'" [tooltipVisible]="true"
+                            [isHtmlContent]="true">
+                        </tooltip-content>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <pre>
+                        <app-kendo-label [label]="'RuleDescription'" 
+                            [value]="hourDistributionRuleData.RuleDescription"></app-kendo-label>
+                        </pre>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'ManualOtDtEntry'"
+                            [value]="hourDistributionRuleData.ManualOtDtEntry  | yesNo"></app-kendo-label>
+                    </div>
+                </div>
+                <ng-template [ngIf]="!hourDistributionRuleData.ManualOtDtEntry">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'RegularStHoursPerWeek'"
+                                [value]="hourDistributionRuleData.RegularStHoursPerWeek | number : '1.2-3'"
+                                [tooltipVisible]="true"
+                                [tooltipTitle]="'Regular_ST_Hours_Allowed_Per_Week_Tooltip'"></app-kendo-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'MaxStHourAllowed'"
+                                [value]="hourDistributionRuleData.MaxStHourAllowed | number : '1.2-3'"
+                                [tooltipVisible]="true"
+                                [tooltipTitle]="'Max_ST_Hours_Allowed_Per_Week_Tooltip'"></app-kendo-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'MaxOtHourAllowed'"
+                                [value]="hourDistributionRuleData.MaxOtHourAllowed | number : '1.2-3'"
+                                [tooltipVisible]="true"
+                                [tooltipTitle]="'Max_OT_Hours_Allowed_Per_Week_Tooltip'"></app-kendo-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'MaxDtHourAllowed'"
+                                [value]="hourDistributionRuleData.MaxDtHourAllowed | number : '1.2-3'"
+                                [tooltipVisible]="true"
+                                [tooltipTitle]="'Max_DT_Hours_Allowed_Per_Week_Tooltip'"></app-kendo-label>
+                        </div>
+                    </div>
+                </ng-template>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'MaxTotalHourAllowed'"
+                            [value]="hourDistributionRuleData.MaxTotalHourAllowed | number : '1.2-3'"
+                            [tooltipVisible]="true"
+                            [tooltipTitle]="'Max_Total_Hours_Allowed_Per_Week_Tooltip'"></app-kendo-label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-template [ngIf]="!hourDistributionRuleData.ManualOtDtEntry">
+        <div class="card">
+            <div class="card__header">
+                <h4 class="card__heading">{{'HourDistributionConfiguration'|translate}}</h4>
+            </div>
+            <div class="card__body">
+                <div class="row">
+                    <div class="list-view">
+                        <h4 class="card__body--first__subheading">{{((hourDistributionRuleData.PreDefinedWorkScheduleId
+                            ===
+                            preDefinedWorkScheduleId)?'Week1Rule':'RuleType') | translate}}</h4>
+                        <div class="list-view grouping__kendo-grid">
+                            <div class="row">
+                                <div class=" col-sm-12 col-md-12">
+                                    <ng-template #template let-anchor>
+                                        <span>{{ anchor.nativeElement.innerText }}</span>
+                                    </ng-template>
+                                    <kendo-grid
+                                        [data]="(hourDistributionRuleData.PreDefinedWorkScheduleId === preDefinedWorkScheduleId) ? hourDistributionRuleData.Week1Rule : hourDistributionRuleData.WeekDayRule"
+                                        [selectable]="selectableSettings" [navigable]="false"
+                                        [height]="magicNumber.threeHundredFifty" class="custom-grid">
+                                        <kendo-grid-column field="WeekDayName" [title]="'WeekDayId' | translate"
+                                            class="separator-column" [width]="magicNumber.oneHundredSeventy">
+                                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex>
+                                                {{ dataItem.WeekDayName }}
+                                                <span kendoTooltip position="top"
+                                                    *ngIf="dataItem.WeekDayName== 'Non-working Day' || dataItem.WeekDayName == 'Working Day'">
+                                                    <tooltip-content
+                                                        [tooltipTitle]="dataItem.WeekDayName == 'Non-working Day' ?'Non_Working_Day_Tooltip':'Working_Day_Tooltip'"
+                                                        [tooltipVisible]="true">
+                                                    </tooltip-content>
+                                                </span>
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                        <kendo-grid-column-group>
+                                            <ng-template kendoGridHeaderTemplate>
+                                                <span kendoTooltip position="top">{{'StraightTime' | translate}}
+
+                                                    <tooltip-content [tooltipTitle]="'ST_Tooltip'"
+                                                        [tooltipVisible]="true">
+                                                    </tooltip-content>
+                                                </span>
+                                            </ng-template>
+                                            <kendo-grid-column field="StOperator" [title]="'Operator'| translate"
+                                                class="separator-column">
+                                                <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                                    <div class="d-inline-block">{{operator[dataItem.StOperator]}}</div>
+                                                </ng-template>
+                                            </kendo-grid-column>
+                                            <kendo-grid-column field="StValue" [title]="'Value' | translate"
+                                                class="separator-column">
+                                                <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                                    <div>
+                                                        <div class="d-inline-block">{{dataItem.StValue | number :
+                                                            '1.2-3'}}
+                                                        </div>
+
+                                                    </div>
+                                                </ng-template>
+                                            </kendo-grid-column>
+                                        </kendo-grid-column-group>
+                                        <kendo-grid-column-group>
+                                            <ng-template kendoGridHeaderTemplate>
+                                                <span kendoTooltip position="top">{{'OverTime'|translate}}
+                                                    <tooltip-content [tooltipTitle]="'OT_Tooltip'"
+                                                        [tooltipVisible]="true"></tooltip-content>
+                                                </span>
+                                            </ng-template>
+                                            <kendo-grid-column field="OtOperator" [title]="'Operator' | translate"
+                                                class="separator-column">
+                                                <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                                    <div class="d-inline-block">{{operator[dataItem.OtOperator]}}</div>
+                                                </ng-template>
+                                            </kendo-grid-column>
+                                            <kendo-grid-column field="valuesOT" [title]="'Value' | translate"
+                                                class="separator-column">
+                                                <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                                    <div>
+                                                        <div class="d-inline-block">{{dataItem.OtValue | number :
+                                                            '1.2-3'}}
+                                                        </div>
+                                                    </div>
+                                                </ng-template>
+                                            </kendo-grid-column>
+                                        </kendo-grid-column-group>
+                                        <kendo-grid-column-group>
+                                            <ng-template kendoGridHeaderTemplate>
+                                                <span kendoTooltip position="top">{{'DoubleTime'|translate}}
+
+                                                    <tooltip-content [tooltipTitle]="'DT_Tooltip'"
+                                                        [tooltipVisible]="true"></tooltip-content>
+                                                </span>
+                                            </ng-template>
+                                            <kendo-grid-column field="DtOperator" [title]="'Operator' | translate"
+                                                class="separator-column">
+                                                <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                                    <div class="d-inline-block">{{operator[dataItem.DtOperator]}}</div>
+                                                </ng-template>
+                                            </kendo-grid-column>
+                                            <kendo-grid-column field="DtValue" [title]="'Value' | translate"
+                                                class="separator-column">
+                                                <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                                    <div>
+                                                        <div class="d-inline-block">{{dataItem.DtValue | number :
+                                                            '1.2-3'}}
+                                                        </div>
+                                                    </div>
+                                                </ng-template>
+                                            </kendo-grid-column>
+                                        </kendo-grid-column-group>
+                                        <kendo-grid-column field="MaxHoursAllowed" [width]="magicNumber.twoHundred"
+                                            class="separator-column">
+                                            <ng-template kendoGridHeaderTemplate>
+                                                <span kendoTooltip position="top">{{'MaxHoursAllowed'|translate}}
+                                                    <tooltip-content
+                                                        [tooltipTitle]="'Max_Hours_Allowed_Per_Day_Tooltip'"
+                                                        [tooltipVisible]="true"></tooltip-content>
+                                                </span>
+                                            </ng-template>
+                                            <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                                <div>
+                                                    <div class="d-inline-block">{{dataItem.MaxHoursAllowed | number :
+                                                        '1.2-3'}}</div>
+                                                </div>
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                    </kendo-grid>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="hourDistributionRuleData.PreDefinedWorkScheduleId===preDefinedWorkScheduleId">
+                <div class="card__body">
+                    <div class="row">
+                        <div class="list-view">
+                            <h4 class="card__body--first__subheading">{{'Week2Rule' | translate}}</h4>
+                            <div class="list-view grouping__kendo-grid">
+                                <div class="row">
+                                    <div class=" col-sm-12 col-md-12">
+                                        <ng-template #template let-anchor>
+                                            <span>{{ anchor.nativeElement.innerText }}</span>
+                                        </ng-template>
+                                        <kendo-grid [data]="hourDistributionRuleData.Week2Rule"
+                                            [selectable]="selectableSettings" [navigable]="false"
+                                            [height]="magicNumber.threeHundredFifty" class="custom-grid">
+                                            <kendo-grid-column field="WeekDayName" [title]="'Weekdays' | translate"
+                                                class="separator-column" [width]="magicNumber.oneHundredSeventy">
+                                                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex>
+                                                    {{ dataItem.WeekDayName }}
+                                                    <span kendoTooltip position="top"
+                                                        *ngIf="dataItem.WeekDayName== 'Non-working Day' || dataItem.WeekDayName == 'Working Day'">
+                                                        <tooltip-content
+                                                            [tooltipTitle]="dataItem.WeekDayName == 'Non-working Day' ?'Working_Day_Tooltip':'Non_Working_Day_Tooltip'"
+                                                            [tooltipVisible]="true">
+                                                        </tooltip-content>
+                                                    </span>
+                                                </ng-template>
+                                            </kendo-grid-column>
+                                            <kendo-grid-column-group>
+                                                <ng-template kendoGridHeaderTemplate>
+                                                    <span kendoTooltip position="top">{{'StraightTime' | translate}}
+
+                                                        <tooltip-content [tooltipTitle]="'ST_Tooltip'"
+                                                            [tooltipVisible]="true">
+                                                        </tooltip-content>
+                                                    </span>
+                                                </ng-template>
+                                                <kendo-grid-column field="StOperator" [title]="'Operator' | translate"
+                                                    class="separator-column">
+                                                    <ng-template kendoGridCellTemplate let-rowIndex="rowIndex"
+                                                        let-dataItem>
+                                                        <div class="d-inline-block">{{operator[dataItem.StOperator]}}
+                                                        </div>
+                                                    </ng-template>
+                                                </kendo-grid-column>
+                                                <kendo-grid-column field="StValue" [title]="'Value' | translate"
+                                                    class="separator-column">
+                                                    <ng-template kendoGridCellTemplate let-rowIndex="rowIndex"
+                                                        let-dataItem>
+                                                        <div>
+                                                            <div class="d-inline-block">{{dataItem.StValue | number :
+                                                                '1.2-3'}}</div>
+
+                                                        </div>
+                                                    </ng-template>
+                                                </kendo-grid-column>
+                                            </kendo-grid-column-group>
+                                            <kendo-grid-column-group>
+                                                <ng-template kendoGridHeaderTemplate>
+                                                    <span kendoTooltip position="top">{{'OverTime'|translate}}
+                                                        <tooltip-content [tooltipTitle]="'OT_Tooltip'"
+                                                            [tooltipVisible]="true"></tooltip-content>
+                                                    </span>
+                                                </ng-template>
+                                                <kendo-grid-column field="OtOperator" [title]="'Operator' | translate"
+                                                    class="separator-column">
+                                                    <ng-template kendoGridCellTemplate let-rowIndex="rowIndex"
+                                                        let-dataItem>
+                                                        <div class="d-inline-block">{{operator[dataItem.OtOperator]}}
+                                                        </div>
+                                                    </ng-template>
+                                                </kendo-grid-column>
+                                                <kendo-grid-column field="valuesOT" [title]="'Value' | translate"
+                                                    class="separator-column">
+                                                    <ng-template kendoGridCellTemplate let-rowIndex="rowIndex"
+                                                        let-dataItem>
+                                                        <div>
+                                                            <div class="d-inline-block">{{dataItem.OtValue | number :
+                                                                '1.2-3'}}</div>
+                                                        </div>
+                                                    </ng-template>
+                                                </kendo-grid-column>
+                                            </kendo-grid-column-group>
+                                            <kendo-grid-column-group>
+                                                <ng-template kendoGridHeaderTemplate>
+                                                    <span kendoTooltip position="top">{{'DoubleTime'|translate}}
+                                                        <tooltip-content [tooltipTitle]="'DT_Tooltip'"
+                                                            [tooltipVisible]="true"></tooltip-content>
+                                                    </span>
+                                                </ng-template>
+                                                <kendo-grid-column field="DtOperator" [title]="'Operator' | translate"
+                                                    class="separator-column">
+                                                    <ng-template kendoGridCellTemplate let-rowIndex="rowIndex"
+                                                        let-dataItem>
+                                                        <div class="d-inline-block">{{operator[dataItem.DtOperator]}}
+                                                        </div>
+                                                    </ng-template>
+                                                </kendo-grid-column>
+                                                <kendo-grid-column field="DtValue" [title]="'Value' | translate"
+                                                    class="separator-column">
+                                                    <ng-template kendoGridCellTemplate let-rowIndex="rowIndex"
+                                                        let-dataItem>
+                                                        <div>
+                                                            <div class="d-inline-block">{{dataItem.DtValue | number :
+                                                                '1.2-3'}}</div>
+                                                        </div>
+                                                    </ng-template>
+                                                </kendo-grid-column>
+                                            </kendo-grid-column-group>
+                                            <kendo-grid-column field="MaxHoursAllowed" [width]="magicNumber.twoHundred"
+                                                class="separator-column">
+                                                <ng-template kendoGridHeaderTemplate>
+                                                    <span kendoTooltip position="top">{{'MaxHoursAllowed'|translate}}
+                                                        <tooltip-content
+                                                            [tooltipTitle]="'Max_Hours_Allowed_Per_Day_Tooltip'"
+                                                            [tooltipVisible]="true"></tooltip-content>
+                                                    </span>
+                                                </ng-template>
+                                                <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                                    <div>
+                                                        <div class="d-inline-block">{{dataItem.MaxHoursAllowed | number
+                                                            :
+                                                            '1.2-3'}}</div>
+                                                    </div>
+                                                </ng-template>
+                                            </kendo-grid-column>
+                                        </kendo-grid>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card__header">
+                <h4 class="card__heading">{{'AdditionalRulesOptional'|translate}}
+                    <tooltip-content [tooltipTitle]="'Additional_Rule_Tooltip'"
+                        [tooltipVisible]="true"></tooltip-content>
+                </h4>
+            </div>
+            <div class="card__body">
+                <div class="row">
+                    <div class="list-view">
+                        <div class="list-view grouping__kendo-grid">
+                            <div class="row">
+                                <div class=" col-sm-12 col-md-12">
+                                    <ng-template #template let-anchor>
+                                        <span>{{ anchor.nativeElement.innerText }}</span>
+                                    </ng-template>
+                                    <kendo-grid [data]="hourDistributionRuleData.AdditionalRules"
+                                        [selectable]="selectableSettings" [navigable]="false"
+                                        [height]="magicNumber.threeHundredFifty" class="custom-grid">
+                                        <kendo-grid-column field="WeekDayName" title="Rule"
+                                            [width]="magicNumber.oneHundredSeventy" class="separator-column">
+                                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex>
+                                                {{ dataItem.WeekDayName }}
+                                                <span kendoTooltip position="top">
+                                                    <tooltip-content
+                                                        [tooltipTitle]="(dataItem.WeekDayName==='7th Day Consecutive') ? '7th_Consecutive_Day_Tooltip' : 'Holiday_Tooltip'"
+                                                        [tooltipVisible]="true"></tooltip-content>
+                                                </span>
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                        <kendo-grid-column-group>
+                                            <ng-template kendoGridHeaderTemplate>
+                                                <span kendoTooltip position="top">{{'StraightTime' | translate}}
+                                                </span>
+                                            </ng-template>
+                                            <kendo-grid-column field="StOperator" [title]="'Operator' | translate"
+                                                class="separator-column">
+                                                <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                                    <div class="d-inline-block">{{operator[dataItem.StOperator]}}</div>
+                                                </ng-template>
+                                            </kendo-grid-column>
+                                            <kendo-grid-column field="StValue" [title]="'Value' | translate"
+                                                class="separator-column">
+                                                <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                                    <div>
+                                                        <div class="d-inline-block">{{dataItem.StValue | number :
+                                                            '1.2-3'}}
+                                                        </div>
+
+                                                    </div>
+                                                </ng-template>
+                                            </kendo-grid-column>
+                                        </kendo-grid-column-group>
+                                        <kendo-grid-column-group>
+                                            <ng-template kendoGridHeaderTemplate>
+                                                <span kendoTooltip position="top">{{'OverTime'|translate}}
+                                                </span>
+                                            </ng-template>
+                                            <kendo-grid-column field="OtOperator" [title]="'Operator' | translate"
+                                                class="separator-column">
+                                                <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                                    <div class="d-inline-block">{{operator[dataItem.OtOperator]}}</div>
+                                                </ng-template>
+                                            </kendo-grid-column>
+                                            <kendo-grid-column field="OtValue" [title]="'Value' | translate"
+                                                class="separator-column">
+                                                <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                                    <div>
+                                                        <div class="d-inline-block">{{dataItem.OtValue | number :
+                                                            '1.2-3'}}
+                                                        </div>
+                                                    </div>
+                                                </ng-template>
+                                            </kendo-grid-column>
+                                        </kendo-grid-column-group>
+                                        <kendo-grid-column-group>
+                                            <ng-template kendoGridHeaderTemplate>
+                                                <span kendoTooltip position="top">{{'DoubleTime'|translate}}
+                                                </span>
+                                            </ng-template>
+                                            <kendo-grid-column field="DtOperator" [title]="'Operator' | translate"
+                                                class="separator-column">
+                                                <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                                    <div class="d-inline-block">{{operator[dataItem.DtOperator]}}</div>
+                                                </ng-template>
+                                            </kendo-grid-column>
+                                            <kendo-grid-column field="DtValue" [title]="'Value' | translate"
+                                                class="separator-column">
+                                                <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                                    <div>
+                                                        <div class="d-inline-block">{{dataItem.DtValue | number :
+                                                            '1.2-3'}}
+                                                        </div>
+                                                    </div>
+                                                </ng-template>
+                                            </kendo-grid-column>
+                                        </kendo-grid-column-group>
+                                    </kendo-grid>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card__header">
+                <h4 class="card__heading">{{'SpecialRule'|translate}}</h4>
+            </div>
+            <div class="card__body">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'SpecialDayRulesRequired' | translate"
+                                [value]="hourDistributionRuleData.SpecialDayRule | yesNo"
+                                [tooltipTitle]="'Special_Rule_Tooltip'" [tooltipVisible]="true"></app-kendo-label>
+                        </div>
+                    </div>
+                    <div class=" col-sm-12 col-md-12 list-view">
+                        <div *ngIf="hourDistributionRuleData.SpecialDayRule">
+                            <ng-template #template let-anchor>
+                                <span>{{ anchor.nativeElement.innerText }}</span>
+                            </ng-template>
+                            <kendo-grid [data]="hourDistributionRuleData.SpecialDayRules"
+                                [selectable]="selectableSettings" [navigable]="false" class="custom-grid">
+
+                                <kendo-grid-column field="WeekDayName" [width]="magicNumber.oneHundredSeventy"
+                                    [title]="'Day' | translate" class="separator-column">
+                                    <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                        <div>
+                                            <div class="d-inline-block">{{dataItem.WeekDayName}}</div>
+                                        </div>
+                                    </ng-template>
+                                </kendo-grid-column>
+
+                                <kendo-grid-column-group>
+                                    <ng-template kendoGridHeaderTemplate>
+                                        <span kendoTooltip position="top">{{'StraightTime' | translate}}
+                                        </span>
+                                    </ng-template>
+
+                                    <kendo-grid-column field="StOperator" [title]="'Operator' | translate"
+                                        [width]="magicNumber.hundred">
+                                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                            <div>
+                                                <div class="d-inline-block">{{operator[dataItem.StOperator]}}</div>
+                                            </div>
+                                        </ng-template>
+                                    </kendo-grid-column>
+
+                                    <kendo-grid-column field="StValue" [title]="'Value' | translate"
+                                        [width]="magicNumber.hundred" class="separator-column">
+                                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                            <div>
+                                                <div class="d-inline-block">{{dataItem.StValue}}</div>
+                                            </div>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                </kendo-grid-column-group>
+
+                                <kendo-grid-column-group>
+                                    <ng-template kendoGridHeaderTemplate>
+                                        <span kendoTooltip position="top">{{'OverTime' | translate}}
+                                        </span>
+                                    </ng-template>
+                                    <kendo-grid-column field="OtOperator" [title]="'Operator' | translate"
+                                        [width]="magicNumber.hundred">
+                                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                            <div>
+                                                <div class="d-inline-block">{{operator[dataItem.OtOperator]}}</div>
+                                            </div>
+                                        </ng-template>
+                                    </kendo-grid-column>
+
+                                    <kendo-grid-column field="OtValue" [title]="'Value' | translate"
+                                        [width]="magicNumber.hundred" class="separator-column">
+                                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                            <div>
+                                                <div class="d-inline-block">{{dataItem.OtValue}}</div>
+                                            </div>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                </kendo-grid-column-group>
+
+                                <kendo-grid-column-group>
+                                    <ng-template kendoGridHeaderTemplate>
+                                        <span kendoTooltip position="top">{{'DoubleTime' | translate}}
+                                        </span>
+                                    </ng-template>
+                                    <kendo-grid-column field="DtOperator" [title]="'Operator' | translate"
+                                        [width]="magicNumber.hundred">
+                                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                            <div>
+                                                <div class="d-inline-block">{{operator[dataItem.DtOperator]}}</div>
+                                            </div>
+                                        </ng-template>
+                                    </kendo-grid-column>
+
+                                    <kendo-grid-column field="DtValue" [title]="'Value' | translate"
+                                        [width]="magicNumber.hundred" class="separator-column">
+                                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                            <div>
+                                                <div class="d-inline-block">{{dataItem.DtValue}}</div>
+                                            </div>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                </kendo-grid-column-group>
+
+
+
+                                <kendo-grid-column-group>
+                                    <ng-template kendoGridHeaderTemplate>
+                                        <span kendoTooltip position="top">{{'ApplicableOn' | translate}}
+                                        </span>
+                                    </ng-template>
+                                    <kendo-grid-column field="ApplicableOnTypeId"
+                                        [title]="'ApplicableOnType' | translate" [width]="magicNumber.oneHundredSixty">
+                                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                            <div>
+                                                <div class="d-inline-block">{{dataItem.ApplicableOnTypeName}}</div>
+                                            </div>
+                                        </ng-template>
+                                    </kendo-grid-column>
+
+                                    <kendo-grid-column field="ApplicableOnOperator" [title]="'Operator' | translate"
+                                        [width]="magicNumber.hundred" class="separator-column">
+                                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                            <div>
+                                                <div class="d-inline-block">{{operator[dataItem.ApplicableOnOperator]}}
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </kendo-grid-column>
+
+                                    <kendo-grid-column field="ApplicableOnValue" [title]="'Value' | translate"
+                                        [width]="magicNumber.hundred" class="separator-column">
+                                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                            <div>
+                                                <div class="d-inline-block">{{dataItem.ApplicableOnValue}}</div>
+                                            </div>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                </kendo-grid-column-group>
+                            </kendo-grid>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <div class="page-footer">
+        <div class="btn-box btn-box--center">
+            <button type="button" kendoButton themeColor="primary" (click)="backToList()">{{'Back' |
+                translate}}</button>
+        </div>
+    </div>
+</div>

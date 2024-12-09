@@ -1,0 +1,48 @@
+<kendo-formfield>
+  <tooltip-content>
+    <tooltip-content [tooltipVisible]="tooltipVisible" [tooltipTitle]="tooltipTitle" [label]="label"
+      [tooltipPosition]="" [tooltipTitleLocalizeParam]="tooltipTitleLocalizeParam" [isRequired]="isRequired"
+      [addOnLabelText]="addOnLabelText" [addOnLabelTextLocalizeParam]="addOnLabelTextLocalizeParam"
+      [labelLocalizeParam]="labelLocalizeParam" [isHtmlContent]="isHtmlContent">
+    </tooltip-content>
+  </tooltip-content>
+  <ng-container *ngIf="fileSelectTheme == 'primary'">
+  <div class="custom-choose-file-v2">
+  <kendo-fileselect [formControl]="listControlName ? listControlName :fileControl" [multiple]="multiple"
+    [restrictions]="fileExtAllow" [disabled]="isDisabled" (blur)="blur()" (focus)="focus()" (remove)="remove($event)"
+    (valueChange)="valueChange()" (select)="onFileSelected($event)">
+   
+    <kendo-fileselect-messages dropFilesHere="{{dropFilesMessage | translate}}"
+      select="{{fileselectMessage | translate}}" invalidFileExtension="{{invalidFileExtensionMessage | translate}}"
+      invalidMaxFileSize="{{invalidMaxFileSizeMessage | translate}}">
+    </kendo-fileselect-messages>
+  </kendo-fileselect>
+  <span class="k-icon k-font-icon k-i-upload"></span>
+</div>
+</ng-container>
+<ng-container *ngIf="fileSelectTheme == 'secondary'">
+  <div class="custom-choose-file">
+    <div class="custom-fileselect-upload">
+      <div class="custom-fileselect-upload-custom-dropzone">
+        <div class="custom-fileselect-upload-custom-dropzone__icon">
+          <xrm-icon name="cloud-arrow-up" [size]="21" color="transparent" fill="gray"></xrm-icon>
+        </div>
+        <p>{{'ClickHereToBrowseTheFileToUpload' | translate}}</p>
+
+        <kendo-fileselect [formControl]="listControlName ? listControlName :fileControl" [multiple]="multiple"
+          [restrictions]="fileExtAllow" [disabled]="isDisabled" (blur)="blur()" (focus)="focus()"
+          (remove)="remove($event)" (valueChange)="valueChange()" (select)="onFileSelected($event)">
+
+          <kendo-fileselect-messages dropFilesHere="{{dropFilesMessage | translate}}"
+            select="{{fileselectMessage | translate}}"
+            invalidFileExtension="{{invalidFileExtensionMessage | translate}}"
+            invalidMaxFileSize="{{invalidMaxFileSizeMessage | translate}}">
+          </kendo-fileselect-messages>
+        </kendo-fileselect>
+      </div>
+    </div>
+  </div>
+  </ng-container>
+  
+  <app-print-error-message [control]="listControlName ? listControlName : fileControl"></app-print-error-message>
+ </kendo-formfield>

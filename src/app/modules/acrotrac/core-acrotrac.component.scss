@@ -1,0 +1,861 @@
+label.k-label-empty.k-label {
+  display: none;
+}
+
+.padding__bottom--15 {
+  padding-bottom: 15px;
+}
+
+.list-view .k-input-inner {
+  padding: 8px 6px !important;
+}
+
+.list-view .k-footer-template td {
+  font-weight: 600;
+  font-size: 11px;
+  border: none;
+}
+
+.list-view .k-grid-footer {
+  border-top: 0;
+}
+
+.manageCostAccounting__Dailog .k-dialog-title {
+  margin: inherit;
+  padding: 0;
+  line-height: inherit;
+}
+
+.manageCostAccounting__Dailog .k-window .k-button {
+  margin: 0 !important;
+}
+
+.manageCostAccounting__Dailog .k-window .btn-box .k-button {
+  margin: 5px !important;
+}
+
+.manageCostAccounting__Dailog .form-group .k-button-md.copy__btn {
+  margin-top: 18px !important;
+}
+
+.app-content__time--entry .k-grid th,
+.app-content__time--entry .k-grid td {
+  padding: 8px 6px;
+  font-size: 11px !important;
+}
+
+.app-content__time--entry .k-grid td .timeEntry {
+  display: flex;
+  gap: 5px;
+}
+
+.app-content__time--entry .k-input-md .k-input-inner,
+.app-content__time--entry .k-picker-md .k-input-inner {
+  font-size: 11px !important;
+}
+
+.app-content__time--entry .k-grid .k-grid-content td .k-numerictextbox .k-input-inner {
+  text-align: center;
+}
+
+.app-content__time--entry .k-grid .k-footer-template td span {
+  text-align: center;
+  display: block;
+}
+
+.app-content__time--entry .k-grid td .data-answere {
+  display: inline-block;
+  line-height: 32px;
+}
+
+.app-content__time--entry .k-grid td .data-answere2 {
+  display: block;
+  line-height: 32px;
+  text-align: center;
+}
+
+.expend_grid .k-grid-content {
+  overflow-y: scroll;
+  overflow-x: auto;
+  max-height: fit-content;
+}
+
+.app-content__time--entry .k-icon-button {
+  border: none;
+  width: auto !important;
+  background: transparent;
+}
+
+.app-content__time--entry .offcanvas-body .list__data--item .kendo-label {
+  min-width: 130px !important;
+  color: var(--bs-body-color);
+}
+
+/* time-sheet.css */
+
+.first-button-set {
+  display: flex;
+}
+
+.arrow-btns button {
+  border: 1px solid var(--light-border-color);
+  color: var(--color-primary);
+  font-size: var(--base-font-size);
+  margin-right: 4px;
+}
+
+.arrow-btns button i {
+  font-size: 17px;
+}
+
+.arrow-btn-div .k-listview-header {
+  border-bottom: none;
+}
+
+.arrow-btns {
+  margin-top: -5px;
+  text-align: right;
+}
+
+.week_days_div {
+  width: 140px;
+  border-color: var(--light-border-color) !important;
+  color: var(--k-input-font-color);
+  font-size: var(--base-font-size);
+  margin-right: 4px;
+}
+
+.arrow-btns {
+  float: right;
+  display: flex;
+}
+
+.arrow-btns kendo-label {
+  line-height: 33px;
+}
+
+.arrow-btns .k-picker-md .k-input-inner {
+  color: var(--k-input-font-color);
+}
+
+.total-time {
+  padding-left: 6px;
+}
+
+.billable-hour-icon {
+  display: inline-flex;
+  gap: 15px;
+}
+
+.billable-hour-icon .label-answere span {
+  font-size: 12px !important;
+  color: var(--color-default);
+}
+
+.arrow-btn-div .k-listview {
+  background-color: transparent;
+}
+
+.arrow-row {
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.grid_total_ammount {
+  display: flex;
+  gap: 15px;
+}
+
+.bg-grey {
+  background: #f4f4f7;
+}
+
+.day-header {
+  display: flex;
+  gap: 15px;
+}
+
+.day-header a img {
+  margin-top: 15px;
+}
+
+/* time-sheet.css */
+.time-details-popup {
+  --bs-offcanvas-width: 80%;
+}
+
+th.k-header.k-table-th.rateClass {
+  background: #d3daff;
+}
+
+.revision-workflow-one.active .k-input-solid {
+  border-color: #f79009 !important;
+}
+
+.gold .codeColumn .k-input-solid {
+  border-color: #f79009 !important;
+}
+
+.gold .codeColumn {
+  color: #f79009 !important;
+}
+
+.green .codeColumn .k-input-solid {
+  border-color: #b2f699 !important;
+}
+
+.list-sidebar {
+  --bs-offcanvas-width: 36%;
+}
+
+.card__header-icon.kendo-label__change--all .k-label {
+  font-weight: normal;
+}
+
+.card__header-icon.kendo-label__change--all {
+  display: flex;
+  gap: 24px;
+  cursor: pointer;
+}
+
+.time-details-popup .k-grid-header th:first-child {
+  border-left: 0px !important;
+}
+
+.timesheet__page .list-view .grid__header-th p {
+  font-size: 11px;
+  font-weight: normal;
+}
+
+.timesheet__page .custom__numeric-input input[readonly] {
+  background: none !important;
+  cursor: pointer;
+}
+
+.time-details-popup .k-grid .k-detail-row .k-detail-cell {
+  padding: 0 0 15px !important;
+}
+
+.time-details-popup .list-view .k-grid th,
+.time-details-popup .list-view .k-grid td {
+  padding: 4px !important;
+}
+
+.time-details-popup .gridView2 .k-header {
+  background: #d5e1ff !important;
+}
+
+.time-details-popup .gridView3 .k-header {
+  background: #ecf0fa !important;
+}
+
+.time-details-popup .gridView3 {
+  padding: 15px 0 0 !important;
+}
+
+.time-details-popup .gridView2 .k-header.k-table-th.rateClass {
+  background: #ecf0fa !important;
+}
+
+.time-details-popup .gridView3 .k-header.k-table-th.rateClass {
+  background: #d5e1ff !important;
+}
+
+.time-details-popup .gridView3 tr.k-disabled {
+  background: #ffe5e5 !important;
+  text-decoration: line-through;
+}
+
+.time-details-popup .k-grid-content {
+  overflow-y: scroll;
+  overflow-x: auto;
+  max-height: 400px;
+}
+
+.time-details-popup th.k-hierarchy-cell.k-header.k-table-th {
+  border-top: 0px !important;
+}
+
+.list-view.time-adjustment .k-grid th {
+  padding: 4px 4px !important;
+}
+
+.list-view.time-adjustment .k-grid td {
+  padding: 4px 4px !important;
+}
+
+.list-view.time-adjustment-review .k-grid td {
+  padding: 8px 8px !important;
+}
+
+.list-view.time-adjustment .k-grid td .adjustColoumn {
+  color: var(--orange-color);
+  position: relative;
+}
+
+.list-view.time-adjustment .k-grid td .adjustColoumn:after {
+  content: "*";
+  position: absolute;
+  top: -5px;
+  right: -6px;
+}
+
+.time-details-popup .list-view .k-grid {
+  max-height: max-content;
+}
+
+.timesheet__page .list-view .k-grid .k-grid-footer {
+  border: none;
+}
+
+.list-view {
+  margin-bottom: 10px;
+
+  .k-grid-aria-root {
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 4px;
+    background: var(--table-header-color);
+  }
+
+  .k-grid-header {
+    background: #edeefd;
+    display: unset;
+    border-bottom: 1px solid #e5e8ee;
+
+    tr {
+      &:first-child {
+        th {
+          &.k-header {
+            border-top: none;
+          }
+        }
+      }
+    }
+
+    .k-header {
+      .add-more__link {
+        text-decoration: none;
+        color: var(--color-primary);
+        font-weight: 600;
+      }
+    }
+  }
+
+  .k-grid {
+    tr {
+      border-bottom: 1px solid #f6f6f6;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    table {
+      border-collapse: collapse;
+    }
+
+    th {
+      padding: 8px 12px;
+      color: var(--color-black);
+      font-weight: 500;
+      font-size: var(--base-font-size);
+      vertical-align: middle !important;
+      border-left: 1px solid #dbdde8;
+      border-top: 1px solid #dbdde8;
+    }
+  }
+
+  .k-input-inner {
+    padding: 8px 6px;
+  }
+}
+
+.card {
+  .k-grid {
+    font-size: var(--base-font-size);
+    height: unset !important;
+    max-height: 400px;
+    border: none;
+    color: var(--color-default);
+    background-color: var(--color-white);
+  }
+}
+
+table>colgroup,
+.list-view .k-grid-header {
+  border: none;
+}
+
+.k-table-thead,
+.k-table-header,
+.k-table-group-sticky-header {
+  background-color: unset;
+}
+
+.k-header {
+  &>.k-cell-inner {
+    margin: 0 !important;
+  }
+
+  &.required {
+    .k-column-title {
+      &:after {
+        content: "*";
+        margin-left: 5px;
+        color: #f00;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+.k-grid-header {
+  .k-cell-inner {
+    &>.k-link {
+      flex: inherit;
+    }
+  }
+}
+
+.k-filterable {
+  &>.k-cell-inner {
+    .k-link {
+      padding-inline-end: 5px;
+      float: left;
+      height: 20px;
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      cursor: pointer;
+
+      .hide-tooltip {
+        span {
+          display: block;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          line-height: normal;
+        }
+      }
+    }
+  }
+}
+
+.k-cell-inner {
+  &>.k-link {
+    padding: 3px 1px !important;
+  }
+}
+
+.k-filterable>.k-cell-inner .k-link .k-i-sort-asc-small,
+.k-filterable>.k-cell-inner .k-link .k-i-sort-desc-small {
+  display: block;
+  float: left;
+  position: absolute;
+  right: 0;
+  top: 13px;
+}
+
+.k-column-title {
+  overflow: unset;
+  white-space: normal;
+  line-height: normal;
+  display: flex;
+}
+
+.list-view__tab--custom {
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.list-view__border {
+  .k-grid {
+    color: var(--color-default);
+    background-color: var(--color-white);
+
+    tr {
+      border-bottom: none;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .k-grid-aria-root {
+    border-radius: 8px;
+    border: var(--border-color) solid 1px;
+  }
+}
+
+.list-view .k-grid td.k-state-selected,
+.list-view .k-grid td.k-selected,
+.list-view .k-grid tr.k-state-selected>td,
+.list-view .k-grid tr.k-selected>td {
+  background-color: var(--k-grid-selected-bg);
+}
+
+.List-view__bordered {
+  .k-grid-toolbar {
+    border-color: inherit;
+    box-shadow: none;
+    border-bottom: none;
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    background: none;
+  }
+}
+
+.k-grid-content {
+  overflow-y: scroll;
+  overflow-x: auto;
+  max-height: 270px;
+}
+
+.k-grid {
+  tr {
+    &.k-alt {
+      background-color: #fafafa59 !important;
+    }
+  }
+
+  .k-grid-content {
+    td {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 4px 12px;
+      font-size: 11px;
+      height: 24px;
+      color: #333;
+      border: none;
+    }
+  }
+}
+
+@media (min-width: 320px) and (max-width: 900px) {
+  .timesheet__page .card-status .form-group {
+    margin-bottom: 0;
+  }
+
+  .timesheet__page .card__header {
+    display: block;
+  }
+
+  .list-sidebar {
+    --bs-offcanvas-width: 90% !important;
+  }
+
+  .time-details-popup {
+    --bs-offcanvas-width: 90%;
+  }
+
+  .time-details-popup .list-view .k-grid td.k-hierarchy-cell {
+    vertical-align: top;
+    padding: 0 !important;
+  }
+
+  .app-content .list-view .k-grid td.mobile__grid th,
+  .app-content .list-view .k-grid td.mobile__grid td {
+    padding: 6px 6px !important;
+    white-space: normal;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 900px) {
+  .expense_upload {
+    padding: 0 !important;
+  }
+
+  .expense_upload .upload-wrps .wrapper {
+    position: absolute;
+    margin-top: 0;
+  }
+
+  .expense_upload .custom__file__upload .k-icon.k-i-upload:before {
+    left: 0;
+  }
+
+  .expense_upload .upload-wrps .k-upload .k-upload-button {
+    min-width: 114px;
+  }
+
+  .expense_upload .k-icon.k-i-upload:before {
+    left: 0 !important;
+  }
+}
+
+.kendo-label__change--all tooltip-content {
+  display: inline-block;
+}
+
+.time-adjustment .k-grid tr.k-master-row.gold.k-table-row {
+  background: #eaedfd !important;
+}
+
+.time-adjustment .k-grid tr.k-master-row.gold.k-table-row .billableHours-value .label-answere span {
+  color: var(--color-black);
+  font-weight: 500;
+}
+
+/************time-in-out-css-start-here***************/
+
+.time-in-out-panel .k-expander-header .card__header {
+  width: 100%;
+  padding: 0;
+}
+
+.time-in-out-panel .k-expander-content {
+  padding: 0;
+}
+
+.time-in-out-panel .k-expander-header .card__header .card__header-icon a {
+  font-size: var(--base-font-size);
+}
+
+.time-in-out-panel .list-view .k-input-inner {
+  padding: 4px 6px !important;
+}
+
+.time-in-out-panel .list-view .k-grid {
+  height: unset !important;
+  max-height: max-content;
+}
+
+.time-in-out-panel .list-view .k-grid .k-grid-content {
+  overflow-y: scroll;
+  overflow-x: auto;
+  max-height: max-content;
+}
+
+.no-header-grid .k-grid-header {
+  display: none;
+}
+
+.timeInOut-panelbar .k-panelbar {
+  border-top: 0;
+  border-bottom: 0px !important;
+}
+
+.timeInOut-panelbar .k-panelbar>.k-panelbar-header>.k-link {
+  padding: 12px 12px !important;
+}
+
+.timeInOut-panelbar .k-panelbar>.k-panelbar-header>.k-link.k-selected,
+.timeInOut-panelbar .k-panelbar-group .k-panelbar-item .k-link.k-selected {
+  color: var(--color-primary);
+  background-color: rgb(243 246 253) !important;
+  font-weight: 600;
+}
+
+.timeInOut-panelbar .k-panelbar>.k-panelbar-header>.k-link.k-focus,
+.timeInOut-panelbar .k-panelbar-group .k-panelbar-item .k-link.k-selected.k-focus {
+  box-shadow: none;
+}
+
+/* .timeInOut-panelbar .k-panelbar > .k-item + .k-item, .k-panelbar > .k-panelbar-header + .k-panelbar-header {
+border-top-width: 0 !important;
+} */
+.dayDetails-carousel {
+  position: relative;
+}
+
+.dayDetails-carousel .carousel-control-prev {}
+
+.dayDetails-carousel .carousel-control-next {}
+
+.time-details-popup {
+  position: fixed !important;
+}
+
+.time_in_out-screen .k-input-md .k-input-inner,
+.time_in_out-screen .k-picker-md .k-input-inner {
+  padding: 4px 12px;
+}
+
+.time_in_out-screen .form-group .k-button-md {
+  padding: 0px 16px !important;
+  line-height: 18px;
+  border-radius: 4px;
+}
+
+.time_in_out-screen .inline-form kendo-label .k-label {
+  min-width: 278px;
+}
+
+.time_in_out-screen .inline-form kendo-label {
+  display: flex;
+}
+
+.time_in_out-screen .inline-switch .k-form-field-wrap {
+  display: flex;
+  gap: 10px;
+}
+
+.time_in_out-screen .inline-form.meal-Break-input kendo-label .k-label {
+  min-width: 290px;
+  line-height: 28px;
+}
+
+.time_in_out-screen .meal_break-time .total-minuts .label-answere {
+  padding: 4px 6px;
+  background: #eaedfd;
+  border-radius: 4px;
+  font-weight: 400;
+}
+
+.time_in_out-screen .meal_break-time {
+  border: #e2e2e2 solid 1px;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.time_in_out-screen .meal_break-time-view {
+  border: #e2e2e2 solid 1px;
+  padding: 0px 5px;
+  border-radius: 4px;
+}
+ 
+.time_in_out-screen .meal_break-time-view2{
+  margin-bottom: 6px;
+}
+ 
+.time_in_out-screen .meal_break-time-view2 .form-group .new-view{
+  column-gap: 18px !important;
+}
+
+.time_in_out-screen .form-group.inline-form {
+  background: #eaedfd;
+  padding: 6px;
+  border-radius: 4px;
+}
+
+.time_in_out-screen .form-group.inline-form .new-view {
+  display: flex;
+  padding: 0;
+  line-height: normal;
+}
+
+.time_in_out-screen .meal_break-time .k-daterangepicker label {
+  font-weight: 600;
+}
+
+.time-in-out-popup {
+  z-index: 1412 !important;
+}
+
+.k-popup.content.time-in-out {
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  background-color: var(--body-color) !important;
+  outline: 0;
+  right: 0;
+  height: 100%;
+  max-width: 490px;
+  min-width: 490px;
+  border-radius: 0px;
+}
+
+.time-in-out-popup:before {
+  position: fixed;
+  content: "";
+  left: 0;
+  top: 0;
+  background: #000;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+  transition: opacity 0.05s linear;
+  transition: transform 0.3s ease-in-out;
+}
+
+.k-popup.content.time-in-out .offcanvas-header xrm-icon {
+  cursor: pointer;
+}
+
+.timesheet-sidebar {
+  --bs-offcanvas-width: 46%;
+}
+
+.time_in_out-screen .time-select {
+  display: flex;
+  gap: 6px;
+}
+
+.time_in_out-screen .time-select .time-select__input {
+  width: 33%;
+}
+
+.time_in_out-screen .time-select .time-select__input .k-form-hint,
+.time_in_out-screen .time-select .time-select__input .k-form-error {
+  word-break: break-all;
+}
+
+.time_in_out-screen .time-copy-button {
+  margin-top: 17px;
+  width: 100%;
+  padding: 0 19px !important;
+  line-height: 25px !important;
+}
+
+.time_in_out-screen .total-minuts {
+  width: 100%;
+}
+
+.time_in_out-screen .card__header-icon {
+  display: flex;
+  gap: 24px;
+  cursor: pointer;
+}
+
+.input_disable {
+  display: block;
+}
+
+.input_disable .k-textbox {
+  border: var(--color-primary) solid 1px;
+}
+
+.merged-cell {
+  grid-column: span 2;
+  font-size: 12px;
+}
+
+.time-adjustment .k-grid tr.headerRow {
+  background: #eaedfd !important;
+}
+
+.time-adjustment .k-grid tbody>tr:not(.k-detail-row):hover,
+.time-adjustment .k-grid tbody>tr:not(.k-detail-row).k-hover {
+  background: #eaedfd !important;
+}
+
+.time-in-out-sidebar {
+  --bs-offcanvas-width: 42%;
+}
+
+.dayDetails_popup {
+  margin-left: 6px;
+}
+
+.merged-cell {
+  grid-column: span 2 !important;
+  /* This spans the cell across two columns */
+}
+
+.merged-cell span {
+  font-weight: normal !important;
+  font-size: 11px;
+}
+
+span.card__heading-timeinfo {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+/************time-in-out-css-start-here***************/
+

@@ -1,0 +1,223 @@
+<div
+  class="offcanvas offcanvas-end list-sidebar show"
+  *ngIf="isShow"
+  tabindex="-1"
+  style="visibility: visible"
+>
+  <div class="offcanvas-header">
+    <h5>{{ "InOutDetails" | translate }}</h5>
+    <button
+      type="button"
+      (click)="Cancel()"
+      class="btn-close"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="offcanvas-body floating-layout floating-layout__view-layout">
+    <div class="master-search__filter-box">
+      <div class="card time_in_out-screen">
+        <!-- Card Header Section-->
+        <div class="card__header">
+          <h4 class="card__heading">
+            <xrm-icon
+              name="calendar"
+              color="light-blue-color"
+              [size]="18"
+            ></xrm-icon>
+            {{ selectedDate | date : "EEE, M/d" }}
+          </h4>
+          <div class="card__header-icon">
+            <a
+              href="javascript:;"
+              data-bs-target="#demo"
+              [class.disabled]="isPrevDisabled"
+              (click)="prev(selectedDate)"
+              data-bs-slide="prev"
+              ><xrm-icon
+                name="chevron-left"
+                [size]="15"
+                color="dark-blue-color"
+                class="sw-bolder"
+              ></xrm-icon
+            ></a>
+            <a
+              href="javascript:;"
+              data-bs-target="#demo"
+              (click)="next(selectedDate)"
+              [class.disabled]="isNextDisabled"
+              data-bs-slide="next"
+              ><xrm-icon
+                name="chevron-right"
+                [size]="15"
+                color="dark-blue-color"
+                class="sw-bolder"
+              ></xrm-icon
+            ></a>
+          </div>
+        </div>
+        <!-- End Card Header Section-->
+        <!-- Card Body Section-->
+        <div class="card__body" *ngIf="data">
+          <div class="row">
+            <div class="col-sm-12 col-md-12">
+              <div class="form-group">
+                <app-kendo-label
+                  [label]="'TimeIn'"
+                  [value]="convertTo12HourFormat(data?.EntryTimeIn)"
+                ></app-kendo-label>
+              </div>
+              <div class="col-sm-12 col-md-12">
+                <div class="form-group">
+                  <app-kendo-label
+                    [label]="'TimeOut'"
+                    [value]="convertTo12HourFormat(data?.EntryTimeOut)"
+                  ></app-kendo-label>
+                </div>
+              </div>
+              <div
+                class="col-sm-12 col-md-12"
+                *ngIf="mealBreakConfigurationData?.RestBreakPenalty"
+              >
+                <div class="form-group">
+                  <app-kendo-label
+                    [label]="'RestBreaksTaken'"
+                    [value]="data?.IsRestBreakUsed ? 'Yes' : 'No'"
+                  ></app-kendo-label>
+                </div>
+              </div>
+              <div
+                class="col-sm-12 col-md-12"
+                *ngIf="
+                  !mealBreakConfigurationData?.MealBreakPenalty &&
+                  !mealBreakConfigurationData.AllowInOutMealBreak
+                "
+              >
+                <div class="form-group">
+                  <app-kendo-label
+                    [label]="'MealBreakTaken'"
+                    [value]="data.IsMealBreakUsed ? 'Yes' : 'No'"
+                  ></app-kendo-label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-md-12">
+            <h4 class="card__body--subheading mt-2"></h4>
+          </div>
+
+          <div
+            *ngIf="
+              mealBreakConfigurationData?.AllowInOutMealBreak &&
+              mealBreakConfigurationData?.NumberOfMealBreak
+            "
+          >
+            <div
+              class="mb-3 meal_break-time-view"
+              *ngFor="let item of data?.MealBreakDetails; let i = index"
+            >
+              <div
+                class="col-sm-12 col-md-12"
+                *ngIf="mealBreakConfigurationData.MealBreakPenalty"
+              >
+                <div class="form-group">
+                  <app-kendo-label
+                    [label]="mealBreakNumber[i]"
+                    [value]="item.MealBreakTypeId"
+                  ></app-kendo-label>
+                </div>
+              </div>
+              <div
+                class="col-sm-12 col-md-12"
+                *ngIf="!mealBreakConfigurationData.MealBreakPenalty"
+              >
+                <h4 class="card__body--subheading">
+                  {{ numbers[i] }} {{ "MealBreak" | translate }}
+                </h4>
+              </div>
+
+              <div
+                class="col-sm-12 col-md-12"
+                *ngIf="
+                  item.MealBreakTypeId != 'NotTaken' &&
+                  item.MealBreakTypeId != 'Waived'
+                "
+              >
+                <div class="form-group">
+                  <app-kendo-label
+                    [label]="'TimeIn'"
+                    [value]="convertTo12HourFormat(item?.MealIn)"
+                  ></app-kendo-label>
+                </div>
+              </div>
+              <div
+                class="col-sm-12 col-md-12"
+                *ngIf="
+                  item?.MealBreakTypeId != 'NotTaken' &&
+                  item?.MealBreakTypeId != 'Waived'
+                "
+              >
+                <div class="form-group">
+                  <app-kendo-label
+                    [label]="'TimeOut'"
+                    [value]="convertTo12HourFormat(item?.MealOut)"
+                  ></app-kendo-label>
+                </div>
+              </div>
+              <div
+                class="col-sm-12 col-md-12"
+                *ngIf="
+                  item?.MealBreakTypeId != 'NotTaken' &&
+                  item?.MealBreakTypeId != 'Waived'
+                "
+              >
+                <div class="form-group">
+                  <app-kendo-label
+                    [label]="'Minutes'"
+                    [isNumber]="true"
+                    [decimalPlaces]="0"
+                    [value]="item?.MealBreakTime"
+                  ></app-kendo-label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 meal_break-time-view2">
+                <div class="form-group inline-form">
+                  <app-kendo-label
+                    [label]="'TotalMealBreakInMin'"
+                    [value]="convertMealBreakInMin(data.TotalMealBreakHours)"
+                    [decimalPlaces]="0"
+                    [isNumber]="true"
+                  ></app-kendo-label>
+                </div>
+              </div>
+              <div class="col-md-12 meal_break-time-view2">
+                <div class="form-group inline-form">
+                  <app-kendo-label
+                    [label]="'TotalBillableHours'"
+                    [value]="data?.TotalBillableHours"
+                    [isNumber]="true"
+                  ></app-kendo-label>
+                </div>
+              </div>
+              <div class="col-md-12 meal_break-time-view2">
+                <div class="form-group inline-form">
+                  <app-kendo-label
+                    [label]="'TotalPenaltyHours'"
+                    [value]="data?.PenaltyHours"
+                    [isNumber]="true"
+                  ></app-kendo-label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="offcanvas-backdrop fade show" *ngIf="isShow"></div>

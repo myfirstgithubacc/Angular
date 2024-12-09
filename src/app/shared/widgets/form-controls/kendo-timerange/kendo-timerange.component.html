@@ -1,0 +1,129 @@
+   <kendo-button #anchor (click)="toggleTimeRange()" class="editDaysBtn" *ngIf="timeRangeProperties.isAllowPopup">
+   <xrm-icon name="edit-3" [size]="14" color="dark-blue-color" class="sw-bolder"></xrm-icon>
+   </kendo-button>
+<kendo-popup class="DaysPopup dropdown__shift-range__time-popup" [anchor]="anchor.element" *ngIf="show && timeRangeProperties.isAllowPopup">
+<div *ngIf="timeRangeProperties.isEditMode; then thenTemplateName; else elseTemplateName"></div>
+<ng-template #elseTemplateName>
+   <div class="inputDaterangePicker__modeEdit" [class]="timeRangeProperties.RenderMode ? 'inputDaterangePicker' : ''">
+   <div class="shift-range__time-popup--wapper">
+<div class="shift-range__time-popup--form">
+<div class="form-group">
+      <app-kendo-label [label]="timeRangeProperties.label1" [value]="formatTime(startformControl.value?startformControl.value:timeRangeProperties.startTime)" [isTime]="true"
+      [tooltipPosition]="" [labelLocalizeParam]="timeRangeProperties.labelLocalizeParam1"></app-kendo-label>
+</div>
+<div class="form-group">
+      <app-kendo-label [label]="timeRangeProperties.label2" [value]="formatTime(endformControl.value?endformControl.value:timeRangeProperties.endTime)" [isTime]="true"
+      [tooltipPosition]="" [labelLocalizeParam]="timeRangeProperties.labelLocalizeParam2"></app-kendo-label>
+</div>
+</div>
+</div>
+   </div>
+</ng-template>
+<ng-template #thenTemplateName>
+   <kendo-formfield>
+      <div [class]="timeRangeProperties.RenderMode ? 'inputDaterangePicker' : ''">
+         <!-- *********************************************** START Time ******************************** -->
+         <div class="shift-range__time-popup--wapper">
+            <div class="shift-range__time-popup--form">
+               <div class="form-group">
+                  <div class="inline_label" *ngIf="!timeRangeProperties.starttooltipVisible">
+                     <app-kendo-label [label]="timeRangeProperties.label1" [isTime]="true"
+                     [tooltipPosition]="">
+                     </app-kendo-label><xrm-icon *ngIf="timeRangeProperties.endisRequired" name="star" class="required"></xrm-icon>
+                  </div>
+                  <div class="inline_label">
+                     <tooltip-content [tooltipVisible]="timeRangeProperties.starttooltipVisible" [tooltipTitle]="timeRangeProperties.starttooltipTitle" [label]="timeRangeProperties.label1" [tooltipPosition]=""
+                     [tooltipTitleLocalizeParam]="timeRangeProperties.starttooltipTitleLocalizeParam" [isRequired]="timeRangeProperties.startisRequired" [labelLocalizeParam]="timeRangeProperties.startlabelLocalizeParam"
+                     [isHtmlContent]="timeRangeProperties.startisHtmlContent">
+                     </tooltip-content>
+                  </div>
+                  <kendo-timepicker formatPlaceholder="formatPattern" (blur)="onBlur($event)" (focus)="onFocus($event)" (open)="onOpen($event)" id="timePicker"
+                  (close)="onClose($event)" (valueChange)="onStartTimeChange($event)"
+                  [formControl]="startformControl" [format]="timeFormat"></kendo-timepicker>
+                  <app-print-error-message [control]="startformControl"></app-print-error-message>
+               </div>
+               <!-- *********************************************** END Time ******************************** -->
+               <div class="inlineDaterangePicker form-group">
+                  <div class="inline_label" *ngIf="!timeRangeProperties.starttooltipVisible">
+                     <app-kendo-label *ngIf="!timeRangeProperties.endtooltipVisible" [label]="timeRangeProperties.label2" [isTime]="true"
+                     [tooltipPosition]="">
+                     </app-kendo-label>
+                     <xrm-icon *ngIf="timeRangeProperties.endisRequired" name="star" class="required ng-star-inserted"></xrm-icon>
+                  </div>
+                  <div class="inline_label">
+                     <tooltip-content [tooltipVisible]="timeRangeProperties.endtooltipVisible" [tooltipTitle]="timeRangeProperties.endtooltipTitle" [label]="timeRangeProperties.label2" [tooltipPosition]=""
+                     [tooltipTitleLocalizeParam]="timeRangeProperties.endtooltipTitleLocalizeParam" [labelLocalizeParam]="timeRangeProperties.endlabelLocalizeParam"
+                     [isHtmlContent]="timeRangeProperties.endisHtmlContent" [isRequired]="timeRangeProperties.endisRequired" >
+                     </tooltip-content>
+                  </div>
+                  <kendo-timepicker formatPlaceholder="formatPattern" [min]="endMinRange" (blur)="onBlur($event)" (focus)="onFocus($event)" (open)="onOpen($event)" id="timePicker"
+                  (close)="onClose($event)" (valueChange)="onEndTimeChange($event)"
+                  [formControl]="endformControl" [format]="timeFormat"
+                  ></kendo-timepicker>
+                  <app-print-error-message [control]="endformControl"></app-print-error-message>
+               </div>
+               </div>
+               <div class="shift-range__time-popup--footer">
+                  <button type="button" class="me-1" kendoButton fillMode="outline" themeColor="primary" (click)="hidePopup()">{{'Cancel' | translate}}</button>
+                  <button type="button" kendoButton fillMode="solid" themeColor="primary" (click)="emitData()" [disabled]="applyButtonDisabled">{{'Apply' | translate}}</button>
+               </div>
+         </div>
+</div>
+   </kendo-formfield>
+</ng-template>
+</kendo-popup> 
+<ng-container *ngIf="!timeRangeProperties.isAllowPopup">
+<div *ngIf="timeRangeProperties.isEditMode; then thenTemplateName; else elseTemplateName"></div>
+<ng-template #elseTemplateName>
+<div class="inputDaterangePicker__modeEdit" [class]="timeRangeProperties.RenderMode ? 'inputDaterangePicker' : ''">
+<div class="form-group">
+<app-kendo-label [label]="timeRangeProperties.label1" [value]="formatTime(startformControl.value?startformControl.value:timeRangeProperties.startTime)" [isTime]="true"
+[tooltipPosition]="" [labelLocalizeParam]="timeRangeProperties.labelLocalizeParam1"></app-kendo-label>
+</div>
+<div class="form-group">
+<app-kendo-label [label]="timeRangeProperties.label2" [value]="formatTime(endformControl.value?endformControl.value:timeRangeProperties.endTime)" [isTime]="true"
+[tooltipPosition]="" [labelLocalizeParam]="timeRangeProperties.labelLocalizeParam2"></app-kendo-label>
+</div>
+</div>
+</ng-template>
+<ng-template #thenTemplateName>
+<kendo-formfield>
+<div [class]="timeRangeProperties.RenderMode ? 'inputDaterangePicker' : ''">
+<!-- *********************************************** START Time ******************************** -->
+<div class="form-group">
+<div class="inline_label" *ngIf="!timeRangeProperties.starttooltipVisible">
+<app-kendo-label [label]="timeRangeProperties.label1" [isTime]="true"
+[tooltipPosition]="">
+</app-kendo-label><xrm-icon *ngIf="timeRangeProperties.endisRequired" name="star" class="required ng-star-inserted"></xrm-icon>
+</div>
+<tooltip-content [tooltipVisible]="timeRangeProperties.starttooltipVisible" [tooltipTitle]="timeRangeProperties.starttooltipTitle" [label]="timeRangeProperties.label1" [tooltipPosition]=""
+[tooltipTitleLocalizeParam]="timeRangeProperties.starttooltipTitleLocalizeParam" [labelLocalizeParam]="timeRangeProperties.startlabelLocalizeParam"
+[isHtmlContent]="timeRangeProperties.startisHtmlContent" [isRequired]="timeRangeProperties.startisRequired" >
+</tooltip-content>
+<kendo-timepicker formatPlaceholder="formatPattern" (blur)="onBlur($event)" (focus)="onFocus($event)" (open)="onOpen($event)" id="timePicker"
+(close)="onClose($event)" (valueChange)="onStartTimeChange($event)"
+[formControl]="startformControl" [format]="timeFormat"></kendo-timepicker>
+<app-print-error-message [control]="startformControl"></app-print-error-message>
+</div>
+<!-- *********************************************** END Time ******************************** -->
+<div class="inlineDaterangePicker form-group">
+<div class="inline_label" *ngIf="!timeRangeProperties.starttooltipVisible">
+<app-kendo-label *ngIf="!timeRangeProperties.endtooltipVisible" [label]="timeRangeProperties.label2" [isTime]="true"
+[tooltipPosition]="">
+</app-kendo-label>
+<xrm-icon *ngIf="timeRangeProperties.endisRequired" name="star" class="required"></xrm-icon>
+</div>
+<tooltip-content [tooltipVisible]="timeRangeProperties.endtooltipVisible" [tooltipTitle]="timeRangeProperties.endtooltipTitle" [label]="timeRangeProperties.label2" [tooltipPosition]=""
+[tooltipTitleLocalizeParam]="timeRangeProperties.endtooltipTitleLocalizeParam" [labelLocalizeParam]="timeRangeProperties.endlabelLocalizeParam"
+[isHtmlContent]="timeRangeProperties.endisHtmlContent" [isRequired]="timeRangeProperties.endisRequired" >
+</tooltip-content>
+<kendo-timepicker formatPlaceholder="formatPattern" [min]="endMinRange" (blur)="onBlur($event)" (focus)="onFocus($event)" (open)="onOpen($event)" id="timePicker"
+(close)="onClose($event)" (valueChange)="onEndTimeChange($event)"
+[formControl]="endformControl" [format]="timeFormat"
+></kendo-timepicker>
+<app-print-error-message [control]="endformControl"></app-print-error-message>
+</div>
+</div>
+</kendo-formfield>
+</ng-template>
+</ng-container>

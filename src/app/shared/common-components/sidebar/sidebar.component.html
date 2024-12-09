@@ -1,0 +1,51 @@
+<div  class="main-menu main-menu--expended" hover-class="main-menu--expended">
+  <ul class="nav">
+      <li class="nav__item"  routerLinkActive="active" >
+        <a href="javascript:;" class="nav__link" routerLink="/xrm/landing/home" (click)="RemoveSidebar();$event.stopPropagation()">
+          <span class="nav__link--icon">
+            <xrm-icon name="home" color="white-color"></xrm-icon>
+          </span>
+          <span class="nav__link--text" >
+            Home
+          </span>
+        </a>
+      </li>
+      <!-- Dynamic nav side bar start -->
+      <!-- Dynamic nav side bar ends -->
+   
+      <li class="nav__item open"  routerLinkActive="active" *ngFor="let route of menu" (click)="hideMenu1(route)">
+        <a href="javascript:;" class="nav__link" >
+          <span class="nav__link--icon">
+            <xrm-icon name="{{route?.Icon}}" color="white-color"></xrm-icon>
+          </span>
+          <span class="nav__link--text">
+            {{route?.ItemName | translate}}
+          </span>
+        </a>
+        <ul [ngClass]="id==route.ItemId && addClass ? 'second-level--menu navActive' : 'second-level--menu'" *ngIf="route?.Children?.length > 0 ">
+          <h5 class="nav__item--heading">{{route?.ItemName | translate }}</h5>
+          <li class="nav__item" routerLinkActive="active" [ngClass]="{'open': route1?.Children.length>0}" *ngFor="let route1 of route?.Children" (click)="hideMenu2(route1);$event.stopPropagation()">
+            <a href="javascript:;" class="nav__link"  [routerLink]=" route1?.Route !='' ?route1?.Route: null " (click)="RemoveSidebar(route1.Children?.length, route1)" >
+              {{route1?.ItemName| translate}}
+            </a>
+            <ul [ngClass]="(id2==route1.ItemId) && addClass2 ? 'parent navActive' : (route1?.Children?.length <= 12 ? 'parent parent__reduce-width' : 'parent')"
+            *ngIf="route1?.Children?.length > 0">
+              <h5 class="nav__item--heading">{{route1?.ItemName | translate}}</h5>
+                <li>
+                  <ul class="parent__divide">
+                    <li class="nav__item" routerLinkActive="active"  *ngFor="let route2 of route1?.Children.slice(0, 12)"  >
+                      <a routerLink="{{route2?.Route}}" class="nav__link" (click)="RemoveSidebar(route2.Children?.length, route2);$event.stopPropagation()" >{{route2.ItemName | translate}} </a>
+                    </li>
+                  </ul>
+                  <ul class="parent__divide">
+                    <li class="nav__item" routerLinkActive="active" *ngFor="let route2 of route1?.Children.slice(12)"  >
+                      <a routerLink="{{route2?.Route}}" class="nav__link" (click)="RemoveSidebar(route2.Children?.length,route2);$event.stopPropagation()" >{{route2.ItemName | translate}} </a>
+                    </li>
+                  </ul>
+                </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>

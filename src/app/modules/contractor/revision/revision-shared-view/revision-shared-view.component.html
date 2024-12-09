@@ -1,0 +1,295 @@
+<div class="app-content__body  assignment__revision-main">
+  <!-- Common Header Starts Here -->
+  <form [formGroup]="commonHeaderForm">
+    <app-common-header [buttonSet]="buttonSet" [isStatusEditable]="false" [statusData]="statusData"
+      (onLink)="redirect($event)"></app-common-header>
+  </form>
+
+  <form [formGroup]="revisionForm">
+    <div class="card floating-layout floating-layout__view-layout">
+
+      <div class="card__header">
+        <h4 class="card__heading">{{'RevisionDetail'| translate}}</h4>
+      </div>
+      <div class="card__body">
+        <div class="row">
+          <!-- Page Subheading -->
+          <div class="col-sm-12 col-md-12" *ngIf="getPositionDetailsList().length > 0">
+            <h4 class="card__body--subheading subheading__first-no-border">{{'PositionDetails'| translate}}</h4>
+          </div>
+          <div class="col-sm-12 col-md-12 list-view grid-bordern revision-grid" *ngIf="getPositionDetailsList().length > 0">
+            <div class="form-group">
+              <kendo-grid [data]="getPositionDetailsList()">
+                <kendo-grid-column field="field_label" title="{{'FieldName'| translate}}">
+                  <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                    <strong> {{ dataItem.FieldLabel | translate}}</strong>
+                  </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column field="CurrentValue" title="{{'CurrentValue'| translate}}">
+                  <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                    {{ getDateFormat(dataItem.CurrentValue,dataItem.FieldLabel) }}
+                 </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column field="NewValue" title="{{'RevisedValue'| translate}}">
+                  <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                    {{ getDateFormat(dataItem.NewValue,dataItem.FieldLabel) }}
+                 </ng-template>
+                </kendo-grid-column>
+              </kendo-grid>
+            </div>
+          </div>
+          <!-- Position Details Ends -->
+
+          <!-- Page Subheading -->
+          <div class="col-sm-12 col-md-12" *ngIf="getRateDetailsList().length > 0">
+            <h4 class="card__body--subheading subheading__no-border" [ngClass]="{'mt-0': getRateDetailsList().length > 0}">{{'RateDetails'| translate}}</h4>
+          </div>
+          <!-- Page Subheading -->
+
+          <div class="col-sm-12 col-md-12 list-view  grid-border revision-grid" *ngIf="getRateDetailsList().length > 0">
+            <div class="form-group">
+              <kendo-grid [data]="getRateDetailsList()">
+                <kendo-grid-column field="field_label" title="{{'FieldName'| translate}}">
+                  <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                    <strong> {{ getLocalizaiton(dataItem.FieldLabel, true) }}</strong>
+                  </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column field="CurrentValue" title="{{'CurrentValue'| translate}}">
+                  <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                    {{ getLocalizaiton(dataItem.CurrentValue, true) }}
+                  </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column field="NewValue" title="{{'RevisedValue'| translate}}">
+                  <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                    {{ getLocalizaiton(dataItem.NewValue, true) }}
+                  </ng-template>
+                </kendo-grid-column>
+              </kendo-grid>
+            </div>
+          </div>
+
+          <div class="col-sm-4 col-md-4 mt-3" *ngIf="getRateDetailsList().length > 0">
+            <div class="form-group">
+              <app-kendo-label [label]="'RevisedRateEffectiveDate'" [isDate]="true"
+              [value]="revisionObject.RevisionDetails.RevisedRateEffentiveDate"></app-kendo-label>
+            </div>
+          </div>
+           <!-- Page Subheading -->
+           <div class="col-sm-12 col-md-12 mt-3" *ngIf="getTimeAndExpenseDetailsList().length > 0">
+            <h4 class="card__body--subheading subheading__no-border" [ngClass]="{'mt-0': getTimeAndExpenseDetailsList().length > 0}">{{'TimeAndExpenseConfigurations'| translate}}</h4>
+          </div>
+          <!-- Page Subheading -->
+          <div class="col-sm-12 col-md-12 list-view  grid-border revision-grid" *ngIf="getTimeAndExpenseDetailsList().length > 0">
+            <div class="form-group">
+              <kendo-grid [data]="getTimeAndExpenseDetailsList()">
+                <kendo-grid-column field="field_label" title="{{'FieldName'| translate}}">
+                  <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                    <strong> {{ getLocalizaiton(dataItem.FieldLabel, true) }}</strong>
+                  </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column field="CurrentValue" title="{{'CurrentValue'| translate}}">
+                  <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                    {{ getDateFormat(dataItem.CurrentValue,dataItem.FieldLabel) }}
+                 </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column field="NewValue" title="{{'RevisedValue'| translate}}">
+                  <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                     {{ getDateFormat(dataItem.NewValue,dataItem.FieldLabel) }}
+                  </ng-template>
+                </kendo-grid-column>
+              </kendo-grid>
+            </div>
+          </div>
+          <!-- input box start -->
+          <!-- <div class="col-sm-4 col-md-4 mt-3" *ngIf="isRevisionRequired && getRateDetailsList().length > 0">
+            <div class="form-group">
+              <app-kendo-datepicker [label]="'Revised Rate Effective Date'"
+                [controlName]="'revisedDate'"></app-kendo-datepicker>
+            </div>
+          </div> -->
+
+
+
+          <!-- input box start -->
+          <!-- *ngIf="isPOGreaterthanZero()" -->
+          <div *ngIf="isCurrentPO() && isPOGreaterthanZero()">
+            <div class="col-sm-12 col-md-12" >
+              <h4 class="card__body--subheading subheading__no-border" [ngClass]="{'mt-0': isCurrentPO() && isPOGreaterthanZero()}">{{'PORevisionDetails'| translate}}
+              </h4>
+            </div>
+            <div class="col-sm-6 col-md-6 list-view grid-border"
+              *ngIf="isPOGreaterthanZero() && getPORevisionDetails().length > 0">
+              <div class="form-group">
+                <a href="javascript:;" class=" d-flex justify-content-between ml-auto data-answere" class="link-font"
+                  data-bs-toggle="offcanvas" data-bs-target="#assignmentPODetails">{{'ViewPreviousPODetails'| translate}}</a>
+                <kendo-grid [data]="getPORevisionDetails()">
+                  <kendo-grid-column title="{{'PORevisionDetails' | translate}}" field="Key">
+                  </kendo-grid-column>
+                  <kendo-grid-column title="{{'Values'| translate}}" field="Value" format="{0:n2}"></kendo-grid-column>
+                </kendo-grid>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- *ngIf="isPONewGreaterthanZero()" -->
+          <div *ngIf="isPONew() && isPONewGreaterthanZero()">
+            <div class="col-sm-12 col-md-12" >
+              <h4 class="card__body--subheading subheading__first-no-border" [ngClass]="{'mt-0': isCurrentPO() && isPOGreaterthanZero()}">{{'PORevisionDetailsNewPO'| translate}}</h4>
+            </div>
+            <div class="col-sm-6 col-md-6 list-view grid-border"
+              *ngIf="isPONewGreaterthanZero() && getPORevisionDetailsNewPO().length > 0">
+              <div class="form-group">
+                <kendo-grid [data]="getPORevisionDetailsNewPO()">
+                  <kendo-grid-column title="{{'PORevisionDetails' | translate}}" field="Key">
+                  </kendo-grid-column>
+                  <kendo-grid-column title="{{'Values'| translate}}" field="Value" format="{0:n2}">
+
+                  </kendo-grid-column>
+                </kendo-grid>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- <div class="col-sm-12 col-md-12" *ngIf="hasApprovers()">
+            <h4 class="card__body--subheading subhead ing__first-no-border">Approver Details</h4>
+          </div>
+          <div class="col-sm-6 col-md-6 list-view grid-border" *ngIf="hasApprovers()">
+            <div class="form-group">
+              <app-kendo-label [label]="getApprover(0).ApproverLabel"
+                [value]="getApprover(0).ApproverName"></app-kendo-label>
+              <app-kendo-label [label]="getApprover(1).ApproverLabel"
+                [value]="getApprover(1).ApproverName"></app-kendo-label>
+            </div>
+          </div> -->
+
+        </div>
+      </div>
+    </div>
+<ng-container *ngIf="showApproverWidget">
+  <app-approval-widget-v2 [entityId]="entityId"
+  [isEdit]="true" [isRecordId]="revisionObject.RevisionDetails.Id" [isheading]="true"
+  [approvalInfo]="approvalConfigWidgetObj" [isView]="true"
+  [heading]="'ApproverDetails'" [sector]="revisionObject.RevisionDetails.SectorId" [orgLevel1Id]="revisionObject.RevisionDetails.OrgLevel1Id"
+  (onApproverSubmitReq)="onApproverSubmit($event)"
+  >
+  </app-approval-widget-v2>
+
+</ng-container>
+
+
+    <div class="card" *ngIf="isCommentRequired || (revisionObject.CommentHistory != null && revisionObject.CommentHistory.length>0)">
+      <!-- Card Header Section-->
+      <div class="card__header">
+        <h4 class="card__heading">{{'Comments'| translate}}</h4>
+      </div>
+      <!-- End Card Header Section-->
+
+      <!-- Card Body Section-->
+      <div class="card__body">
+        <div class="row" *ngIf="revisionObject.CommentHistory != null && revisionObject.CommentHistory.length>0 ">
+          <div class="col-sm-12 col-md-12">
+          <div class="form-group">
+
+            <app-multi-level-comments *ngIf="revisionObject.CommentHistory?.length"
+                                        [label]="'ReviewerComment'" [allComments]="revisionObject.CommentHistory"
+                                        [dateKey]="'Date'"
+                                        [commentsKey]="'Comment'">
+                                    </app-multi-level-comments>
+        </div>
+        </div>
+        </div>
+        <div class="row" *ngIf="isCommentRequired">
+          <!-- input box start -->
+          <div class="col-sm-12 col-md-12">
+            <div class="form-group">
+              <app-kendo-textarea [controlName]="'comment'" [isRequired]="isCommentAsterik" [label]="'Comment'" [maxCharacters]="2000"
+                [isEditMode]="false">
+              </app-kendo-textarea>
+            </div>
+          </div>
+          <!-- input box start -->
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<!-- PO Details Quick view sidebar -->
+<div class="offcanvas offcanvas-end" tabindex="-2" id="assignmentPODetails" aria-labelledby="assignmentPODetails">
+  <div class="offcanvas-header">
+    <h5>PO Details</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body" *ngIf="revisionObject?.RevisionPODetails != null">
+    <div class="card">
+      <div class="card__body">
+        <div class="row">
+          <div class="col-sm-12 col-md-12">
+            <div class="view__screen">
+              <ul class="list__data">
+                <li class="list__data--item">
+                        <strong class="kendo-label">{{'PO'| translate}}</strong>
+                        <span class="data-answere">{{revisionObject.RevisionPODetails.PoNumber}}</span>
+                </li>
+                <li class="list__data--item">
+                  <strong class="kendo-label">{{Maplocalization.get('POApprovedAmountCURR')}}</strong>
+                  <span class="data-answere">{{revisionObject.RevisionPODetails.TotalPoAmount | number:'1.0-2'}}</span>
+                </li>
+
+                <li class="list__data--item" *ngIf="!isSeparateTandEPoAmount()">
+                  <strong class="kendo-label">{{Maplocalization.get('POIncurredAmountCURR')}}</strong>
+                  <span class="data-answere" >{{revisionObject.RevisionPODetails.TotalPoIncurredAmount}}</span>
+                </li>
+                <li class="list__data--item" *ngIf="!isSeparateTandEPoAmount()">
+                  <strong class="kendo-label">{{Maplocalization.get('PORemainingAmountCURR')}}</strong>
+                  <span class="data-answere" >{{revisionObject.RevisionPODetails.PoRemainingAmount}}</span>
+                </li>
+                <li class="list__data--item" *ngIf="isSeparateTandEPoAmount()">
+                  <strong class="kendo-label">{{Maplocalization.get('POAmountforTimeCURR')}}</strong>
+                  <span class="data-answere" >{{revisionObject.RevisionPODetails.PoTimeAmount}}</span>
+                </li>
+                <li class="list__data--item" *ngIf="isSeparateTandEPoAmount()">
+                  <strong class="kendo-label">{{Maplocalization.get('PoExpenseAmount')}}</strong>
+                  <span class="data-answere" >{{revisionObject.RevisionPODetails.PoExpenseAmount}}</span>
+                </li>
+                <li class="list__data--item" *ngIf="isSeparateTandEPoAmount()">
+                  <strong class="kendo-label">{{Maplocalization.get('PoTimeIncurredAmount')}}</strong>
+                  <span class="data-answere" >{{revisionObject.RevisionPODetails.PoTimeIncurredAmount}}</span>
+                </li>
+                <li class="list__data--item" *ngIf="isSeparateTandEPoAmount()">
+                  <strong class="kendo-label">{{Maplocalization.get('PoExpenseIncurredAmount')}}</strong>
+                  <span class="data-answere" >{{revisionObject.RevisionPODetails.PoExpenseIncurredAmount}}</span>
+                </li>
+                <li class="list__data--item" *ngIf="isSeparateTandEPoAmount()">
+                  <strong class="kendo-label">{{Maplocalization.get('PORemainingAmountforTimeCURR')}}</strong>
+                  <span class="data-answere" >{{revisionObject.RevisionPODetails.PoTimeRemainingAmount}}</span>
+                </li>
+                <li class="list__data--item" *ngIf="isSeparateTandEPoAmount()">
+                  <strong class="kendo-label" >{{Maplocalization.get('PORemainingAmountforExpenseCURR')}}</strong>
+                  <span class="data-answere">{{revisionObject.RevisionPODetails.PoExpenseRemainingAmount}}</span>
+                </li>
+                <li class="list__data--item">
+                  <strong class="kendo-label">{{'EffectiveFrom'| translate}}</strong>
+                  <span class="data-answere">{{revisionObject.RevisionPODetails.PoEffectiveFrom | date: dateFormat}}</span>
+                </li>
+                <li class="list__data--item">
+                  <strong class="kendo-label">{{'EffectiveTo'| translate}}</strong>
+                  <span class="data-answere">{{revisionObject.RevisionPODetails.PoEffectiveTo | date: dateFormat}}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End PO Details Quick view sidebar -->
+<app-assignment-more-details [assignmentId]="revisionObject.RevisionDetails.AssignmentId"
+  [recordId]="revisionObject.RevisionDetails.Id" [isAssignDetailsNeedFromApi]="true"
+  [entityId]="entityId"></app-assignment-more-details>
+<!-- revisionObject?.RevisionDetails?.AssignmentId -->
+

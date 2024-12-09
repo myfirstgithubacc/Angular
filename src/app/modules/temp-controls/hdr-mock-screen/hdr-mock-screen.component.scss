@@ -1,0 +1,68 @@
+.card.card-mockup {
+	background: var(--secoundry-card) !important;
+}
+.button-submit-animation-one {
+	.button {
+		position: relative;
+		display: inline-block;
+		padding: 8px 16px;
+		border: none;
+		border-radius: 4px;
+		background-color: var(--color-primary);
+		text-align: center;
+		outline: 0;
+		transition: all 0.4s ease-in-out;
+		color: white;
+		&::before {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -4px;
+			margin-left: -4px;
+			content: "";
+			height: 8px;
+			width: 8px;
+			background: white;
+			border-radius: 100%;
+			transition: all 0.4s linear;
+			-webkit-animation: test 2s infinite;
+			animation: test 2s infinite;
+			opacity: 0;
+		}
+		&.active {
+			color: transparent;
+			&::before {
+				opacity: 1;
+			}
+		}
+		&.loading {
+			&::before {
+				opacity: 1;
+			}
+		}
+	}
+}
+#requestSidebar2 {
+	tr {
+		th {
+			border-color: var(--bs-border-color);
+			max-width: 45px;
+			min-width: 280px;
+			width: 30%;
+		}
+	}
+}
+
+@-webkit-keyframes test {
+	0% {
+		left: 30%;
+	}
+
+	50% {
+		left: 70%;
+	}
+
+	100% {
+		left: 30%;
+	}
+}

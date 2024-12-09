@@ -1,0 +1,26 @@
+.widgetsClass {
+    padding: 8px 12px;
+    font-size: var(--base-font-size);
+}
+
+.k-input-solid {
+    border-color: var(--light-border-color);
+    box-shadow: none;
+    border-radius: 4px;
+}
+
+.input-parent {
+    position: relative;
+
+    .eye-icon {
+        position: absolute;
+        right: 16px;
+        top: 8px;
+        cursor: pointer;
+        width: 16px;
+        height: 16px;
+        // background: #fff !important;
+        padding: 0px;
+    }
+
+}

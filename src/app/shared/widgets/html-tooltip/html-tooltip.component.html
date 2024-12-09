@@ -1,0 +1,14 @@
+<kendo-label [text]="label | translate : getObject(labelLocalizeParam)" kendoTooltip kendoPopoverAnchor showOn="hover"
+  [popover]="myPopover" [position]="position">
+  <ng-container>
+   </ng-container>
+</kendo-label>
+<div class="one" #one></div>
+<kendo-popover #myPopover [width]="300" [position]="position">
+  <ng-template kendoPopoverBodyTemplate>
+    <div [innerHTML]="popoverBody"></div>
+
+  </ng-template>
+ 
+
+</kendo-popover>

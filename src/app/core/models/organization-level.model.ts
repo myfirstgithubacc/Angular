@@ -1,0 +1,26 @@
+export class OrganizationLevelCommon{
+CreatedBy:string;
+CreatedOn:string;
+Disabled:boolean;
+Id:string;
+LastModifiedBy:string;
+LastModifiedOn:string;
+OrganizationCode:string;
+OrganizationName:string;
+SectorId:string;
+SectorName:string;
+UKey:string;
+    constructor(){
+       this.CreatedBy='';
+       this.CreatedOn='';
+       this.Disabled=false;
+       this.Id='';
+       this.LastModifiedBy='';
+       this.LastModifiedOn='';
+       this.OrganizationCode='';
+       this.OrganizationName='';
+       this.SectorId='';
+       this.SectorName='';
+       this.UKey=''
+    }
+}

@@ -1,0 +1,34 @@
+<div class="right-logo1 text-center">
+    <img class="logo-xrm" src="assets/images/xrm-new-logo.png" alt="" />
+</div>
+
+
+<div id="page__not--found1" class="err-7-new" *ngIf="isData">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="page__not--found--content">
+                    <!-- <h1 class="mr-3 pr-3 align-top border-right inline-block align-content-center">404</h1> -->
+                    <div class="inline-block align-middle">
+                        <div class="bdrs"></div>
+                        <h2 class="err4n-h2">{{ displayData.Data?.validationMessage | translate}}</h2>
+                        <h6 class="err4n-h6">{{displayData.Data?.ContactMessage | translate}}</h6>
+                        <div class="bdrs"></div>
+                    </div>
+                </div>
+                <div class="back-btn">
+                    <a href="javascript:;" (click)="loginAgain()" class="btn err4-btn2"><i class="fa fa-user"
+                            aria-hidden="true"></i> {{'Login' | translate}}</a>
+                </div>
+            </div>
+            <div class="col-md-5 position-relative">
+                <div class="er-imgs img-absolute" *ngIf="StatusCode === 401">
+                    <img src="./assets/images/401-error.png" alt="" class="img-responsive" />
+                </div>
+                <div class="er-imgs img-absolute" *ngIf="StatusCode === 410">
+                    <img src="./assets/images/410-error.png" alt="" class="img-responsive" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

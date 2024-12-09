@@ -1,0 +1,82 @@
+<app-toaster [isOnComponent]="true"></app-toaster>
+<div class="app-content__body">
+    <div class="card">
+        <div class="card__header">
+            <h4 class="card__heading">{{ 'PickList' | translate}}</h4>
+            <div class="card__header-icon">
+            </div>
+        </div>
+        <div class="card__body">
+            <div class="row">
+                <form [formGroup]="addEditPickListForm">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-textbox [controlName]="'pickListName'" [label]="'PredefinedListName'"
+                                    [isSpecialCharacterAllowed]="true" [isRequired]="true" [tooltipVisible]="true"
+                                    [tooltipTitle]="'PickListName'">
+                                </app-textbox>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 position-relative">
+                            <h4 class="card__body--subheading">{{'ListItems' | translate}}</h4>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-textbox [controlName]="'itemTitle'" [label]="'ItemTitle'"
+                                    [isSpecialCharacterAllowed]=" true" [isRequired]="true" [tooltipVisible]="true"
+                                    [tooltipTitle]="'UdfPredefinedListAddInfoMessage'">
+                                </app-textbox>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-2 text-right">
+                            <div class="form-group mt-4">
+                                <app-kendo-button [buttonName]="isItemEditMode ? 'UpdateItemToList': 'AddItemToList'"
+                                    (Click)="addUpdateItemInGrid()">
+                                </app-kendo-button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+                <div class="col-sm-12 col-md-12">
+
+                    <div class="list-view">
+                        <div class="list-view__tab-item">
+                            <grid-view [gridData]="gridData" [columnOptions]="columnOptions" [pageSize]="pageSize"
+                                [actionSet]="actionSet" [tabOptions]="tabOptions" [isColumnChooserVisible]="false"
+                                [pageSize]="pageSize" [isInternalSearch]="true" [entityId]="entityId"
+                                [fileName]="'UDFPickListItems'" (onExportData)="onExportData()">
+                            </grid-view>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="page-footer">
+                    <div class="btn-box btn-box--center">
+
+                        <button kendoButton type="button" fillMode="outline" themeColor="primary" (click)="cancel()">
+                            {{ "Cancel" | translate }}
+                        </button>
+                        <button type="button" kendoButton (click)="handleFormSubmission()" themeColor="primary"
+                            [innerText]="'Save' | translate" [formName]="addEditPickListForm" appFocusOnError
+                            [disabled]="isEditMode ? addEditPickListForm.pristine: false">{{ "Save" |
+                            translate}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div *ngIf="isEditMode">
+        <event-log></event-log>
+    </div>
+
+
+</div>

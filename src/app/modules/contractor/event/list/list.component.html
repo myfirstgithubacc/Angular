@@ -1,0 +1,47 @@
+<ng-container *ngIf="isList">
+      <div class="master-search">
+        <div class="row">
+            <div class="col-md-12 master-search__wapper">
+                <div class="master-search__search-box">
+                    <div class="custom-search">
+                        <div class="custom-search__input-box">
+                            <app-search [isServerSidePagingEnable]="isServerSidePagingEnable" 
+                                [placeholder]="'SearchFor'" [buttonNameSearch]="''" 
+                                (onSearch)="onSearchTriggered($event)"
+                                [EntityId]="entityId" [columnOptions]="columnOptions">
+                            </app-search>
+                        </div>
+                        <app-advance-search [apiAddress]="advApiAddress" [userValues]="userObject" 
+                            [isServerSidePagingEnable]="isServerSidePagingEnable" [EntityId]="entityId"
+                            (selectedFilter)="onFilterTriggered($event)" [isApiGateway]="true">
+                        </app-advance-search>
+                    </div>
+                </div>
+                <ng-container *ngIf="showBtn">
+                    <app-kendo-button [buttonName]="'NewEvent'" [buttonIcon]="'plus'" (click)="navigate()"
+                    ></app-kendo-button>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <grid-view [isServerSidePagingEnable]="isServerSidePagingEnable" [apiAddress]="apiAddress" 
+            [searchText]="searchText" [advFilterData]="appliedAdvFilters"
+            [columnOptions]="columnOptions" [actionSet]="actionSet" 
+            [manageActionSets]="manageActionSets" [isApiGateway]="true" 
+            [tabOptions]="tabOptions" [fileName]="'contractor-event'" 
+            [kendoGridSelectedBy]="'UKey'" [multiSelect]="false" 
+            [userValues]="userObject" [entityId]="entityId" 
+            [actionItemCategoryField]="'Disabled'" [pageSize]="pageSize" >
+        </grid-view>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="isTab && isaddEdit">
+    <app-add-editContractorEvent [contractorId]="contractorId" [isTab]="isTab" (onCancel)="cancelForm($event)"></app-add-editContractorEvent>
+</ng-container>
+<ng-container *ngIf="isTab && isView">
+    <app-view1  [isTab]="isTab" [viewUkey]="dataItemUkey" (backToList)="cancelForm($event)"></app-view1>
+</ng-container>
+    

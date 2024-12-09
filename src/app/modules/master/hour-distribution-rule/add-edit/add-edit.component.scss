@@ -1,0 +1,50 @@
+.custom-grid {
+    .k-grid-header {
+        th {
+            &:not(:first-child)::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(20%);
+                width: 1px;
+                height: 70%;
+                background-color: #ccc;
+                pointer-events: none;
+            }
+        }
+    }
+}
+
+app-kendo-button {
+    &.copy__btn {
+        button {
+            &.send-button {
+                margin-top: 18px;
+            }
+        }
+    }
+}
+
+.hrsDistributionConfiguration {
+    .columnSection0 {
+        .inline-table-cell {
+            &.row {
+                &.gropping-row {
+                    .col {
+                        &.gropping-cell {
+                            kendo-label {
+                                top: 10px;
+                                position: relative;
+
+                                &>.k-label {
+                                    top: 0px !important;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

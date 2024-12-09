@@ -1,0 +1,36 @@
+.card {
+	&.k-expander {
+		.card__header-icon {
+			margin-left: auto;
+			position: relative;
+			i {
+				font-size: 16px;
+			}
+		}
+	}
+}
+.card__header-icon {
+	display: flex;
+	gap: 24px;
+	cursor: pointer;
+	text-align: center;
+}
+.card__header-icon--success {
+	color: var(--green-color);
+	display: none;
+}
+.card__header-icon--error {
+	color: var(--red-color);
+	display: none;
+}
+.LI-industrial__expansion {
+	.card {
+		.k-expander-content-wrapper {
+			border-top: none;
+		}
+		.k-expander-content {
+			padding: 0;
+		}
+	}
+}
+

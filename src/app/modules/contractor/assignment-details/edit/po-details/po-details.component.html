@@ -1,0 +1,247 @@
+<form [formGroup]="inputProperties.editAssingmentForm">
+    <div class="card" *ngIf="isFieldVisible('PODetails')">
+        <!-- Card Header Section -->
+        <div class="card__header">
+            <h4 class="card__heading">{{'PODetails'| translate}}</h4>
+            <div class="card__header-icon"></div>
+        </div>
+        <!-- End Card Header Section -->
+
+
+
+
+        <!-- Card Body Section -->
+        <div class="card__body">
+            <div class="row">
+                <!-- Input Box Start -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group" *ngIf="isFieldVisible('poOwner')">
+                        <app-kendo-dropdown
+                            [label]="'IsPoSentToPoOwner'"
+                            [controlName]="'poOwner'"
+                            [list]="inputProperties.poOwnerList"
+                            [placeholder]="'Select'"
+                            [isAppend]="isAppendModeForDropdown"
+                            [isEditMode]="isReadOnly('poOwner')"
+                            [isRequired]="true"
+                        >
+                        </app-kendo-dropdown>
+                    </div>
+                </div>
+                <!-- Input Box End -->
+                <div class="clearfix"></div>
+                <!-- Adjust PO Amount Start Here -->
+                <!-- <div class="col-sm-12 col-md-12"> -->
+                    <!-- *ngIf="inputProperties.editAssingmentForm?.get('modifyPO')?.value === null" -->
+                    <!-- <div class="form-group"> -->
+                        <!-- Add the onChange event in Revision -->
+                        <!-- <app-kendo-switch
+                            [controlName]="'adjustPoNumber'"
+                            [label]="'AdjustPOAmount'"
+                            [onLabel]="'Yes'"
+                            [offLabel]="'No'"
+                            (onChangeSwitch)="onChangePoAdjustSwitch($event)"
+                        >
+                        </app-kendo-switch> -->
+
+                    <!-- </div> -->
+                    <!-- *ngIf="EditAssingmentForm?.get('modifyPO')?.value === '15'" -->
+                    <!-- <div class="form-group" >
+        <app-kendo-label [label]="'Adjust PO Amount'" [value]="'Yes'"> </app-kendo-label>
+    </div> -->
+                <!-- </div> -->
+                <!-- Adjust PO Amount Ends Here -->
+
+
+
+
+                <!-- Add Funds In Starts Here  !inputProperties.assignmentDetails?.IsSinglePO && *ngIf="inputProperties.editAssingmentForm?.get('adjustPoNumber')?.value"-->
+                <div class="col-sm-12 col-md-12">
+                    <!-- *ngIf="EditAssingmentForm?.get('modifyPO')?.value === '16' || EditAssingmentForm?.get('modifyPO')?.value === null" -->
+                    <div class="form-group">
+                        <app-kendo-radio-button
+                            [label]="'AddFundsIn'"
+                            [controlName]="'poAdjustmentType'"
+                            [RadioGroup]="inputProperties.poRadioGroup"
+                            [name]="'poradio'"
+                            [isEditMode]="isReadOnly('poRadio') || inputProperties.IsRevisionPending"
+                            (onChangeRadio)="onChangePoRadioAddFunds($event)"
+                        >
+                        </app-kendo-radio-button>
+
+                    </div>
+                </div>
+                <!-- Add Funds In Ends Here -->
+
+
+
+
+                <div class="cleafix"></div>
+
+
+
+
+                <!-- Funds (USD) Ends Here -->
+                <!-- *ngIf="inputProperties.editAssingmentForm?.get('poRadio')?.value" -->
+                <div class="col-sm-6 col-md-6"  *ngIf="inputProperties.editAssingmentForm?.get('poAdjustmentType')?.value == 279" [ngClass]="inputProperties.isControlRevision.poFundAmount && isRevisionFieldExist('poFundAmount') ? 'revision-workflow-two' : ''">
+                    <div class="form-group">
+                        <app-numeric-box
+                        [controlName]="'poFundAmount'"
+                        [label]="'Funds'"
+                        [isCurrency]="true"
+                        [isEditMode]="isReadOnly('poFundAmount')"
+                        [min]="0"
+                        [max]="999999999.99"
+                        [decimals]="2"
+                        [placeholder]="'0.00'"
+                        (afterValueChanged)="getRevisionFieldsUpdate('poFundAmount');onChangePoFundAmount($event)"
+                    ></app-numeric-box>
+                    <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision.poFundAmount && isRevisionFieldExist('poFundAmount')">
+                        <xrm-icon  name="alert-triangle" color="orange-color" [size]="18" title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                     </div>
+                    <div class="mt-1">
+                        <span *ngIf="inputProperties.editAssingmentForm?.get('ModifyPOEndDate')?.value || inputProperties.editAssingmentForm?.get('ModifyPObasedOnRevisedRates')?.value || (inputProperties.editAssingmentForm?.get('modifyPOApprovedAmountBasedOnRevisedRates')?.value && inputProperties.editAssingmentForm.get('revisedRatedate')?.value)" class="achor__text mt-1">
+                            {{getEstimatedCostChangeText(inputProperties?.currencyCode!)}}
+                        </span>
+                        <!-- <span *ngIf="inputProperties.editAssingmentForm?.get('ModifyPOEndDate')?.value || inputProperties.editAssingmentForm?.get('ModifyPObasedOnRevisedRates')?.value || (inputProperties.editAssingmentForm?.get('modifyPOApprovedAmountBasedOnRevisedRates')?.value && inputProperties.editAssingmentForm.get('revisedRatedate')?.value)" class="achor__text mt-1">
+                            {{getEstimatedCostChangeText(addPOEndDateRevisedRate, inputProperties.currencyCode)}}
+                        </span> -->
+                    </div>
+                    </div>
+                </div>
+                <!-- Funds (USD) Ends Here -->
+
+                <div class="col-sm-6 col-md-6"  *ngIf="inputProperties.editAssingmentForm?.get('poAdjustmentType')?.value == 280" [ngClass]="inputProperties.isControlRevision.NewPOFundAmount && isRevisionFieldExist('NewPOFundAmount') ? 'revision-workflow-two' : ''">
+                    <div class="form-group">
+                        <app-numeric-box
+                        [controlName]="'NewPOFundAmount'"
+                        [label]="'Funds'"
+                        [isCurrency]="true"
+                        [isEditMode]="isReadOnly('poFundAmount')"
+                        [min]="0"
+                        [max]="999999999.99"
+                        [isRequired]="true"
+                        [decimals]="2"
+                        (afterValueChanged)="getRevisionFieldsUpdate('NewPOFundAmount')"
+                        [placeholder]="'0.00'"
+                    ></app-numeric-box>
+
+                        <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision.NewPOFundAmount && isRevisionFieldExist('NewPOFundAmount')">
+
+                            <xrm-icon  name="alert-triangle" color="orange-color" [size]="18" title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+
+                         </div>
+                    </div>
+                </div>
+
+
+                <!-- New PO Start Here -->
+                <!-- *ngIf="EditAssingmentForm?.get('poradio')?.value === '14'" -->
+                <div class="col-sm-6 col-md-6" *ngIf="inputProperties.editAssingmentForm?.get('poAdjustmentType')?.value == 280" [ngClass]="inputProperties.isControlRevision.NewPONumber && isRevisionFieldExist('NewPONumber') ? 'revision-workflow-two' : ''">
+                    <div  class="form-group">
+                        <app-textbox
+                            [label]="'NewPO'"
+                            [controlName]="'NewPONumber'"
+                            [isEditMode]="isReadOnly('newPONumber')"
+                            [isRequired]="true"
+                            (onChangeTextBox)="getRevisionFieldsUpdate('NewPONumber')"
+                        >
+                        </app-textbox>
+                        <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision.NewPONumber && isRevisionFieldExist('NewPONumber')">
+
+                            <xrm-icon  name="alert-triangle" color="orange-color" [size]="18" title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                         </div>
+                    </div>
+                </div>
+                <!-- New PO Ends Here -->
+
+                <!-- Effective Form Date start here -->
+                <!-- *ngIf="EditAssingmentForm?.get('poradio')?.value === '14'" -->
+                <div class="col-sm-6 col-md-6" *ngIf="inputProperties.editAssingmentForm?.get('poAdjustmentType')?.value == 280" [ngClass]="inputProperties.isControlRevision.PoEffectiveFromDate && isRevisionFieldExist('PoEffectiveFromDate') ? 'revision-workflow-two' : ''">
+                    <div  class="form-group">
+                        <!-- <app-kendo-datepicker
+                            [label]="'EffectiveFromDate'"
+                            [controlName]="'PoEffectiveFromDate'"
+                            [isEditMode]="isReadOnly('PoEffectiveFromDate')"
+                            [isRequired]="false"
+                            (onChange)="getRevisionFieldsUpdate('PoEffectiveFromDate')"
+                        >
+                        </app-kendo-datepicker> -->
+                        <app-kendo-dropdown
+                            [label]="'EffectiveFromDate'"
+                            [list]="inputProperties.poEffectiveFromDateList"
+                            [controlName]="'PoEffectiveFromDate'"
+                            [placeholder]="'Select'"
+                            [isEditMode]="isReadOnly('PoEffectiveFromDate')"
+                            [isRequired]="true"
+                            (onChange)="getRevisionFieldsUpdate('PoEffectiveFromDate')"
+                        >
+                        </app-kendo-dropdown>
+                        <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision.PoEffectiveFromDate && isRevisionFieldExist('PoEffectiveFromDate')">
+
+                            <xrm-icon  name="alert-triangle" [size]="18" color="orange-color" title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                         </div>
+                    </div>
+                </div>
+                <!-- Effective Form Date ends here -->
+
+                <!-- PO Grid Start Here -->
+                <div class="col-sm-12 col-md-12 list-view form-group grid-border" *ngIf="inputProperties.poGrid">
+                  <div class="form-group">
+                      <kendo-grid [data]="inputProperties.poGrid">
+                          <kendo-grid-column media="(max-width: 920px)" title="List">
+                              <ng-template kendoGridCellTemplate let-dataItem>
+                                  <dd><strong>PO #</strong></dd>
+                                  <!-- when SeparateTAndEPoAmount has false value starts here-->
+                                  <dd ><strong>{{getGridlabelForPO('POOrApprovedAmount')}}</strong></dd>
+                                  <dl></dl>
+                                  <dd *ngIf="!isSeparateTandEPoAmount()"><strong>{{getGridlabelForPO('POIncurredAmountCURR')}}</strong></dd>
+                                  <dl *ngIf="!isSeparateTandEPoAmount()"></dl>
+                                  <dd *ngIf="!isSeparateTandEPoAmount()"><strong>{{getGridlabelForPO('PORemainingAmountCURR')}}</strong></dd>
+                                  <dl *ngIf="!isSeparateTandEPoAmount()"></dl>
+                                  <!-- when SeparateTAndEPoAmount has false value ends here-->
+                                  <!-- when SeparateTAndEPoAmount has true value starts here-->
+                                  <dd *ngIf="isSeparateTandEPoAmount()"><strong>{{getGridlabelForPO('POAmountforTimeCURR')}}</strong></dd>
+                                  <dl *ngIf="isSeparateTandEPoAmount()"></dl>
+                                  <dd *ngIf="isSeparateTandEPoAmount()"><strong>{{getGridlabelForPO('PoExpenseAmount')}}</strong></dd>
+                                  <dl *ngIf="isSeparateTandEPoAmount()"></dl>
+                                  <dd *ngIf="isSeparateTandEPoAmount()"><strong>{{getGridlabelForPO('PoTimeIncurredAmount')}}</strong></dd>
+                                  <dl *ngIf="isSeparateTandEPoAmount()"></dl>
+                                  <dd *ngIf="isSeparateTandEPoAmount()"><strong>{{getGridlabelForPO('PoExpenseIncurredAmount')}}</strong></dd>
+                                  <dl *ngIf="isSeparateTandEPoAmount()"></dl>
+                                  <dd *ngIf="isSeparateTandEPoAmount()"><strong>{{getGridlabelForPO('PORemainingAmountforTimeCURR')}}</strong></dd>
+                                  <dl *ngIf="isSeparateTandEPoAmount()"></dl>
+                                  <dd *ngIf="isSeparateTandEPoAmount()"><strong>{{getGridlabelForPO('PORemainingAmountforExpenseCURR')}}</strong></dd>
+                                  <dl *ngIf="isSeparateTandEPoAmount()"></dl>
+                                  <!-- when SeparateTAndEPoAmount has true value ends here-->
+                                  <dd><strong>{{'EffectiveFrom' | translate}} </strong></dd>
+                                  <dl></dl>
+                                  <dd><strong>{{'EffectiveTo' | translate}} </strong></dd>
+                                  <dl></dl>
+                              </ng-template>
+                          </kendo-grid-column>
+                          <kendo-grid-column media="(min-width: 921px)" field="PoNumber" title="{{'PONumber' | translate}}"> </kendo-grid-column>
+                           <!-- when SeparateTAndEPoAmount has false value starts here-->
+                          <kendo-grid-column media="(min-width: 921px)" field="TotalPoAmount" [title]="getGridlabelForPO('POApprovedAmountCURR')" [format]="'n2'"> </kendo-grid-column>
+                          <kendo-grid-column media="(min-width: 921px)" *ngIf="!isSeparateTandEPoAmount()" field="TotalPoIncurredAmount" [title]="getGridlabelForPO('POIncurredAmountCURR')" [format]="'n2'"> </kendo-grid-column>
+                          <kendo-grid-column media="(min-width: 921px)" *ngIf="!isSeparateTandEPoAmount()" field="PoRemainingAmount" [title]="getGridlabelForPO('PORemainingAmountCURR')" [format]="'n2'"> </kendo-grid-column>
+                          <!-- when SeparateTAndEPoAmount has false value ends here-->
+                           <!-- when SeparateTAndEPoAmount has true value starts here-->
+                          <kendo-grid-column media="(min-width: 921px)" *ngIf="isSeparateTandEPoAmount()" field="PoTimeAmount" [title]="getGridlabelForPO('POAmountforTimeCURR')" [format]="'n2'"> </kendo-grid-column>
+                          <kendo-grid-column media="(min-width: 921px)" *ngIf="isSeparateTandEPoAmount()" field="PoExpenseAmount" [title]="getGridlabelForPO('PoExpenseAmount')" [format]="'n2'"> </kendo-grid-column>
+                          <kendo-grid-column media="(min-width: 921px)" *ngIf="isSeparateTandEPoAmount()" field="PoTimeIncurredAmount" [title]="getGridlabelForPO('PoTimeIncurredAmount')" [format]="'n2'"> </kendo-grid-column>
+                          <kendo-grid-column media="(min-width: 921px)" *ngIf="isSeparateTandEPoAmount()" field="PoExpenseIncurredAmount" [title]="getGridlabelForPO('PoExpenseIncurredAmount')" [format]="'n2'"> </kendo-grid-column>
+                          <kendo-grid-column media="(min-width: 921px)" *ngIf="isSeparateTandEPoAmount()" field="PoTimeRemainingAmount" [title]="getGridlabelForPO('PORemainingAmountforTimeCURR')" [format]="'n2'"> </kendo-grid-column>
+                          <kendo-grid-column media="(min-width: 921px)" *ngIf="isSeparateTandEPoAmount()"field="PoExpenseRemainingAmount" [title]="getGridlabelForPO('PORemainingAmountforExpenseCURR')" [format]="'n2'"> </kendo-grid-column>
+                          <!-- when SeparateTAndEPoAmount has true value ends here-->
+                          <kendo-grid-column media="(min-width: 921px)" field="PoEffectiveFrom" title="{{'EffectiveFrom' | translate}} "> </kendo-grid-column>
+                          <kendo-grid-column media="(min-width: 921px)" field="PoEffectiveTo" title="{{'EffectiveTo' | translate}} "> </kendo-grid-column>
+                      </kendo-grid>
+                  </div>
+              </div>
+                <!-- PO Grid Ends Here -->
+            </div>
+        </div>
+    </div>
+
+</form>

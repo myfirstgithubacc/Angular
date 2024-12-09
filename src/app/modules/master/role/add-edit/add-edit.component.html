@@ -1,0 +1,138 @@
+<!-- Main Body Section-->
+<div class="app-content__body">
+  <br>
+  <form [formGroup]="AddEditRoleForm">
+
+    <!-- Start Card Section-->
+    <div class="card">
+      <!-- Card Header Section-->
+      <div class="card__header">
+        <h4 class="card__heading">{{'BasicDetails'| translate}}</h4>
+      </div>
+      <!-- End Card Header Section-->
+      <!-- Card Body Section-->
+      <div class="card__body">
+        <div class="row">
+          <!-- <div *ngIf="isEditMode">
+            <div class="col-sm-6 col-md-6">
+              <div class="form-group">
+                <kendo-label text="{{'RoleID' | translate}}">
+                  <p class="label-answere">{{roleObject?.RoleCode}}</p>
+                </kendo-label>
+              </div>
+            </div>
+          </div> -->
+
+          <div class="col-sm-6 col-md-6">
+            <div class="form-group">
+              <app-kendo-dropdown [list]="roleServicesList" [label]="'HdrUserGroup'|translate" [controlName]="'roleGroupId'"
+                [placeholder]="'DdlSelect'" [isRequired]="true" [isEditMode]="isEditMode"
+                (onChange)="roleGroupChanges($event)">
+              </app-kendo-dropdown>
+            </div>
+          </div>
+          <!-- Text Box End -->
+          <!-- Text Box Start -->
+          <div class="col-md-6 col-sm-6">
+            <div class="form-group">
+              <app-textbox [controlName]="'roleName'" [label]="'Role' | translate" [isRequired]="true">
+              </app-textbox>
+            </div>
+          </div>
+          <!-- <div class="col-md-6 col-sm-6" *ngIf="
+              this.AddEditRoleForm?.get('roleGroupId')?.value?.Text == 'Client' && !isEdit
+            ">
+            <div class="form-group">
+              <app-kendo-switch [controlName]="'approvalRole'" [label]="'ApprovalRole' | translate"
+                [tooltipTitle]="'ApprovalRole' | translate">
+              </app-kendo-switch>
+            </div>
+          </div> -->
+          <!-- Text Box End -->
+          <!-- Page Subheading -->
+          <div class="col-sm-12 col-md-12" *ngIf="isCopyBlockVisible&&!isEditMode">
+            <h4 class="card__body--subheading">
+              {{'CopyPermissionsfromExistingRole'|translate }}
+            </h4>
+          </div>
+          <!-- Page Subheading -->
+          <!-- Text Box Start -->
+          <div class="col-md-6 col-sm-6" *ngIf="isCopyBlockVisible&&!isEditMode">
+            <div class="form-group">
+              <app-kendo-dropdown [list]="roleNameList" [label]="'Role' | translate" [controlName]="'rollDropDown'"
+                [placeholder]="'DdlSelect'| translate">
+              </app-kendo-dropdown>
+            </div>
+          </div>
+          <!-- Text Box End -->
+          <!-- input box start -->
+          <div class="col-sm-6 col-md-6" *ngIf="isCopyBlockVisible&&!isEditMode">
+            <div class="form-group">
+              <form>
+                <button class="copy__btn" kendoButton [disabled]="setCopyButtonDisabled()" fillMode="outline"
+                  themeColor="primary" (click)="copySelectedRole()">
+                  <xrm-icon name="copy" [size]="15" color="dark-blue-color"></xrm-icon>
+                  {{'CopyFromSelectedRole'| translate}}
+                </button>
+              </form>
+
+            </div>
+          </div>
+          <!-- input box start -->
+
+          <!-- Text Box Start -->
+
+
+
+          <!-- Text Box End -->
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Start Card Section-->
+    <div class="card">
+      <!-- Card Header Section-->
+      <div class="card__header">
+        <h4 class="card__heading">{{'ConfigureActionPermissions'| translate}}</h4>
+      </div>
+      <!-- End Card Header Section-->
+      <!-- Card Body Section-->
+      <div class="card__body">
+        <div class="row">
+          <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+              <kendo-tabstrip class="list-view__tab-item role-tabstrip">
+                <kendo-tabstrip-tab class="list-view__tab-item" title="{{'Permissions'| translate}}" [selected]="true">
+                  <ng-template kendoTabContent>
+                    <div class="col-sm-12 col-md-12 halfGrid">
+                      <app-tree-view [data]="permissionList" [isFiltered]="true" [textField]="'text'"
+                        (onCheckedTree)="selectedItems($event)" [checkedKeys]="checkedKey" [selectedKeys]="selectedKey"
+                        [selectedItems]="selectedActionList" [selectedItemsIndex]="selectedKey" [isViewOnlyCase]="true"
+                        [childrenField]="'items'" [expandedKeys]="expandedKeys" [controlName]="'selectedNode'"
+                        [treeViewType]="'multileveltreeview'"></app-tree-view>
+                    </div>
+                  </ng-template>
+                </kendo-tabstrip-tab>
+              </kendo-tabstrip>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--  Page Footer Section-->
+    <div class="page-footer">
+      <div class="btn-box btn-box--center">
+        <button type="button" kendoButton fillMode="outline" themeColor="primary" routerLink="/xrm/master/role/list">
+          {{ "Cancel" | translate }}
+        </button>
+        <button type="button" kendoButton (click)="submitForm()"
+          themeColor="primary" [innerText]=" 'Save' | translate" appFocusOnError [formName]="AddEditRoleForm" [disabled]="isEditMode ? AddEditRoleForm.pristine : false">
+          {{ ("Save" | translate) }}
+        </button>
+      </div>
+    </div>
+    <!-- End Footer Section-->
+  </form>
+</div>

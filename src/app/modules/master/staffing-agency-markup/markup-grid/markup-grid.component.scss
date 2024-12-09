@@ -1,0 +1,39 @@
+.markup-table {
+  .grid-form {
+    button {
+      &.copy__btn2 {
+        margin-top: 30px;
+        padding: 8px 16px;
+      }
+    }
+  }
+
+  &.grid-form {
+    .gridView2 {
+      th {
+        background: #d5e1ff;
+        border-left: 2px solid var(--color-white);
+        vertical-align: top;
+        line-height: normal;
+      }
+
+      td {
+        line-height: normal;
+        vertical-align: middle;
+      }
+    }
+
+    h3 {
+      &.mobile-panelbar-heading {
+        display: none;
+      }
+    }
+
+    span {
+      &.grid__expend {
+        cursor: pointer;
+        padding: 8px;
+      }
+    }
+  }
+}

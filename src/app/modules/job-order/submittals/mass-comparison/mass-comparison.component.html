@@ -1,0 +1,158 @@
+<div class="mass-comparison">
+  <form [formGroup]="massComparisonForm">
+    <h1>{{'MassCompare'|translate}} </h1>
+    <table>
+      <thead>
+        <tr>
+          <th class="bg-purple">Item</th>
+          <th class="bg-purple">{{'RequestDetails'|translate}}</th>
+          <th *ngFor="let controlName of getControl(); let i = index">
+          {{getControlValueByIndex(i, 'CandidateName')}}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">{{'Id'|translate}}</td>
+          <td><span>{{getRequestID()}}</span></td>
+          <td *ngFor="let controlName of getControl(); let i = index">
+            <span>{{getControlValueByIndex(i, 'SubmittalCode')}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="bold">ST Bill Rate (USD)</td>
+          <td><span>{{getRequestStBillRate()}}</span></td>
+          <td *ngFor="let controlName of getControl(); let i = index">
+            <span>{{getControlValueByIndex(i, 'StBillRate')}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="bold">{{'InterviewAvailability'|translate}}</td>
+          <td><span>{{getInterviewAvailability()}}</span></td>
+          <td *ngFor="let controlName of getControl(); let i = index">
+            <span>{{getControlValueByIndex(i, 'InterviewAvailability')}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="bold">{{'StartAvailability'| translate}}</td>
+          <td><span>{{getStartAvailabililty()}}</span></td>
+          <td *ngFor="let controlName of getControl(); let i = index">
+            <span>{{getControlValueByIndex(i, 'StartAvailabililty')}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="bold">Work History</td>
+          <td><span>{{getWorkHistory()}}</span></td>
+          <td *ngFor="let controlName of getControl(); let i = index">
+            <span>{{getControlValueByIndex(i, 'WorkHistory')}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="bold">{{'SkillsRequired'|translate}}</td>
+          <td><span>{{getSkillsRequired()}}</span></td>
+          <td *ngFor="let controlName of getControl(); let i = index">
+            <span>{{getControlValueByIndex(i, 'SkillsRequired')}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="bold">{{'SkillsPreferred'|translate}}</td>
+          <td><span>{{getSkillsPrefered()}}</span></td>
+          <td *ngFor="let controlName of getControl(); let i = index">
+            <span>{{getControlValueByIndex(i, 'SkillsPrefered')}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="bold">Work Experience Required</td>
+          <td><span>{{getWorkExperienceRequired()}}</span></td>
+          <td *ngFor="let controlName of getControl(); let i = index">
+            <span>{{getControlValueByIndex(i, 'WorkExperienceRequired')}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="bold">Work Experience Preferred</td>
+          <td><span>{{getWorkExperiencePreferred()}}</span></td>
+          <td *ngFor="let controlName of getControl(); let i = index">
+            <span>{{getControlValueByIndex(i, 'WorkExperiencePrefered')}}</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="bold">{{'EducationRequired'|translate}}</td>
+          <td><span>{{getEducationRequired()}}</span></td>
+          <td *ngFor="let controlName of getControl(); let i = index">
+            <span>{{getControlValueByIndex(i, 'EducationRequired')}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="bold">{{'EducationPreferred'| translate}}</td>
+          <td><span>{{getEducationPrefered()}}</span></td>
+          <td *ngFor="let controlName of getControl(); let i = index">
+            <span>{{getControlValueByIndex(i, 'EducationPrefered')}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="bold">Candidate Resume</td>
+          <td><span></span></td>
+          <td *ngFor="let controlName of getControl(); let i = index">
+            <ng-container *ngFor="let document of getDocuments(i)">
+              <a href="{{document.DocumentUrl}}" download="download" (click)="downloadFile(document.file)" class="resume__link">{{document.DocumentTitle}}</a>
+              <br>
+            </ng-container>
+          </td>
+        </tr>
+        <tr *ngIf="isMSP||isClient">
+          <td class="bold">{{'GridAction'|translate}}</td>
+          <td></td>
+          <td *ngFor="let controlName of getControl(); let i = index">
+            <div class="col-sm-12 col-md-12">
+                <app-kendo-radio-button [name]="controlName" [controlName]="controlName + '.Action'"
+                  [RadioGroup]="actions" (onChangeRadio)="onChangeAction(i)">
+                </app-kendo-radio-button>
+                <div class="resetIcon">
+                  <xrm-icon [title]="'Reset'" name="refresh" [size]="14" color="black-color" (click)="actionReset(i)"
+                    class="sw-bolder"></xrm-icon>
+                </div>
+            </div>
+          </td>
+        </tr>
+        <!-- Decline Reason and Comment -->
+        <ng-container *ngIf="isMSP || isClient">
+          <tr *ngIf="shouldShowReasonRow() || shouldShowCommentRow()">
+            <td class="bold">{{ shouldShowReasonRow() ? 'Reason' : 'Comment' | translate }}</td>
+            <td></td>
+            <td *ngFor="let controlName of getControl(); let i = index">
+              <ng-container *ngIf="getActionValue(controlName)">
+                <div class="col-sm-12 col-md-12">
+                  <div class="form-group">
+                    <ng-container *ngIf="shouldShowReasonRow()">
+                      <app-kendo-dropdown [label]="'DeclineReason'" [isRequired]="true" [controlName]="controlName + '.DeclineReason'"
+                        [list]="declineReason" [placeholder]="'Select'">
+                      </app-kendo-dropdown>
+                    </ng-container>
+                    <ng-container *ngIf="shouldShowCommentRow()">
+                      <app-kendo-textarea [controlName]="controlName + '.Comment'" [isRequired]="true" [label]="'DeclineComment'"
+                        [maxCharacters]="500">
+                      </app-kendo-textarea>
+                    </ng-container>
+                  </div>
+                </div>
+              </ng-container>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </form>
+</div>
+
+  <div class="page-footer">
+      <div class="btn-box btn-box--center">
+        <button type="button" kendoButton themeColor="primary" fillMode="outline" (click)="cancel()">
+          {{'Cancel'|translate}}
+        </button>
+        <button type="button" kendoButton themeColor="primary" (click)="submitForm()"
+          [disabled]="massComparisonForm.untouched ?? true" appFocusOnError [listformName]="[massComparisonForm]">
+          {{'Submit'| translate}}
+        </button>
+      </div>
+  </div>

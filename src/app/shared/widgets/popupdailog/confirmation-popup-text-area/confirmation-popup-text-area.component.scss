@@ -1,0 +1,94 @@
+.confirmation-popupclass {
+	.k-window {
+		padding: 25px 15px;
+		border-radius: 8px;
+		&.k-dialog {
+			width: 370px !important;
+		}
+		.k-window-content {
+			padding: 0 10px;
+			overflow: hidden;
+		}
+	}
+	.k-dialog-content {
+		i {
+			display: none;
+		}
+	}
+	.k-button-solid-base {
+		color: var(--color-primary);
+		border-color: var(--color-primary);
+		background-color: var(--color-white);
+	}
+	.k-dialog-buttongroup {
+		margin: unset;
+		margin-left: auto;
+	}
+	&.k-dialog-buttongroup {
+		flex-flow: row;
+		align-items: flex-start;
+	}
+	.dailog__title {
+		text-align: left !important;
+	}
+	.k-window-actions {
+		.k-window-action {
+			right: 0;
+			top: 0;
+		}
+	}
+}
+.confirmation-popupclass .k-window-title, .confirmation-popupclass .k-dialog-titlebar {
+	padding: 0;
+	margin: 0;
+	line-height: 1;
+}
+.k-dialog-titlebar {
+	background: none;
+	border: none;
+	color: var(--card-heading-color);
+	font-weight: 600;
+	padding: 16px 20px;
+}
+.k-window-titlebar-actions {
+	&.k-dialog-titlebar-actions {
+		.k-dialog-titlebar-action {
+			position: absolute;
+			right: 0;
+			top: 0;
+			z-index: 9;
+			padding: 4px;
+		}
+	}
+}
+.dailog__icon {
+	text-align: center;
+}
+.dailog__title {
+	font-size: var(--dialog-heading-font-size);
+	margin-bottom: 16px;
+	margin-top: 8px;
+}
+kendo-dialog-actions {
+	&.k-actions-stretched {
+		display: table;
+		margin: auto;
+		text-align: center;
+		border: none;
+	}
+}
+.k-window {
+	.k-button {
+		margin: 5px;
+		font-size: var(--base-font-size);
+		border-radius: 4px;
+		position: relative;
+		overflow: hidden;
+		padding: 6px 12px;
+		font-weight: 500;
+	}
+}
+.k-button-solid-primary {
+	border-color: var(--color-primary);
+	background-image: linear-gradient(to right, #4a32d4 0%, #1d5cc7 100%);
+}

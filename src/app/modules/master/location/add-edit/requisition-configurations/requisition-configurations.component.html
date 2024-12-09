@@ -1,0 +1,59 @@
+<form [formGroup]="requisitionConfigurationForm">
+
+   <!--Requisition Configuration Section Start-->
+   <div class="card">
+      <!-- Card Header Section-->
+      <div class="card__header">
+         <h4 class="card__heading">{{'RequisitionConfigurations' | translate}}</h4>
+      </div>
+      <!-- End Card Header Section-->
+
+      <!-- Card Body Section Start -->
+      <div class="card__body">
+         <div class="row">
+            <!-- Input Box Start -->
+            <div class="col-sm-12 col-md-12">
+               <div class="form-group">
+                  <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                     [tooltipTitle]="'AlternateSectorConfigurationToolTip'"
+                     [isDisable]="oneTimeSettingForToggleSwitchToMakeDisable('AltRequisitionConfigurations')"
+                     [controlName]="'alternateRequisitionConfigurations'" [onLabel]="'Yes'" [offLabel]="'No'"
+                     [label]="'AlternateRequisitionConfigurations'"
+                     (onChangeSwitch)="onAlternateRequisitionConfigurationsChange($event)"></app-kendo-switch>
+               </div>
+            </div>
+            <!-- Input Box End -->
+
+            <!-- Input Box Start -->
+            <div class="col-sm-6 col-md-6"
+               *ngIf="requisitionConfigurationForm?.get('alternateRequisitionConfigurations')?.value">
+               <div class="form-group">
+                  <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                     [tooltipTitle]="'Is_Position_Details_Editable_Tootip'" [controlName]="'positionDetailsEditable'"
+                     [onLabel]="'Yes'" [offLabel]="'No'" [label]="'IsPositionDetailsEditable'"></app-kendo-switch>
+               </div>
+            </div>
+            <!-- Input Box End -->
+
+            <!-- Sub Heading Start -->
+            <div class="col-sm-12 col-md-12"
+               *ngIf="requisitionConfigurationForm?.get('alternateRequisitionConfigurations')?.value">
+               <h4 class="card__body--subheading">{{'AssignmentType' | translate}}</h4>
+            </div>
+            <!-- Sub Heading End -->
+
+            <!-- Input Box End -->
+            <div class="col-sm-12 col-md-12 list-view list-view__border"
+               *ngIf="requisitionConfigurationForm?.get('alternateRequisitionConfigurations')?.value">
+               <app-list-view #list (formData)="getAssignmentTypesFormStatus($event)"
+                  [columnData]="assignmentTypesColumn" [columnConfigure]="assignmentTypesColumnConfiguration"
+                  [populatedData]="assignmentTypesPrefilledData">
+               </app-list-view>
+            </div>
+         </div>
+      </div>
+      <!-- Card Body Section End -->
+   </div>
+   <!--Requisition Configuration Section End-->
+
+</form>

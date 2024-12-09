@@ -1,0 +1,36 @@
+<!-- Main Body Section-->
+<div class="app-content__body floating-layout floating-layout__view-layout"> 
+        <!-- Start Card Section-->
+        <div class="card">
+            <!-- Card Header Section-->
+            <div class="card__header">
+                <h4 class="card__heading">{{"BasicDetails"| translate}}</h4>
+            </div>
+            <!-- End Card Header Section-->
+
+            <!-- Card Body Section-->
+            <div class="card__body">
+                <div class="row">
+                    <!-- Text Box Start -->
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'BusinessClassification'" [value]="businessClassification.Name">
+                            </app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- Text Box End -->
+            </div>
+        </div>               
+</div>
+
+<!--  Page Footer Section-->
+<div class="page-footer">
+    <div class="btn-box btn-box--center">
+    <button type="button" kendoButton themeColor="primary" (click)="listNavigation()">
+        {{ "Back" | translate}}
+    </button>
+    </div>
+</div>
+<!-- End Footer Section-->
+
+</div>

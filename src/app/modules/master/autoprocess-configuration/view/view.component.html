@@ -1,0 +1,127 @@
+<div class="app-content__body">
+    <form [formGroup]="AddEditAutoProcessForm">
+
+        <div class="card">
+
+            <div class="card__header">
+                <h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+                <div class="card__header-icon">
+                </div>
+            </div>
+
+            <div class="card__body">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <app-kendo-label  [label]="'JobName'" 
+                            [value]="jobName"
+                                ></app-kendo-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <app-kendo-label  [label]="'Description'"
+                            [value]="jobDescription"></app-kendo-label>
+                        </div>
+                    </div>   
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <app-kendo-label  [label]="'IsEmailRequired'"
+                            [value]="isEmailReq | yesNo"></app-kendo-label>
+                        </div>
+                    </div>  
+                    <div class="col-sm-6 col-md-6" *ngIf="isEmailReq && successEmail!=''">                        
+                        <div class="form-group">
+                            <app-kendo-label  [label]="'SuccessEmail'"
+                            [value]="successEmail"></app-kendo-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6" *ngIf="isEmailReq && exceptionEmail!=''">
+                        <div class="form-group">
+                            <app-kendo-label  [label]="'ExceptionEmail'"
+                            [value]="exceptionEmail"></app-kendo-label>
+                        </div>
+                    </div>                  
+                </div>  
+            </div>
+
+        </div>
+
+
+
+        <div class="card">
+
+            <div class="card__header">
+                <h4 class="card__heading">{{'Configuration'|translate}}</h4>
+                <div class="card__header-icon">
+                    <a class="color-primary" href="javascript:;" data-bs-toggle="offcanvas"
+                    data-bs-target="#executionHistory" (click)="executionHistoryData()">{{'ExecutionHistory'|translate}}</a>
+                </div>
+            </div>
+
+            <div class="card__body">
+                <div class="row">      
+                  <div class="list-view">
+                    <h4 class="card__body--first__subheading">{{'TriggerConfigurationDetails'| translate}}</h4>     
+                      <grid-view  class="trigger"
+                      [gridData]="jobDetails"
+                      [showTabs]="false"
+                      [isInternalSearch]='true' 
+                      [isServerSidePagingEnable]="false"
+                      [isApiGateway]="false"
+                      [pageSize]="pageSize" 
+                      [fileName]="generateFileName()"
+                      [columnOptions]="triggerColumnOptions" 
+                      [isActionColumnVisible]="false"
+                      [tabOptions]="tabOptions" 
+                      [isExportHide]="true"
+                      >
+                    </grid-view>
+                  </div>
+                </div>
+              </div>
+
+        </div>
+
+
+        <div class="page-footer">
+            <div class="btn-box btn-box--center">
+                <button type="button" kendoButton fillMode="outline" themeColor="primary"
+                    (click)="onBackClick()">{{'Back'|translate}}
+                </button>
+            </div>
+        </div>
+
+        
+    </form>
+</div>
+
+
+
+
+<div class="offcanvas offcanvas-end execution-popup" tabindex="-1" id="executionHistory"
+    aria-labelledby="executionHistory">
+    <form [formGroup]="executionForm">
+        <div class="offcanvas-header">
+            <h5>{{'ExecutionHistory'|translate}}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+            </button>
+        </div>
+        <div class="offcanvas-body">
+            <grid-view  class="trigger"
+            [gridData]="executionDetails"
+            [showTabs]="false"
+            [isInternalSearch]='true' 
+            [isServerSidePagingEnable]="false"
+            [isApiGateway]="false"
+            [pageSize]="pageSize" 
+            [columnOptions]="executionHisCO" 
+            [isActionColumnVisible]="false"
+            [tabOptions]="tabOptions" 
+            [isExportHide]="true"
+            >
+            </grid-view>
+        </div> 
+        </form>      
+</div>
+

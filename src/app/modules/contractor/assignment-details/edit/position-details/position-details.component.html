@@ -1,0 +1,698 @@
+<form [formGroup]="inputProperties.editAssingmentForm">
+    <div class="card">
+        <div class="card__header">
+            <h4 class="card__heading">{{'PositionDetails'| translate}}</h4>
+        </div>
+        <div class="card__body">
+            <div class="row">
+                <!-- Sector Name Starts -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label
+                            [label]="getDynamicLabelName('Sector')?.Value!"
+                            [value]="inputProperties.assignmentDetails?.SectorName"
+                        >
+                        </app-kendo-label>
+                    </div>
+                </div>
+                <!-- Sector Name Ends Here -->
+
+                <!-- Assignment Type Starts Here -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-label
+                            [label]="'AssignmentType'"
+                            [value]="inputProperties.assignmentDetails?.AssignmentTypeName">
+                        </app-kendo-label>
+                    </div>
+                </div>
+                <!-- Assignment Type Ends Here -->
+
+                <!-- Organization Level 1 Starts Here -->
+                <div class="col-sm-6 col-md-6" *ngIf="getDynamicLabelName('OrganizationLevel1')?.isVisible! && isFieldVisible('orgLevel1')">
+                    <div class="form-group">
+                        <ng-container *ngIf="!isReadOnly('orgLevel1')">
+                            <app-kendo-dropdown
+                            [list]="inputProperties.orgLevel1List"
+                            [label]="getDynamicLabelName('OrganizationLevel1')?.Value!"
+                            [controlName]="'orgLevel1'"
+                            [placeholder]="'-Select-'"
+                            [isRequired]="getDynamicLabelName('OrganizationLevel1')?.IsMandatory!"
+                            [isAppend]="isAppendModeForDropdown"
+                            [isEditMode]="isReadOnly('orgLevel1')"
+                            [singleItemautoLable]="false"
+                            (onChange)="onRequestingManagerOrgLvl1Change($event)"
+                        >
+                        </app-kendo-dropdown>
+                        </ng-container>
+
+                        <ng-container *ngIf="isReadOnly('orgLevel1')">
+                            <app-kendo-label [label]="getDynamicLabelName('OrganizationLevel1')?.Value!" [value]="inputProperties.assignmentDetails?.OrgLevel1Name"
+                            ></app-kendo-label>
+                        </ng-container>
+                    </div>
+                </div>
+                <!-- Organization Level 1 Ends Here -->
+
+                <!-- Organization Level 2 Start Here -->
+                <div class="col-sm-6 col-md-6" *ngIf="getDynamicLabelName('OrganizationLevel2')?.isVisible! && isFieldVisible('orgLevel2')">
+                    <div class="form-group">
+                        <ng-container  *ngIf="!isReadOnly('orgLevel2')">
+                            <app-kendo-dropdown
+                            [list]="inputProperties.orgLevel2List"
+                            [label]="getDynamicLabelName('OrganizationLevel2')?.Value!"
+                            [placeholder]="'Select'"
+                            [controlName]="'orgLevel2'"
+                            [isRequired]="getDynamicLabelName('OrganizationLevel2')?.IsMandatory!"
+                            [isAppend]="isAppendModeForDropdown"
+                            [singleItemautoLable]="false"
+                            [isEditMode]="isReadOnly('orgLevel2')"
+                        >
+                        </app-kendo-dropdown>
+                        </ng-container>
+
+                        <ng-container *ngIf="isReadOnly('orgLevel2')">
+                            <app-kendo-label [label]="getDynamicLabelName('OrganizationLevel2')?.Value!" [value]="inputProperties.assignmentDetails?.OrgLevel2Name"
+                            ></app-kendo-label>
+                        </ng-container>
+                    </div>
+                </div>
+                <!-- Organization Level 2 Ends Here -->
+
+
+
+
+                <!-- Organization Level 3 Starts Here -->
+                <div class="col-sm-6 col-md-6" *ngIf="getDynamicLabelName('OrganizationLevel3')?.isVisible! && isFieldVisible('orgLevel3')">
+                    <div class="form-group">
+                        <ng-container *ngIf="!isReadOnly('orgLevel3')">
+                            <app-kendo-dropdown
+                            [list]="inputProperties.orgLevel3List"
+                            [label]="getDynamicLabelName('OrganizationLevel3')?.Value!"
+                            [placeholder]="'Select'"
+                            [controlName]="'orgLevel3'"
+                            [isRequired]="getDynamicLabelName('OrganizationLevel3')?.IsMandatory!"
+                            [isAppend]="isAppendModeForDropdown"
+                            [singleItemautoLable]="false"
+                            [isEditMode]="isReadOnly('orgLevel3')"
+                        >
+                        </app-kendo-dropdown>
+                        </ng-container>
+
+                        <ng-container *ngIf="isReadOnly('orgLevel3')">
+                            <app-kendo-label [label]="getDynamicLabelName('OrganizationLevel3')?.Value!" [value]="inputProperties.assignmentDetails?.OrgLevel3Name"
+                            ></app-kendo-label>
+                        </ng-container>
+                    </div>
+                </div>
+                <!-- Organization Level 3 Ends Here -->
+
+
+
+
+                <!-- Organization Level 4 Starts Here -->
+                <div class="col-sm-6 col-md-6" *ngIf="getDynamicLabelName('OrganizationLevel4')?.isVisible! && isFieldVisible('orgLevel4')">
+                    <div class="form-group">
+                        <ng-container *ngIf="!isReadOnly('orgLevel4')">
+                            <app-kendo-dropdown
+                            [list]="inputProperties.orgLevel4List"
+                            [label]="getDynamicLabelName('OrganizationLevel4')?.Value!"
+                            [controlName]="'orgLevel4'"
+                            [placeholder]="'Select'"
+                            [isRequired]="getDynamicLabelName('OrganizationLevel4')?.IsMandatory!"
+                            [isAppend]="isAppendModeForDropdown"
+                            [singleItemautoLable]="false"
+                            [isEditMode]="isReadOnly('orgLevel4')"
+                        >
+                        </app-kendo-dropdown>
+                        </ng-container>
+
+                        <ng-container *ngIf="isReadOnly('orgLevel4')">
+                            <app-kendo-label [label]="getDynamicLabelName('OrganizationLevel4')?.Value!" [value]="inputProperties.assignmentDetails?.OrgLevel4Name"
+                            ></app-kendo-label>
+                        </ng-container>
+                    </div>
+                </div>
+                <!-- Organization Level 4 Ends Here -->
+
+
+
+                <div class="clearfix"></div>
+                <!-- Work Location Start Here -->
+                <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('workLocation')" [ngClass]="inputProperties.isControlRevision.WorkLocationId && isRevisionFieldExist('WorkLocationId') ? 'revision-workflow-two' : ''">
+                    <div class="form-group">
+
+
+                        <ng-container *ngIf="inputProperties.IsRevisionPending || isReadOnly('workLocation'); else editLocationTemplate">
+                            <app-kendo-label [label]="'ContractorsWorkLocation'" [value]="inputProperties.assignmentDetails?.WorkLocationName"
+                            ></app-kendo-label>
+                        </ng-container>
+                        <ng-template #editLocationTemplate>
+                            <app-kendo-dropdown
+                            [list]="inputProperties.workLocationList"
+                            [label]="'ContractorsWorkLocation'"
+                            [controlName]="'WorkLocationId'"
+                            [isRequired]="true"
+                            [isAppend]="isAppendModeForDropdown"
+                            [singleItemautoLable]="false"
+                            [isEditMode]="isReadOnly('workLocation') || inputProperties.IsRevisionPending"
+                            (onChange)="getRevisionFieldsUpdate('WorkLocationId')"
+                        >
+                        </app-kendo-dropdown>
+                        </ng-template>
+
+                        <div class="mt-1">
+                            <span *ngIf="inputProperties.editAssingmentForm?.get('WorkLocationId')?.value" class="achor__text mt-1">
+                                {{inputProperties.locationAdress}}
+                            </span>
+                        </div>
+                        <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision.WorkLocationId && isRevisionFieldExist('WorkLocationId')">
+                            <xrm-icon  name="alert-triangle" [size]="18" color="orange-color" title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- Work Location Ends Here -->
+
+
+
+
+                <!-- Hire Code start Here -->
+                <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('HireCode')">
+                    <div class="form-group">
+                        <!-- <app-kendo-dropdown
+                            [list]="inputProperties.hireCodeList"
+                            [label]="'HireCode'"
+                            [controlName]="'hireCode'"
+                            [placeholder]="'-Select-'"
+                            [isRequired]="false"
+                            [isEditMode]="true"
+                            [isAppend]="isAppendModeForDropdown"
+
+                        >
+                        </app-kendo-dropdown> -->
+
+                        <app-kendo-label
+                            [label]="'HireCode'"
+                            [value]="inputProperties.assignmentDetails.HireCodeName">
+                        </app-kendo-label>
+                    </div>
+                </div>
+                <!-- Hire Code Ends Here -->
+
+
+
+                <div class="clearfix"></div>
+                <!-- Labor Category Start Here -->
+                <div class="col-sm-6 col-md-6"*ngIf="isFieldVisible('laborCategory')" [ngClass]="inputProperties.isControlRevision.LaborCategoryId && isRevisionFieldExist('LaborCategoryId')?'revision-workflow-two' : ''" >
+                    <div class="form-group">
+
+
+                        <ng-container *ngIf="inputProperties.IsRevisionPending || isReadOnly('laborCategory'); else editLaborCategoryTemplate">
+                            <app-kendo-label [label]="'LaborCategory'" [value]="inputProperties.assignmentDetails?.LaborCategoryName"
+                            ></app-kendo-label>
+                        </ng-container>
+                        <ng-template #editLaborCategoryTemplate>
+                            <app-kendo-dropdown
+                            [list]="inputProperties.laborCategoryList"
+                            [label]="'LaborCategory'"
+                            [controlName]="'LaborCategoryId'"
+                            [placeholder]="'-Select-'"
+                            [isRequired]="true"
+                            [isAppend]="isAppendModeForDropdown"
+                            [singleItemautoLable]="false"
+                            [isEditMode]="isReadOnly('laborCategory') || inputProperties.IsRevisionPending"
+                            (onChange)="getRevisionFieldsUpdate('LaborCategoryId')"
+                        >
+                    </app-kendo-dropdown>
+                        </ng-template>
+                        <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision.LaborCategoryId && isRevisionFieldExist('LaborCategoryId')">
+                            <xrm-icon  name="alert-triangle" [size]="18" color="orange-color" title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- Labor Category Ends Here -->
+
+
+
+
+                <!-- Job Category Starts Here -->
+                <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('jobCategory')" [ngClass]="inputProperties.isControlRevision.JobCategoryId && isRevisionFieldExist('JobCategoryId') ? 'revision-workflow-two' : ''">
+                    <div class="form-group">
+
+
+                        <ng-container *ngIf="inputProperties.IsRevisionPending || isReadOnly('jobCategory');else editJobCategoryTemplate">
+                            <app-kendo-label [label]="'JobCategory'" [value]="inputProperties.assignmentDetails?.JobCategoryName"
+                            ></app-kendo-label>
+                        </ng-container>
+                        <ng-template #editJobCategoryTemplate>
+                            <app-kendo-dropdown
+                            [list]="inputProperties.jobCategoryList"
+                            [label]="'JobCategory'"
+                            [controlName]="'JobCategoryId'"
+                            [placeholder]="'-Select-'"
+                            [isRequired]="true"
+                            [isAppend]="isAppendModeForDropdown"
+                            [singleItemautoLable]="false"
+                            [isEditMode]="isReadOnly('jobCategory') || inputProperties.IsRevisionPending"
+                            (onChange)="getRevisionFieldsUpdate('JobCategoryId')"
+                        >
+                        </app-kendo-dropdown>
+                        </ng-template>
+                        <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision.JobCategoryId && isRevisionFieldExist('JobCategoryId')">
+                            <xrm-icon  name="alert-triangle" [size]="18" color="orange-color" title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                         </div>
+                    </div>
+                </div>
+                <!-- Job Category Ends Here -->
+
+
+
+
+                <!-- Position Title Starts Here -->
+                <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('positionTittle')">
+                    <div class="form-group">
+                        <app-textbox
+                            [label]="'PositionTitle'"
+                            [controlName]="'positionTittle'"
+                            [isRequired]="false"
+                            [maxCharacters]="201"
+                            (onChangeTextBox)="onChangePositionTitle($event)"
+                            [isEditMode]="isReadOnly('positionTittle')"
+                        ></app-textbox>
+                    </div>
+                </div>
+                <!-- Position Title Ends Here -->
+
+
+
+
+                <!-- Security Clearance Start Here -->
+                <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('securityClerance')">
+                    <div class="form-group" *ngIf="inputProperties.assignmentDetails?.AssignmentTypeId!=84">
+                        <app-kendo-dropdown
+                            [list]="inputProperties.securityClearanceList"
+                            [label]="'SecurityClearance'"
+                            [controlName]="'securityClerance'"
+                            [placeholder]="'-Select-'"
+                            [isRequired]="false"
+                            [singleItemautoLable]="false"
+                            [isAppend]="isAppendModeForDropdown"
+                            [isEditMode]="isReadOnly('securityClerance')"
+                        >
+                        </app-kendo-dropdown>
+                    </div>
+                </div>
+                <!-- Security Clearance Ends Here -->
+
+
+
+
+                <!-- Start Date Start Here -->
+                <div class="clearfix"></div>
+                <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('startDate')" [ngClass]="inputProperties.isControlRevision.AssignmentStartDate && isRevisionFieldExist('AssignmentStartDate') ? 'revision-workflow-two' : ''">
+                    <div class="form-group">
+                        <!-- Add the onChange event in Revision -->
+                        <app-kendo-datepicker
+                            [label]="'StartDate'"
+                            [controlName]="'AssignmentStartDate'"
+                            [isRequired]="true"
+                            [getFormattedDate]="true"
+                            [isEditMode]="isReadOnly('startDate') || inputProperties.IsRevisionPending"
+                            (onChange)="onStartDateChange($event, getStartDateControl(),
+                            getStartDateKey())"
+                        >
+                        <!-- [minDate]="getSectorInitialGoLiveDate()" -->
+                        </app-kendo-datepicker>
+                        <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision.AssignmentStartDate && isRevisionFieldExist('AssignmentStartDate')">
+                            <xrm-icon  name="alert-triangle" [size]="18" color="orange-color" title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                         </div>
+                    </div>
+                </div>
+                <!-- Start Date Ends Here -->
+
+
+
+
+                <!-- End Date Start Here -->
+                <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('endDate')" [ngClass]="inputProperties.isControlRevision.AssignmentEndDate && isRevisionFieldExist('AssignmentEndDate') ? 'revision-workflow-two' : ''">
+                    <div class="form-group">
+                        <!-- Add the onChange event in Revision -->
+                        <!-- <ng-container *ngIf="isRevision"> -->
+                            <app-kendo-datepicker
+                            [label]="'EndDate'"
+                            [controlName]="'AssignmentEndDate'"
+                            [isRequired]="true"
+                            [isEditMode]="isReadOnly('endDate') || inputProperties.IsRevisionPending"
+                            (onChange)="onEndDateChange($event, getEndDateControl(), getEndDateKey())"
+                        >
+                        </app-kendo-datepicker>
+
+
+                        <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision.AssignmentEndDate && isRevisionFieldExist('AssignmentEndDate')">
+                            <xrm-icon  name="alert-triangle" [size]="18" color="orange-color" title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                         </div>
+                    </div>
+                </div>
+                <!-- End Date Ends Here -->
+
+
+
+
+                <!-- Need to use widget here -->
+                <!-- Shift start Here -->
+                <div class="col-sm-12 col-md-12" *ngIf="isFieldVisible('shift')">
+                    <div class="dropdown__shift-range ">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-6" [ngClass]="(inputProperties.isControlRevision.ShiftId && isRevisionFieldExist('ShiftId') || inputProperties.isControlRevision.shiftWorkingDays) ? 'revision-workflow-two' : ''">
+
+                                        <div class="form-group">
+                                            <ng-container *ngIf="!inputProperties.IsRevisionPending">
+                                                <app-kendo-dropdown
+                                                [list]="inputProperties.shiftList"
+                                                [label]="'Shift'"
+                                                [controlName]="'ShiftId'"
+                                                [placeholder]="'-Select-'"
+                                                [isRequired]="true"
+                                                [singleItemautoLable]="false"
+                                                [isEditMode]="isReadOnly('shift') || inputProperties.IsRevisionPending"
+                                                (onChange)="onShiftChange($event); getRevisionFieldsUpdate('ShiftId')"
+                                                [isAppend]="isAppendModeForDropdown"
+                                            >
+                                            </app-kendo-dropdown>
+                                            </ng-container>
+                                            <ng-container *ngIf="inputProperties.IsRevisionPending">
+                                                <app-kendo-label [label]="'Shift'" [value]="inputProperties.assignmentDetails.AssignmentShiftDetails?.[0]?.ShiftName"
+                                                ></app-kendo-label>
+                                            </ng-container>
+                                        <div kendoTooltip class="achor__text tooltip_message" *ngIf="(inputProperties.isControlRevision.ShiftId && isRevisionFieldExist('ShiftId')) || inputProperties.isControlRevision.shiftWorkingDays">
+                                            <xrm-icon  name="alert-triangle" [size]="18" color="orange-color" title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                                         </div>
+                                        </div>
+                                    </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <app-weekday-picker *ngIf="inputProperties.editAssingmentForm?.get('ShiftId')?.value?? inputProperties.IsRevisionPending"
+                                    [dayInfo]="inputProperties?.daysInfo!" [isWeekdayEditMode]="false"
+                                    [timeRangeProperties]="inputProperties.timeRange" [timeFormat]="'hh:mm a'"
+                                    [startTimeControlName]="'startTimeControlName'"
+                                    [endTimeControlName]="'endTimeControlName'"
+                                    [isReadonly]="isReadOnly('shift') ? false: !inputProperties.IsRevisionPending"
+                                    (getWeekDayInfo)="getWeekData($event)" (onCancel)="getStatus($event)">
+                                    </app-weekday-picker>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Shift Ends Here -->
+
+
+                <!-- Page Subheading -->
+                <ng-container *ngIf="inputProperties.endDateChanged && inputProperties.editAssingmentForm?.get('AssignmentEndDate')?.value">
+
+
+                <div class="col-sm-12 col-md-12">
+                    <h4 class="card__body--subheading">{{'EndDateRevisionDetails' | translate}}</h4>
+                </div>
+
+
+                <!-- input box start -->
+        <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('modifyPO')" [ngClass]="inputProperties.isControlRevision.ModifyPOEndDate && isRevisionFieldExist('ModifyPOEndDate') ? 'revision-workflow-two' : ''">
+            <div class="form-group" >
+
+                <app-kendo-radio-button [label]="'ModifyPOApprovedAmountBasedOnNewEndDate'" [controlName]="'ModifyPOEndDate'" [RadioGroup]="inputProperties.modifyPO" [name]="'modifyPO'" [isEditMode]="isReadOnly('modifyPO')" (onChangeRadio)="onChangePOEndDate($event)" [isRequired]="true"> </app-kendo-radio-button>
+
+                <div class="mt-1">
+                    <span *ngIf="inputProperties.editAssingmentForm?.get('ModifyPOEndDate')?.value" class="achor__text mt-1">
+                        {{getEstimatedCostChangeText(inputProperties.editAssingmentForm.get('revisedFundByEndDateChange')?.value, inputProperties.currencyCode)}}
+                    </span>
+                </div>
+                <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision.ModifyPOEndDate && isRevisionFieldExist('ModifyPOEndDate')">
+                    <xrm-icon  name="alert-triangle" [size]="18" color="orange-color" title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                 </div>
+            </div>
+
+
+        </div>
+        <div class="clearfix"></div>
+
+        <!-- input box end -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('terminateAssignment')" [ngClass]="inputProperties.isControlRevision.TerminateAssignment && isRevisionFieldExist('TerminateAssignment') ? 'revision-workflow-two' : ''">
+                    <div class="form-group">
+                        <app-kendo-radio-button [label]="'TerminateAssignment'" [controlName]="'TerminateAssignment'" [RadioGroup]="inputProperties.terminationAssignment" [name]="'terminationAssignment'" [isEditMode]="isReadOnly('terminationAssignment')" (onChangeRadio)="onChangeTerminationAssignmentRadio($event)" [isRequired]="true">
+                        </app-kendo-radio-button>
+                        <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision.TerminateAssignment && isRevisionFieldExist('TerminateAssignment')">
+                            <xrm-icon  name="alert-triangle" [size]="18" color="orange-color" title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                         </div>
+                    </div>
+
+                </div>
+                <div class="clearfix"></div>
+                <!-- input box start -->
+
+                <!-- input box start -->
+                <ng-container *ngIf="inputProperties.editAssingmentForm?.get('TerminateAssignment')?.value && isFieldVisible('terminationReason')">
+                    <div class="col-sm-6 col-md-6" [ngClass]="inputProperties.isControlRevision.TerminateReasonId && isRevisionFieldExist('TerminateReasonId') ? 'revision-workflow-two' : ''">
+                        <div class="form-group">
+                            <app-kendo-dropdown
+                            [label]="'TerminationReason'"
+                            [list]="inputProperties.terminationReasonList"
+                            [controlName]="'TerminateReasonId'"
+                            [isRequired]="true"
+                            [placeholder]="'Select'"
+                            [isEditMode]="isReadOnly('terminationReason')"
+                            (onChange)="onChangetermination($event)">
+                        </app-kendo-dropdown>
+                            <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision.TerminateReasonId && isRevisionFieldExist('TerminateReasonId')">
+                                <xrm-icon  name="alert-triangle" [size]="18" color="orange-color" title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                             </div>
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+                       <ng-container *ngIf="inputProperties.editAssingmentForm?.get('TerminateReasonId')?.value">
+                        <div class="col-sm-6 col-md-6" *ngIf="inputProperties.terminationVisibleField?.DoNotReturn=='Yes'" [ngClass]="inputProperties.isControlRevision.AddedToDNR && isRevisionFieldExist('AddedToDNR') ? 'revision-workflow-two' : ''">
+                            <div class="form-group">
+                                <app-kendo-switch [controlName]="'AddedToDNR'" [label]="'EnableContractorDoNotReturn'" [onLabel]="'Yes'"
+                                    [offLabel]="'No'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'If Yes is selected, the Contractor will not be able to return to any assignment of this sector upon termination by the user.'" (onChangeSwitch)="onChangeDNR($event)">
+                                </app-kendo-switch>
+                                <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision.AddedToDNR && isRevisionFieldExist('AddedToDNR')">
+                                    <xrm-icon  name="alert-triangle" [size]="18" color="orange-color" title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                                 </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6 col-md-6" *ngIf="inputProperties.editAssingmentForm?.get('AddedToDNR')?.value && inputProperties.isControlRevision.AddedToDNR">
+                            <div class="form-group">
+                                <app-kendo-radio-button [label]="'DNRLevel'" [controlName]="'dnrOptions'" [RadioGroup]="inputProperties.levelDNR" [name]="'dnrOptions'" [isRequired]="true">
+                                </app-kendo-radio-button>
+                            </div>
+                        </div>
+                        </ng-container>
+                        <!-- input box start -->
+                        <div class="clearfix"></div>
+                        <ng-container *ngIf="inputProperties.showBackfill && !inputProperties.isAssignmentTerminated && inputProperties.editAssingmentForm?.get('TerminateReasonId')?.value">
+                          <div class="col-sm-6 col-md-6" *ngIf="inputProperties.terminationVisibleField?.BackfillNeeded =='Yes' && isFieldVisible('Backfill')" [ngClass]="inputProperties.isControlRevision.BackFillRequested && isRevisionFieldExist('BackFillRequested') ? 'revision-workflow-two' : ''">
+                                <div class="form-group">
+                                    <app-kendo-switch [controlName]="'BackFillRequested'" [label]="'BackfillRequired'" [onLabel]="'Yes'" [offLabel]="'No'" (onChangeSwitch)="onChangeBackfill($event)" [isEditMode]="!isReadOnly('Backfill')"> </app-kendo-switch>
+                                    <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision.BackFillRequested && isRevisionFieldExist('BackFillRequested')">
+                                        <xrm-icon  name="alert-triangle" [size]="18" color="orange-color" title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        <div class="clearfix"></div>
+
+                        <div class="col-sm-6 col-md-6" *ngIf="inputProperties.editAssingmentForm?.get('BackFillRequested')?.value && isFieldVisible('backFillStartDate')" [ngClass]="inputProperties.isControlRevision.BackFillStartDate && isRevisionFieldExist('BackFillStartDate') ? 'revision-workflow-two' : ''">
+                            <div class="form-group" *ngIf="inputProperties.editAssingmentForm?.get('TerminateAssignment')?.value">
+                                <app-kendo-datepicker [label]="'StartDateForBackfillPosition'" [isRequired]="true" [controlName]="'BackFillStartDate'" (onChange)="onBackfillStartDateChange($event, getBackFillStartDate()
+                                , getBackFillStartDateKey())" [isEditMode]="isReadOnly('backFillStartDate')"> </app-kendo-datepicker>
+                                <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision.BackFillStartDate && isRevisionFieldExist('BackFillStartDate')">
+                                    <xrm-icon  name="alert-triangle" [size]="18" color="orange-color" title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                                 </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-sm-6 col-md-6" *ngIf="inputProperties.editAssingmentForm?.get('BackFillRequested')?.value && isFieldVisible('backFillEndDate')" [ngClass]="inputProperties.isControlRevision.BackFillEndDate && isRevisionFieldExist('BackFillEndDate') ? 'revision-workflow-two' : ''">
+                            <div class="form-group" *ngIf="inputProperties.editAssingmentForm?.get('TerminateAssignment')?.value">
+                                <app-kendo-datepicker [label]="'EndDateForBackfillPosition'" [isRequired]="true" [controlName]="'BackFillEndDate'" (onChange)="onBackFillEndDateChange($event, getBackFillEndDate()
+                                , getBackFillEndDateKey())" [isEditMode]="isReadOnly('backFillEndDate')"> </app-kendo-datepicker>
+                                <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision.BackFillEndDate && isRevisionFieldExist('BackFillEndDate')">
+                                    <xrm-icon  name="alert-triangle" [size]="18" color="orange-color" title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                                 </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-sm-12 col-md-12" *ngIf="inputProperties.editAssingmentForm?.get('BackFillRequested')?.value && isFieldVisible('staffing')" [ngClass]="inputProperties.isControlRevision.NotifyToStaffingAgency && isRevisionFieldExist('NotifyToStaffingAgency') ? 'revision-workflow-two' : ''">
+                            <div class="form-group">
+                                <app-kendo-radio-button [label]="'BroadcastBackfillto'" [controlName]="'NotifyToStaffingAgency'" [RadioGroup]="(inputProperties.assignmentDetails.LoggedInUserRoleGroupID==4)? (inputProperties.choosestaffingClient): (inputProperties.choosestaffing)" [name]="'staffing'" (onChangeRadio)="onChangeNotifyStaffing($event)" [tooltipTitle]="''" [tooltipVisible]="true" [isEditMode]="isReadOnly('NotifyToStaffingAgency')">
+                                </app-kendo-radio-button>
+
+
+                                <div class="col-sm-12 col-md-12 halfGridCol2 tree-bxs" *ngIf="inputProperties.editAssingmentForm?.get('NotifyToStaffingAgency')?.value == '284'">
+
+                                    <app-tree-view [data]="staffingAgency" [isFiltered]="false"
+                                                    [textField]="'text'" (onCheckedTree)="selectedStaffingAgency($event)"
+                                                    [checkedKeys]="checkedKeys" [childrenField]="'items'"
+                                                    [expandedKeys]="expandedKeys" [isViewApprovalCase]="true"
+                                                    [treeViewType]="'multileveltreeview'"></app-tree-view>
+                                </div>
+                                <div kendoTooltip class="achor__text tooltip_message" *ngIf="inputProperties.isControlRevision.NotifyToStaffingAgency && isRevisionFieldExist('NotifyToStaffingAgency')">
+                                    <xrm-icon  name="alert-triangle" [size]="18" color="orange-color" title="{{'ChangesToThisFieldAreConsideredRevision' | translate}}"></xrm-icon>
+                                 </div>
+                            </div>
+
+                        </div>
+                        </ng-container>
+
+                </ng-container>
+
+            </ng-container>
+
+
+                <!-- Job Duties Start Here -->
+                <div class="col-sm-12 col-md-12" *ngIf="isFieldVisible('jobDuties')">
+                    <div class="form-group">
+                        <app-kendo-textarea
+                            [label]="'JobDuties'"
+                            [controlName]="'jobDuties'"
+                            [maxCharacters]="8000"
+                            [isEditMode]="isReadOnly('jobDuties')"
+                        >
+                        </app-kendo-textarea>
+                    </div>
+                </div>
+                <!-- Job Duties Start Here -->
+
+                <!-- Page Subheading -->
+                <div class="col-sm-12 col-md-12" *ngIf="isFieldVisible('requestingManager') || isFieldVisible('primaryManager') || isFieldVisible('alternateManager')">
+                    <h4 class="card__body--subheading">{{'ClientInformation'| translate}}</h4>
+                </div>
+                <!-- Page Subheading -->
+
+                <!-- Requesting Manager Start Here -->
+                <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('requestingManager')">
+                    <div class="form-group">
+                        <app-kendo-dropdown
+                            [list]="inputProperties.requestingManagerList"
+                            [label]="'RequestingManager'"
+                            [controlName]="'requestingManager'"
+                            [placeholder]="'-Select-'"
+                            [isRequired]="true"
+                            [isAppend]="false"
+                            [isEditMode]="isReadOnly('requestingManager')"
+                            [singleItemautoLable]="false"
+                            (onChange)="onRequestingManagerOrgLvl1Change($event)"
+                        >
+                        </app-kendo-dropdown>
+                    </div>
+                </div>
+                <!-- Requesting Manager Ends Here -->
+                <div class="clearfix"></div>
+                <!-- Primary Manager Start Here -->
+                <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('primaryManager')">
+                    <div class="form-group">
+
+                        <app-kendo-dropdown
+                            [list]="inputProperties.requestingManagerList"
+                            [label]="'IsPoSentToPm'"
+                            [controlName]="'primaryManager'"
+                            [placeholder]="'-Select-'"
+                            [isRequired]="true"
+                            [isAppend]="false"
+                            [singleItemautoLable]="false"
+                            [isEditMode]="inputProperties.assignmentDetails?.IsMultipleTimeApprovalNeeded || isReadOnly('primaryManager')"
+                            (onChange)="onPrimaryManagerChange($event)"
+                        >
+                        </app-kendo-dropdown>
+
+
+                    </div>
+
+
+                </div>
+                <!-- Primary Manager Ends Here -->
+
+
+
+
+                <!-- Alternate Manager Start Here -->
+                <div class="col-sm-6 col-md-6" *ngIf="isFieldVisible('alternateManager')">
+                    <div class="form-group">
+                        <app-kendo-dropdown
+                            [list]="inputProperties.requestingManagerList"
+                            [label]="'AlternateManager'"
+                            [controlName]="'alternateManager'"
+                            [placeholder]="'-Select-'"
+                            [isRequired]="false"
+                            [isAppend]="false"
+                            [singleItemautoLable]="false"
+                            [isEditMode]="inputProperties.assignmentDetails?.IsMultipleTimeApprovalNeeded || isReadOnly('alternateManager')"
+                            (onChange)="onAlternateManagerChange($event)"
+                        >
+                        </app-kendo-dropdown>
+                    </div>
+                </div>
+                <!-- Alternate Manager Ends Here -->
+
+
+
+
+                <!-- Page Subheading -->
+                <div class="col-sm-12 col-md-12">
+                    <h4 class="card__body--subheading">{{'RequestDetails' | translate}}</h4>
+                </div>
+                <!-- Page Subheading -->
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6" *ngIf="inputProperties.assignmentDetails?.AssignmentTypeId==84">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'RequestId'"></app-kendo-label>
+                        <a
+                            href="javascript:;"
+                            (click)="openRightSidePanel('LI')"
+                            class="add-more__link" class="ml-auto"
+                            class="request_id link-font" data-bs-toggle="offcanvas"
+                            data-bs-target="#assignmentDetails"
+                        >
+                       {{inputProperties.assignmentDetails?.RequestCode}}
+                        </a>
+                    </div>
+                </div>
+                <!-- <app-view-li [isVisible]="false" [ukey]="inputProperties.assignmentDetails?.UKey"></app-view-li> -->
+                <!-- input box start -->
+
+
+
+
+                <!-- input box start -->
+                <div class="col-sm-6 col-md-6" *ngIf="inputProperties.assignmentDetails?.AssignmentTypeId!=84">
+                    <div class="form-group">
+                        <app-kendo-label [label]="'CandidateOrSubmittalID'"></app-kendo-label>
+                        <a
+                            href="javascript:;"
+                            (click)="openRightSidePanel('Submittal')"
+                        >
+                        {{inputProperties.assignmentDetails?.RequestCode}}
+                        </a>
+                    </div>
+                </div>
+                <!-- input box start -->
+            </div>
+        </div>
+    </div>
+</form>

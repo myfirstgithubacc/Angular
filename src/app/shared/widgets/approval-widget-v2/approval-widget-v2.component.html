@@ -1,0 +1,55 @@
+<!-- Starts Section 1 -->
+<div class="app-content__body">
+
+
+    <!-- Ends Section 1 -->
+  
+    <!-- Starts Section 2 -->
+  
+    <div [ngClass]="{'card': isheading}" class="card">
+      <div class="card__header" *ngIf="isheading">
+        <h4 class="card__heading">{{heading | translate}}</h4>
+      </div>
+      <div class="card__body">
+        <div class="row">
+          <!-- input box start -->
+              <form class="row" [formGroup]="approverForm" >
+                <div  class="col-sm-6 add-row" *ngFor="let dt of approvalData; let i = index">
+                   <ng-container *ngIf="approvalTypeEnum.userApprovalLevel === dt.ApproverTypeId; else otherType">
+                    <ng-container>
+                    <div class="form-group">
+                      <app-kendo-dropdown  *ngIf="dt.Items.length > 1 && !isView" [list]="dt.Items" [label]="dt.ApproverLabel" [placeholder]="'DdlSelect'"
+                        [isRequired]="true" [controlName]="dt.controlName" (onChange)="getuserValue(dt.controlName , $event)">
+                      </app-kendo-dropdown>
+                      <kendo-label [text]="dt.ApproverLabel" *ngIf="dt.Items.length > 1 && isView">
+                        <p class="label-answere">{{ approverForm.get(dt.controlName)?.value?.Text }}</p>
+                      </kendo-label>
+                      <div *ngIf="dt.Items.length == 1">
+                        <kendo-label [text]="dt.ApproverLabel">
+                          <p class="label-answere">{{ dt.Items[0].Text | translate }}</p>
+                        </kendo-label>
+                      </div>
+                    </div>
+                    </ng-container>
+  
+             
+                
+                   </ng-container>
+                   <ng-template #otherType>
+                    <div class="form-group">
+                    <kendo-label [text]="dt.ApproverLabel">
+                      <span *ngIf="dt.Items.length>0">
+                          <p class="label-answere"> <span *ngFor="let item of dt.Items; let last = last">{{ item.Text | translate }}
+                            <ng-container *ngIf="!last">, </ng-container>
+                          </span>
+                          </p>
+                      </span>
+                    </kendo-label>
+                  </div>
+                  </ng-template>
+                </div>
+              </form>
+        </div>
+      </div>
+    </div>
+  </div>

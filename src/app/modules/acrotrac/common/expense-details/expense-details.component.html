@@ -1,0 +1,39 @@
+<div class="card card__flat">
+	<div class="card__header">
+		<h4 class="card__heading">{{"ExpenseReportDetails" | translate}}</h4>
+	</div>
+	<div class="card__body">
+		<div class="row">
+			<div class="col-sm-12 col-md-12 list-view">
+				<grid-view [gridData]="detailsData" (emitFileData)="downloadViaFileLink($event)"
+					[columnOptions]="columnOptions" [pageSize]="magicNumber.fiveHundred" [actionSet]="actionSet"
+					[tabOptions]="tabOptions" [isColumnChooserVisible]="false" [actionItemCategoryField]="'Disabled'"
+					[isInternalSearch]="false" [isExportHide]="true" [actionItemCategoryField]="'StatusId'"
+					[isRowIndexNeeded]="true" [isActionColumnVisible]="showActions" [pageHideOnServerSide]="true"
+					[isPaginationVisible]="false" [isToolbarVisible]="false" [showTabs]="false">
+				</grid-view>
+			</div>
+			<div *ngIf="gridDataSummary.length" class="col-sm-12 col-md-12">
+				<h4 class="card__body--subheading subheading__no-border">{{"Summary" | translate}}</h4>
+			</div>
+			<div *ngIf="gridDataSummary.length" class="col-sm-7 col-md-7 list-view">
+				<kendo-grid [data]="gridDataSummary">
+					<kendo-grid-column field="ExpenseTypeName" [title]="'ExpenseType' | translate">
+						<ng-template kendoGridFooterTemplate>
+							<strong>{{totalAmountSummary}}</strong>
+						</ng-template>
+					</kendo-grid-column>
+					<kendo-grid-column field="Amount" [title]="amountSummary"
+						[width]="magicNumber.oneHundredFortyThree">
+						<ng-template kendoGridCellTemplate let-dataItem>
+							{{dataItem.Amount.toFixed(magicNumber.two) | number: '1.2-2' }}
+						</ng-template>
+						<ng-template kendoGridFooterTemplate>
+							<strong>{{totalAmount.toFixed(magicNumber.two) | number: '1.2-2' }}</strong>
+						</ng-template>
+					</kendo-grid-column>
+				</kendo-grid>
+			</div>
+		</div>
+	</div>
+</div>

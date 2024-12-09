@@ -1,0 +1,16 @@
+.and_or{
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    top: 190px;
+    transform: translate(-25px,0px);
+    // display: none;
+} 
+.andOR {
+    padding: 4px 10px;
+    border: #e2e2e2 solid 1px;
+    border-radius: 4px;
+    font-weight: 600;
+    color: #000;
+    text-align: center;
+}

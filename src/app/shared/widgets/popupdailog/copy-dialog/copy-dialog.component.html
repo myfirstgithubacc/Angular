@@ -1,0 +1,50 @@
+<div class="k-dialog-content copy-dailog-popup">
+
+  <a href="javascript:;" class="close-dailog" (click)="close()">
+  <xrm-icon name="x" color="black-color" [size]="18" [strokeWidth]="2.5"></xrm-icon></a>
+  <xrm-icon name="copy" color="dark-blue-color" [size]="40" class="text-primary dailog__icon" *ngIf="isCopy"></xrm-icon>
+  <h3 class="dailog__title d-flex justify-content-center" style="text-align: center">
+    {{ title | translate }}
+  </h3>
+  <app-toaster [isOnComponent]="true"></app-toaster>
+  <form [formGroup]="formGroup">
+    <div class="form-scroll">
+      <span *ngFor="let control of copydialogdata">
+        <span *ngIf="control?.type=='dropdown'">
+          <div class="my-3">
+            <app-kendo-dropdown [isRequired]="!control.notRequired" [list]="control?.dropdownData"
+              [controlName]="control?.controlName" [label]="control?.labels.dropdownLabel" [placeholder]="'DdlSelect'"
+              (onChange)="DrpChanged($event,control?.controlName)" [tooltipVisible]="control?.tooltipVisible"
+              [labelLocalizeParam]="control?.labelLocalizeParam" [tooltipTitle]="control?.tooltipTitle"
+              [tooltipTitleLocalizeParam]="control?.tooltipTitleLocalizeParam"></app-kendo-dropdown>
+
+            <div class="my-3" *ngIf="control.IsTreePresent && isTreeAvailable">
+              <app-tree-view [data]="treeData?.treeData" [isFiltered]="false" [childrenField]="'items'"
+                [textField]="treeData?.textField" [tooltipVisible]="treeData?.tooltipVisible"
+                [tooltipTitle]="treeData?.tooltipTitle" [tooltipPosition]="treeData?.tooltipPosition"
+                [treeViewType]="treeData?.treeViewType"
+                [tooltipTitleLocalizeParam]="treeData?.tooltipTitleLocalizeParam" [label]="treeData?.label|translate"
+                [isRequired]="treeData?.isRequired" (onCheckedTree)="onTreeChecked($event)"></app-tree-view>
+              <p *ngIf="buttonClicked && treeData?.treeData && selectedTree.length==0" class="treeError">{{'ReqFieldValidationMessage' | translate}}</p>
+            </div>
+          </div>
+        </span>
+        <span *ngIf="control?.type=='label'">
+          <div class="my-3">
+            <app-kendo-label [value]="control?.value" [label]="control?.labels" ></app-kendo-label>
+          </div>
+        </span>
+        <span *ngIf="control?.type=='upload'">
+          <div class="col-sm-12 col-md-12">
+          <app-kendo-fileselect [controlName]="control?.controlName" [label]="'Choose'" [isRequired]="true"
+          [multiple]="isMultipleUpload" [fileSelectTheme]="'secondary'"
+          [fileExtAllow]="control?.extensionsAllow"></app-kendo-fileselect>
+        </div>
+        <span class="file-caption">
+          {{'UploadNote' | translate}}
+        </span>
+        </span>
+      </span>
+    </div>
+  </form>
+</div>

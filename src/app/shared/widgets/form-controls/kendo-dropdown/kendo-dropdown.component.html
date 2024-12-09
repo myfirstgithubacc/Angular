@@ -1,0 +1,61 @@
+<div *ngIf="isRendered">
+  <div *ngIf="isEditMode; then thenTemplateName; else elseTemplateName"></div>
+  <ng-template #thenTemplateName>
+    <app-kendo-label *ngIf="!isHtmlContent" [label]="label"
+      [value]="listControlName ? listControlName.value?.Text : formControl.value?.Text" [tooltipPosition]=""
+      [labelLocalizeParam]="labelLocalizeParam" [addOnLabelText]="addOnLabelText"
+      [addOnLabelTextLocalizeParam]="addOnLabelTextLocalizeParam" [tooltipVisible]="tooltipVisible"
+      [tooltipTitle]="tooltipTitle" [tooltipTitleLocalizeParam]="tooltipTitleLocalizeParam">
+    </app-kendo-label>
+
+    <tooltip-content *ngIf="isHtmlContent"
+      [value]="listControlName ? listControlName.value?.Text : formControl.value?.Text"
+      [tooltipVisible]="tooltipVisible" [tooltipTitle]="tooltipTitle" [label]="label" [addOnLabelText]="addOnLabelText"
+      [addOnLabelTextLocalizeParam]="addOnLabelTextLocalizeParam" [isRequired]="isRequired" [tooltipPosition]=""
+      [tooltipTitleLocalizeParam]="tooltipTitleLocalizeParam" [isHtmlContent]="isHtmlContent"
+      [labelLocalizeParam]="labelLocalizeParam">
+    </tooltip-content>
+
+    <div class="mt-1">
+      <span class="achor__text">
+        {{ helpTexts.join(", ") }}
+      </span>
+    </div>
+  </ng-template>
+  <ng-template #elseTemplateName>
+    <kendo-formfield>
+      <tooltip-content [tooltipVisible]="tooltipVisible" [tooltipTitle]="tooltipTitle" [label]="label"
+        [addOnLabelText]="addOnLabelText" [addOnLabelTextLocalizeParam]="addOnLabelTextLocalizeParam"
+        [isRequired]="isRequired" [tooltipPosition]="" [tooltipTitleLocalizeParam]="tooltipTitleLocalizeParam"
+        [isHtmlContent]="isHtmlContent" [labelLocalizeParam]="labelLocalizeParam">
+      </tooltip-content>
+      <div [ngClass]="version == 'new'?'autocomplete-search search-singleselect' : '' "
+        [ngClass]="isLoadOnDemand ? 'autocomplete-search search-singleselect combobox-search' : ''">
+        <kendo-combobox class="search-icon" #comboBox [formControl]="listControlName ? listControlName : formControl"
+          [disabled]="isDisabled" [data]="version == 'new' && !isLoadOnDemand ? data : list" [allowCustom]="false"
+          textField="Text" valueField="Value" [filterable]="true" (focus)="onFocus($event)" (blur)="onBlur($event)"
+          [valuePrimitive]="false" [placeholder]="placeholder | translate" [kendoDropDownFilter]="filterSettings"
+          (open)="onOpen()" (click)="openItem()" (filterChange)="OnFilter($event)" (valueChange)="OnChange($event)"
+          [loading]="loadOnDemandSrv.isLoading(getControlName())">
+          <ng-template kendoComboBoxItemTemplate let-dataItem>
+            {{ isLocalizedData ? (dataItem.Text | translate) : dataItem.Text }}
+
+            <span *ngIf="dataItem.isRequired" class="required required--dropdown-value">
+              {{dataItem.Tag ? dataItem.Tag : '*' }}
+            </span>
+          </ng-template>
+          <ng-template kendoMultiColumnComboBoxNoDataTemplate>
+            {{ 'NoDataFound' | translate }}
+          </ng-template>
+        </kendo-combobox>
+        <span class="k-icon k-font-icon k-i-search" *ngIf="version == 'new' || isLoadOnDemand"></span>
+      </div>
+      <div class="mt-1">
+        <span class="achor__text">
+          {{ helpTexts.join(", ") }}
+        </span>
+      </div>
+      <app-print-error-message [control]="listControlName ? listControlName : formControl"></app-print-error-message>
+    </kendo-formfield>
+  </ng-template>
+</div>

@@ -1,0 +1,812 @@
+<!-- Main Body Section-->
+<div class="app-content__body floating-layout floating-layout__view-layout">
+  <form [formGroup]="addEditEventReasonForm">
+    <app-common-header [entityId]="entityId" [recordStatus]="getUserStatus()" [statusData]="statusData"
+      [buttonSet]="!myInput ? buttonSet : ''" [isStatusEditable]="false"></app-common-header>
+  </form>
+  <br>
+
+  <form [formGroup]="userviewform">
+    <div class="row">
+      <div class="col-sm-3" *ngIf="!showCardEventLog">
+        <app-side-menu-user [TabList]="tabList" (selectedTapEvent)="selectedTapEvent($event)"></app-side-menu-user>
+
+        <div class="card" *ngIf="tabList[3].isSelected && !tabList[3].isDisabled">
+          <div class="card__header">
+            <h4 class="card__heading">{{'Profile Picture'}}</h4>
+          </div>
+          <div class="card__body">
+            <div class="avatar-upload">
+              <div class="avatar-preview">
+                <img id="output2" alt="" [src]="profilePic" />
+                <!-- <div id="output2" #imagePreview style="background-image: url('assets/images/users/3.jpg');"></div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div [ngClass]="!showCardEventLog ? 'col-sm-9' : 'col-sm-12'">
+
+        <!--  Basic Details Starts -->
+        <div class="card" *ngIf="tabList[0].isSelected && !tabList[0].isDisabled">
+          <div class="card__header">
+            <h4 class="card__heading">{{'BasicDetails'| translate}}</h4>
+          </div>
+          <div class="card__body">
+            <div class="row">
+              <!-- input box start -->
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                  <app-kendo-label [label]="'UserType'" [value]="userType">
+                  </app-kendo-label>
+                </div>
+              </div>
+              <!-- input box end -->
+
+            </div>
+
+            <div class="row">
+
+              <div class="col-sm-6 col-md-6" *ngIf="userType=='StaffingAgency'">
+                <div class="form-group">
+                  <app-kendo-label [label]="'StaffingAgency'" [value]="userObject.StaffingAgencyName">
+                  </app-kendo-label>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-6" *ngIf="userType=='StaffingAgency'">
+              </div>
+            </div>
+
+            <div class="row">
+              <!-- input box start -->
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                  <app-kendo-label [fieldName]="'UserName'" [entityType]="entityType" [xrmEntityId]="entityId"
+                    [label]="'UserName'" [value]="userObject.UserFullName">
+                  </app-kendo-label>
+                </div>
+              </div>
+              <!-- input box end -->
+
+              <!-- input box start -->
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                  <app-kendo-label [entityType]="entityType" [xrmEntityId]="entityId" [fieldName]="'UserEmail'"
+                    [label]="'EmailAddress'" [value]="userObject.UserEmail">
+                  </app-kendo-label>
+                </div>
+              </div>
+              <!-- input box end -->
+
+              <!-- input box start -->
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+
+                  <app-kendo-phone [label]="'ContactNumber'" [isEditMode]="false" [phoneControlName]="'phoneControl'"
+                    [phoneExtControlName]="'phoneExt'" [isExtension]="isPhoneExt"></app-kendo-phone>
+
+                </div>
+                <!-- <div class="form-group">
+
+                  <app-kendo-label [fieldName]="'UserAlternatePhoneNumber'" [entityType]="entityType" [xrmEntityId]="entityId" [label]="'ContactNumber'" [value]="userObject?.PhoneNumberExt + ' ' + userObject?.PhoneNumber">
+                  </app-kendo-label>
+                </div> -->
+              </div>
+              <!-- input box end -->
+
+              <!-- input box start -->
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                  <app-kendo-label [label]="'CountryId'" [value]="userObject.UserCountry">
+                  </app-kendo-label>
+                </div>
+              </div>
+              <!-- input box end -->
+
+              <!-- input box start -->
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                  <app-kendo-label [label]="'Language1'" [value]="userObject.UserLanguage">
+                  </app-kendo-label>
+                </div>
+              </div>
+              <!-- input box end -->
+
+              <!-- input box start -->
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                  <app-kendo-label [label]="'TimeZoneId'" [value]="userObject.UserTimezone">
+                  </app-kendo-label>
+                </div>
+              </div>
+              <!-- input box end -->
+
+              <!-- input box start -->
+              <div class="col-sm-6 col-md-6" *ngIf="userObject?.RoleGroupId == 3">
+                <div class="form-group">
+                  <app-kendo-label [label]="'AddressLine1'" [value]="userObject.UserAddressLine1">
+                  </app-kendo-label>
+                </div>
+              </div>
+              <!-- input box end -->
+
+              <!-- input box start -->
+              <div class="col-sm-6 col-md-6" *ngIf="userObject?.RoleGroupId == 3">
+                <div class="form-group">
+                  <app-kendo-label [label]="'AddressLine2'" [value]="userObject.UserAddressLine2">
+                  </app-kendo-label>
+                </div>
+              </div>
+              <!-- input box end -->
+
+              <!-- input box start -->
+              <div class="col-sm-6 col-md-6" *ngIf="userObject?.RoleGroupId == 3">
+                <div class="form-group">
+                  <app-kendo-label [label]="'City'" [value]="userObject.UserCity">
+                  </app-kendo-label>
+                </div>
+              </div>
+              <!-- input box end -->
+
+
+
+              <!-- input box start -->
+              <div class="col-sm-6 col-md-6" *ngIf="userObject?.RoleGroupId == 3">
+                <div class="form-group">
+                  <app-kendo-label [label]="stateLabel" [value]="userObject.UserState">
+                  </app-kendo-label>
+                </div>
+              </div>
+              <!-- input box end -->
+
+
+
+              <!-- input box start -->
+              <div class="col-sm-6 col-md-6" *ngIf="userObject?.RoleGroupId == 3">
+                <div class="form-group">
+                  <app-kendo-masked-textbox [isEditMode]="false" [controlName]="'UserZipCode'" [isZipCode]="true"
+                    [label]="zipLabel" [countryId]="userObject.CountryId"></app-kendo-masked-textbox>
+                </div>
+              </div>
+              <!-- input box end -->
+
+
+
+
+
+              <div class="clearfix"></div>
+              <!-- input box start -->
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                  <app-kendo-label [fieldName]="'LoginMethod'" [entityType]="entityType" [xrmEntityId]="entityId"
+                    [label]="'LoginMethod'" [value]="userObject.LoginMethodName" [tooltipVisible]="true"
+                    [tooltipTitle]="'AuthenticationMethodExplanation'">
+                  </app-kendo-label>
+                </div>
+              </div>
+
+
+
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                  <app-kendo-label [fieldName]="'UserName'" [entityType]="entityType" [xrmEntityId]="entityId"
+                    [label]="'LoginID'" [value]="userObject.UserName">
+                  </app-kendo-label>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-6" *ngIf="userObject?.LoginMethod==1">
+                <div class="form-group">
+                  <app-kendo-label [label]="'PasswordExpiryDate'"
+                    [value]="getDateTransformed(userObject.PasswordExpiryDate)">
+                  </app-kendo-label>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                  <app-kendo-label [label]="'XRMAcknowledgementStatementAcceptedOn'"
+                    [value]="getDateTransformed(userObject.AcknowledgementAcceptedOnDate)">
+                  </app-kendo-label>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <!-- Basic Details Ends -->
+
+        <!--  USER ACCOUNT CONFIGURATION Starts -->
+        <div class="card" *ngIf="tabList[0].isSelected && !tabList[0].isDisabled">
+
+          <div class="card__header">
+            <h4 class="card__heading">{{'UserAccountConfiguration'| translate}}</h4>
+          </div>
+
+
+          <!-- Card Body Section-->
+          <div class="card__body">
+
+            <div class="row">
+
+
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                  <app-kendo-label [label]="'UserRole'" [tooltipVisible]="true" [tooltipTitle]="'RoleExplanation'"
+                    [value]="userObject.RoleName">
+                  </app-kendo-label>
+                </div>
+              </div>
+
+              <div class="row" *ngIf="userObject?.RoleGroupId == 3">
+                <div class="col-sm-6 col-md-6">
+                  <div class="form-group">
+                    <app-kendo-label [label]="'SectorAccessibility'" [tooltipVisible]="true"
+                      [tooltipTitle]="'SectorAccessExplanation'">
+                    </app-kendo-label>
+                    <p class="label-answere">{{userObject.IsAllSectorAccessible ?'All': 'Selected'| translate}}</p>
+                    <div class="col-sm-6 col-md-6" *ngIf="!userObject.IsAllSectorAccessible">
+                      <kendo-treeview [nodes]="sectorAccessList" textField="Text" selectBy="Text"
+                        kendoTreeViewHierarchyBinding kendoTreeViewExpandable>
+                      </kendo-treeview>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-6 col-md-6">
+                  <div class="form-group">
+                    <app-kendo-label [label]="'LocationAccessibility'" [tooltipVisible]="true"
+                      [tooltipTitle]="'DisplayAllActiveLocations'">
+                    </app-kendo-label>
+                    <p class="label-answere">{{userObject.IsAllLocationAccessible ?'All': 'Selected'| translate}}</p>
+                    <div class="col-sm-6 col-md-6"
+                      *ngIf="!userObject?.IsAllLocationAccessible && locationSectorGroupingList && locationSectorGroupingList.length>0">
+                      <app-tree-view-readonly [data]="locationSectorGroupingList" [textField]="'Text'"
+                        [childrenField]="'LocationList'" [isFiltered]="false"> </app-tree-view-readonly>
+
+                      <!-- <kendo-treeview [nodes]="LocationAccessList" textField="Text" selectBy="Text"
+                          kendoTreeViewHierarchyBinding kendoTreeViewExpandable>
+                        </kendo-treeview> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-6" *ngIf="userObject?.RoleGroupId == 2">
+                <div class="form-group">
+                  <app-kendo-label [label]="'SectorAccessibility'" [tooltipVisible]="true"
+                    [tooltipTitle]="'SelectDataAccessSectors'">
+
+
+                  </app-kendo-label>
+                  <p class="label-answere">{{userObject.IsAllSectorAccessible ?'All': 'Selected'| translate}}</p>
+                  <div class="col-sm-6 col-md-6" *ngIf="!userObject.IsAllSectorAccessible">
+                    <kendo-treeview [nodes]="sectorAccessList" textField="Text" selectBy="Text"
+                      kendoTreeViewHierarchyBinding kendoTreeViewExpandable>
+                    </kendo-treeview>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-sm-6 col-md-6" *ngIf="userObject?.RoleGroupId == 4">
+                <div class="form-group">
+                  <app-kendo-label [label]="'DataAccessRights'" [value]="userObject.DataAccessRightName"
+                    [tooltipVisible]="true" [tooltipTitle]="'CurrentDataAccessRightsExplanation'">
+                  </app-kendo-label>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- USER ACCOUNT CONFIGURATION Ends -->
+        <div class="" *ngIf="tabList[1].isSelected && !tabList[1].isDisabled">
+          <div class="card__body px-0">
+            <div class="col-sm-12">
+              <div class="list-view__tab">
+                <kendo-tabstrip class="list-view__border list-view__tab-item me-0 client_sector">
+                  <ng-container *ngFor="let item of userObject?.ClientUserSectorAccesses; let i = index;">
+                    <kendo-tabstrip-tab class="list-view__tab-item" [selected]="item?.isshow ? true : false">
+                      <ng-template kendoTabTitle>
+                        <span style="position:relative" (click)="tabClick(i)"> {{item.SectorName}}</span>
+                      </ng-template>
+                    </kendo-tabstrip-tab>
+                  </ng-container>
+                </kendo-tabstrip>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Sector Details Starts-->
+        <ng-container *ngFor="let item of userObject?.ClientUserSectorAccesses; let i = index;">
+          <ng-container *ngIf="item?.isshow">
+            <div class="card" *ngIf="tabList[1].isSelected && !tabList[1].isDisabled">
+
+              <!-- Card Header Section-->
+              <div class="card__header">
+                <h4 class="card__heading">{{'SectorDetails'| translate}}</h4>
+              </div>
+              <!-- End Card Header Section-->
+
+              <!-- Card Body Section-->
+              <div class="card__body">
+                <div class="row">
+                  <!-- input box start -->
+                  <!-- <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'Sector'" [value]="item?.SectorName">
+                      </app-kendo-label>
+                    </div>
+                  </div> -->
+                  <!-- input box end -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="userObject?.ApplicabilityForMultipleSectors">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'PrimarySector'" [value]="item?.IsDefault ? 'Yes' : 'No' | translate">
+                      </app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box end -->
+                </div>
+
+                <div class="row">
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'Location'" [value]="item?.DefaultLocationName">
+                      </app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box end -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="orgLabelNameShow[0]">
+                    <div class="form-group">
+                      <app-kendo-label [label]="orgLabelName[i][0]" [value]="item?.DefaultOrglevel1Name">
+                      </app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box end -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="orgLabelNameShow[1]">
+                    <div class="form-group">
+                      <app-kendo-label [label]="orgLabelName[i][1]" [value]="item?.OrgLevel2Name">
+                      </app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box end -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="orgLabelNameShow[2]">
+                    <div class="form-group">
+                      <app-kendo-label [label]="orgLabelName[i][2]" [value]="item?.OrgLevel3Name">
+                      </app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box end -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="orgLabelNameShow[3]">
+                    <div class="form-group">
+                      <app-kendo-label [label]="orgLabelName[i][3]" [value]="item?.OrgLevel4Name">
+                      </app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box end -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'DefaultCostAccountingCode'"
+                        [value]="item?.DefaultCostAccountingCodeName">
+                      </app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box end -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6" *ngIf="item?.NextLevelManagerName">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'NextLevelManager'" [value]="item?.NextLevelManagerName"
+                        [tooltipVisible]="false"
+                        [tooltipTitle]="'SelectAUserToDesignateAsTheNextLevelApproverForTheLIProffPSRRequest'">
+                      </app-kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box end -->
+
+                  <!-- input box start -->
+                  <div class="col-sm-6 col-md-6"
+                    *ngIf="this.userObject?.UserDataAccessRight == userDataAccessRight.LocationView || this.userObject?.UserDataAccessRight == userDataAccessRight.Org1View">
+                    <div class="form-group">
+                      <kendo-label
+                        text="{{this.userObject.UserDataAccessRight == userDataAccessRight.Org1View ? getLocalizedMessage(orgLabelName[i][0]) : getLocalizedMessage('Location')}} ">
+                        <ng-container *ngIf="getConfigureClientData(item.SectorId, i)">
+                          <ng-container *ngFor="let data of getConfigureClientData(item.SectorId, i)">
+                            <p class="label-answere">{{userObject.UserDataAccessRight=='219' ? data.OrgLevelName :
+                              data.LocationName }}</p>
+                          </ng-container>
+                        </ng-container>
+
+                      </kendo-label>
+                    </div>
+                  </div>
+                  <!-- input box end -->
+
+
+                </div>
+                <!-- Card Body Section End-->
+              </div>
+            </div>
+            <!-- Card Section End-->
+            <!-- TabList[1].isSelected && !TabList[1].isDisabled -->
+            <!-- Approval Configuration starts-->
+            <div class="card" *ngIf="tabList[1].isSelected && !tabList[1].isDisabled">
+              <!-- Card Header Section-->
+              <div class="card__header">
+                <h4 class="card__heading">{{'ApprovalConfiguration'|translate}}</h4>
+              </div>
+              <!-- End Card Header Section-->
+
+              <!-- Card Body Section-->
+              <div class="card__body">
+                <div class="row">
+                  <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'RequisitionPSRLIApprovalLimitUSD'"
+                        [value]="item?.ReqPSRLiApprovalLimit">
+                      </app-kendo-label>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6 col-md-6" *ngIf="item?.IsRfxSowRequired">
+                    <div class="form-group">
+                      <app-kendo-label [label]="'RFxSOWApprovalLimitUSD'" [value]="item?.RFxSowApprovalLimit">
+                      </app-kendo-label>
+                    </div>
+                  </div>
+
+
+                  <div class="card__body pt-0" *ngIf="approvalConfiguration.length > 0">
+                    <div class="list-view third-lavel-grid staf-list">
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <ng-template #template let-anchor>
+                            <span>{{ anchor.nativeElement.getAttribute("title") }}</span>
+                            <span>{{ anchor.nativeElement.innerText }}</span>
+                          </ng-template>
+                          <div kendoTooltip [tooltipTemplate]="template" filter="title, .k-grid th"
+                            (mouseover)="showTooltip($event)">
+                            <div kendoTooltip [tooltipTemplate]="template" filter="a[field]">
+                              <kendo-grid [kendoGridBinding]="getApprovalConfigurationGridData(item.SectorId)"
+                                [pageable]="true" [pageSize]="5">
+                                <ng-template kendoGridToolbarTemplate class="list-view__header">
+                                  <div class="breadcrumbs-hardcode">
+                                    <div class="icon-group">
+                                      <kendo-splitbutton size="small" class="icon-group__item" [data]="splitButtonItems"
+                                        (itemClick)="onSplitButtonItemClick($event)"
+                                        (buttonClick)="onSplitButtonClick()">
+                                        <span class="k-icon k-font-icon k-i-export"></span>
+                                      </kendo-splitbutton>
+                                    </div>
+                                  </div>
+                                </ng-template>
+                                <ng-container>
+                                  <kendo-grid-column field="WorkflowName"
+                                    title="{{'Workflow'|translate}}"></kendo-grid-column>
+                                </ng-container>
+                                <ng-template kendoGridDetailTemplate let-dataItem>
+                                  <kendo-grid [kendoGridBinding]="dataItem.ApprovalConfigs" [pageSize]="20"
+                                    class="gridView2" (cellClick)="cellClickHandler($event)"
+                                    (cellClose)="cellCloseHandler($event)">
+
+                                    <kendo-grid-column field="ApproverConfigName"
+                                      title="{{'ApprovalConfigurationName'| translate}}"></kendo-grid-column>
+
+                                    <ng-template kendoGridDetailTemplate let-dataItem>
+                                      <kendo-grid [kendoGridBinding]="dataItem.ApproverLabels" class="gridView3"
+                                        (cellClick)="cellClickHandler2($event)" (cellClose)="cellCloseHandler2($event)">
+
+                                        <kendo-grid-column field="ApproverLabel" title="{{'ApprovalLevels'| translate}}"
+                                          [editable]="false"></kendo-grid-column>
+
+                                        <kendo-grid-column title="{{'AuthorizedForApprovalLevel'| translate}}"
+                                          editor="boolean">
+                                          <ng-template kendoGridCellTemplate let-filter let-column="column"
+                                            let-filterService="filterService" let-dataItem>
+                                            <kendo-label
+                                              [text]="getSelectedApproval(item?.SectorId,dataItem)"></kendo-label>
+                                          </ng-template>
+                                        </kendo-grid-column>
+                                      </kendo-grid>
+                                    </ng-template>
+                                  </kendo-grid>
+                                </ng-template>
+                              </kendo-grid>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
+            <!-- Approval Configuration ends -->
+
+            <!-- udf Details card-->
+            <ng-container *ngIf="tabList[1].isSelected && !tabList[1].isDisabled && item.SectorId>0">
+              <app-udf-implementation [entityId]="entityId" [sectorId]="item?.SectorId"
+                [recordUKey]="item?.RecordUKey ?? ''" [recordId]="item?.ClientUserSectorAccessId ?? 0"
+                [parentsInfos]="udfCommonMethods.getParentsInfo()" [actionTypeId]="actionTypeId">
+              </app-udf-implementation>
+            </ng-container>
+
+          </ng-container>
+
+
+        </ng-container>
+
+        <div class="card" *ngIf="tabList[2].isSelected && !tabList[2].isDisabled">
+          <!-- Card Header Section-->
+          <div class="card__header">
+            <!-- Update Lable -->
+            <h4 class="card__heading">{{ 'AlternateContactDetails' | translate}}</h4>
+          </div>
+          <!-- End Card Header Section-->
+
+          <!-- Card Body Section-->
+          <div class="card__body">
+
+            <div class="row">
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                  <app-kendo-label [label]="'AddressLine1'" [value]="userObject.UserAddressLine1">
+                  </app-kendo-label>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                  <app-kendo-label [label]="'AddressLine2'" [value]="userObject.UserAddressLine2">
+                  </app-kendo-label>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                  <app-kendo-label [label]="'City'" [value]="userObject.UserCity">
+                  </app-kendo-label>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                  <app-kendo-label [label]="stateLabel" [value]="userObject.UserState">
+                  </app-kendo-label>
+                </div>
+              </div>
+
+              <!-- input box start -->
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                  <app-kendo-masked-textbox [isEditMode]="false" [controlName]="'UserZipCode'" [isZipCode]="true"
+                    [label]="zipLabel" [countryId]="userObject.CountryId"></app-kendo-masked-textbox>
+                </div>
+              </div>
+              <!-- input box end -->
+
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                  <app-kendo-label [label]="'AlternateEmailAddress'" [value]="userObject.AlternateEmail">
+                  </app-kendo-label>
+                </div>
+              </div>
+
+
+
+
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                  <app-kendo-phone [label]="'AlternatePhone1'" [isEditMode]="false" [phoneControlName]="'altPhone1'"
+                    [phoneExtControlName]="'altPhoneExt1'" [isExtension]="isAltPhoneExt1"></app-kendo-phone>
+                  <!-- <app-kendo-label [label]="'Alternate Phone 1'" [value]="userObject.AlternatePhoneNumber1">
+                      </app-kendo-label> -->
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                  <app-kendo-phone [label]="'AlternatePhone2'" [isEditMode]="false" [phoneControlName]="'altPhone2'"
+                    [phoneExtControlName]="'altPhoneExt2'" [isExtension]="isAltPhoneExt2"></app-kendo-phone>
+                  <!-- <app-kendo-label [label]="'Alternate Phone 2'" [value]="userObject.AlternatePhoneNumber2">
+                      </app-kendo-label> -->
+                </div>
+              </div>
+
+
+
+
+            </div>
+
+
+
+
+          </div>
+        </div>
+
+        <!-- User Defined field -->
+
+        <!-- //!SECTION GENERAL PREFERENCES -->
+        <div class="card" *ngIf="tabList[3].isSelected && !tabList[3].isDisabled">
+          <!-- Card Header Section-->
+          <div class="card__header">
+            <!-- Update Lable -->
+            <h4 class="card__heading">{{ 'GeneralPreferences' | translate}}</h4>
+          </div>
+          <!-- End Card Header Section-->
+
+          <!-- Card Body Section-->
+          <div class="card__body">
+
+            <div class="row">
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                  <app-kendo-label [label]="'LandingPageUponLogin'" [value]="userObject.LandingPageName">
+                  </app-kendo-label>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                  <app-kendo-label [label]="'Language1'" [value]="userObject.UserLanguage">
+                  </app-kendo-label>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                  <app-kendo-label [label]="'TimeZoneId'" [value]="userObject.UserTimezone">
+                  </app-kendo-label>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                  <app-kendo-label [label]="'DateFormat'" [value]="dateFormat">
+                  </app-kendo-label>
+                </div>
+              </div>
+
+            </div>
+
+
+
+
+          </div>
+        </div>
+        <!-- //!SECTION GENERAL PREFERENCES -->
+
+        <!-- System Notification Preference starts-->
+        <!-- <div class="card" *ngIf="TabList[3].isSelected && !TabList[3].isDisabled && userType=='ClientUsers'">
+
+          <div class="card__header">
+            <h4 class="card__heading">{{'SystemNotificationPreferences'| translate}}</h4>
+            <div class="card__header-icon"></div>
+          </div>
+
+          <div class="card__body">
+            <div class="row">
+
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                  <app-kendo-label [label]="'OptOutOfXRMEmailNotifications'" [value]="userObject?.SystemNotificationAllowed ? 'On' : 'Off'">
+                  </app-kendo-label>
+
+                </div>
+              </div>
+
+              <div class="clearfix"></div>
+
+
+              <div *ngIf="userObject?.SystemNotificationAllowed">
+                <div class="col-sm-6 col-md-6">
+                  <div class="form-group">
+                    <app-kendo-label [textContent]="'XRMAutomatedEmailRemindersPreferences'| translate"></app-kendo-label>
+                  </div>
+                </div>
+
+
+                <div class="col-sm-12 col-md-12 list-view form-group grid-border">
+                  <kendo-grid [data]="userObject?.UserNotificationPreferences">
+
+                    <kendo-grid-column title="{{'AutomatedNotifications'| translate}}" media="(min-width: 450px)"
+                      field="AutomatedNotificationOption">
+                      <ng-template kendoGridCellTemplate let-dataItem>
+                        <kendo-label text="{{ dataItem.AutomatedNotificationOption| translate}}">
+                        </kendo-label>
+                      </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column title="{{'EmailNotificationsPreferences'| translate}}" media="(min-width: 450px)"
+                      field="NotificationPreferenceOption">
+                      <ng-template kendoGridCellTemplate let-dataItem>
+                        <kendo-label text="{{ dataItem.NotificationPreferenceOption| translate}}">
+                        </kendo-label>
+                      </ng-template>
+                    </kendo-grid-column>
+                  </kendo-grid>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div> -->
+        <!-- System Notification Preference Ends -->
+
+        <div class="card" *ngIf="(tabList[3].isSelected && !tabList[3].isDisabled) && userObject?.IsSelfRecord">
+          <!-- Card Header Section-->
+          <div class="card__header">
+            <h4 class="card__heading">{{'SecurityQuestion'| translate}}</h4>
+            <div class="card__header-icon">
+              <!-- <button kendoButton fillMode="outline" themeColor="primary">-->
+            </div>
+          </div>
+          <!-- End Card Header Section-->
+
+          <!-- Card Body Section-->
+          <div class="card__body">
+            <grid-view [gridData]="securityQuestionList" [showTabs]="false" [columnOptions]="securityQuestionColumns"
+              [kendoGridSelectedBy]="'UKey'" [isColumnChooserVisible]="false" [pageSize]="pageSize"
+              [isActionColumnVisible]="false" [entityId]="entityId"></grid-view>
+
+          </div>
+          <!-- End Card Body Section-->
+        </div>
+
+        <!-- Proxy User starts -->
+        <div class="card card__remove-widet-card"
+          *ngIf="(tabList[3].isSelected && !tabList[3].isDisabled && userType=='Client')">
+          <!-- Card Header Section-->
+          <div class="card__header">
+            <h4 class="card__heading">{{'ProxyUser'| translate}}</h4>
+          </div>
+          <!-- End Card Header Section-->
+
+          <!-- Card Body Section-->
+          <div class="card__body pt-0">
+            <grid-view [gridData]="proxyUserList" [showTabs]="false" [columnOptions]="columnOptions"
+              [tabOptions]="tabOptions" [kendoGridSelectedBy]="'UKey'" [isColumnChooserVisible]="false"
+              [pageSize]="pageSize" [fileName]="'ProxyUsers'" [isActionColumnVisible]="false"
+              [entityId]="entityId"></grid-view>
+
+          </div>
+          <!-- End Card Body Section-->
+        </div>
+        <!-- Proxy User ends -->
+
+
+
+
+
+
+        <div class="page-footer">
+          <div class="btn-box btn-box--center">
+            <button kendoButton themeColor="primary" (click)="navigate()">
+              {{ !showCardEventLog ? 'Back' : 'Close' | translate }}
+            </button>
+          </div>
+        </div>
+        <ng-container *ngIf="!showCardEventLog">
+          <event-log [entityId]="entityId" [recordId]="recordId"> </event-log>
+        </ng-container>
+      </div>
+    </div>
+
+  </form>
+
+
+</div>

@@ -1,0 +1,530 @@
+<!-- Main Body Section-->
+<div class="app-content__body app-content__kendoexpansion-main">
+    <form [formGroup]="InterviewRequestForm">
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <!-- Start Kendo Expansion Panel -->
+                <kendo-expansionpanel [expanded]="true" class="card">
+                    <ng-template kendoExpansionPanelTitleDirective>
+                        <div (click)="$event.stopPropagation()">
+                            <h4 class="card__heading">Basic Details</h4>
+                        </div>
+                    </ng-template>
+                    <div class="card__body">
+                        <div class="row">
+                            <!-- Input Box Start -->
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'Interview Availability'"
+                                        [value]="'2/2/2024 or later next week'"></app-kendo-label>
+                                </div>
+                            </div>
+                            <!-- Input Box End -->
+
+                            <!-- Input Box Start -->
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'Start Availability'"
+                                        [value]="'4/2/2024'"></app-kendo-label>
+                                </div>
+                            </div>
+                            <!-- Input Box End -->
+
+                        </div>
+                    </div>
+                </kendo-expansionpanel>
+                <!-- End Kendo Expansion Panel -->
+
+                <!-- Start Kendo Expansion Panel -->
+                <kendo-expansionpanel [expanded]="false" class="card">
+                    <ng-template kendoExpansionPanelTitleDirective>
+                        <div (click)="$event.stopPropagation()">
+                            <h4 class="card__heading">Interview Details</h4>
+                        </div>
+                    </ng-template>
+                    <div class="card__body">
+                        <div class="row">
+                            <!-- Input Box Start -->
+                            <div class="col-sm-12 col-md-12 list-view">
+                                <kendo-grid [data]="interviewGridData" [selectable]="selectableSettings"
+                                    [navigable]="false">
+                                    <kendo-grid-column media="(max-width: 920px)" title="Items" class="mobile-view">
+                                        <ng-template kendoGridCellTemplate let-dataItem>
+                                            <!-- template for mobile -->
+                                            <dl>
+                                                <dt>Interview Slot</dt>
+                                                {{ dataItem.interviewSlot }}
+                                            </dl>
+                                            <dl>
+                                                <dt>Interview Type</dt>
+                                                <dd>
+                                                    <app-kendo-dropdown [list]="interviewTypeList"
+                                                        [controlName]="'interviewfieldName'" [placeholder]="'-Select-'">
+                                                    </app-kendo-dropdown>
+                                                </dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>Date</dt>
+                                                <dd>
+                                                    <app-kendo-datepicker [controlName]="'datefieldName'">
+                                                    </app-kendo-datepicker>
+                                                </dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>Start Time</dt>
+                                                <dd>
+                                                    <app-kendo-timepicker
+                                                        [controlName]="'timefieldName'"></app-kendo-timepicker>
+                                                </dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>End Time</dt>
+                                                <dd>
+                                                    <app-kendo-timepicker
+                                                        [controlName]="'timefieldName'"></app-kendo-timepicker>
+                                                </dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>Time Zone</dt>
+                                                <dd>
+                                                    <app-kendo-dropdown [list]="timeZoneTypeList"
+                                                        [controlName]="'timezonefieldName'" [placeholder]="'-Select-'">
+                                                    </app-kendo-dropdown>
+                                                </dd>
+                                            </dl>
+                                            <dl>
+                                                <a href="javascript:;" class="add-more__link red-color">
+                                                    <xrm-icon [name]="'trash-2'" [color]="'red-color'" [size]="16"
+                                                        class="sw-bold"></xrm-icon>
+                                                    Delete </a>
+                                            </dl>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                    <kendo-grid-column media="(max-width: 920px)" [width]="30">
+                                        <ng-template kendoGridHeaderTemplate let-rowIndex="rowIndex">
+                                            <a href="javascript:;" class="add-more__link"><i
+                                                    class="fa-solid fa-plus"></i></a>
+                                        </ng-template>
+                                    </kendo-grid-column>
+
+                                    <kendo-grid-column field="interviewSlot" title="Item #" media="(min-width: 921px)"
+                                        [width]="70">
+                                    </kendo-grid-column>
+                                    <kendo-grid-column [width]="160" field="interviewType" title="Interview Type"
+                                        media="(min-width: 921px)">
+                                        <ng-template kendoGridCellTemplate let-dataItem>
+                                            <app-kendo-dropdown [list]="interviewTypeList"
+                                                [controlName]="'interviewfieldName'" [placeholder]="'-Select-'">
+                                            </app-kendo-dropdown>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                    <kendo-grid-column [width]="160" field="date" title="Date"
+                                        media="(min-width: 921px)">
+                                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                            <app-kendo-datepicker [controlName]="'datefieldName'">
+                                            </app-kendo-datepicker>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                    <kendo-grid-column [width]="160" field="startTime" title="Start Time"
+                                        media="(min-width: 921px)">
+                                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                            <app-kendo-timepicker [controlName]="'timefieldName'">
+                                            </app-kendo-timepicker>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                    <kendo-grid-column [width]="160" field="endTime" title="End Time"
+                                        media="(min-width: 921px)">
+                                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                            <app-kendo-timepicker [controlName]="'endfieldName'">
+                                            </app-kendo-timepicker>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                    <kendo-grid-column [width]="160" field="timeZone" title="Time Zone"
+                                        media="(min-width: 921px)">
+                                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                            <app-kendo-dropdown [list]="timeZoneTypeList"
+                                                [controlName]="'timezonefieldName'" [placeholder]="'-Select-'">
+                                            </app-kendo-dropdown>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                    <kendo-grid-column [width]="100" media="(min-width: 921px)">
+                                        <ng-template kendoGridHeaderTemplate let-rowIndex="rowIndex">
+                                            <a href="javascript:;" class="add-more__link"><i
+                                                    class="fa-solid fa-plus"></i> Add
+                                                More</a>
+                                        </ng-template>
+                                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                            <a href="javascript:;" class="add-more__link red-color"> <xrm-icon
+                                                    [name]="'trash-2'" [color]="'red-color'" [size]="16"
+                                                    class="sw-bold"></xrm-icon> Delete </a>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                </kendo-grid>
+                            </div>
+                            <!-- Input Box End -->
+
+                        </div>
+                    </div>
+                </kendo-expansionpanel>
+                <!-- End Kendo Expansion Panel -->
+
+                <!-- Start Kendo Expansion Panel -->
+                <kendo-expansionpanel [expanded]="false" class="card">
+                    <ng-template kendoExpansionPanelTitleDirective>
+                        <div (click)="$event.stopPropagation()">
+                            <h4 class="card__heading">Interview Details</h4>
+                        </div>
+                    </ng-template>
+                    <div class="card__body">
+                        <div class="row">
+                            <!-- Input Box Start -->
+                            <div class="col-sm-12 col-md-12 list-view">
+                                <kendo-grid [data]="interviewGridData2" [selectable]="selectableSettings"
+                                    [navigable]="false">
+                                    <kendo-grid-column media="(max-width: 920px)" title="Items" class="mobile-view">
+                                        <ng-template kendoGridCellTemplate let-dataItem>
+                                            <!-- template for mobile -->
+                                            <dl>
+                                                <dt>Interview Slot</dt>
+                                                {{ dataItem.interviewSlot }}
+                                            </dl>
+                                            <dl>
+                                                <dt>Interview Type</dt>
+                                                <dd>
+                                                    <app-kendo-dropdown [list]="interviewTypeList"
+                                                        [controlName]="'interviewfieldName'" [placeholder]="'-Select-'">
+                                                    </app-kendo-dropdown>
+                                                </dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>Date</dt>
+                                                <dd>
+                                                    <app-kendo-datepicker [controlName]="'datefieldName'">
+                                                    </app-kendo-datepicker>
+                                                </dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>Start Time</dt>
+                                                <dd>
+                                                    <app-kendo-timepicker
+                                                        [controlName]="'timefieldName'"></app-kendo-timepicker>
+                                                </dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>End Time</dt>
+                                                <dd>
+                                                    <app-kendo-timepicker
+                                                        [controlName]="'timefieldName'"></app-kendo-timepicker>
+                                                </dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>Time Zone</dt>
+                                                <dd>
+                                                    <app-kendo-dropdown [list]="timeZoneTypeList"
+                                                        [controlName]="'timezonefieldName'" [placeholder]="'-Select-'">
+                                                    </app-kendo-dropdown>
+                                                </dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>Confirmation</dt>
+                                                <dd>
+                                                    <app-kendo-switch [controlName]="'visibleconfirmationfieldName'"
+                                                        [onLabel]="'Yes'" [offLabel]="'No'">
+                                                    </app-kendo-switch>
+                                                </dd>
+                                            </dl>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                    <kendo-grid-column media="(max-width: 920px)" [width]="30">
+                                        <ng-template kendoGridHeaderTemplate let-rowIndex="rowIndex">
+                                            <a href="javascript:;" class="add-more__link"><i
+                                                    class="fa-solid fa-plus"></i></a>
+                                        </ng-template>
+                                    </kendo-grid-column>
+
+                                    <kendo-grid-column field="interviewSlot" title="Item #" media="(min-width: 921px)"
+                                        [width]="70">
+                                    </kendo-grid-column>
+                                    <kendo-grid-column [width]="160" field="interviewType" title="Interview Type"
+                                        media="(min-width: 921px)">
+                                        <ng-template kendoGridCellTemplate let-dataItem>
+                                            <app-kendo-dropdown [list]="interviewTypeList"
+                                                [controlName]="'interviewfieldName'" [placeholder]="'-Select-'">
+                                            </app-kendo-dropdown>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                    <kendo-grid-column [width]="160" field="date" title="Date"
+                                        media="(min-width: 921px)">
+                                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                            <app-kendo-datepicker [controlName]="'datefieldName'">
+                                            </app-kendo-datepicker>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                    <kendo-grid-column [width]="160" field="startTime" title="Start Time"
+                                        media="(min-width: 921px)">
+                                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                            <app-kendo-timepicker [controlName]="'timefieldName'">
+                                            </app-kendo-timepicker>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                    <kendo-grid-column [width]="160" field="endTime" title="End Time"
+                                        media="(min-width: 921px)">
+                                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                            <app-kendo-timepicker [controlName]="'endfieldName'">
+                                            </app-kendo-timepicker>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                    <kendo-grid-column [width]="160" field="timeZone" title="Time Zone"
+                                        media="(min-width: 921px)">
+                                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                            <app-kendo-dropdown [list]="timeZoneTypeList"
+                                                [controlName]="'timezonefieldName'" [placeholder]="'-Select-'">
+                                            </app-kendo-dropdown>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                    <kendo-grid-column [width]="100" media="(min-width: 921px)">
+                                        <ng-template kendoGridHeaderTemplate let-rowIndex="rowIndex">
+                                            Confirmation
+                                        </ng-template>
+                                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                            <app-kendo-switch [controlName]="'visibleconfirmationfieldName'"
+                                                [onLabel]="'Yes'" [offLabel]="'No'">
+                                            </app-kendo-switch>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                </kendo-grid>
+                            </div>
+                            <!-- Input Box End -->
+
+                        </div>
+                    </div>
+                </kendo-expansionpanel>
+                <!-- End Kendo Expansion Panel -->
+
+                <!-- Start Kendo Expansion Panel -->
+                <kendo-expansionpanel [expanded]="false" class="card">
+                    <ng-template kendoExpansionPanelTitleDirective>
+                        <div (click)="$event.stopPropagation()">
+                            <h4 class="card__heading">Alternate Schedule</h4>
+                        </div>
+                    </ng-template>
+                    <div class="card__body">
+                        <div class="row">
+                            <!-- Input Box Start -->
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-switch [controlName]="'addalternateslotsfieldName'"
+                                        [label]="'Add Alternate Slots'"
+                                        (onChangeSwitch)="addAlternateSlotsModel($event)" [onLabel]="'Yes'"
+                                        [offLabel]="'No'">
+                                    </app-kendo-switch>
+                                </div>
+                            </div>
+
+                            <!-- Input Box Start -->
+                            <div class="col-sm-12 col-md-12 list-view">
+                                <kendo-grid [data]="interviewGridData" [selectable]="selectableSettings"
+                                    [navigable]="false">
+                                    <kendo-grid-column media="(max-width: 920px)" title="Items" class="mobile-view">
+                                        <ng-template kendoGridCellTemplate let-dataItem>
+                                            <!-- template for mobile -->
+                                            <dl>
+                                                <dt>Interview Slot</dt>
+                                                {{ dataItem.interviewSlot }}
+                                            </dl>
+                                            <dl>
+                                                <dt>Interview Type</dt>
+                                                <dd>
+                                                    <app-kendo-dropdown [list]="interviewTypeList"
+                                                        [controlName]="'interviewfieldName'" [placeholder]="'-Select-'">
+                                                    </app-kendo-dropdown>
+                                                </dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>Date</dt>
+                                                <dd>
+                                                    <app-kendo-datepicker [controlName]="'datefieldName'">
+                                                    </app-kendo-datepicker>
+                                                </dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>Start Time</dt>
+                                                <dd>
+                                                    <app-kendo-timepicker
+                                                        [controlName]="'timefieldName'"></app-kendo-timepicker>
+                                                </dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>End Time</dt>
+                                                <dd>
+                                                    <app-kendo-timepicker
+                                                        [controlName]="'timefieldName'"></app-kendo-timepicker>
+                                                </dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>Time Zone</dt>
+                                                <dd>
+                                                    <app-kendo-dropdown [list]="timeZoneTypeList"
+                                                        [controlName]="'timezonefieldName'" [placeholder]="'-Select-'">
+                                                    </app-kendo-dropdown>
+                                                </dd>
+                                            </dl>
+                                            <dl>
+                                                <a href="javascript:;" class="add-more__link red-color">
+                                                    <xrm-icon [name]="'trash-2'" [color]="'red-color'" [size]="16"
+                                                        class="sw-bold"></xrm-icon>
+                                                    Delete </a>
+                                            </dl>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                    <kendo-grid-column media="(max-width: 920px)" [width]="30">
+                                        <ng-template kendoGridHeaderTemplate let-rowIndex="rowIndex">
+                                            <a href="javascript:;" class="add-more__link"><i
+                                                    class="fa-solid fa-plus"></i></a>
+                                        </ng-template>
+                                    </kendo-grid-column>
+
+                                    <kendo-grid-column field="interviewSlot" title="Item #" media="(min-width: 921px)"
+                                        [width]="70">
+                                    </kendo-grid-column>
+                                    <kendo-grid-column [width]="160" field="interviewType" title="Interview Type"
+                                        media="(min-width: 921px)">
+                                        <ng-template kendoGridCellTemplate let-dataItem>
+                                            <app-kendo-dropdown [list]="interviewTypeList"
+                                                [controlName]="'interviewfieldName'" [placeholder]="'-Select-'">
+                                            </app-kendo-dropdown>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                    <kendo-grid-column [width]="160" field="date" title="Date"
+                                        media="(min-width: 921px)">
+                                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                            <app-kendo-datepicker [controlName]="'datefieldName'">
+                                            </app-kendo-datepicker>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                    <kendo-grid-column [width]="160" field="startTime" title="Start Time"
+                                        media="(min-width: 921px)">
+                                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                            <app-kendo-timepicker [controlName]="'timefieldName'">
+                                            </app-kendo-timepicker>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                    <kendo-grid-column [width]="160" field="endTime" title="End Time"
+                                        media="(min-width: 921px)">
+                                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                            <app-kendo-timepicker [controlName]="'endfieldName'">
+                                            </app-kendo-timepicker>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                    <kendo-grid-column [width]="160" field="timeZone" title="Time Zone"
+                                        media="(min-width: 921px)">
+                                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex" let-dataItem>
+                                            <app-kendo-dropdown [list]="timeZoneTypeList"
+                                                [controlName]="'timezonefieldName'" [placeholder]="'-Select-'">
+                                            </app-kendo-dropdown>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                    <kendo-grid-column [width]="100" media="(min-width: 921px)">
+                                        <ng-template kendoGridHeaderTemplate let-rowIndex="rowIndex">
+                                            <a href="javascript:;" class="add-more__link"><i
+                                                    class="fa-solid fa-plus"></i> Add
+                                                More</a>
+                                        </ng-template>
+                                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                            <a href="javascript:;" class="add-more__link red-color"> <xrm-icon
+                                                    [name]="'trash-2'" [color]="'red-color'" [size]="16"
+                                                    class="sw-bold"></xrm-icon> Delete </a>
+                                        </ng-template>
+                                    </kendo-grid-column>
+                                </kendo-grid>
+                            </div>
+                            <!-- Input Box End -->
+                        </div>
+                    </div>
+                </kendo-expansionpanel>
+                <!-- End Kendo Expansion Panel -->
+
+                <!-- Start Kendo Expansion Panel -->
+                <kendo-expansionpanel [expanded]="false" class="card">
+                    <ng-template kendoExpansionPanelTitleDirective>
+                        <div (click)="$event.stopPropagation()">
+                            <h4 class="card__heading">Additional Details</h4>
+                        </div>
+                    </ng-template>
+                    <div class="card__body">
+                        <div class="row">
+                            <!-- Input Box Start -->
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group mb-4">
+                                    <app-kendo-textarea [controlName]="'AdditionalinterviewfieldName'"
+                                        [placeholder]="'(Please list who will conduct the interview, Directions to Location, Phone Number to call, Items to bring, etc.)'"
+                                        [label]="'Additional Interview Details'">
+                                    </app-kendo-textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </kendo-expansionpanel>
+                <!-- End Kendo Expansion Panel -->
+
+                <!-- Start Kendo Expansion Panel -->
+                <kendo-expansionpanel [expanded]="false" class="card">
+                    <ng-template kendoExpansionPanelTitleDirective>
+                        <div (click)="$event.stopPropagation()">
+                            <h4 class="card__heading">Comments</h4>
+                        </div>
+                    </ng-template>
+                    <div class="card__body">
+                        <div class="row">
+                            <!-- Input Box Start -->
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group mb-4">
+                                    <app-kendo-textarea [controlName]="'CommentsfieldName'" [label]="''">
+                                    </app-kendo-textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </kendo-expansionpanel>
+                <!-- End Kendo Expansion Panel -->
+
+                <!-- Start Kendo Expansion Panel -->
+                <kendo-expansionpanel [expanded]="false" class="card">
+                    <ng-template kendoExpansionPanelTitleDirective>
+                        <div (click)="$event.stopPropagation()">
+                            <h4 class="card__heading">Staffing Comments</h4>
+                        </div>
+                    </ng-template>
+                    <div class="card__body">
+                        <div class="row">
+                            <!-- Input Box Start -->
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group mb-4">
+                                    <app-kendo-textarea [controlName]="'StaffingCommentsfieldName'" [label]="''">
+                                    </app-kendo-textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </kendo-expansionpanel>
+                <!-- End Kendo Expansion Panel -->
+
+            </div>
+        </div>
+
+
+        <div class="page-footer">
+            <div class="btn-box btn-box--center">
+                <button kendoButton fillMode="outline" themeColor="primary" (click)="navigateBack()">Cancel </button>
+                <button kendoButton fillMode="outline" themeColor="primary" (click)="cancelInterview()">Cancel Interview
+                </button>
+                <button kendoButton fillMode="solid" href="javascript:;" themeColor="primary"
+                    (click)="candidateNotAvailable()">Candidate Not Available</button>
+                <button kendoButton href="javascript:;" themeColor="primary" (click)="submitForm()">Submit</button>
+            </div>
+        </div>
+
+    </form>
+</div>

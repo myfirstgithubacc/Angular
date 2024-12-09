@@ -1,0 +1,11 @@
+<div class="kendo__stepper-custom" [ngClass]="isOptional ? '' : 'xrm-stepper-pointer'">
+
+  <kendo-stepper [steps]="localizeStepLabels()" stepType="label" [currentStep]="currentStep" [linear]="false" (currentStepChange)="onStepChanged($event)" 
+  (completed)="onComplete($event)" (canceled)="onCancel($event)" (activate)="onActivate($event)">
+  <ng-template kendoStepperLabelTemplate let-step>
+    <span class="step-progress"></span>
+    <span>{{ step.label | translate }}</span>                    
+    </ng-template>
+  </kendo-stepper> 
+
+</div>

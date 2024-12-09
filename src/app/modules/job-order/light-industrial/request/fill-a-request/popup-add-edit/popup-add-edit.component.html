@@ -1,0 +1,179 @@
+<h3 *ngIf="!isNewCandidate" class="dailog__title">{{'SubmitExistingCandidate' | translate}}</h3>
+<h3 *ngIf="isNewCandidate" class="dailog__title">{{'FillNewCandidate' | translate}}</h3>
+<form [formGroup]="candidateForm">
+    <div class="body">
+        <div class="right3-card">
+            <div class="alert__toast--fixed2">
+                <app-toaster [isOnComponent]="true"></app-toaster>
+            </div>
+            <div *ngIf="!isNewCandidate" class="card__header pl-0">
+                <h4 *ngIf="candidatePoolDetails" class="card__heading">{{candidatePoolDetails?.CandidateName}}
+                    ({{candidatePoolDetails?.Code}})</h4>
+                <h4 *ngIf="candidateDetails" class="card__heading">{{candidateDetails?.FullName}}
+                    ({{candidateDetails?.CandidatePoolCode}})</h4>
+
+            </div>
+            <!-- First Card Section-->
+            <div class="card">
+                <!-- Card Header Section-->
+                <div class="card__header">
+                    <h4 class="card__heading">{{'RequestDetails' | translate}}</h4>
+                    <div class="card__header-icon">
+                    </div>
+                </div>
+                <!-- End Card Header Section-->
+
+                <!-- Card Body Section-->
+                <div class="card__body">
+                    <div class="row">
+                        <div *ngIf="isNewCandidate" class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <kendo-label text="{{'CandidateName' | translate}}"> <xrm-icon name="star" class="required"></xrm-icon>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <app-textbox [controlName]="'lastName'" [maxCharacters]="50"
+                                                [isSpecialCharacterAllowed]="true"
+                                                [placeholder]="'LastName'"></app-textbox>
+                                        </div>
+                                        <div class="col-4">
+                                            <app-textbox [controlName]="'firstName'" [maxCharacters]="50"
+                                                [isSpecialCharacterAllowed]="true"
+                                                [placeholder]="'FirstName'"></app-textbox>
+                                        </div>
+                                        <div class="col-4">
+                                            <app-textbox [controlName]="'middleName'" [maxCharacters]="50"
+                                                [isSpecialCharacterAllowed]="true"
+                                                [placeholder]="'MiddleInitial'"></app-textbox>
+                                        </div>
+                                    </div>
+                                </kendo-label>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-datepicker [label]="'ScheduleStartDate'" [controlName]="'scheduleStartDate'"
+                                    [isEditMode]="isScheduleStartDateReadable" [isRequired]="true"
+                                    (onChange)="onScheduleStartDateChange()"></app-kendo-datepicker>
+                            </div>
+                        </div>
+
+                        <div *ngIf="isNewCandidate || isExistingCandidate" class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-textbox appNoSpace [label]="uIdConfigLabelName" [controlName]="'uId'"
+                                    [isEditMode]="assignmentRate > 0" [isRequired]="true"
+                                    [isSpecialCharacterAllowed]="false" [maxCharacters]="uIdMaxCharecters"
+                                    [tooltipTitle]="uIdConfigTooltip" [tooltipVisible]="uIdConfigTooltip ? true : false"
+                                    (onChangeTextBox)="sanitizeUIDInputBasedOnConfig($event)">
+                                </app-textbox>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-radio-button
+                                    *ngIf="allowSelectionPayRate && assignmentRate > 0 && assignmentRate != baseWageRate"
+                                    [controlName]="'baseWageRate'" [RadioGroup]="radioValueWageRate" [name]="'WageRate'"
+                                    [label]="'BaseWageRate'" [labelLocalizeParam]="localizeCurrency"
+                                    [tooltipVisible]="true" [tooltipTitle]="'FillARequestBaseWageRateTooptip'"
+                                    [isRequired]="true">
+                                </app-kendo-radio-button>
+                                <app-kendo-label
+                                    *ngIf="!(allowSelectionPayRate && assignmentRate > 0 && assignmentRate != baseWageRate)"
+                                    [label]="'BaseWageRate'" [labelLocalizeParam]="localizeCurrency" [isNumber]="true"
+                                    [value]="baseWageRate" [tooltipVisible]="true"
+                                    [tooltipTitle]="'FillARequestBaseWageRateTooptip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6" [hidden]="isMarkupVisible">
+                            <div class="form-group">
+                                <app-numeric-box [label]="'SubmittedMarkupPer'" [controlName]="'submittedMarkup'"
+                                    [placeholder]="'0.000'" format="n3" [min]="0" [maxlength]="6" [decimals]="3"
+                                    [isRequired]="true" (onNumericChange)="getRateValue($event)">
+                                </app-numeric-box>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'StaffingAgencySTBill'"
+                                    [labelLocalizeParam]="localizeCurrency" [isNumber]="true"
+                                    [value]="candidateForm.get('vendorSTBillRate')?.value">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <app-benefit-adder *ngIf="requestId" [reqLibraryId]="reqLibraryId" [isCreate]="isEditMode"
+                            [requestId]="requestId" [entityId]="entityIdBenefitAdder" [sectorId]="sectorId"
+                            [locationId]="locationId" (onDataPicked)="getBenefitAdderData($event)"></app-benefit-adder>
+                    </div>
+                </div>
+            </div>
+            <!-- First Card Section End -->
+
+            <!-- Second Card Section-->
+            <ng-container *ngIf="sectorId > 0">
+                <app-onboarding-requirements #onboarding [entityId]="entityIdOnboarding" [recordId]="recordId"
+                    [sectorId]="sectorId" [locationId]="locationId" [actionTypeId]="actionTypeId"
+                    [isDrugScreen]="isDrugScreen" [isBackgroundCheck]="isBackgroundCheck"
+                    [isPendingResultSection]="isPendingResultSection" [parentInfosDrugScreen]="parentInfosDrugScreen"
+                    [parentInfosBackgroundCheck]="parentInfosBackgroundCheck" (onDataPicked)="getOnboardingData($event)">
+                </app-onboarding-requirements>
+            </ng-container>
+            <!-- Second Card Section End -->
+
+            <!-- Forth Card Section-->
+            <div class="card" [hidden]="!hasUdfData">
+                <div class="card__header">
+                    <h4 class="card__heading">{{'OtherDetailsUDFs' | translate}}</h4>
+                    <div class="card__header-icon">
+                    </div>
+                </div>
+                <app-udf-implementation [entityId]="entityIdCandidate" [sectorId]="sectorId"
+                    [recordUKey]="candidateUkey" [recordId]="actionTypeId == 1 ? 0 :recordId" [showTitle]="false"
+                    [actionTypeId]="actionTypeId" [parentsInfos]="udfCommonMethods.getParentsInfo()"
+                    (onDataPicked)="getUdfData($event)" (hasUDFLength)="getUdfLength($event)">
+                </app-udf-implementation>
+            </div>
+            <!-- Forth Card Section End -->
+
+            <!-- Third Card Section-->
+            <div class="card fill-request-addedit-popup" [hidden]="!hasDmsData">
+                <!-- Card Header Section-->
+                <div class="card__header">
+                    <h4 class="card__heading">{{'DocumentUpload' | translate}}</h4>
+                    <div class="card__header-icon">
+                    </div>
+                </div>
+                <!-- dms section -->
+                <ng-container>
+                    <app-dms-implementation #dms [workFlowId]="entityIdCandidate"
+                        [additionalWorkFlows]="additionalWorkFlows" [sectorId]="sectorId"
+                        [uploadStageId]="uploadStageId" [actionTypeId]="actionTypeId" [recordId]="recordId"
+                        [showTitle]="false" (gridChange)="onGridChange()"
+                        [isTransactionScreen]="true" (hasDMSLength)="getDmsLength($event)">
+                    </app-dms-implementation>
+                </ng-container>
+                <!-- end dms section -->
+            </div>
+            <!-- Third Card Section End -->
+
+            <!-- Footer Section-->
+            <div class="page-footer">
+                <button type="button" kendoButton x themeColor="primary" fillMode="outline" (click)="onCancel()">
+                    {{'Cancel' | translate}}
+                </button>
+                <button type="button" kendoButton x themeColor="primary" appFocusOnError [formName]="candidateForm"
+                    (click)="submitCandidateForm()"
+                    [disabled]="isEditMode ? (candidateForm.pristine && !widgetChangeDetected) :false">{{'SubmitforPosition'
+                    | translate}}
+                </button>
+            </div>
+            <!-- End Footer Section-->
+        </div>
+    </div>
+</form>

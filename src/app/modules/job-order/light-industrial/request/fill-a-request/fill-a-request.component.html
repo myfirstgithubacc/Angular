@@ -1,0 +1,212 @@
+<div class="app-content__body fill-request-layout__main">
+    <form [formGroup]="fillCandidateForm">
+        <div class="row LI-industrial__expansion">
+            <div class="col-md-12">
+                <kendo-expansionpanel [expanded]="false" class="card card--inverse">
+                    <ng-template kendoExpansionPanelTitleDirective>
+                        <h4 class="card__heading">Job Details</h4>
+                        <div class="card__header-icon">
+                            <div class="card__header-icon--error">
+                                <xrm-icon name="alert-triangle" color="red-color" [size]="18"
+                                    class="sw-bold"></xrm-icon>
+                            </div>
+
+                        </div>
+                    </ng-template>
+                    <div class="card__body">
+                        <div class="card__body--inner-wrapper">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12">
+                                    <table class="table" aria-describedby="job details">
+                                        <colgroup>
+                                            <col style="width:30%">
+                                            <col style="width:70%">
+                                        </colgroup>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="col">{{'RequestId' | translate}}</th>
+                                                <td>{{liRequestDetails?.RequestCode}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col">{{'SubmissionDate' | translate}}</th>
+                                                <td>{{submissionDate}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col">{{'Sector' | translate}}</th>
+                                                <td>{{liRequestDetails?.SectorName}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col">{{'Location' | translate}}</th>
+                                                <td>{{liRequestDetails?.WorkLocationName}} <br>
+                                                    <span class="achor__text">
+                                                        {{liRequestDetails?.LocationAddress}}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col">{{'LaborCategory' | translate}}</th>
+                                                <td>{{liRequestDetails?.LaborCategoryName}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col">{{'JobCategory' | translate}}</th>
+                                                <td>{{liRequestDetails?.JobCategoryName}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col">{{'Shift' | translate}}</th>
+                                                <td>{{liRequestDetails?.RequestShiftDetailGetAllDto?.ShiftName}} <br>
+                                                    <div class="dropdown__shift-range">
+                                                        <div class="form-group mb-0">
+                                                            <div class="dropdown__shift-range--input">
+                                                                <div class="achor__text">
+                                                                    <app-weekday-picker [dayInfo]="daysInfo"
+                                                                        [isWeekdayEditMode]="false"
+                                                                        [timeRangeProperties]="timeRange"
+                                                                        [isReadonly]="false" [timeFormat]="'hh:mm a'"
+                                                                        [startTimeControlName]="'startTimeControlName'"
+                                                                        [endTimeControlName]="'endTimeControlName'"></app-weekday-picker>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col">{{'HourDistribution' | translate}}</th>
+                                                <td>{{liRequestDetails?.HourDistributionRuleName}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col">{{'NoofContractorFillReq' | translate}}</th>
+                                                <td>{{liRequestDetails?.NoOfContractorFilled}}/{{liRequestDetails?.PositionNeeded}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col">{{'AwaitingConfirmation' | translate}}</th>
+                                                <td>{{liRequestDetails?.AwaitingConfirmation}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col">{{'PositionDescription' | translate}}</th>
+                                                <td>
+                                                    <app-kendo-label [allowMultilineText]="true" class="data-answere"
+                                                        [value]="liRequestDetails?.PositionDescription">
+                                                    </app-kendo-label>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </kendo-expansionpanel>
+
+                <kendo-expansionpanel [expanded]="isPanelOpen" class="card card--inverse">
+                    <ng-template kendoExpansionPanelTitleDirective>
+                        <h4 class="card__heading">Position Details</h4>
+                        <div class="card__header-icon">
+                            <div class="card__header-icon--error">
+                                <xrm-icon name="alert-triangle" color="red-color" [size]="18"
+                                    class="sw-bold"></xrm-icon>
+                            </div>
+                        </div>
+
+                    </ng-template>
+                    <div class="card__body">
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <div
+                                    [ngClass]="{'list-view': true, 'list-view-vertical-scrolling': contractorGridData.length > 5}">
+                                    <div class="fill-request-layout__list-grid">
+                                        <app-list-view [columnData]="positionGridColumns"
+                                            [columnConfigure]="positionColumnConfiguration"
+                                            [populatedData]="contractorGridData"
+                                            (actionEvent)="actionClicked($event)"></app-list-view>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </kendo-expansionpanel>
+
+                <kendo-expansionpanel [expanded]="isPanelOpen2" class="card card--inverse">
+                    <ng-template kendoExpansionPanelTitleDirective>
+                        <h4 class="card__heading">{{'ManagerComments' | translate}}</h4>
+                        <div class="card__header-icon">
+                            <div class="card__header-icon--error">
+                                <xrm-icon name="alert-triangle" color="red-color" [size]="18"
+                                    class="sw-bold"></xrm-icon>
+                            </div>
+
+                        </div>
+                    </ng-template>
+                    <div class="card__body">
+                        <div class="card__body--inner-wrapper">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                    <app-kendo-label [label]="'ManagerCommentstoStaffingAgency'" 
+                                        [value]="liRequestDetails?.ManagerCommentsToStaffingAgency">
+                                    </app-kendo-label>
+                                </div>
+                            </div>
+                               
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                    <app-multi-level-comments *ngIf="broadcastComments?.length"
+                                                [label]="'PreviousBroadcastComments'" [allComments]="broadcastComments"
+                                                [dateKey]="'BroadcastedOnDate'"
+                                                [commentsKey]="'Comments'">
+                                    </app-multi-level-comments>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </kendo-expansionpanel>
+
+                <kendo-expansionpanel [expanded]="isPanelOpen3" class="card card--inverse" [hidden]="!hasDmsData">
+                    <ng-template kendoExpansionPanelTitleDirective>
+                        <h4 class="card__heading">{{'Documents' | translate}}</h4>
+                        <div class="card__header-icon">
+                            <div class="card__header-icon--error">
+                                <xrm-icon name="alert-triangle" color="red-color" [size]="18"
+                                    class="sw-bold"></xrm-icon>
+                            </div>
+
+                        </div>
+                    </ng-template>
+                    <div class="card__body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12">
+                                <div class="col-sm-12 col-md-12 list-view third-lavel-grid staf-list">
+                                    <div class="form-group">
+                                        <ng-container>
+                                            <app-dms-implementation #dms [workFlowId]="entityId"
+                                                [userGroupId]="userGroupId" [sectorId]="sectorId"
+                                                (hasDMSLength)="getdmslength($event)" [uploadStageId]="uploadStageId"
+                                                [actionTypeId]="actionTypeId" [recordId]="recordId" [showTitle]="false">
+                                            </app-dms-implementation>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </kendo-expansionpanel>
+
+                <div class="page-footer text-end">
+                    <button type="button" kendoButton x themeColor="primary" fillMode="outline"
+                        (click)="cancelForm()">Cancel
+                    </button>
+                    <ng-container *ngIf="liRequestDetails?.IsAllowedToFill">
+                        <button type="button" kendoButton x themeColor="primary" [disabled]="!isSubmitBtnDisable"
+                            (click)="submitForm()">Submit 
+                        </button>
+                    </ng-container>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+<app-popup-position-view></app-popup-position-view>

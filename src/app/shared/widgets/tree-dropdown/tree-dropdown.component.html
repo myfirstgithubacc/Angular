@@ -1,0 +1,8 @@
+<form [formGroup]="treeDropdownForm">
+  <app-kendo-dropdown [isRequired]="true" [list]="drpList" [controlName]="'Dropdown'" [label]="labels.drpLabel"
+    [placeholder]="'DdlSelect'" (onChange)="drpChanged($event)"></app-kendo-dropdown>
+
+  <app-tree-view *ngIf="treeValues" [data]="treeValues" [isFiltered]="false" [tooltipVisible]="isTooltipVisibile"
+    [tooltipTitle]="tooltipTitle|translate" [label]="labels.treeLabel|translate"></app-tree-view>
+
+</form>

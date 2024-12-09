@@ -1,0 +1,216 @@
+<div *ngIf="isExpandedDetails" class="offcanvas offcanvas-end time-details-popup show" tabindex="-1" id="viewDetails"
+    aria-labelledby="viewDetails">
+    <div class="offcanvas-header">
+        <h5>{{'ExpandedTimesheetDetails' | translate }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"
+            (click)="closePopup()"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="card mt-3">
+            <div class="card__header">
+                <h4 class="card__heading">{{periodHeading}}</h4>
+                <div class="card__header-icon">
+                    <div class="form-group text-end mb-1">
+                        <kendo-label class="kendo-label__change kendo-label__change--all"
+                            [text]="showBillRateWithCurrency">
+                            <kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [(ngModel)]="isDisabled"></kendo-switch>
+                        </kendo-label>
+                    </div>
+                </div>
+            </div>
+            <div class="card__body">
+                <div class="list-view">
+                    <ng-template #template let-anchor>
+                        <span>{{ anchor.nativeElement.innerText }}</span>
+                    </ng-template>
+                    <div kendoTooltip [tooltipTemplate]="template" filter=".k-grid td"
+                        (mouseover)="showTooltip($event)">
+                        <kendo-grid #grid
+                            [kendoGridBinding]="getTimeEntryDetailsData.length > magicNumber.zero ? getTimeEntryDetailsData : []"
+                            [resizable]="true">
+                            <kendo-grid-column media="(max-width: 920px)">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    <dl>
+                                        <dt>{{"Date" | translate}}</dt>
+                                        <dd>{{ dataItem?.Date | date: dateFormat }}</dd>
+
+                                        <dt>{{"CostAccountingCode" | translate}}</dt>
+                                        <dd>{{ dataItem?.CostAccountingCodeName}}</dd>
+
+                                        <dt>{{"IsAllowManualShift" | translate}}</dt>
+                                        <dd>{{ dataItem?.ShiftName }}</dd>
+
+                                        <dt>{{'ST' | translate}}</dt>
+                                        <dd>
+                                            <p>
+                                                <span><strong>{{'Hours' | translate}}</strong> : {{
+                                                    dataItem?.StHour?.toFixed(magicNumber.two) }}</span> ,
+                                                <span *ngIf="isDisabled"><strong>{{'ShowRate' | translate}}</strong> :
+                                                    {{ dataItem?.StRate }}</span>
+                                            </p>
+                                        </dd>
+
+                                        <dt>{{'OT' | translate}}</dt>
+                                        <dd>
+                                            <p>
+                                                <span><strong>{{'Hours' | translate}}</strong> : {{
+                                                    dataItem?.OtHour?.toFixed(magicNumber.two) }}</span> ,
+                                                <span *ngIf="isDisabled"><strong>{{'ShowRate' | translate}}</strong> :
+                                                    {{ dataItem?.OtRate }}</span>
+                                            </p>
+                                        </dd>
+
+                                        <dt>{{'DT' | translate}}</dt>
+                                        <dd>
+                                            <p>
+                                                <span><strong>{{'Hours' | translate}}</strong> : {{
+                                                    dataItem?.DtHour?.toFixed(magicNumber.two) }}</span> ,
+                                                <span *ngIf="isDisabled"><strong>{{'ShowRate' | translate}}</strong> :
+                                                    {{ dataItem?.DtRate }}</span>
+                                            </p>
+                                        </dd>
+
+                                        <ng-container *ngIf="isPenaltyApplied">
+                                            <dt>{{'PT' | translate}}</dt>
+                                            <dd>
+                                                <p>
+                                                    <span><strong>{{'Hours' | translate}}</strong> : {{
+                                                        dataItem?.PtHour?.toFixed(magicNumber.two) }}</span> ,
+                                                    <span *ngIf="isDisabled"><strong>{{'ShowRate' | translate}}</strong>
+                                                        :
+                                                        {{ dataItem?.PtRate }}</span>
+                                                </p>
+                                            </dd>
+                                        </ng-container>
+
+                                        <dt>{{'TotalHours' | translate}}</dt>
+                                        <dd>{{ dataItem?.TotalHours.toFixed(magicNumber.two) }}</dd>
+
+                                        <dt>{{estimatedCostWithCurrency}}</dt>
+                                        <dd>{{ dataItem?.EstimatedCost.toFixed(magicNumber.two) }}</dd>
+                                    </dl>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column media="(min-width: 921px)" field="Date" [title]="'Date' | translate"
+                                [width]="magicNumber.Ninety">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    <span>{{ dataItem?.Date | date: dateFormat}}</span>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column media="(min-width: 921px)" field="CostAccountingCodeName"
+                                [title]="'CostAccountingCode' | translate" [width]="magicNumber.twoHundred">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    <span>{{ dataItem?.CostAccountingCodeName}}</span>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column media="(min-width: 921px)" field="ShiftName"
+                                [title]="'IsAllowManualShift' | translate" [width]="magicNumber.hundred">
+                                <ng-template kendoGridFooterTemplate>
+                                    <div class="text-end total-amount">
+                                        <strong>{{'Total' | translate}}</strong>
+                                        <!-- <span class="amount-divider">|</span> -->
+                                    </div>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column-group title="ST">
+                                <kendo-grid-column media="(min-width: 921px)" field="StHour"
+                                    [title]="'Hours'  | translate" [width]="magicNumber.sixty">
+                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                        <span>{{ dataItem?.StHour?.toFixed(magicNumber.two)}}</span>
+                                    </ng-template>
+                                    <ng-template kendoGridFooterTemplate>
+                                        <strong>{{stTotal.toFixed(magicNumber.two)}}</strong>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column media="(min-width: 921px)" field="StRate"
+                                    [title]="'ShowRate' | translate" headerClass="rateClass" [width]="magicNumber.sixty"
+                                    *ngIf="isDisabled">
+                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                        <span>{{ dataItem?.StRate?.toFixed(magicNumber.two)}}</span>
+                                    </ng-template>
+                                </kendo-grid-column>
+                            </kendo-grid-column-group>
+                            <kendo-grid-column-group title="OT">
+                                <kendo-grid-column media="(min-width: 921px)" field="OtHour"
+                                    [title]="'Hours' | translate" [width]="magicNumber.sixty">
+                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                        <span>{{ dataItem?.OtHour?.toFixed(magicNumber.two)}}</span>
+                                    </ng-template>
+                                    <ng-template kendoGridFooterTemplate>
+                                        <strong>{{otTotal.toFixed(magicNumber.two)}}</strong>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column media="(min-width: 921px)" field="OtRate"
+                                    [title]="'ShowRate' | translate" headerClass="rateClass" [width]="magicNumber.sixty"
+                                    *ngIf="isDisabled">
+                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                        <span>{{ dataItem?.OtRate?.toFixed(magicNumber.two)}}</span>
+                                    </ng-template>
+                                </kendo-grid-column>
+                            </kendo-grid-column-group>
+                            <kendo-grid-column-group title="DT">
+                                <kendo-grid-column media="(min-width: 921px)" field="DtHour"
+                                    [title]="'Hours' | translate" [width]="magicNumber.sixty">
+                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                        <span>{{ dataItem?.DtHour?.toFixed(magicNumber.two)}}</span>
+                                    </ng-template>
+                                    <ng-template kendoGridFooterTemplate>
+                                        <strong>{{dtTotal.toFixed(magicNumber.two)}}</strong>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column media="(min-width: 921px)" field="DtRate"
+                                    [title]="'ShowRate' | translate" headerClass="rateClass" [width]="magicNumber.sixty"
+                                    *ngIf="isDisabled">
+                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                        <span>{{ dataItem?.DtRate?.toFixed(magicNumber.two)}}</span>
+                                    </ng-template>
+                                </kendo-grid-column>
+                            </kendo-grid-column-group>
+                            <kendo-grid-column-group title="PT" *ngIf="isPenaltyApplied">
+                                <kendo-grid-column media="(min-width: 921px)" field="PtHour"
+                                    [title]="'Hours' | translate" [width]="magicNumber.sixty">
+                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                        <span>{{ dataItem?.PtHour?.toFixed(magicNumber.two)}}</span>
+                                    </ng-template>
+                                    <ng-template kendoGridFooterTemplate>
+                                        <strong>{{ptTotal.toFixed(magicNumber.two)}}</strong>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column media="(min-width: 921px)" field="PtRate"
+                                    [title]="'ShowRate' | translate" headerClass="rateClass" [width]="magicNumber.sixty"
+                                    *ngIf="isDisabled">
+                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                        <span>{{ dataItem?.PtRate?.toFixed(magicNumber.two)}}</span>
+                                    </ng-template>
+                                </kendo-grid-column>
+                            </kendo-grid-column-group>
+                            <kendo-grid-column media="(min-width: 921px)" field="totalHour"
+                                [title]="'TotalHours' | translate" [width]="magicNumber.hundred">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    <span>{{ dataItem?.TotalHours.toFixed(magicNumber.two)}}</span>
+                                </ng-template>
+                                <ng-template kendoGridFooterTemplate let-dataItem>
+                                    <strong>{{(stTotal + otTotal + dtTotal +
+                                        ptTotal).toFixed(magicNumber.two)}}</strong>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column media="(min-width: 921px)" field="estimatedCost"
+                                [title]="estimatedCostWithCurrency" [width]="magicNumber.hundred">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    <span>{{ dataItem?.EstimatedCost.toFixed(magicNumber.two)}}</span>
+                                </ng-template>
+                                <ng-template kendoGridFooterTemplate let-dataItem>
+                                    <strong>{{totalEstimatedCost.toFixed(magicNumber.two)}}</strong>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <ng-template kendoGridNoRecordsTemplate>
+                                <p>{{"GridNoRecordAvailable" | translate}}</p>
+                            </ng-template>
+                        </kendo-grid>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="offcanvas-backdrop fade show"></div>

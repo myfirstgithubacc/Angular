@@ -1,0 +1,28 @@
+.close-icon-default {
+  span {
+    &.k-clear-value {
+      position: relative;
+      right: 0;
+    }
+  }
+
+  .k-button-clear {
+    line-height: inherit !important;
+
+    &.k-focus {
+      &::after {
+        display: none;
+      }
+    }
+  }
+}
+
+.close-icon-default .k-button-clear:focus,
+.close-icon-default .k-button-clear.k-focus {
+  outline: none !important;
+  border: none !important;
+}
+
+.security-question__grid .mt-1 {
+  margin-top: 0 !important;
+}

@@ -1,0 +1,36 @@
+<div class="master-search widget-filter__search">
+  <div class="row">
+    <div class="col-md-12 master-search__wapper">
+      <div class="master-search__search-box">
+        <div class="custom-search">
+          <div class="custom-search__input-box">
+            <app-search 
+              [isServerSidePagingEnable]="isServerSidePagingEnable" 
+              [placeholder]="'SearchFor'" 
+              (onSearch)="onSearchTriggered($event)" 
+              [EntityId]="entityId" 
+              [columnOptions]="columnOptions">
+            </app-search>
+          </div>
+          <app-advance-search 
+           [isServerSidePagingEnable]="isServerSidePagingEnable" 
+           [EntityId]="entityId"
+           (selectedFilter)="onFilterTriggered($event)"
+           [apiAddress]="advApiAddress"  
+           [isApiGateway]="true">
+          </app-advance-search>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <grid-view [entityId]="entityId" [pageSize]="pageSize" [actionItemCategoryField]="'Disabled'" 
+    [columnOptions]="columnOptions" [actionSet]="actionSet" [tabOptions]="tabOptions"
+    [kendoGridSelectedBy]="'UKey'" [fileName]="generateFileName()" [multiSelect]="false"
+    [isServerSidePagingEnable]="isServerSidePagingEnable"
+    [apiAddress]="apiAddress"  [searchText]="searchText"
+    [advFilterData]="advFilterData" [isApiGateway]="true"
+  ></grid-view>
+</div>

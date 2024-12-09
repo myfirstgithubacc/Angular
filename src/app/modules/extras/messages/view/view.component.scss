@@ -1,0 +1,90 @@
+.notification-view .card {
+    border-left:0 ;
+}
+.notification-view .card .card__header{
+    border-bottom:1px solid #eee ;
+}
+.notification-view .card .card__body{
+    padding-top: 15px ;
+}
+.notification-view .card__header-icon {
+    gap: 6px;
+    display: flex;
+}
+.notification-view .card__body .email-content p{
+    margin: 4px 0 4px 0;
+    font-size: var(--base-font-size) !important;
+    color: var(--color-default);
+    font-family: var(--font-roboto-sans);
+    font-weight: 300;
+}
+
+.notification-view .card__body .email-content p b{
+    font-weight: 600;
+}
+
+.notification-view .list__content{
+    // list-style: none;
+    padding-left: 20px;
+    font-family: var(--font-roboto-sans);
+}
+
+.notification-view .list__content .list__data--item{
+    padding: 2px;
+}
+
+.notification-view .list__content .data-answere{
+    font-weight: 300;
+}
+
+.notification-view .recent_messages_attachment .file-type{
+    font-style: normal;
+    font-size: 10px !important;
+    margin-top: 0px !important;
+    color: var(--bs-gray-500) !important;
+    margin-left: 10px !important;
+}
+.notification-view .recent_messages_attachment{  
+    border: 1px solid #eee;
+    border-radius: 5px;
+    width: fit-content;
+    padding: 4px 8px;
+    background-color: rgb(238, 238, 238, 43%),;
+}
+.notification-view .recent_messages_attachment .file-icon{
+    width: 22px;
+    height: 27px;
+    background: none;
+    border: none;
+    line-height: 0px;
+}
+
+.notification-view .recent_messages_attachment a{
+    border-radius: 8px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.notification-view .recent_messages_attachment .file-type span{
+    color: var(--color-primary);
+    font-size: var(--base-font-size);
+    text-decoration: none;
+}
+.recent_messages__body .mail-section {
+	float: left;
+	box-shadow: none !important;
+	width: auto !important;
+}
+
+.recent_messages__body .mail-section table {
+	width: 100% !important;
+}
+
+.recent_messages__body .mail-section--footer {
+	display: none;
+}
+
+
+
+

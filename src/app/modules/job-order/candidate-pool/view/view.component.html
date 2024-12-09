@@ -1,0 +1,192 @@
+<h3 *ngIf="parentEntity == 'LiRequest' || parentEntity == 'Submittal'" class="dailog__title">
+    {{'SubmitExistingCandidate' | translate}}
+</h3>
+<div class="app-content__body floating-layout floating-layout__view-layout">
+    <div class="body">
+        <div class="right3-card">
+            <div class="card">
+                <div class="card__header">
+                    <h4 class="card__heading">{{'BasicDetails'|translate}}</h4>
+                </div>
+                <div class="card__body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'CandidateName'" [value]="candidatePool.CandidateName">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'EmailAddress'" [value]="candidatePool.EmailAddress">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <form [formGroup]="contactNumberForm">
+                                    <app-kendo-phone [label]="'ContactNumber'" [isEditMode]="false"
+                                        [phoneControlName]="'contactNumber'" [phoneExtControlName]="'contactNumberExt'"
+                                        [isExtension]="isExtensionVisible"></app-kendo-phone>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'UID'" [value]="candidatePool.UId">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'PreviouslyPlacedAtThisClient'"
+                                    [value]="candidatePool.PreviouslyPlacedAtThisClient | yesNo">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-sm-12 col-md-12 floating-layout__view-layout--break"
+                            *ngIf="candidatePool.PreviouslyPlacedAtThisClient">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'WorkDetails'" [tooltipVisible]="true"
+                                    [tooltipTitle]="'WorkDetailsToolTip'">
+                                </app-kendo-label>
+                                <p [innerHTML]="workDetails | safe : 'html'"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card__header">
+                    <h4 class="card__heading">{{'OrganizationPreferences' | translate}}</h4>
+                    <div class="card__header-icon">
+                    </div>
+                </div>
+                <div class="card__body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'PreferredSector'"
+                                    [labelLocalizeParam]="sectorLabelTextParams" [value]="getPreferableSectorsNames()">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'PreferredAssignmentType'"
+                                    [value]="getPreferredAssignmentTypesNames()" [tooltipVisible]="true"
+                                    [tooltipTitle]="'PreferredAssignmentTypeToolTip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'PreferredLocation'" [value]="getPreferredLocations()"
+                                    [tooltipVisible]="true" [tooltipTitle]="'PreferredLocationToolTip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'PreferredShift'" [value]="candidatePool.PreferredShift"
+                                    [tooltipVisible]="true" [tooltipTitle]="'PreferredShiftToolTip'">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card__header">
+                    <h4 class="card__heading">{{'VettingDetails' | translate}}</h4>
+                    <div class="card__header-icon">
+                    </div>
+                </div>
+                <div class="card__body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'DrugScreenId'" [value]="candidatePool.DrugScreenName">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'BackgroundChecksTitle'"
+                                    [value]="candidatePool.BackGroundCheckName">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6" *ngIf="candidatePool.DrugScreenId!=drugScreenName">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'DrugScreenResult'"
+                                    [value]="candidatePool.DrugScreenResultName">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6" *ngIf="candidatePool.BackgroundCheckId == backgroundCheckId">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'BackgroundResultDate'"
+                                    [value]="candidatePool.BackgroundResultDate| date: dateFormat">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6" *ngIf="candidatePool.DrugScreenId== drugScreen">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'DrugResultDate'"
+                                    [value]="candidatePool.DrugResultDate| date: dateFormat">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'IsCandidateEligibleForSecurityClearance'"
+                                    [value]="candidatePool.IsCandidateEligibleForSecurityClearance | yesNo">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-sm-6 col-md-6" *ngIf="candidatePool.IsCandidateEligibleForSecurityClearance">
+                            <div class="form-group">
+                                <app-kendo-label [label]="'CurrentSecurityClearanceLevel'"
+                                    [value]="candidatePool.CurrentSecurityClearanceLevel">
+                                </app-kendo-label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ng-container>
+                <app-dms-implementation #dms [workFlowId]="entityId" [userGroupId]="userGroupId"
+                    [sectorId]="sectorIdUDF" [uploadStageId]="uploadStageId" [actionTypeId]="actionTypeId"
+                    [recordId]="candidatePoolId" [processingId]="processingId">
+                </app-dms-implementation>
+            </ng-container>
+            <ng-container>
+                <app-udf-implementation [entityId]="entityId" [sectorId]="sectorIdUDF" [recordUKey]="recordUkey"
+                    [parentsInfos]="udfCommonMethods.getParentsInfo()" [actionTypeId]="actionTypeId"
+                    [isMasterScreen]="backFromPopup ? false : true">
+                </app-udf-implementation>
+            </ng-container>
+            <div class="page-footer">
+                <div class="btn-box btn-box--center" *ngIf="parentEntity == 'LiRequest'">
+                    <button type="button" kendoButton themeColor="primary" (click)="navigatetolist()">
+                        {{ "Back" }}
+                    </button>
+                </div>
+                <div class="btn-box btn-box--center" *ngIf="parentEntity == 'CandidatePool'">
+                    <button type="button" kendoButton themeColor="primary" (click)="navigate()">
+                        {{ "Back" }}
+                    </button>
+                </div>
+                <div class="btn-box btn-box--center" *ngIf="parentEntity == 'Submittal'">
+                    <button type="button" kendoButton themeColor="primary" (click)="navigateToSbmtlList()">
+                        {{ "Back" }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

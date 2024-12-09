@@ -1,0 +1,11 @@
+<tooltip-content *ngIf="data" [label]="label" [tooltipVisible]="tooltipVisible" [tooltipTitle]="tooltipTitle" [isRequired]="isRequired"
+  [tooltipPosition]="tooltipPosition" [tooltipTitleLocalizeParam]="tooltipTitleLocalizeParam">
+</tooltip-content>
+<kendo-formfield>
+  <span>
+    <kendo-treeview class="tree_view_appearance" [nodes]="data" [textField]="textField" kendoTreeViewHierarchyBinding
+      [childrenField]="childrenField" [childrenField]="childrenField" kendoTreeViewExpandable selectBy="text"
+      style="max-height: 150px">
+    </kendo-treeview>
+  </span>
+</kendo-formfield>

@@ -1,0 +1,742 @@
+<!-- Main Body Section-->
+<div class="app-content__body">
+   <form [formGroup]="AddstaffingagencyForm">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="staffing-agency-section">
+               <!-- Start Card Section-->
+               <div class="card">
+                  <!-- Card Header Section-->
+                  <div class="card__header">
+                     <h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+                  </div>
+                  <!-- End Card Header Section-->
+                  <!-- Card Body Section-->
+                  <div class="card__body">
+                     <div class="row">
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6">
+                           <div class="form-group">
+                              <app-textbox [controlName]="'staffingAgencyName'"  [maxCharacters]="50" [label]="'StaffingAgencyName'"
+                                 [isRequired]="true" [isEditMode]="isEditMode" [isSpecialCharacterAllowed]="true">
+                              </app-textbox>
+                              <p *ngIf="isEditMode" class="label-answere">{{staffingAgencyDetails.StaffingAgencyName}}
+                              </p>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6">
+                           <div class="form-group">
+                              <app-kendo-dropdown [list]="statusList" [label]="'Disabled'"
+                                 [controlName]="'staffingAgencyStatusId'" [placeholder]="'DdlSelect'"
+                                 [isRequired]="staffingReuired" (onChange)="onStatusChange($event)">
+                              </app-kendo-dropdown>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6">
+                           <div class="form-group">
+                              <app-kendo-dropdown [list]="countrylist" [label]="'HomeCountry'" [isEditMode]="countrylist.length <= 1 ? true : false"
+                                 [controlName]="'countryId'" [placeholder]="'DdlSelect'"
+                                 [isRequired]="staffingAgencyStatus" (onChange)="onCountryChange($event)">
+                              </app-kendo-dropdown>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6">
+                           <div class="form-group">
+                              <app-textbox [controlName]="'staffingAgencyEin'" [label]="'StaffingAgencyEin'" [maxCharacters]="15"
+                                 [tooltipVisible]="false" [isSpecialCharacterAllowed]="true"
+                                 [tooltipTitle]="'StaffingAgencyEinTooltipMessage'" appNoSpace>
+                              </app-textbox>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+
+
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6">
+                           <div class="form-group">
+                              <app-textbox [controlName]="'addressLine1'" [maxCharacters]="50" [label]="'AddressLine1'"
+                                 [isRequired]="staffingAgencyStatus" [isSpecialCharacterAllowed]="true">
+                              </app-textbox>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6">
+                           <div class="form-group">
+                              <app-textbox [controlName]="'addressLine2'" [maxCharacters]="50" [label]="'AddressLine2'"
+                                 [isSpecialCharacterAllowed]="true">
+                              </app-textbox>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6">
+                           <div class="form-group">
+                              <app-textbox [controlName]="'city'" [label]="'City'" [maxCharacters]="50" [isRequired]="staffingAgencyStatus"
+                                 [isSpecialCharacterAllowed]="true">
+                              </app-textbox>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6">
+                           <div class="form-group">
+                              <app-kendo-dropdown [list]="stateRulesList" [label]="isEditMode ? stateLabelEdit : stateLabel" [controlName]="'stateId'"
+                                 [placeholder]="'DdlSelect'" [isRequired]="staffingAgencyStatus" >
+                              </app-kendo-dropdown>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6">
+                           <div class="form-group">
+                              <app-kendo-masked-textbox [controlName]="'zipCode'" [label]="isEditMode ? zipLabelEdit : zipLabel"
+                              [countryId]="countryVal" [isZipCode]="true"  [isRequired]="staffingAgencyStatus"></app-kendo-masked-textbox>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6">
+                           <div class="form-group">
+                              <app-kendo-dropdown [list]="timezonelist" [label]="'TimeZone'"
+                                 [controlName]="'timeZoneId'" [placeholder]="'DdlSelect'"
+                                 [isRequired]="staffingAgencyStatus">
+                              </app-kendo-dropdown>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6">
+                           <div class="form-group">
+                              <app-kendo-dropdown [list]="languageList" [label]="'Language'" [controlName]="'cultureId'"
+                                 [placeholder]="'DdlSelect'" [isRequired]="staffingAgencyStatus">
+                              </app-kendo-dropdown>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6">
+                           <div class="form-group">
+                              <app-kendo-dropdown [list]="staffingAgencyTierList" [label]="'StaffingAgencyTierLevel'"
+                                 [controlName]="'staffingAgencyTypeId'" [placeholder]="'DdlSelect'"
+                                 [isRequired]="staffingAgencyStatus">
+                              </app-kendo-dropdown>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6">
+                           <div class="form-group">
+                              <app-textbox [controlName]="'homePageUrl'" [label]="'HomepageUrl'"
+                                 [isSpecialCharacterAllowed]="true">
+                              </app-textbox>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6">
+                           <div class="form-group">
+                              <app-kendo-dropdown [list]="securityClearanceList" [label]="'SecurityClearance'"
+                                 [controlName]="'securityClearanceId'" [placeholder]="'DdlSelect'"
+                                 [isRequired]="staffingAgencyStatus" (onChange)="onChnageSecurityClearenceId($event)" >
+                              </app-kendo-dropdown>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6"
+                        *ngIf="AddstaffingagencyForm?.get('securityClearanceId')?.value?.Text !== 'None' && AddstaffingagencyForm?.get('securityClearanceId')?.value">
+
+                           <div class="form-group">
+                              <app-textbox [controlName]="'cageCode'" [label]="'CageCode'" [maxCharacters]="10" appNoSpace>
+                              </app-textbox>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6">
+                           <div class="form-group">
+                              <app-kendo-dropdown [list]="businessClassificationList" [label]="'BusinessClassification'"
+                                 [controlName]="'businessClassificationId'" [placeholder]="'DdlSelect'"
+                                 [isRequired]="staffingAgencyStatus">
+                              </app-kendo-dropdown>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6">
+                           <div class="form-group">
+                              <app-kendo-dropdown [list]="paymentTypeList" [label]="'PaymentTypeId'"
+                                 [controlName]="'paymentType'" [placeholder]="'DdlSelect'" [isRequired]="false">
+                              </app-kendo-dropdown>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6">
+                           <div class="form-group">
+                              <app-numeric-box [controlName]="'preferenceNteRateMultiplier'"
+                                 [label]="'PreferenceNteRateMultiplier'" [isRequired]="true"
+                                 [isRequired]="staffingAgencyStatus" [maxlength]="7" [decimals]="3" format="n3"
+                                 [tooltipVisible]="true" [tooltipTitle]="'PreferenceNteRateMultiplierTooltipMessage'">
+                              </app-numeric-box>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+
+                     </div>
+                  </div>
+               </div>
+               <!-- Start Card Section-->
+               <div class="card">
+                  <!-- Card Header Section-->
+                  <div class="card__header">
+                     <h4 class="card__heading">{{'ContactDetails' | translate}}</h4>
+                  </div>
+                  <!-- End Card Header Section-->
+                  <!-- Card Body Section-->
+                  <div class="card__body">
+                     <div class="row">
+                        <div class="col-sm-12 col-md-12">
+                           <h4 class="card__body--subheading no__border"> {{'PrimaryContact' | translate}}</h4>
+                        </div>
+
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6" *ngIf="isEditMode">
+                           <div class="form-group">
+                              <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                                 [tooltipTitle]="'ChangePrimaryUserInfoTooltipMessage'"
+                                 [controlName]="'ChangePrimaryUser'" [label]="'ChangePrimaryUserInfo'"
+                                 (onChangeSwitch)="onChangePrimaryUserSwitchChange($event)"
+                                 *ngIf="staffingAgencyStatusIdData != 83">
+                              </app-kendo-switch>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6" *ngIf="AddstaffingagencyForm?.get('ChangePrimaryUser')?.value">
+                           <div class="form-group">
+                              <app-kendo-dropdown [list]="primaryContactList" [label]="'PrimaryUser'"
+                                 [controlName]="'contactPrimaryUserList'" [placeholder]="'DdlSelect'"
+                                 [isRequired]="true" (onChange)="onChangePrimaryUser($event)">
+                              </app-kendo-dropdown>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+                        <div class="clearfix"></div>
+
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6">
+                           <div class="form-group" *ngIf="!isEditMode">
+                              <kendo-label text="{{'PrimaryContactName'| translate}}">
+                                 <xrm-icon name="star" class="required"></xrm-icon>
+                                 <div class="row">
+                                    <div class="col-4">
+                                       <app-textbox [controlName]="'primaryContactLastName'" [placeholder]="'LastName'" [isSpecialCharacterAllowed]="false"
+                                          [isEditMode]="isEditMode"  [maxCharacters]="30"></app-textbox>
+                                    </div>
+                                    <div class="col-4">
+                                       <app-textbox [controlName]="'primaryContactFirstName'"
+                                          [placeholder]="'FirstName'" [isEditMode]="isEditMode"
+                                          [isSpecialCharacterAllowed]="false" [maxCharacters]="30"></app-textbox>
+                                    </div>
+                                    <div class="col-4">
+                                       <app-textbox [controlName]="'primaryContactMiddleName'" 
+                                          [placeholder]="'MiddleInitial'" [isEditMode]="isEditMode"
+                                          [isSpecialCharacterAllowed]="false" [maxCharacters]="30"></app-textbox>
+                                    </div>
+                                 </div>
+
+                              </kendo-label>
+                           </div>
+                           <div class="form-group" *ngIf="isEditMode">
+                              <app-kendo-label [label]="'PrimaryContactName'"></app-kendo-label>
+                              <p class="label-answere" *ngIf="!this.staffingAgencyDetails.IsPrimaryUserCreated  && !this.primaryValue">{{primaryUserContactName}}</p>
+                              <p class="label-answere" *ngIf="this.staffingAgencyDetails.IsPrimaryUserCreated || this.primaryValue"><a href="javascript:void(0)" (click)="openRightSidePanel(pcUkey)">{{primaryUserContactName}}</a></p>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6">
+                           <div class="form-group">
+                              <app-textbox [controlName]="'primaryContactEmail'" [label]="'PrimaryContactEmailAddress'"
+                                 [isRequired]="true" [isEditMode]="isEditMode" [isSpecialCharacterAllowed]="true" [maxCharacters]="50">
+                              </app-textbox>
+                              <p class="label-answere" *ngIf="isEditMode">{{pcEmail}}
+                              </p>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6">
+                           <div class="form-group"  >
+                              <app-kendo-phone [label]="'PrimaryPhoneNumber'" [isEditMode]="isEdit" [phoneControlName]="'primaryContactPhoneNumber'"
+                              [phoneExtControlName]="'primaryPhoneExtension'"   [countryId]="countryIdVal" [isRequired]="staffingAgencyStatus"
+                              [isExtension]="primaryExt"> </app-kendo-phone>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6" *ngIf="!isEditMode && staffingAgencyStatus">
+                           <div class="form-group">
+                              <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                                 [tooltipTitle]="'CreateUserAccountTooltipMessage'"
+                                 [controlName]="'isPrimaryUserCreated'" [label]="'CreateUserAccount'"
+                                 (onChangeSwitch)="onPrimaryCreateUserAccountChange($event)">
+                              </app-kendo-switch>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6" *ngIf="!isEditMode  && staffingAgencyStatus">
+                           <div class="form-group" *ngIf="AddstaffingagencyForm?.get('isPrimaryUserCreated')?.value">
+                              <app-textbox [label]="'LoginID'" [controlName]="'primaryUserId'"
+                                 (onChangeTextBox)="validateUserId('primaryUserId')" [isRequired]="true" [isSpecialCharacterAllowed]="true" [specialCharactersAllowed]="['.','_', '@','-']"
+                                 [maxCharacters]="50">
+                              </app-textbox>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6" *ngIf="!isEditMode  && staffingAgencyStatus">
+                           <div class="form-group" *ngIf="AddstaffingagencyForm?.get('isPrimaryUserCreated')?.value">
+                              <app-kendo-dropdown [list]="roleList" [label]="'Role'" [controlName]="'primaryRoleNo'"
+                                 [placeholder]="'DdlSelect'" [isRequired]="true">
+                              </app-kendo-dropdown>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+
+                        <div class="col-sm-12 col-md-12">
+                           <h4 class="card__body--subheading"> {{'AlternateContact' | translate}} </h4>
+                        </div>
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6" *ngIf="isEditMode">
+                           <div class="form-group">
+                              <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                                 [tooltipTitle]="'ChangeAlternateUserInfoTooltipMessage'"
+                                 [controlName]="'ChangeAlternateUser'" [label]="'ChangeAlternateUserInfo'"
+                                 (onChangeSwitch)="onChangeAlternateUserSwitchChange($event)"
+                                 *ngIf="staffingAgencyStatusIdData != 83">
+                              </app-kendo-switch>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6" *ngIf="AddstaffingagencyForm?.get('ChangeAlternateUser')?.value">
+                           <div class="form-group">
+                              <app-kendo-dropdown [list]="alternateContactList" [label]="'AlternateUser'"
+                                 [controlName]="'contactAlternateUserList'" [placeholder]="'DdlSelect'"
+                                 [isRequired]="true" (onChange)="onChangeAlternateUser($event)">
+                              </app-kendo-dropdown>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+
+                        <div class="clearfix"></div>
+
+
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6">
+                           <div class="form-group" *ngIf="!isEditMode">
+                              <kendo-label text="{{'AlternateContactName'| translate}}">
+                                 <xrm-icon name="star" class="required"
+                                    *ngIf="AddstaffingagencyForm?.get('isAlternateUserCreated')?.value && staffingAgencyStatusIdData !==83"></xrm-icon>
+                                 <div class="row">
+                                    <div class="col-4">
+                                       <app-textbox [controlName]="'alternateContactLastName'"
+                                          [placeholder]="'LastName'" [isSpecialCharacterAllowed]="false" [maxCharacters]="30"></app-textbox>
+                                    </div>
+                                    <div class="col-4">
+                                       <app-textbox [controlName]="'alternateContactFirstName'"
+                                          [placeholder]="'FirstName'" [isSpecialCharacterAllowed]="false" [maxCharacters]="30"></app-textbox>
+                                    </div>
+                                    <div class="col-4">
+                                       <app-textbox [controlName]="'alternateContactMiddleName'"
+                                          [placeholder]="'MiddleInitial'"
+                                          [isSpecialCharacterAllowed]="false" [maxCharacters]="30"></app-textbox>
+                                    </div>
+                                 </div>
+                              </kendo-label>
+                           </div>
+                           <div class="form-group" *ngIf="isEditMode">
+                              <app-kendo-label [label]="'AlternateContactName'"></app-kendo-label>
+                              <p class="label-answere" *ngIf="!this.staffingAgencyDetails.IsAlternateUserCreated && !this.alternateValue">{{alternateUserContactName}}</p>
+                              <p class="label-answere" *ngIf="this.staffingAgencyDetails.IsAlternateUserCreated || this.alternateValue"><a href="javascript:void(0)" (click)="openRightSidePanel(altcUkey)">{{alternateUserContactName}}</a></p>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6">
+                           <div class="form-group">
+                              <app-textbox [controlName]="'alternateContactEmail'" [isRequired]="isRequired"
+                                 [label]="'AlternateContactEmailAddress'" [isEditMode]="isEditMode"
+                                 [isSpecialCharacterAllowed]="true" [maxCharacters]="50">
+                              </app-textbox>
+                              <p class="label-answere" *ngIf="isEditMode">
+                                 {{altcEmail}} </p>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6">
+                           <div class="form-group">
+                               <app-kendo-phone [label]="'AlternatePhoneNumber'"  [phoneControlName]="'alternateContactPhoneNumber'" [countryId]="countryIdVal" [isRequired]="isRequired" [isExtension]="altExt"
+                              [phoneExtControlName]="'alternatePhoneExtension'" [isEditMode]="isEdit" ></app-kendo-phone>
+
+
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6" *ngIf="!isEditMode && staffingAgencyStatus">
+                           <div class="form-group">
+                              <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                                 [tooltipTitle]="'CreateUserAccountTooltipMessage'"
+                                 [controlName]="'isAlternateUserCreated'" [label]="'CreateUserAccount'"
+                                 (onChangeSwitch)="onAlternateCreateUserAccountChange($event)">
+                              </app-kendo-switch>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6" *ngIf="!isEditMode && staffingAgencyStatus">
+                           <div class="form-group" *ngIf="AddstaffingagencyForm?.get('isAlternateUserCreated')?.value">
+                              <app-textbox [controlName]="'alternateUserId'" [label]="'LoginID'"
+                                 (onChangeTextBox)="validateUserId('alternateUserId')" [isRequired]="true"
+                                 [isSpecialCharacterAllowed]="true" [specialCharactersAllowed]="['.','_', '@','-']" [maxCharacters]="50">
+                              </app-textbox>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6" *ngIf="!isEditMode && staffingAgencyStatus">
+                           <div class="form-group" *ngIf="AddstaffingagencyForm?.get('isAlternateUserCreated')?.value">
+                              <app-kendo-dropdown [list]="roleList" [label]="'Role'" [controlName]="'alternateRoleNo'"
+                                 [placeholder]="'DdlSelect'" [isRequired]="true">
+                              </app-kendo-dropdown>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+
+                        <div class="col-sm-12 col-md-12">
+                           <h4 class="card__body--subheading"> {{'AccountingContact'|translate}} </h4>
+                        </div>
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6" *ngIf="isEditMode">
+                           <div class="form-group">
+                              <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                                 [tooltipTitle]="'ChangeAccountingUserInfoTooltipMessage'"
+                                 [controlName]="'ChangeAccountingUser'"
+                                 (onChangeSwitch)="onChangeAccountingUserSwitchChange($event)"
+                                 [label]="'ChangeAccountingUserInfo'" *ngIf="staffingAgencyStatusIdData != 83">
+                              </app-kendo-switch>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6"
+                           *ngIf="AddstaffingagencyForm?.get('ChangeAccountingUser')?.value">
+                           <div class="form-group">
+                              <app-kendo-dropdown [list]="accContactList" [label]="'AccountingUser'"
+                                 [controlName]="'contactAcountingUserList'" [placeholder]="'DdlSelect'"
+                                 [isRequired]="true" (onChange)="onChangeAccountingUser($event)">
+                              </app-kendo-dropdown>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+
+                        <div class="clearfix"></div>
+
+
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6">
+                           <div class="form-group" *ngIf="!isEditMode">
+                              <kendo-label text="{{'AccountingContactName'| translate}}">
+                                 <xrm-icon name="star" class="required"
+                                    *ngIf="AddstaffingagencyForm?.get('isAccountingUserCreated')?.value && staffingAgencyStatusIdData !==83"></xrm-icon>
+                                 <div class="row">
+                                    <div class="col-4">
+                                       <app-textbox [controlName]="'accountingContactLastName'"
+                                          [placeholder]="'LastName'" [isSpecialCharacterAllowed]="false" [maxCharacters]="30"></app-textbox>
+                                    </div>
+                                    <div class="col-4">
+                                       <app-textbox [controlName]="'accountingContactFirstName'"
+                                          [placeholder]="'FirstName'" [isSpecialCharacterAllowed]="false" [maxCharacters]="30"></app-textbox>
+                                    </div>
+                                    <div class="col-4">
+                                       <app-textbox [controlName]="'accountingContactMiddleName'"
+                                          [placeholder]="'MiddleInitial'"
+                                          [isSpecialCharacterAllowed]="false" [maxCharacters]="30"></app-textbox>
+                                    </div>
+                                 </div>
+                              </kendo-label>
+                           </div>
+                           <div class="form-group" *ngIf="isEditMode">
+                              <app-kendo-label [label]="'AccountingContactName'"></app-kendo-label>
+                              <p class="label-answere" *ngIf="!this.staffingAgencyDetails.IsAccountingUserCreated && !this.accountingValue">{{accountingUserContactName}}</p>
+                              <p class="label-answere"  *ngIf="this.staffingAgencyDetails.IsAccountingUserCreated || this.accountingValue"><a href="javascript:void(0)" (click)="openRightSidePanel(acctcUkey)">{{accountingUserContactName}}</a></p>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6">
+                           <div class="form-group">
+                              <app-textbox [controlName]="'accountingContactEmail'"
+                                 [label]="'AccountingContactEmailAddress'" [isEditMode]="isEditMode"
+                                 [isSpecialCharacterAllowed]="true" [isRequired]="isRequiredAccounting" [maxCharacters]="50">
+                              </app-textbox>
+                              <p class="label-answere" *ngIf="isEditMode">
+                                 {{acctcEmail}} </p>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6">
+                           <div class="form-group">
+                              <app-kendo-phone [label]="'AccountingPhoneNumber'"  [phoneControlName]="'accountingContactPhoneNumber'"
+                              [phoneExtControlName]="'accountingPhoneExtension'" [countryId]="countryIdVal" [isRequired]="isRequiredAccounting"
+                              [isEditMode]="isEdit" [isExtension]="acctExt"  ></app-kendo-phone>
+
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6" *ngIf="!isEditMode && staffingAgencyStatus">
+                           <div class="form-group">
+                              <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                                 [tooltipTitle]="'CreateUserAccountTooltipMessage'"
+                                 [controlName]="'isAccountingUserCreated'" [label]="'CreateUserAccount'"
+                                 (onChangeSwitch)="onAccountingCreateUserAccountChange($event)">
+                              </app-kendo-switch>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6" *ngIf="!isEditMode && staffingAgencyStatus">
+                           <div class="form-group" *ngIf="AddstaffingagencyForm?.get('isAccountingUserCreated')?.value">
+                              <app-textbox [controlName]="'accountingUserId'" [label]="'LoginID'" [isRequired]="true"
+                              [isSpecialCharacterAllowed]="true" [specialCharactersAllowed]="['.','_', '@','-']" (onChangeTextBox)="validateUserId('accountingUserId')" [maxCharacters]="50">
+                              </app-textbox>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6" *ngIf="!isEditMode && staffingAgencyStatus">
+                           <div class="form-group" *ngIf="AddstaffingagencyForm?.get('isAccountingUserCreated')?.value">
+                              <app-kendo-dropdown [list]="roleList" [label]="'Role'" [controlName]="'accountingRoleNo'"
+                                 [placeholder]="'DdlSelect'" [isRequired]="true">
+                              </app-kendo-dropdown>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+                     </div>
+                  </div>
+               </div>
+
+               <!-- Start Card Section-->
+               <div class="card">
+                  <!-- Card Header Section-->
+                  <div class="card__header">
+                     <h4 class="card__heading">{{'ConfigurationOption'|translate}}</h4>
+                  </div>
+                  <!-- End Card Header Section-->
+                  <!-- Card Body Section-->
+                  <div class="card__body">
+                     <div class="row">
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6">
+                           <div class="form-group">
+                              <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                                 [tooltipTitle]="'PayrollStaffingAgencyTooltipMessage'"
+                                 [controlName]="'isAllowedForPayroll'" [label]="'PayrollStaffingAgency'">
+                              </app-kendo-switch>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6">
+                           <div class="form-group">
+                              <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                                 [tooltipTitle]="'AbleToAdministerIcTooltipMessage'" [controlName]="'isAllowedForIc'"
+                                 [label]="'AbleToAdministerIc'" (onChangeSwitch)="onAbletoAdministerIcChange($event)">
+                              </app-kendo-switch>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+                        <div class="clearfix"></div>
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6" *ngIf="AddstaffingagencyForm?.get('isAllowedForIc')?.value">
+                           <div class="form-group">
+                              <app-numeric-box [controlName]="'icMarkup'" [label]="'IcMarkup'" [isRequired]="true" [min]="0"
+                                 [maxlength]="5" [decimals]="2">
+                              </app-numeric-box>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+                        <!-- Input Box Start -->
+
+                        <div class="col-sm-6 col-md-6"
+                           *ngIf="AddstaffingagencyForm?.get('isAllowedForIc')?.value || AddstaffingagencyForm?.get('AbletoAdministerIC')?.value">
+                           <div class="form-group">
+                              <app-numeric-box [controlName]="'sowIcMspFee'" [label]="'SowIcMspFee'" [min]="0"
+                                 [maxlength]="5" [decimals]="2" [tooltipVisible]="false"
+                                 [tooltipTitle]="'SowIcMspFeeTooltipMessage'">
+                              </app-numeric-box>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6">
+                           <div class="form-group">
+                              <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                                 [tooltipTitle]="'LightIndustrialStaffingAgencyTooltipMessage'" (onChangeSwitch)="onChangeLiSwitch($event)"
+                                 [controlName]="'isAllowedForLi'" [label]="'LightIndustrialStaffingAgency'">
+                              </app-kendo-switch>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6" *ngIf="AddstaffingagencyForm?.get('isAllowedForLi')?.value">
+                           <div class="form-group">
+                              <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="false"
+                                 [controlName]="'canReceiveCandidateFromAts'"
+                                 [tooltipTitle]="'GetCandidatesFromAtsTooltipMessage'" [label]="'GetCandidatesFromAts'">
+                              </app-kendo-switch>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+
+                        <div class="clearfix"></div>
+
+                        <!-- Input Box Start -->
+                        <div class="col-sm-6 col-md-6">
+                           <div class="form-group">
+                              <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                                 [tooltipTitle]="'MspAffiliatedTooltipMessage'" [controlName]="'isMspAfiiliated'"
+                                 [label]="'MspAffiliated'">
+                              </app-kendo-switch>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+
+                        <!-- Input Box Start -->
+                        <div class="col-sm-8 col-md-8">
+                           <div class="form-group">
+                              <app-kendo-switch [onLabel]="'Yes'" [offLabel]="'No'" [tooltipVisible]="true"
+                                 [tooltipTitle]="'ApprovedForRfxSowTooltipMessage'" [controlName]="'isAllowedForRfxSow'" [isDisable]="disableSwitch"
+                                 [label]="'ApprovedForRfxSow'" (onChangeSwitch)="switchforEnabledRFx($event)">
+                              </app-kendo-switch>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+
+                        <div class="clearfix"></div>
+                        <!-- Text Box Start -->
+                        <div class="col-sm-6 col-md-6" *ngIf="AddstaffingagencyForm?.get('isAllowedForRfxSow')?.value">
+                           <div class="form-group">
+                              <app-kendo-label [label]="'AccessibleSowLaborCategoryDyn'" [tooltipVisible]="true" [labelLocalizeParam]="sectorLabelTextParams"
+                                 [tooltipTitle]="'SowLaborCategoriesTooltipMessage'">
+                              </app-kendo-label>
+                              <div class="tree-bxs hide-tooltip-content" >
+                                 <app-tree-view [data]="laborCategory" [textField]="'Text'" [childrenField]="'items'"
+                                    [isFiltered]="false" [checkedKeys]="labourKey" [selectedKeys]="labourKey" [disabledKeys]="disabledLabourKey"
+                                    [treeViewType]="'singleleveltreeview'"
+                                    (onCheckedTree)="onLaborCategoryChecked($event)">
+                                 </app-tree-view>
+                              </div>
+
+                           </div>
+                        </div>
+                        <!-- Text Box End -->
+                     </div>
+                  </div>
+               </div>
+
+               <!--  Page Footer Section-->
+               <!-- Start Card Section-->
+
+                  <app-udf-implementation [entityId]="entityId" [sectorId]="sectorId" [recordUKey]="recordUKey"
+                     [parentsInfos]="udfCommonMethods.getParentsInfo()" [actionTypeId]="actionTypeId"
+                     (onDataPicked)="getUdfData($event)">
+                  </app-udf-implementation>
+
+               <!-- Start Card Section-->
+               <div class="card">
+                  <!-- Card Header Section-->
+                  <div class="card__header">
+                     <h4 class="card__heading">{{'Comments'|translate}}</h4>
+                  </div>
+                  <!-- End Card Header Section-->
+                  <!-- Card Body Section-->
+                  <div class="card__body">
+                     <div class="row">
+                        <!-- Input Box Start -->
+                        <div class="col-sm-12 col-md-12">
+                           <div class="form-group">
+                              <app-kendo-textarea [controlName]="'comments'" [label]="'Comment'" [maxCharacters]="2000"
+                                 [isSpecialCharacterAllowed]="true"></app-kendo-textarea>
+                           </div>
+                        </div>
+                        <!-- Input Box End -->
+                     </div>
+                  </div>
+               </div>
+
+               <!--  Page Footer Section-->
+               <div class="page-footer">
+                  <div class="btn-box btn-box--center">
+                     <button type="button" kendoButton fillMode="outline" themeColor="primary"
+                        (click)="navigate()"> {{ "Cancel" | translate }}</button>
+                     <button type="button" (click)="submitForm()" kendoButton themeColor="primary"
+                        [disabled]="isEditMode ? (AddstaffingagencyForm.pristine && !sowKeyClicked) : false"
+                        appFocusOnError [formName]="AddstaffingagencyForm">
+                        {{ isEditMode ? ("Save" | translate) : ("Save" | translate) }}
+                     </button>
+                     
+                  </div>
+               </div>
+               <!-- End Footer Section-->
+            </div>
+         </div>
+      </div>
+   </form>
+</div>
+<div *ngIf="openRightPanel" class="offcanvas offcanvas-end show offcanvas-body--mobileview" tabindex="-1" id="errormessageSidebarsm" aria-labelledby="errormessageSidebarsm" [@slideInOut]>
+   <div class="offcanvas-header">
+      <h5></h5>
+      <button type="button" class="btn-close" (click)="closeOpenPanel()"></button>
+   </div>
+   <div class="offcanvas-body">
+      <app-view-user [myInput]="existingUkey"></app-view-user>
+   </div>
+</div>
+<div *ngIf="openRightPanel" class="offcanvas__fade--show"></div>
+

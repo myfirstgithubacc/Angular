@@ -1,0 +1,32 @@
+.basic-status-left ul {
+    padding-left: 0;
+    margin-bottom: 0;
+}
+.basic-status-left ul li {
+    list-style-type: none;
+    display: inline-block;
+    position: relative;
+}
+.basic-status-left ul li::before {
+    content: "|";
+    color: #9b9b9b;
+    padding: 0 5px;
+}
+.basic-status-left ul li:first-child:before {
+    display: none;
+}
+.basic-title {
+    font-weight: 600;
+    font-size: 14px;
+}
+.basic-code {
+    font-weight: 300;
+    font-size: var(--base-font-size);
+}
+.basic-status {
+    font-weight: 300;
+    font-size: 11px;
+}
+.view__screen .list__data .list__data--item .kendo-label {
+  min-width: 300px;
+}

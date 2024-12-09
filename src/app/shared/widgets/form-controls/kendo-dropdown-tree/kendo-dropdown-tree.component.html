@@ -1,0 +1,35 @@
+<kendo-formfield>
+  <tooltip-content [tooltipVisible]="isToolTipVisible" [tooltipTitle]="tooltipTitle" [label]="label"
+  [addOnLabelText]="addOnLabelText" [addOnLabelTextLocalizeParam]="addOnLabelTextLocalizeParam" [isRequired]="isRequired"
+    [isHtmlContent]="isHtmlContent" [tooltipPosition]="" [tooltipTitleLocalizeParam]="tooltipTitleLocalizeParam"
+    [labelLocalizeParam]="labelLocalizeParam">
+  </tooltip-content>
+
+  <ng-container *ngIf="isEditMode">
+
+    <kendo-dropdowntree *ngIf="isSingleSelected" kendoDropDownTreeExpandable [kendoDropDownTreeHierarchyBinding]="data"
+      [textField]="'Text'" [valueField]="'Value'" [childrenField]="'items'" [value]="value"
+      [valuePrimitive]="isValuePremitive" [filterable]="isFilterable" [dataItem]="singleSelectedData"
+      (valueChange)="valueChange($event)">
+    </kendo-dropdowntree>
+
+    <kendo-multiselecttree *ngIf="!isSingleSelected" [checkableSettings]="checkableSettings"
+      kendoMultiSelectTreeExpandable [checkAll]="isVisibleCheckAllBtn"
+      [kendoMultiSelectTreeHierarchyBinding]="parsedData" [expandOnFilter]="filterExpandSettings"
+      (filterChange)="handleFilter($event)" [valuePrimitive]="isValuePremitive" [dataItems]="selectedData"
+      [textField]="'Text'" [valueField]="'Value'" [childrenField]="'items'" [clearButton]="true"
+      [placeholder]="placeholderKey | translate" [filterable]="isFilterable" (valueChange)="valueChange($event)">
+    </kendo-multiselecttree>
+
+  </ng-container>
+
+  <ng-container *ngIf="!isEditMode">
+    <kendo-formfield>
+      <kendo-treeview kendoTreeViewExpandable [nodes]="data" [textField]="'Text'" kendoTreeViewHierarchyBinding
+        [childrenField]="'items'" style="max-height: 200px" class="tree_view_appearance">
+      </kendo-treeview>
+    </kendo-formfield>
+  </ng-container>
+
+
+</kendo-formfield>

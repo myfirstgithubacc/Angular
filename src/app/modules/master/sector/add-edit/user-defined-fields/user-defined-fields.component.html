@@ -1,0 +1,8 @@
+<form [formGroup]="formUserDefined">
+    <div class="card__heading"></div>
+    <app-udf-implementation [entityId]="entityId" [sectorId]="recordId" [recordUKey]="recordUKey" [recordId]="recordId"
+        [isDataPersist]="true" [parentsInfos]="udfCommonMethods.getParentsInfo()" [actionTypeId]="actionTypeId"
+        [showNewUdfConfigs]="true" (onDataPicked)="getUdfData($event)">
+    </app-udf-implementation>
+
+</form>

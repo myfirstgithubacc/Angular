@@ -1,0 +1,402 @@
+<!-- Main Body Section-->
+<div class="app-content__body app-content__kendoexpansion-main">
+
+    <form [formGroup]="InterviewRequestForm">
+        <div class="row">
+            <div class="col-md-12">
+
+                <!-- Start Kendo Expansion Panel -->
+                <kendo-expansionpanel (click)="$event.stopPropagation()" [expanded]="true"
+                    class="card  floating-layout floating-layout__view-layout">
+                    <ng-template kendoExpansionPanelTitleDirective>
+                        <div>
+                            <h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+                        </div>
+                    </ng-template>
+                    <div class="card__body">
+                        <div class="row">
+                            <!-- Input Box Start -->
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'Interview Availability'"
+                                        [value]="interviewUkeyDetails.InterviewAvailability"></app-kendo-label>
+                                </div>
+                            </div>
+                            <!-- Input Box End -->
+
+                            <!-- Input Box Start -->
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'Start Availability'"
+                                        [value]="interviewUkeyDetails.StartAvailability"></app-kendo-label>
+                                </div>
+                            </div>
+                            <!-- Input Box End -->
+
+                        </div>
+                    </div>
+                </kendo-expansionpanel>
+                <!-- End Kendo Expansion Panel -->
+
+                <!-- Start Kendo Expansion Panel -->
+                <kendo-expansionpanel (click)="$event.stopPropagation()" [expanded]="true"
+                    class="card  floating-layout floating-layout__view-layout">
+                    <ng-template kendoExpansionPanelTitleDirective>
+                        <div>
+                            <h4 class="card__heading">Interview Details</h4>
+                        </div>
+                    </ng-template>
+
+                    <div class="card__body">
+                        <div class="row"> 
+
+                            <!-- Input Box Start -->
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group mb-4">
+                                    <app-kendo-label [label]="'InterviewRound'" [value]="interviewUkeyDetails.InterviewRound"></app-kendo-label>
+                                </div>
+                            </div> 
+                            <!-- Input Box End --> 
+
+                            <div class="col-sm-12 col-md-12 list-view" *ngIf="populateScheduleData.length">
+                                <app-list-view [columnData]="interviewGridColumns" [columnConfigure]="columnConfiguration"
+                                [populatedData]="populateScheduleData"></app-list-view>
+                            </div>
+                        </div>
+                    </div>        
+                </kendo-expansionpanel>
+                <!-- End Kendo Expansion Panel -->
+
+
+                <!-- Start Kendo Expansion Panel -->
+                <kendo-expansionpanel (click)="$event.stopPropagation()" [expanded]="false" class="card">
+                    <ng-template kendoExpansionPanelTitleDirective>
+                        <div>
+                            <h4 class="card__heading">Alternate Schedule</h4>
+                        </div>
+                    </ng-template>
+                    <div class="card__body">
+
+                        <div class="row" *ngIf="!isReviewMode">
+                            <!-- Input Box Start -->
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'Add Alternate Slots'" [value]="populateAlternateData.length ? 'Yes': 'No'"></app-kendo-label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 list-view" *ngIf="populateAlternateData.length">
+                            <app-list-view [columnData]="interviewGridColumns" [columnConfigure]="columnConfiguration"
+                            [populatedData]="populateAlternateData"></app-list-view>
+                        </div>
+
+                        <div class="row" *ngIf="isReviewMode">
+                            <!-- Input Box Start -->
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'Add Alternate Slots'" [value]="'Yes'"></app-kendo-label>
+                                    <!-- <app-kendo-switch [label]="'Add Alternate Slots'" [controlName]="'switch2'" [onLabel]="'Yes'" [offLabel]="'No'"></app-kendo-switch> -->
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </kendo-expansionpanel>
+                <!-- End Kendo Expansion Panel -->
+
+                <!-- Start Kendo Expansion Panel -->
+                <kendo-expansionpanel (click)="$event.stopPropagation()" [expanded]="false"
+                    class="card  floating-layout floating-layout__view-layout" *ngIf="!isReviewMode">
+                    <ng-template kendoExpansionPanelTitleDirective>
+                        <div>
+                            <h4 class="card__heading">Additional Details</h4>
+                        </div>
+                    </ng-template>
+                    <div class="card__body">
+                        <div class="row">
+                            <!-- Input Box Start -->
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group mb-4">
+                                    <app-kendo-label [label]="'Additional Interview Details'" [tooltipVisible]="true"
+                                        [tooltipTitle]="'Please list who will conduct the interview, Directions to Location, Phone Number to call, Items to bring, etc.'"
+                                        [value]="interviewUkeyDetails.AdditionalInterviewDetails"></app-kendo-label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </kendo-expansionpanel>
+                <!-- End Kendo Expansion Panel -->
+
+                <!-- Start Kendo Expansion Panel -->
+                <kendo-expansionpanel (click)="$event.stopPropagation()" [expanded]="false" class="card" *ngIf="isReviewMode">
+                    <ng-template kendoExpansionPanelTitleDirective>
+                        <div>
+                            <h4 class="card__heading">Additional Details</h4>
+                        </div>
+                    </ng-template>
+                    <div class="card__body">
+                        <div class="row">
+                            <!-- Input Box Start -->
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group mb-4">
+                                    <app-kendo-textarea [controlName]="'AdditionalinterviewfieldName'"
+                                        [isRequired]="true" [tooltipVisible]="true"
+                                        [tooltipTitle]="'Please list who will conduct the interview, Directions to Location, Phone Number to call, Items to bring, etc.'"
+                                        [label]="'Additional Interview Details'">
+                                    </app-kendo-textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </kendo-expansionpanel>
+                <!-- End Kendo Expansion Panel -->
+
+                <!-- Start Kendo Expansion Panel -->
+                <kendo-expansionpanel (click)="$event.stopPropagation()" [expanded]="false" class="card">
+                    <ng-template kendoExpansionPanelTitleDirective>
+                        <div>
+                            <h4 class="card__heading">{{'Comments' | translate}}</h4>
+                        </div>
+                    </ng-template>
+                    <div class="card__body">
+                        <div class="row">
+                            <!-- Input Box Start -->
+                            <div class="col-sm-12 col-md-12" *ngIf="!isReviewMode && !isFinishMode && !isCancelMode">
+                                <div class="form-group mb-4">
+                                    <app-multi-level-comments *ngIf="comments.length"
+                                    [label]="'Comments'" [allComments]="comments"
+                                    [dateKey]="'CreatedOn'" [labelKey]="'CommentedBy'" [commentsKey]="'Comment'">
+                                </app-multi-level-comments>
+                                </div>
+                            </div>
+
+                            <!-- Input Box Start -->
+                            <div class="col-sm-12 col-md-12" *ngIf="isReviewMode || isFinishMode || isCancelMode">
+                                <div class="form-group mb-4">
+                                    <app-kendo-label [label]="'Previous Comments'"
+                                        ></app-kendo-label>
+                                </div>
+                            </div>
+
+                            <!-- Input Box Start -->
+                            <div class="col-sm-12 col-md-12" *ngIf="isReviewMode">
+                                <div class="form-group mb-4">
+                                    <app-kendo-textarea [controlName]="'CommentsfieldName'"
+                                        [label]="'Comments (Viewable to Staffing Agency and MSP)'">
+                                    </app-kendo-textarea>
+                                </div>
+                            </div>
+
+                            <!-- Input Box Start -->
+                            <div class="col-sm-12 col-md-12" *ngIf="isFinishMode || isCancelMode">
+                                <div class="form-group mb-4">
+                                    <app-kendo-textarea [controlName]="'CommentsfieldName'"
+                                        [label]="'Comments (Viewable to Staffing Agency and MSP)'" [isRequired]="true">
+                                    </app-kendo-textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </kendo-expansionpanel>
+                <!-- End Kendo Expansion Panel -->
+
+            </div>
+        </div>
+
+
+        <div class="page-footer" *ngIf="!isReviewMode && !isFinishMode && !isCancelMode">
+            <div class="btn-box btn-box--center">
+                <button kendoButton themeColor="primary" (click)="navigate()">{{'Back' | translate}}
+                </button>
+            </div>
+        </div>
+
+        <div class="page-footer" *ngIf="isReviewMode">
+            <div class="btn-box btn-box--center">
+                <button kendoButton themeColor="primary" fillMode="outline" (click)="navigate()"> {{'Cancel' | translate}} </button>
+                <button kendoButton themeColor="primary" (click)="submitForm()"> {{'Submit' | translate}} </button>
+            </div>
+        </div>
+
+        <div class="page-footer" *ngIf="isFinishMode">
+            <div class="btn-box btn-box--center">
+                <button kendoButton themeColor="primary" fillMode="outline" (click)="navigate()"> {{'Cancel' | translate}} </button>
+                <button kendoButton themeColor="primary" (click)="submitForm2()"> {{'FinishInterview' | translate}} </button>
+            </div>
+        </div>
+
+        <div class="page-footer" *ngIf="isCancelMode">
+            <div class="btn-box btn-box--center">
+                <button kendoButton themeColor="primary" fillMode="outline" (click)="navigate()"> {{'Cancel' | translate}} </button>
+                <button kendoButton themeColor="primary" (click)="submitForm3()"> {{'CancelInterview' | translate}} </button>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<!-- Add Interview Request Sidebar -->
+<div class="offcanvas offcanvas-end list-sidebar" tabindex="-1"
+    aria-labelledby="assignmentDetails">
+    <div class="offcanvas-header">
+        <h5>Quick View</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+        </button>
+    </div>
+
+    <div class="offcanvas-body  floating-layout floating-layout__quickview-layout">
+        <div class="card mt-2 ">
+            <div class="card__header">
+                <h4 class="card__heading">Submittals Details </h4>
+            </div>
+            <div class="card__body">
+                <div class="row">
+                    <!-- Input Box Start -->
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'Candidate Name'" [value]="'Leah, Williamson'"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box end -->
+
+                    <!-- Input Box Start -->
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'Contact Phone'" [value]="'(123) 4567 678'"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box end -->
+
+                    <!-- Input Box Start -->
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'Contact Email'" [value]="'none@acrocorp.com'"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box end -->
+
+                    <!-- Input Box Start -->
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'UID'" [value]="'123345454'"></app-kendo-label>
+                        </div>
+                    </div>
+
+                    <!-- input box start -->
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'Candidate’s Worker Classification'"
+                                [value]="'Sub-Vendor'"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box end -->
+
+                    <div class="clearfix"></div>
+
+                    <!-- input box start -->
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'Worker Classification Sub-Category'"
+                                [value]="''"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box end -->
+
+                    <!-- input box start -->
+                    <div class=" col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <app-kendo-label
+                                [label]="'This candidate has previously worked (either directly or indirectly) for the organization or its affiliates'"
+                                [value]="'Yes'"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box end -->
+
+                    <!-- input box start -->
+                    <div class=" col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'Previous work history details with the organization'"
+                                [value]="''"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box end -->
+
+                    <!-- input box start -->
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <app-kendo-label
+                                [label]="'End date of current assignment with the organization, if applicable'"
+                                [value]="'06/11/2024'"></app-kendo-label>
+                        </div>
+                    </div>
+                    <!-- input box end -->
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-2">
+          <div class="card__header">
+              <h4 class="card__heading">Submittal Skill Set</h4>
+          </div>
+          <div class="floating-layout floating-layout__view-layout">
+              <div class="card__body">
+                  <div class="row">
+
+                      <!-- Text Box Start -->
+                      <div class="col-sm-12 col-md-12">
+                          <div class="form-group">
+                              <div class="floating-layout__view-layout--break">
+                                  <app-kendo-label [label]="'Candidate\'s Related Skills'"
+                                      value="The ideal candidate will have a strong technical background, excellent problem-solving skills, and the ability to provide exceptional customer service. This role involves troubleshooting and resolving hardware, software, and network issues, supporting end-users, and ensuring the smooth operation of IT systems.">
+                                  </app-kendo-label>
+                              </div>
+                          </div>
+                      </div>
+                      <!-- Text Box End -->
+
+                      <!-- Text Box Start -->
+                      <div class="col-sm-12 col-md-12">
+                          <div class="form-group">
+                              <div class="floating-layout__view-layout--break">
+                                  <app-kendo-label [label]="'Candidate\'s Relevant Experience'" value="1 – 5 years experience designing and developing software solutions.
+                                  • Experience coding in Java, HTML, CSS and Javascript. C or C++ a plus">
+                                  </app-kendo-label>
+                              </div>
+                          </div>
+                      </div>
+                      <!-- Text Box End -->
+
+                      <!-- Text Box Start -->
+                      <div class="col-sm-12 col-md-12">
+                          <div class="form-group">
+                              <div class="floating-layout__view-layout--break">
+                                  <app-kendo-label [label]="'Candidate\'s Education Details'" value="
+                          • 1-5 years experience designing and developing software solutions.
+                          • Experience coding in Java, HTML, CSS and Javascript. C or C++ a plus.">
+                                  </app-kendo-label>
+                              </div>
+                          </div>
+                      </div>
+                      <!-- Text Box End -->
+
+                      <!-- Text Box Start -->
+                      <div class="col-sm-12 col-md-12">
+                          <div class="form-group mb-4">
+                              <div class="floating-layout__view-layout--break">
+                                  <app-kendo-label [label]="'Candidate\'s Relevant Information'"
+                                      value="The qualified candidate must have the ability to work as a key member of a cross functional teams including engineering, product and user experience.">
+                                  </app-kendo-label>
+                              </div>
+                          </div>
+                      </div>
+
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+
+</div>
+<!-- End Interview Request Sidebar -->

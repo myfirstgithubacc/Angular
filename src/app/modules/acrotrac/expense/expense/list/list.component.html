@@ -1,0 +1,49 @@
+<div class="master-search">
+  <div class="row">
+    <div class="col-md-12 master-search__wapper">
+      <div class="master-search__search-box">
+        <div class="custom-search">
+          <div class="custom-search__input-box">
+            <app-search [isServerSidePagingEnable]="isServerSidePagingEnable" [placeholder]="'SearchFor'"
+              [EntityId]="entityId" (onSearch)="OnSearchTriggered($event)" [columnOptions]="columnOptions">
+            </app-search>
+          </div>
+          <app-advance-search [apiAddress]="advApiAddress" [isServerSidePagingEnable]="isServerSidePagingEnable"
+            [EntityId]="entityId" (selectedFilter)="OnFilterTriggered($event)"
+            [isApiGateway]="true"></app-advance-search>
+        </div>
+      </div>
+      <app-kendo-button [xrmEntityId]="entityId" [buttonName]="'NewEntity'" [buttonIcon]="'plus'"
+        [buttonLocalizeParam]="expenseEntryLabelTextParams" (Click)="openDialog()">
+      </app-kendo-button>
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="isLoading">
+  <grid-view [isServerSidePagingEnable]="isServerSidePagingEnable" [apiAddress]="apiAddress" [searchText]="searchList"
+    [advFilterData]="appliedAdvFilters" [entityId]="entityId" [columnOptions]="columnOptions" [actionSet]="actionSet"
+    [tabOptions]="tabOptions" [isSortingAllowed]="true" [isFilteringAllowed]="true"
+    [massActionButtonSet]="massActionButtonSet" [isActionColumnVisible]="true" [actionItemCategoryField]="'Status'"
+    [kendoGridSelectedBy]="'UKey'" [fileName]="'Expense'" (selectedTab)="selectedTab($event)"
+    [multiSelect]="multiSelect && hasReviewPermission" (onGroupedAction)="onGroupedAction($event)" [forceMultiSelect]="hasReviewPermission" [pageSize]="pageSize"
+    [isApiGateway]="true"></grid-view>
+</div>
+
+<kendo-dialog class="dailog dailog-center" *ngIf="isShowSuccess" [width]="600">
+  <a href="javascript:;" class="close-dailog" (click)="handleDialogPopUp(false)"><xrm-icon name="x" color="black-color" [size]="18" [strokeWidth]="2.5"></xrm-icon></a>
+  <xrm-icon name="circle-question-mark" color="dark-blue-color" [size]="40" class="text-primary dailog__icon sw-bolder"></xrm-icon>
+  <p>{{'TimeExpenseApproverMessage' | translate}}</p>
+
+  <div class="dailog__button">
+    <button type="button" kendoButton fillMode="solid" themeColor="primary" (click)="aprroveSelectedRows()">
+      {{ 'OK' | translate}}
+    </button>
+    <button type="button" kendoButton fillMode="outline" themeColor="primary" (click)="handleDialogPopUp(false)">
+      {{ 'Cancel' | translate}}
+    </button>
+  </div>
+</kendo-dialog>
+
+<app-filter-sidebar *ngIf="isShowPopup" (isShowFilterChange)="isShowPopup = $event" [headerName]="'ExpenseEntry'"
+  [@.disabled]="!isShowPopup" [navigationPath]="entryNavigationPath()" [entityId]="entityId">
+</app-filter-sidebar>

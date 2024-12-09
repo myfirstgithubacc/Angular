@@ -1,0 +1,214 @@
+<div class="app-content__body approval-configuration">
+   <form [formGroup]="statusForm" *ngIf="isEditMode">
+      <app-common-header [controlName]="'status'" [entityId]="entityId" [buttonSet]="buttonSet"
+         [recordStatus]="recordStatus" [statusData]="statusData" [isStatusEditable]="false"></app-common-header>
+   </form>
+   <br>
+
+   <form [formGroup]="AddEditApprovalConfigForm" (ngSubmit)="submitForm()">
+      <div class="card">
+         <div class="card__header">
+            <h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+         </div>
+         <div class="card__body">
+            <div class="row">
+               <div class="col-md-4 col-sm-4">
+                  <div class="form-group">
+                     <app-textbox [controlName]="'ApprovalProcessName'" [label]="'ApprovalProcessName'"
+                        [isRequired]="true" appRestrictInput [isSpecialCharacterAllowed]="true" [maxCharacters]="50">
+                     </app-textbox>
+                  </div>
+               </div>
+               <div class="col-md-4 col-sm-4" *ngIf="!isEditMode">
+                  <div class="form-group">
+                     <app-kendo-dropdown [label]="'Workflow'" [controlName]="'Workflow'" [isRequired]="true"
+                        [list]="approvalEntityList" (onChange)="approvalRequired($event)">
+                     </app-kendo-dropdown>
+                  </div>
+               </div>
+               <div class="col-md-4 col-sm-4" *ngIf="!isEditMode">
+
+                  <div class="form-group" *ngIf="approvalReqLength>1 ">
+                     <app-kendo-dropdown [controlName]="'AprrovalReq'" [label]="'ApprovalRequired'" [isRequired]="true"
+                        [list]="approvalRequiredDropDownData">
+                     </app-kendo-dropdown>
+                  </div>
+                  <div class="form-group" *ngIf="approvalReqLength == 1 && approvalRequiredDropDownData[0].Text">
+
+                     <kendo-label text="{{'ApprovalRequired' | translate}}">
+                        <i class="fa-solid fa-star-of-life required"></i>
+                        <p class="label-answere">{{approvalRequiredDropDownData[0].Text}}</p>
+                     </kendo-label>
+                  </div>
+               </div>
+
+               <div class="col-md-4 col-sm-4" *ngIf="isEditMode">
+
+                  <div class="form-group">
+                     <kendo-label text="Workflow">
+                        <p class="label-answere">{{workFlowName | translate}}
+                     </kendo-label>
+                  </div>
+               </div>
+
+               <div class="col-md-4 col-sm-4" *ngIf="isEditMode">
+
+                  <div class="form-group">
+                     <kendo-label text="{{'ApprovalRequired' | translate}}">
+                        <p class="label-answere">{{approveralRequiredName | translate}}</p>
+                     </kendo-label>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-12">
+               <div class="form-group">
+                  <app-kendo-textarea [controlName]="'Comments'" [label]="'Comment'" [maxCharacters]="8000"
+                     [isSpecialCharacterAllowed]="true"></app-kendo-textarea>
+
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div class="card">
+         <div class="card__header">
+            <h4 class="card__heading">{{'ApplicableIn' | translate}}</h4>
+         </div>
+         <div class="card__body">
+            <div class="row">
+               <div class="col-sm-4 col-md-4">
+                  <div class="form-group">
+
+                     <app-kendo-radio-button [controlName]="'IsAllSectorApplicable'" [RadioGroup]="accessAllSectors"
+                        [label]="'Sector'" [tooltipVisible]="true" [tooltipTitle]="'AccessAllSectorsTooltipMessage'"
+                        [name]="'IsAllSectorApplicable'" (onChangeRadio)="onChangeSwitch($event,1)">
+                     </app-kendo-radio-button>
+
+                     <div class="tree-bxs">
+                        <app-tree-view *ngIf="!AddEditApprovalConfigForm?.get('IsAllSectorApplicable')?.value"
+                           [data]="sectorData" [textField]="'Text'" [isFiltered]="true" [treeViewType]="'approvalLevel'"
+                           [childrenField]="'items'" [checkedKeys]="sectorKey"
+                           (onCheckedTree)="onTreeChecked($event)"></app-tree-view>
+
+                     </div>
+                  </div>
+               </div>
+               <div class="col-sm-4 col-md-4">
+                  <div class="form-group">
+
+                     <app-kendo-radio-button [controlName]="'IsAllLocationApplicable'" [RadioGroup]="accessAllLocation"
+                        [label]="'Location'" [tooltipVisible]="true" [name]="'IsAllLocationApplicable'"
+                        [tooltipTitle]="'AccessAllLocationTooltipMessage'" (onChangeRadio)="onChangeSwitch($event,2)">
+                     </app-kendo-radio-button>
+
+                     <div class="tree-bxs">
+                        <app-tree-view *ngIf="!AddEditApprovalConfigForm?.get('IsAllLocationApplicable')?.value"
+                           [data]="sectorWiseObj.locationObj.data" [textField]="'Text'" [checkedKeys]="locKey"
+                           [isFiltered]="locationData.length > 0 || true" [childrenField]="'items'"
+                           [treeViewType]="'multileveltreeview'" [isViewApprovalCase]="true"
+                           [expandedKeys]="expandedKeys" (onCheckedTree)="onCategoryChecked($event,1)"></app-tree-view>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-sm-4 col-md-4">
+                  <div class="form-group">
+
+                     <app-kendo-radio-button [controlName]="'IsAllLaborCategoryApplicable'"
+                        [RadioGroup]="accessAllLaborCategory" [label]="'LaborCategory'" [tooltipVisible]="true"
+                        [name]="'IsAllLaborCategoryApplicable'" [tooltipTitle]="'AccessAllLaborCategoryTooltipMessage'"
+                        (onChangeRadio)="onChangeSwitch($event,4)">
+                     </app-kendo-radio-button>
+                     <div class="tree-bxs">
+                        <app-tree-view *ngIf="!AddEditApprovalConfigForm?.get('IsAllLaborCategoryApplicable')?.value"
+                           [data]="sectorWiseObj.labourObj.data" [textField]="'Text'"
+                           [isFiltered]="laborCategoriesData.length>0 || true" [checkedKeys]="labourKey"
+                           [childrenField]="'items'" [treeViewType]="'multileveltreeview'" [isViewApprovalCase]="true"
+                           [expandedKeys]="expandedKeys" (onCheckedTree)="onCategoryChecked($event,3)"></app-tree-view>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-sm-4 col-md-4">
+                  <div class="form-group">
+
+                     <app-kendo-radio-button [controlName]="'IsAllOrgLevel1Applicable'" [RadioGroup]="accessAllOrgLevel"
+                        [label]="'OrgLevel1'" [tooltipVisible]="true"
+                        [tooltipTitle]="'AccessAllOrganizationLevelTooltipMessage'"
+                        (onChangeRadio)="onChangeSwitch($event,3)" [name]="'IsAllOrgLevel1Applicable'">
+                     </app-kendo-radio-button>
+
+                     <div class="tree-bxs">
+                        <app-tree-view *ngIf="!AddEditApprovalConfigForm?.get('IsAllOrgLevel1Applicable')?.value"
+                           [data]="sectorWiseObj.orgLevelObj.data" [textField]="'Text'" [checkedKeys]="orgKey"
+                           [childrenField]="'items'" [treeViewType]="'multileveltreeview'" [isViewApprovalCase]="true"
+                           [expandedKeys]="expandedKeys" [isFiltered]="organizationLevelData.length>0 || true"
+                           (onCheckedTree)="onCategoryChecked($event,2)"></app-tree-view>
+                     </div>
+                  </div>
+               </div>
+
+
+               <div class="col-sm-4 col-md-4">
+                  <div class="form-group" *ngIf="isRfrVisible(xrmEntityId)">
+                     <app-kendo-radio-button [controlName]="'IsAllReasonForRequestApplicable'"
+                        [RadioGroup]="accessAllReasonForRequest" [label]="'ReasonForRequest'" [tooltipVisible]="true"
+                        [name]="'IsAllReasonForRequestApplicable'"
+                        [tooltipTitle]="'AccessAllReasonForRequestTooltipMessage'"
+                        (onChangeRadio)="onChangeSwitch($event,5)">
+                     </app-kendo-radio-button>
+                     <div class="tree-bxs">
+                        <app-tree-view *ngIf="!AddEditApprovalConfigForm?.get('IsAllReasonForRequestApplicable')?.value"
+                           [data]="sectorWiseObj.reasonForReqObj.data" [textField]="'Text'"
+                           [isFiltered]="reasonforRequestData.length>0 || true" [checkedKeys]="reasonKey"
+                           [childrenField]="'items'" [treeViewType]="'multileveltreeview'" [isViewApprovalCase]="true"
+                           [expandedKeys]="expandedKeys" (onCheckedTree)="onCategoryChecked($event,4)"></app-tree-view>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="card">
+         <div class="card__header">
+            <h4 class="card__heading">{{'SetupApprovalConfigurations' | translate}}</h4>
+         </div>
+         <div class="card__body">
+            <div class="row">
+               <app-approval-form-v2 (approvalForm)="getApprovalFrom($event)"
+                  (getApprovalConfigForm)="getApprovalFormValue($event)" [editData]="patchValueOfApproval"
+                  [approverByData]="approverByData" [setupApprovalData]="wholeSetupApprovalData"
+                  [approverDropDownDataObj]="approvalConfigUserObj" [isEdit]="isEditMode"></app-approval-form-v2>
+            </div>
+         </div>
+      </div>
+
+      <div class="page-footer">
+         <div class="btn-box btn-box--center">
+            <button type="button" kendoButton fillMode="outline" themeColor="primary" (click)="navigate()">
+               {{ "Cancel" | translate }}
+            </button>
+            <button type="submit" kendoButton themeColor="primary"
+               [disabled]="isEditMode ? (AddEditApprovalConfigForm.pristine && setupApprovalConfigForm.pristine && !secKeyClicked && !levelRemoved) :false"
+               appFocusOnError [formName]="AddEditApprovalConfigForm">
+               {{"Save" | translate }}
+            </button>
+
+         </div>
+      </div>
+   </form>
+
+
+</div>
+<div *ngIf="offcanvasServc.offcanvasElement" class="offcanvas offcanvas-end show offcanvas-body--mobileview"
+   tabindex="-1" id="errormessageSidebarsm" aria-labelledby="errormessageSidebarsm" [@slideInOut]>
+   <div class="offcanvas-header">
+      <h5>{{'ViewApprovalConfiguration' | translate}}</h5>
+      <button type="button" class="btn-close" (click)="hideRightPanel()"></button>
+   </div>
+   <div class="offcanvas-body">
+      <approval-view [myInput]="existingUkey"></approval-view>
+   </div>
+</div>
+<div *ngIf="offcanvasServc.offcanvasElement" class="offcanvas__fade--show"></div>
+<div *ngIf="isEditMode">
+   <event-log></event-log>
+</div>

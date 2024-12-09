@@ -1,0 +1,60 @@
+<div class="master-search widget-filter__search">
+    <div class="row">
+        <div class="col-md-12 master-search__wapper">
+            <div class="master-search__search-box">
+                <div class="custom-search">
+                    <div class="custom-search__input-box">
+                        <!-- Update Localization -->
+                        <app-search
+                        [isServerSidePagingEnable]="true"
+                        [placeholder]="'Search for...'"
+                        [EntityId]="entityId"
+                        (onSearch)="OnSearchTriggered($event)"
+                        [columnOptions]="columnOptions"
+                        ></app-search>
+                    </div>
+                    <app-advance-search
+                        [apiAddress]="'role/select-advance-search'"
+                        [isApiGateway]="true"
+                        [isServerSidePagingEnable]="isServerSidePagingEnable"
+                        [EntityId]="entityId"
+                        (selectedFilter)="OnFilterTriggered($event)"
+                    ></app-advance-search>
+                </div>
+
+
+
+            </div>
+
+
+            <div class="master-search__button-box master-search__button-box--right">
+                <app-kendo-button
+                    [xrmEntityId]="entityId"
+                    [buttonName]="'NewRole'"
+                    (Click)="navigate()"
+                    [buttonIcon]="'plus'"
+                ></app-kendo-button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <grid-view
+    [isServerSidePagingEnable]="true"
+    [apiAddress]="'role-all-paging'"
+    [isApiGateway]="true"
+    [searchText]="selectTextsearch"
+    [advFilterData]="appliedAdvFilters"
+    [columnOptions]="columnOptions"
+    [actionSet]="actionSet"
+    [tabOptions]="tabOptions"
+    [fileName]="'Role'"
+    [kendoGridSelectedBy]="'Id'"
+    [actionItemCategoryField]="'Disabled'"
+    [entityId]="entityId"
+    (onGroupedAction)="onGroupedAction($event)"
+    [pageSize]="pageSize"
+    ></grid-view>
+</div>

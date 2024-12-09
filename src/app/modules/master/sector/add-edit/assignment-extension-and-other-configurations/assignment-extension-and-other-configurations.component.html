@@ -1,0 +1,93 @@
+<form [formGroup]="assignmentExtAndOtherConfigForm">
+    <div class="card">
+        <div class="card__header">
+            <h4 class="card__heading">
+                {{'AssignmentExtensionAndOtherConfigurations' | translate}}
+            </h4>
+            <div class="card__header-icon">
+            </div>
+        </div>
+        <div class="card__body">
+            <div class="row">
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'AllowProcessExtensionAdjustment'" [onLabel]="'Yes'"
+                            [offLabel]="'No'" [label]="'AllowProcessExtensionAdjustment'" [tooltipVisible]="true"
+                            [tooltipTitle]="'Allow_Process_Extension_Adjustment_Tooltip'"
+                            [tooltipTitleLocalizeParam]="tooltipTitleParams">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'ExtRateIncreaseAllowed'" [onLabel]="'Yes'" [offLabel]="'No'"
+                            [label]="'ExtRateIncreaseAllowed'" [tooltipVisible]="true"
+                            [tooltipTitle]="'Is_Assignment_Extension_Rate_Increase_Allowed_Tooltip'"
+                            [tooltipTitleLocalizeParam]="tooltipTitleParams">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch *ngIf="!isEditMode" [onLabel]="'Yes'" [offLabel]="'No'"
+                            [controlName]="'IsTrainingRequired'" [label]="'IsTrainingRequired'" [tooltipVisible]="true"
+                            [tooltipTitle]="'Is_Training_Module_Required_Tooltip'"
+                            [tooltipTitleLocalizeParam]="tooltipTitleParams">
+                        </app-kendo-switch>
+
+                        <app-kendo-switch *ngIf="isEditMode" [isDisable]="isEditMode && !isDraft" [onLabel]="'Yes'"
+                            [offLabel]="'No'" [controlName]="'IsTrainingRequired'" [label]="'IsTrainingRequired'"
+                            [tooltipVisible]="true" [tooltipTitle]="'Is_Training_Module_Required_Tooltip'"
+                            [tooltipTitleLocalizeParam]="tooltipTitleParams">
+                        </app-kendo-switch>
+
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [tooltipVisible]="true" [controlName]="'AllowSelectionPayRateFillLiRequest'"
+                            [tooltipTitle]="'Previous_Assignment_Wage_Rate_Selectable_in_Fill_A_Request_Tooltip'"
+                            [onLabel]="'Yes'" [offLabel]="'No'" [label]="'AllowSelectionPayRateFillLiRequest'">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'ChangeRateWithoutEffectiveDate'"
+                            [isDisable]="isEditMode &&!isDraft" [onLabel]="'Yes'" [offLabel]="'No'"
+                            [label]="'ChangeRateWithoutEffectiveDate'" [tooltipVisible]="true"
+                            [tooltipTitle]="'Change_Rate_Without_Effective_Date_Tooltip'">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <app-kendo-switch [controlName]="'AllowMspAdjustSupplierMarkupInPsr'" [onLabel]="'Yes'"
+                            [offLabel]="'No'" [label]="'AllowMspAdjustSupplierMarkupInPsr'" [tooltipVisible]="true"
+                            [tooltipTitle]="'Allow_MSP_To_Adjust_Staffing_Agency_Markup_When_Processing_PSR_Tooltip'">
+                        </app-kendo-switch>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <span class="textarea__count">{{'Days' | translate}}</span>
+                        <app-numeric-box [label]="'OffBoardInterval'" [tooltipVisible]="true"
+                            [tooltipTitle]="'Off_Board_Interval_Tooltip'" [controlName]="'OffBoardInterval'"
+                            [placeholder]="''" [isRequired]="true" [maxlength]=2 [min]=0 format="n" [decimals]=0>
+                        </app-numeric-box>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group"><span class="textarea__count">{{'Days' | translate}}</span>
+                        <app-numeric-box [label]="'OffBoardIntervalLi'" [controlName]="'OffBoardIntervalLi'"
+                            [placeholder]="''" [isRequired]="true" [tooltipVisible]="true"
+                            [tooltipTitle]="'Off_Board_Interval_for_LI_Tooltip'" [maxlength]=2 [min]=0 format="n"
+                            [decimals]=0>
+                        </app-numeric-box>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

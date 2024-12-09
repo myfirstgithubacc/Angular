@@ -1,0 +1,32 @@
+.link-font {
+  font-size: var(--base-font-size);
+  position: absolute;
+  right: 0;
+  top: -20px;
+}
+
+.card__body_revision--subheading {
+  margin-bottom: -5px;
+}
+
+.k-grid .k-grid-header .k-table-th,
+.k-grid .k-grid-header .k-table-th .k-link {
+  cursor: default;
+}
+
+.revision-grid {
+  .k-grid-content {
+    max-height: unset;
+  }
+}
+
+.assignment__revision-main {
+  .card__body--subheading {
+    &.subheading__first-no-border {
+      margin-top: 0;
+      margin-bottom: 10px;
+      border: none;
+      padding-bottom: 0;
+    }
+  }
+}

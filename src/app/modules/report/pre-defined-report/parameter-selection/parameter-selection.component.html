@@ -1,0 +1,92 @@
+<div class="app-content__body custom_report--page custom_report--build">
+    <form [formGroup]="commonHeader">
+        <ng-container>
+            <app-common-header [recordName]="'Report'" [recordId]="'ABC'"
+        [entityId]="entityId" [recordIdTitle]="'AssignmentID'" [recordStatus]="'Active'"
+        [recordStatusTitle]="'Status'| translate" [isStatusEditable]="false"
+        [statusData]="statusData"></app-common-header>
+        </ng-container>
+        <!-- <app-common-header [recordName]="'Predefined Report'"
+        ></app-common-header> -->
+        <div class="card">
+            <!-- Card Header Section-->
+            <div class="card__header" id="system-messages">
+                <h4 class="card__heading">{{'FiltersAndParameters' | translate}}</h4>
+            </div>
+            <!-- Card Body Section-->
+            <div class="card__body">
+                <div class="row  report__filters">
+                    <div class="form-group">
+                     <app-fiter-report class="filter_block" [fieldList]="fieldList" [value]="value" [reportId]="reportId"
+                            (selectedFilters)="selectedFilters($event)" (isInvalidFilter)="isInvalidFilter($event)"></app-fiter-report>
+                        </div>
+                </div>
+                <div class="row">
+                    
+                    <div class="col-sm-6 col-md-6" *ngIf="!isCustomReport">
+                        <div class="form-group">
+                                <kendo-label text="Output">
+                                    <div class="visualization_select">
+                                        <ul>
+                                            <li>
+                                                <a href="javascript:;"
+                                                    (click)="toggleActive(reportDetails.Json.IsAggregateReport ? 296 : 295)"
+                                                    [class.active]="isActive(reportDetails.Json.IsAggregateReport ? 296 : 295)">
+                                                    <xrm-icon name="summary" [size]="18" color="dark-blue-color"
+                                                        class="sw-bolder"></xrm-icon>
+                                                    <p>{{reportDetails.Json.IsAggregateReport ? 'Summary List' :
+                                                        'VisualList' | translate}}</p>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:;" (click)="toggleActive(298)"
+                                                    [class.active]="isActive(298)">
+                                                    <xrm-icon name="export-excel" [size]="18"
+                                                        color="dark-blue-color" class="sw-bolder"></xrm-icon>
+                                                    <p>{{'Excel' | translate}}</p>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:;" (click)="toggleActive(299)"
+                                                    [class.active]="isActive(299)">
+                                                    <xrm-icon name="export-csv" [size]="18" color="dark-blue-color"
+                                                        class="sw-bolder"></xrm-icon>
+                                                    <p>{{'CSV' | translate}}</p>
+                                                </a>
+                                            </li>
+                                            <li [class.disabled]="true">
+                                                <a href="javascript:;" (click)="toggleActive(297)"
+                                                    [class.active]="isActive(297)">
+                                                    <xrm-icon name="export-pdf" [size]="18" color="dark-blue-color"
+                                                        class="sw-bolder"></xrm-icon>
+                                                    <p>{{'PDF' | translate}}</p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </kendo-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Card Body Section-->
+        </div>
+
+        <div class="page-footer stepper-button">
+            <div class="stepper-button__prev">
+                <button kendoButton href="javascript:;" fillMode="outline" themeColor="primary"
+                    routerLink="/xrm/report/report-library/pre-defined-report" (click)="back()"><i
+                        class="fa-solid fa-chevron-left"></i>
+                    {{'Previous' | translate}}</button>
+            </div>
+            <div class="stepper-button__next">
+                <button kendoButton href="javascript:;" themeColor="primary" fillMode="outline" (click)="copyPredefined()"
+                    *ngIf="!isCustomReport && permissions.copy">{{'Save to My Reports' | translate}}</button>
+                <button kendoButton href="javascript:;" themeColor="primary" fillMode="outline" (click)="editPredefined()"
+                    *ngIf="!isCustomReport && permissions.edit">{{'Edit' | translate}}</button>
+                <button *ngIf="permissions.run" kendoButton href="javascript:;" themeColor="primary" (click)="runReport()">{{'Run' | translate}} <i
+                        class="fa-solid fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </form>
+</div>

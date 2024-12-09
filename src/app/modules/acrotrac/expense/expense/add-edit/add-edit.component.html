@@ -1,0 +1,200 @@
+<div class="app-content__body">
+    <form [formGroup]="AddEditExpenseForm">
+        <form [formGroup]="ExpenseEntryForm">
+            <div #scrollTo class="card">
+                <div class="card__header">
+                    <h4 class="card__heading">{{ periodHeading }}</h4>
+                </div>
+                <div class="card__body">
+                    <div class="row">
+                        <div class=" col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-dropdown [list]="costAccountingList" [label]="'CostAccountingCode'"
+                                    [controlName]="'CostAccountingCodeId'" [placeholder]="'DdlSelect'"
+                                    [isRequired]="true" (onChange)="getAssignmentCostEffectiveDates($event)">
+                                </app-kendo-dropdown>
+                            </div>
+                        </div>
+                        <div class=" col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-datepicker [label]="'DateIncurred'" [controlName]="'DateIncurred'"
+                                    [isRequired]="true" [getFormattedDate]="true"
+                                    [minDate]="dateIncurred.AssignmentStartDate | date"
+                                    [maxDate]="dateIncurred.AssignmentEndDate | date" (onChange)="onDateSelect($event)">
+                                </app-kendo-datepicker>
+                            </div>
+                        </div>
+                        <div class=" col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <app-kendo-dropdown [list]="expenseTypeList" [label]="'ExpenseType'"
+                                    [controlName]="'ExpenseTypeId'" [placeholder]="'DdlSelect'"
+                                    (onChange)="onExpenseTypeList($event)" [isRequired]="true">
+                                </app-kendo-dropdown>
+                            </div>
+                        </div>
+                        <div class=" col-sm-3 col-md-3"
+                            *ngIf="NatureOfExpenseId == mileage || NatureOfExpenseId == hoursAndAmount">
+                            <div class="form-group">
+                                <app-numeric-box [label]="milesOrHours" [controlName]="'Quantity'" [isRequired]="true"
+                                    (onNumericChange)="calculatedAmount(milesOrHours, $event)"
+                                    [decimals]="roundedDecimal" [maxlength]="maxLength">
+                                </app-numeric-box>
+                            </div>
+                        </div>
+                        <div [class.col-sm-6]="isClassChange" [class.col-md-6]="isClassChange"
+                            [class.col-sm-3]="!isClassChange" [class.col-md-3]="!isClassChange">
+                            <div class="form-group amount-readOnly">
+                                <app-numeric-box [label]="'DynamicCurrency'" [controlName]="'Amount'"
+                                    [isRequired]="true" format="n2" [labelLocalizeParam]="currencyDynamicParams"
+                                    [decimals]=2 [isEditMode]="isReadOnly" [maxlength]=10
+                                    (onNumericChange)="onValidationChange('Amount',$event,'Amount')">
+                                </app-numeric-box>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <kendo-label text="Document">
+                                            <div class="col custom__file__upload expense_upload ps-0 mt-0"
+                                                *ngIf="!ExpenseEntryForm.get('DocumentFileName')?.value">
+                                                <div class="form-group upload-wrps">
+                                                    <div class="email__choose-file">
+                                                        <app-kendo-fileselect [fileSelectTheme]="'primary'"
+                                                            [multiple]="false" [isDisabled]="false"
+                                                            [fileselectMessage]="chooseFileBtnText"
+                                                            [fileExtAllow]="myRestrictions"
+                                                            (onSelect)="onFileSelect($event)">
+                                                        </app-kendo-fileselect>
+
+                                                        <div class="wrapper">
+                                                            <div class="custom-dropzone" kendoUploadDropZone="myZone">
+                                                                <app-kendo-button kendoButton fillMode="outline"
+                                                                    themeColor="primary" [buttonName]="'Choose File'"
+                                                                    [buttonIcon]="'upload'">
+                                                                </app-kendo-button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </kendo-label>
+                                        <div>
+                                            <div class="attachment-file2"
+                                                *ngIf="ExpenseEntryForm.get('DocumentFileName')?.value">
+                                                <div>
+                                                    {{ExpenseEntryForm.get('DocumentFileName')?.value}}
+                                                </div>
+                                                <div class="ms-1" kendoTooltip>
+                                                    <a href="javascript:;" kendoButton title="Delete" class="delete"
+                                                        (click)="clearFile()">
+                                                        <xrm-icon [name]="'trash-2'" [color]="'red-color'" [size]="16"
+                                                            class="sw-bold"></xrm-icon>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <app-kendo-textarea [label]="'Description'" [controlName]="'Description'"
+                                    [isRequired]="true" [maxCharacters]="magicNumber.twoThousand" [placeholder]="''">
+                                </app-kendo-textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page-footer pt-4 pb-0">
+                        <div class="btn-box btn-box--center">
+                            <button type="button" kendoButton fillMode="outline" themeColor="primary"
+                                (click)="OnResetClick()">
+                                {{'Reset' | translate}}
+                            </button>
+                            <app-kendo-button [buttonName]="buttonStatusChange ? 'Update' : 'Add'" appFocusOnError
+                                [formName]="ExpenseEntryForm" (Click)="addUpdateExpenseEntry()" [enabled]="enabled">
+                            </app-kendo-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <ng-container *ngIf="detailsData">
+            <app-expense-details [detailsData]="detailsData" [controlName]="'totalBillAmount'"
+                (onRowClick)="editDetails($event)" (updatedDetails)="deletedDetails($event)"
+                [currencyCode]="currencyCode" [disableDelete]="!buttonStatusChange">
+            </app-expense-details>
+        </ng-container>
+        <div class="card">
+            <div class="card__header">
+                <h4 class="card__heading">{{'Comments' | translate}}</h4>
+            </div>
+            <div class="card__body">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group"
+                            *ngIf="(isEditMode && this.AddEditExpenseForm.get('StatusId')?.value != draftId)">
+                            <app-kendo-label [label]="'ReviewerComment'"></app-kendo-label>
+                            <div *ngFor="let detail of this.AddEditExpenseForm.get('ReviewerComment')?.value"
+                                class="reviews__signature">
+                                <p>{{ detail.ReviewedOnDate | date: dateFormat }}</p>
+                                <p>{{ detail.ApproverComments }} <span> - {{ detail.ApproverLabel }} </span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <app-kendo-textarea [label]="'ContractorComment'" [controlName]="'ContractorComment'"
+                                [isRequired]="false" [maxCharacters]="magicNumber.twoThousand" [placeholder]="''">
+                            </app-kendo-textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-footer">
+            <div class="btn-box btn-box--center">
+                <button type="button" kendoButton fillMode="outline" themeColor="primary"
+                    routerLink="/xrm/time-and-expense/expense/list">
+                    {{ "Cancel" | translate }}
+                </button>
+
+                <button kendoButton href="javascript:;" fillMode="outline" themeColor="primary"
+                    *ngIf="(this.AddEditExpenseForm.get('StatusId')?.value == draftId || this.AddEditExpenseForm.get('StatusId')?.value == submittedId)"
+                    (click)="openDialog('Draft')" appFocusOnError [formName]="AddEditExpenseForm"
+                    [disabled]="(isEditMode ? ((AddEditExpenseForm.pristine && ExpenseEntryForm.pristine) || (detailsData.length ? false:true)) : (detailsData.length)?false:true)">
+                    {{'SaveAsDraft' | translate}}
+                </button>
+                <app-kendo-button [buttonName]="'Submit'" appFocusOnError [formName]="AddEditExpenseForm"
+                    (Click)="successStaff()"
+                    [isDisable]="(!(this.AddEditExpenseForm.get('StatusId')?.value == draftId) ? ((AddEditExpenseForm.pristine && ExpenseEntryForm.pristine) || (detailsData.length ? false:true)) : (detailsData.length)?false:true)">
+                </app-kendo-button>
+
+                <kendo-dialog class="dailog dailog-center" *ngIf="successFullySaved" [width]="600">
+                    <a href="javascript:;" class="close-dailog" (click)="closeDialog()">
+                        <xrm-icon name="x" color="black-color" [size]="18" [strokeWidth]="2.5"></xrm-icon>
+                    </a>
+                    <xrm-icon name="circle-question-mark" color="dark-blue-color" [size]="40"
+                        class="text-primary dailog__icon sw-bolder"></xrm-icon>
+                    <p>{{'ExpenseEntryMessage' | translate}}</p>
+                    <div class="dailog__button">
+                        <button type="button" kendoButton fillMode="solid" themeColor="primary"
+                            (click)="openDialog((isEditMode) ? 'Edit' : 'Add')">
+                            {{ "CertifyConfirm" | translate }}
+                        </button>
+                        <button type="button" kendoButton fillMode="outline" themeColor="primary"
+                            (click)="closeDialog()">
+                            {{ "Cancel" | translate }}
+                        </button>
+                    </div>
+                </kendo-dialog>
+            </div>
+        </div>
+    </form>
+</div>
+<app-assignment-more-details [assignmentId]="assignmentId" [recordId]="approvalId"
+    [assignmentDetails]="assignmentDetailsFromService" [isAssignDetailsNeedFromApi]="isEditMode"
+    (assignmentMoreDataEmitter)="bindingExpenseEntryDetails($event, weekendingDate)" [entityId]="entityId"
+    [weekendingDate]="weekending">
+</app-assignment-more-details>

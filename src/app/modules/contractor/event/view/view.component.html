@@ -1,0 +1,154 @@
+<!-- Main Body Section-->
+<div class="app-content__body floating-layout floating-layout__view-layout">
+
+    <form [formGroup]="statusForm">
+        <app-common-header [statusData]="statusCardData" [controlName]="'status'" [recordId]="contractorEventData.EventCode"
+        [isStatusEditable]="true" [buttonSet]="buttonSet" [recordStatus]="recordStatus" [entityId]="entityID">
+        </app-common-header>
+    </form>
+    <!-- Card Section-->
+    <div class="card">
+
+        <!-- Card Header Section-->
+       <div class="card__header">
+           <h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+       </div>
+       <!-- End Card Header Section-->
+
+        <!-- Card Body Section-->
+        <div class="card__body">
+        <!--start row Section-->
+        <div class="row">
+
+            <!-- input box start -->
+            <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                    <app-kendo-label [label]="'Sector'" [value]="contractorEventData.SectorName"></app-kendo-label>
+                </div>
+            </div>
+            <!-- input box end -->
+
+            <!-- input box start -->
+            <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                    <app-kendo-label [label]="'AssignmentID'" [value]="contractorEventData.AssignmentId"></app-kendo-label>
+                </div>
+            </div>
+            <!-- input box end -->
+
+            <!-- input box start -->
+            <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                    <app-kendo-label [label]="'Event'" [value]="contractorEventData.EventName"></app-kendo-label>
+                </div>
+            </div>
+            <!-- input box end -->
+
+            <!-- input box start -->
+            <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                    <app-kendo-label [label]="'EventReason'" [value]="contractorEventData.EventReasonName"></app-kendo-label>
+                </div>
+            </div>
+            <!-- input box end -->
+
+
+            <!-- input box start -->
+            <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                    <app-kendo-label  [isDate]="true" [label]="DateTypeId == twentyFour ? 'FromDate' : 'IncurredDate'" [value]="contractorEventData.FromDate" 
+                   >
+                   </app-kendo-label>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-6" *ngIf="DateTypeId == twentyFour">
+                <div class="form-group">
+                    <app-kendo-label  [label]="'ThroughDate'"  [isDate]="true" [value]="contractorEventData.ToDate"></app-kendo-label>
+
+                </div>
+             </div>
+            <!-- input box end -->
+
+              <!-- page subheading -->
+                <div class="col-sm-12 col-md-12" *ngIf="contractorEventData?.IsBackFillRequired == true">
+                    <h4 class="card__body--subheading">{{'BackfillDetails' | translate}}</h4>
+                </div>
+                <!-- page subheading -->
+
+            <!-- input box start -->
+            <div class="col-sm-6 col-md-6"  *ngIf="contractorEventData?.IsBackFillRequired == true">
+                <div class="form-group">
+                    <app-kendo-label [label]="'RequiresBackfill'" [value]="contractorEventData.BackfillRequired">
+                   </app-kendo-label>
+                </div>
+            </div>
+            <!-- input box end -->
+            <div class="clearfix"></div>
+
+            <!-- input box start -->
+            <div class="col-sm-6 col-md-6" *ngIf="contractorEventData?.BackfillRequired == 'Yes'">
+                <div class="form-group">
+                    <app-kendo-label [label]="'BackfillStartDate'"  [isDate]="true" [value]="contractorEventData.BackfillStartDate">
+                   </app-kendo-label>
+                </div>
+            </div>
+            <!-- input box end -->
+
+            <!-- input box start -->
+            <div class="col-sm-6 col-md-6" *ngIf="contractorEventData?.BackfillRequired == 'Yes'">
+                <div class="form-group">
+                    <app-kendo-label [label]="'BackfillEndDate'" [isDate]="true" [value]="contractorEventData.BackfillEndDate">
+                   </app-kendo-label>
+                </div>
+            </div>
+            <!-- input box end -->
+
+             <!-- input box start -->
+             <div class="col-sm-6 col-md-6" *ngIf="contractorEventData?.BackfillRequired == 'Yes'"> 
+                <div class="form-group">
+                    <app-kendo-label   class="floating-layout__view-layout--break" [label]="'BroadcastBackfillto'" [value]="choosestaffing[(contractorEventData.BroadcastFrom ?? 1)-1].Text"
+                    [tooltipVisible]="true" [tooltipTitle]="'BroadcastBackfilltoTooltipMsg'">
+                   </app-kendo-label>
+                   <div class="col-sm-6 col-md-6" *ngIf="contractorEventData?.BroadcastFrom == 3">
+                 <app-tree-view-readonly [data]="contractorEventData.staffingAgencies 
+                 " [textField]="'Text'"
+                 [childrenField]="'items'" [isFiltered]="false"></app-tree-view-readonly>
+                   </div>
+                </div>
+            </div>
+            <!-- input box end -->
+            <div class="clearfix"></div>
+
+             <!-- input box start -->
+             <div class="col-sm-12 col-md-12">
+                <div class="form-group">
+                    <app-kendo-label [label]="'Comment'" class="floating-layout__view-layout--break" [value]="contractorEventData.Comment"
+                    >
+                   </app-kendo-label>
+                </div>
+            </div>
+            <!-- input box end -->
+        </div>
+        <!--End row Section-->
+        </div>
+        <!--End Card Body Section-->
+
+   </div>
+   <!-- Card Section-->
+    
+<!--  Page Footer Section-->
+<div class="page-footer">
+    <div class="btn-box btn-box--center">
+        <app-kendo-button [buttonName]="'Back'" (click)="back()"
+         ></app-kendo-button>
+    </div>
+</div>
+<!-- End Footer Section-->
+
+</div>
+
+<div>
+    <event-log></event-log>
+</div>
+
+

@@ -1,0 +1,5 @@
+
+<button *ngIf="isRendered" type="button" kendoButton fillMode="solid" [disabled]="isDisable" themeColor="primary" class="send-button"
+  [icon]="buttonIcon" (click)="onclick()">
+  {{ buttonName | translate : getObject() }}
+</button>

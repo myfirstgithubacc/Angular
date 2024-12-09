@@ -1,0 +1,445 @@
+<div class="app-content__body app-content__body--li-create">
+    <form [formGroup]="liRequestForm">
+        <div class="col-xs-12 col-md-12">
+            <app-status-bar-li [statusId]="statusId" [approverlength]="approverLength"
+                [isEditMode]="isEditMode"></app-status-bar-li>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="card" [ngClass]="getCardClass(SECTION_NAMES.jobDetails)">
+                    <div class="card__header" (click)="onSectionAction(SECTION_NAMES.jobDetails)">
+                        <h4 class="card__heading">{{'JobDetails' | translate}}</h4>
+                        <div class="card__header-icon">
+                            <div *ngIf="!showJobDetailsSection" class="card__header-icon--error">
+                                <xrm-icon  name="alert-triangle" color="red-color" [size]="18" class="sw-bold"></xrm-icon>
+                            </div>
+                            <div>
+                                <xrm-icon [name]="showJobDetailsSection ? 'chevron-up' : 'chevron-down'" 
+                                [svgPath]="showJobDetailsSection ? chevronUp : chevronDown"[size]="18" color="black-color" class="sw-bold"></xrm-icon>
+                            </div>
+                        </div>
+                    </div>
+                    <div #jobDetailsSection class="card__body" [hidden]="!showJobDetailsSection">
+                        <div class="card__body--inner-wrapper">
+                            <div class="row">
+
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <app-kendo-dropdown *ngIf="sectorList?.length !== 1" [list]="sectorList"
+                                            [label]="'Sector'" [controlName]="'sectorName'" [isEditMode]="isEditMode"
+                                            [placeholder]="'DdlSelect'" [isRequired]="true"
+                                            (onChange)="onSectorChange($event)">
+                                        </app-kendo-dropdown>
+                                        <app-kendo-dropdown *ngIf="sectorList?.length === 1" [list]="sectorList"
+                                            [label]="'Sector'" [controlName]="'sectorName'" [isEditMode]="true"
+                                            [placeholder]="'DdlSelect'" (onChange)="onSectorChange($event)">
+                                        </app-kendo-dropdown>
+                                    </div>
+                                </div>
+                                <!-- input box start-->
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <ng-container>
+                                            <app-kendo-dropdown [list]="locationList" [label]="'Location'"
+                                                [controlName]="'locationName'" [placeholder]="'DdlSelect'"
+                                                (onChange)="onLocationChange($event)"
+                                                [isEditMode]="contractorFilled > 0" [isRequired]="true"
+                                                [helpTexts]="[locationDetails?.LocationAddress ?? '']"></app-kendo-dropdown>
+                                        </ng-container>                                      
+                                    </div>
+                                </div>
+                                <!-- input box end-->
+
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <div class="d-flex">
+                                            <div class="w-100">
+                                                <app-kendo-dropdown
+                                                    [list]="requestingManagerList"
+                                                    [isEditMode]="userDetails?.DataAccessRight == 218 || (isEditMode && nonEditableField)"
+                                                    [isRequired]="true" [label]="'RequestingPrimaryManagerName'"
+                                                    [controlName]="'primaryManager'" [placeholder]="'DdlSelect'"
+                                                    (onChange)="onRequestingManagerChange($event)">
+                                                </app-kendo-dropdown>                                               
+                                            </div>
+                                            <div class="ms-2" *ngIf="!isEditMode">
+                                                <app-load-more [buttonLabel]="'CopyfrompreviousLIRequest'"
+                                                    [headerTitle]="'PreviousLIRequests'"
+                                                    [columnOptions]="loadMoreColumnOptions"
+                                                    [dataSource]="loadMoreDataSource" [isSearch]="isSearchLoadMore"
+                                                    (search)="searchPreviousData($event)"
+                                                    (loadMoreData)="loadMoreData()" (copyData)="getCopyData($event)"
+                                                    (onOpenPopup)="openPopupLoadMore()"></app-load-more>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <app-kendo-dropdown [list]="orgLevel1List"
+                                            [label]="orgType1Data.OrgName || 'OrgLevel1'" [controlName]="'orglevel1'"
+                                            [placeholder]="'DdlSelect'"
+                                            [isEditMode]="isEditMode && contractorFilled > 0" [isRequired]="true"
+                                            (onChange)="onOrgLevel1Change($event)"></app-kendo-dropdown>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 col-md-12" *ngIf="orgType2Data?.IsVisible">
+                                    <div class="form-group">
+                                        <app-kendo-dropdown [list]="orgLevel2List"
+                                            [isEditMode]="(isEditMode && contractorFilled > 0) && !(orgType2Data.IsMandatory && !liRequestDetails.OrgLevel2Id)"
+                                            [label]="orgType2Data.OrgName"
+                                            [isRequired]="(orgType2Data.IsMandatory || (isEditMode && contractorFilled > 0)) ? true : false"
+                                            [controlName]="'orglevel2'" [placeholder]="'DdlSelect'"
+                                            (onChange)="onOrgLevel2Change($event)"></app-kendo-dropdown>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 col-md-12" *ngIf="orgType3Data?.IsVisible">
+                                    <div class="form-group">
+                                        <app-kendo-dropdown [list]="orgLevel3List"
+                                            [isEditMode]="(isEditMode && contractorFilled > 0) && !(orgType3Data.IsMandatory && !liRequestDetails.OrgLevel3Id)"
+                                            [label]="orgType3Data.OrgName"
+                                            [isRequired]="(orgType3Data.IsMandatory || (isEditMode && contractorFilled > 0)) ? true : false"
+                                            [controlName]="'orglevel3'" [placeholder]="'DdlSelect'"
+                                            (onChange)="onOrgLevel3Change($event)"></app-kendo-dropdown>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 col-md-12" *ngIf="orgType4Data?.IsVisible">
+                                    <div class="form-group">
+                                        <app-kendo-dropdown [list]="orgLevel4List"
+                                            [isEditMode]="(isEditMode && contractorFilled > 0) && !(orgType4Data.IsMandatory && !liRequestDetails.OrgLevel4Id)"
+                                            [label]="orgType4Data.OrgName"
+                                            [isRequired]="(orgType4Data.IsMandatory || (isEditMode && contractorFilled > 0)) ? true : false"
+                                            [controlName]="'orglevel4'" [placeholder]="'DdlSelect'"
+                                            (onChange)="onOrgLevel4Change($event)"></app-kendo-dropdown>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <app-kendo-dropdown [list]="laborCategoryList" [label]="'LaborCategory'"
+                                            [controlName]="'laborCategory'" [placeholder]="'DdlSelect'"
+                                            [isEditMode]="nonEditableField" [isRequired]="true"
+                                            (onChange)="onLaborCategoryChange($event)"></app-kendo-dropdown>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <app-kendo-dropdown [list]="jobCategoryList" [label]="'JobCategory'"
+                                            [controlName]="'jobCategory'" [placeholder]="'DdlSelect'"
+                                            [isEditMode]="nonEditableField" [isRequired]="true"
+                                            (onChange)="onJobCategoryChange($event)"></app-kendo-dropdown>
+                                    </div>
+                                </div>
+
+                                <!-- input box start-->
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <app-kendo-dropdown [list]="shiftList" [label]="'Shift'"
+                                            [controlName]="'shiftName'" [placeholder]="'DdlSelect'"
+                                            [isEditMode]="isEditMode && contractorFilled > 0" [isRequired]="true"
+                                            (onChange)="onShiftChange($event)"></app-kendo-dropdown>
+                                        <div class="mt-1">
+                                            <app-weekday-picker *ngIf="liRequestForm?.get('shiftName')?.value"
+                                                [dayInfo]="daysInfo" [isWeekdayEditMode]="false"
+                                                [timeRangeProperties]="timeRange" [timeFormat]="'hh:mm a'"
+                                                [startTimeControlName]="'startTimeControlName'"
+                                                [endTimeControlName]="'endTimeControlName'"
+                                                [isReadonly]="contractorFilled > 0 ? false : true"
+                                                (getWeekDayInfo)="getWeekData($event)" (onCancel)="getStatus($event)">
+                                            </app-weekday-picker>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- input box end-->
+
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <app-kendo-dropdown [list]="hdrList" [label]="'HourDistribution'"
+                                            [controlName]="'hourDistribution'" [placeholder]="'DdlSelect'"
+                                            [isEditMode]="contractorFilled > 0"
+                                            [isRequired]="true"></app-kendo-dropdown>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <app-kendo-dropdown [list]="costAccountingCodeList"
+                                            [label]="'CostAccountingCode'" [controlName]="'costAccountingName'"
+                                            [placeholder]="'DdlSelect'" [helpTexts]="[costAccountingCodeHelpText]"
+                                            [isRequired]="true"
+                                            (onChange)="onCostAccountingCodeChange($event)"></app-kendo-dropdown>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <app-kendo-dropdown [list]="reasonForRequestList" [label]="'ReasonForRequest'"
+                                            [controlName]="'reasonforRequest'" [placeholder]="'DdlSelect'"
+                                            [isEditMode]="isEditMode" [isRequired]="true"
+                                            (onChange)="onReasonForRequestChange($event)"></app-kendo-dropdown>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <app-kendo-datepicker [label]="'StartDate'" [controlName]="'startDate'"
+                                            (onChange)="onChangeStartDate($event)" [isEditMode]="isEditMode"
+                                            [isRequired]="true"></app-kendo-datepicker>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <app-kendo-datepicker [label]="'StartDateNoLaterThan'"
+                                            [controlName]="'startDateNoLaterThan'"
+                                            (onChange)="onChangeStartDateNoLaterThan($event)"></app-kendo-datepicker>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <app-kendo-dropdown *ngIf="!isMultipleTimeApprover" [list]="timeApproverList"
+                                            [label]="'PrimaryApprover'" [controlName]="'PrimaryTimeApprover'"
+                                            [placeholder]="'DdlSelect'" [isRequired]="true"></app-kendo-dropdown>
+                                        <app-kendo-label *ngIf="isMultipleTimeApprover" [label]="'PrimaryApprover'"
+                                            [value]="'Multiple Approver'"></app-kendo-label>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <app-kendo-dropdown *ngIf="!isMultipleTimeApprover" [list]="timeApproverList"
+                                            [label]="'AlternateApprover'" [controlName]="'AlternateTimeApprover'"
+                                            [placeholder]="'DdlSelect'"></app-kendo-dropdown>
+                                        <app-kendo-label *ngIf="isMultipleTimeApprover" [label]="'AlternateApprover'"
+                                            [value]="'Multiple Approver'"></app-kendo-label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-6" *ngIf="showDrugField()">
+                                    <div class="form-group">
+                                        <app-kendo-switch [label]="'DrugScreenId'" [isEditMode]="editableDrugField()"
+                                            [controlName]="'DrugScreen'" [onLabel]="'Yes'"
+                                            [offLabel]="'No'"></app-kendo-switch>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-6" *ngIf="showaBackgroundField()">
+                                    <div class="form-group">
+                                        <app-kendo-switch [label]="'BackgroundChecksTitle'"
+                                            [isEditMode]="editableBackgroundField()" [controlName]="'BackgroundChecks'"
+                                            [onLabel]="'Yes'" [offLabel]="'No'"></app-kendo-switch>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <app-contractor-details #contractor [isEditMode]="isEditMode" [parentData]="parentData"
+                                [lastTbdSequenceNo]="lastTbdSequenceNo" [startDate]="startDate"
+                                [startDateNoLaterThan]="startDateNoLaterThan"
+                                [tenurePolicyApplicable]="tenurePolicyApplicable" [requsitionTenure]="requsitionTenure"
+                                [wageRate]="wageRate" [shiftDetails]="shiftDetails" [weekDaysArray]="weekDaysArray"
+                                [benefitAdderList]="benefitAdderList" [tenureLimitType]="tenureLimitType"
+                                (totalContractorsEmitter)="handleTotalContractors($event)"
+                                (totalEstimatedCostEmitter)="handleTotalEstimatedCostContractors($event)"
+                                (onDataPicked)="getContractorData($event)" (formData)="getContractorFormData($event)"
+                                (gridChange)="onContractorGridChange()">
+                            </app-contractor-details>
+
+                            <div class="clearfix"></div>
+                            <div class="col-sm-4 col-md-4">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'NoOfRequestedContractor'"
+                                        [value]="totalContractors"></app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6"></div>
+                            <div class="col-sm-2 col-md-2">
+                                <div class="form-group" *ngIf="isEditMode">
+                                    <app-kendo-label [label]="'NoOfContractorsFilled'"
+                                        [value]="liRequestDetails ? liRequestDetails.NoOfContractorFilled : 0"></app-kendo-label>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+
+                            <div class="col-sm-4 col-md-4">
+                                <app-benefit-adder *ngIf="reqLibraryId || requestId" [reqLibraryId]="reqLibraryId"
+                                    [requestId]="requestId" [entityId]="entityId" [sectorId]="sectorId"
+                                    [locationId]="locationId" [isCreate]="!isEditMode"
+                                    (onDataPicked)="getBenefitAdderData($event)"></app-benefit-adder>
+                            </div>
+
+                            <div class="col-sm-6"></div>
+                            <div class="col-sm-2 col-md-2">
+                                <div class="form-group">
+                                    <app-kendo-label [label]="'EstimatedCost'" [isCurrency]="true"
+                                        [value]="totalEstimatedCost"></app-kendo-label>
+                                </div>
+                            </div>
+
+                            <ng-container *ngIf="!isEditMode">
+                                <div class="col-sm-6 col-md-6" *ngIf="shouldShowControl() && isBroadcastActionAllowed">
+                                    <div class="form-group">
+                                        <app-kendo-switch [label]="'ManualBroadcast'" [controlName]="'ManualBroadcast'"
+                                            [tooltipTitle]="'ManualBroadcastToolTipmsg'" [onLabel]="'Yes'"
+                                            [offLabel]="'No'" [tooltipVisible]="true"></app-kendo-switch>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                            <div class="card__body--inner-wrapper">
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <app-kendo-textarea [label]="'PositionDescription'" [allowBullets]="true"
+                                            [controlName]="'positionDesc'"></app-kendo-textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div [hidden]="hasApproverData" class="card" [ngClass]="getCardClass(SECTION_NAMES.approverDetails)">
+                    <div class="card__header" (click)="onSectionAction(SECTION_NAMES.approverDetails)">
+                        <h4 class="card__heading">{{'ApproverDetails' | translate}}</h4>
+                        <div class="card__header-icon">
+                            <div *ngIf="!showApproverDetailsSection" class="card__header-icon--error">
+                                <xrm-icon  name="alert-triangle" color="red-color" [size]="18" class="sw-bold"></xrm-icon>
+                            </div>
+                            <div>
+                                <xrm-icon [name]="showApproverDetailsSection ? 'chevron-up' : 'chevron-down'" 
+                                [svgPath]="showApproverDetailsSection ? chevronUp : chevronDown"[size]="18" color="black-color" class="sw-bold"></xrm-icon>
+                            </div>
+                        </div>
+                    </div>
+                    <div #approverDetailsSection class="card__body" [hidden]="!showApproverDetailsSection">
+                        <ng-container>
+                            <app-approval-widget-v2 [entityId]="entityId" [isEdit]="isNeedToReloadLatestApprovers"
+                                [isRecordId]="recordId" [isheading]="false" [heading]="'ApproverDetails'"
+                                [sector]="sectorId"
+                                [orgLevel1Id]="orgLevel1Id === 0 ? (liRequestDetails ? liRequestDetails.OrgLevel1Id : 0) : orgLevel1Id"
+                                [approvalInfo]="approvalConfigWidgetObj"
+                                (onApproverSubmitReq)="onApproverSubmit($event)"></app-approval-widget-v2>
+                        </ng-container>
+                    </div>
+                </div>
+
+
+                <div class="card" [hidden]="!hasUDFLength" [ngClass]="getCardClass(SECTION_NAMES.otherDetails)">
+                    <div class="card__header" (click)="onSectionAction(SECTION_NAMES.otherDetails)">
+                        <h4 class="card__heading">{{'OtherDetailsUDFs' | translate}}</h4>
+                        <div class="card__header-icon">
+                            <div *ngIf="!showOtherDetailsSection" class="card__header-icon--error">
+                                <xrm-icon  name="alert-triangle" color="red-color" [size]="18" class="sw-bold"></xrm-icon>
+                            </div>
+                            <div>
+                                <xrm-icon [name]="showOtherDetailsSection ? 'chevron-up' : 'chevron-down'" 
+                                [svgPath]="showOtherDetailsSection ? chevronUp : chevronDown"[size]="18" color="black-color" class="sw-bold"></xrm-icon>
+                            </div>
+                        </div>
+                    </div>
+                    <div #otherDetailsSection [hidden]="!showOtherDetailsSection">
+                        <!-- UDF Section -->
+                        <ng-container *ngIf="sectorId > 0">
+                            <app-udf-implementation [entityId]="entityId" [sectorId]="sectorId" [recordId]="recordId"
+                                [showTitle]="false" [recordUKey]="recordUKey" [isDataPersist]="true"
+                                [parentsInfos]="udfCommonMethods.getParentsInfo()" [actionTypeId]="actionTypeId"
+                                (onDataPicked)="getUdfData($event)" (hasUDFLength)="getUDFLength($event)">
+                            </app-udf-implementation>
+                        </ng-container>
+                        <!-- End UDF Section -->
+                    </div>
+                </div>
+
+
+                <div class="card" [ngClass]="getCardClass(SECTION_NAMES.commentDetails)">
+                    <div class="card__header" (click)="onSectionAction(SECTION_NAMES.commentDetails)">
+                        <h4 class="card__heading">{{'Comments' | translate}}</h4>
+                        <div class="card__header-icon">
+                            <div *ngIf="!showCommentDetailsSection" class="card__header-icon--error">
+                                <xrm-icon  name="alert-triangle" color="red-color" [size]="18" class="sw-bold"></xrm-icon>
+                            </div>
+                            <div>
+                                <xrm-icon [name]="showCommentDetailsSection ? 'chevron-up' : 'chevron-down'" 
+                                [svgPath]="showCommentDetailsSection ? chevronUp : chevronDown"[size]="18" color="black-color" class="sw-bold"></xrm-icon>
+                            </div>
+                        </div>
+                    </div>
+                    <div #commentDetailsSection class="card__body" [hidden]="!showCommentDetailsSection">
+                        <div class="card__body--inner-wrapper">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <app-kendo-textarea [label]="'ManagerCommentstoStaffingAgency'"
+                                            [maxCharacters]="2000" [allowBullets]="true"
+                                            [controlName]="'ManagerCommentstoStaffingAgency'"></app-kendo-textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <app-kendo-textarea [label]="'ManagerCommentsNotViewablebyStaffingAgency'"
+                                            [controlName]="'ManagerComments'" [maxCharacters]="2000"
+                                            [allowBullets]="true"></app-kendo-textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card" [hidden]="!hasDMSLength" [ngClass]="getCardClass(SECTION_NAMES.documentUploads)">
+                    <div class="card__header" (click)="onSectionAction(SECTION_NAMES.documentUploads)">
+                        <h4 class="card__heading">{{'DocumentUpload' | translate}}</h4>
+                        <div class="card__header-icon">
+                            <div *ngIf="!showDocumentUploadsSection" class="card__header-icon--error">
+                                <xrm-icon  name="alert-triangle" color="red-color" [size]="18" class="sw-bold"></xrm-icon>
+                            </div>
+                            <div>
+                                <xrm-icon [name]="showDocumentUploadsSection ? 'chevron-up' : 'chevron-down'" 
+                                [svgPath]="showDocumentUploadsSection ? chevronUp : chevronDown"[size]="18" color="black-color" class="sw-bold"></xrm-icon>
+                            </div>
+                        </div>
+                    </div>
+                    <div #documentUploadsSection [hidden]="!showDocumentUploadsSection">
+                        <ng-container>
+                            <app-dms-implementation #dms [workFlowId]="entityId" [sectorId]="sectorId"
+                                [uploadStageId]="uploadStageId" [actionTypeId]="actionTypeId" [recordId]="recordId"
+                                [showTitle]="false" (gridChange)="onGridChange()"
+                                [isTransactionScreen]="true" (hasDMSLength)="getDMSLength($event)">
+                            </app-dms-implementation>
+                        </ng-container>
+                    </div>
+                </div>
+
+                <!-- Footer Section-->
+                <div class="page-footer stepper-button">
+                    <div class="stepper-button__prev">
+                    </div>
+                    <div class="btn-box btn-box--center">
+                        <button type="button" fillMode="outline" kendoButton x themeColor="primary"
+                            (click)="cancelForm()">{{'Cancel' |
+                            translate}}</button>
+                        <ng-container *ngIf=" isEditMode ? liRequestDetails?.IsAllowedToEdit : true">
+                            <button type="button" x themeColor="primary" kendoButton appFocusOnError
+                                [formName]="liRequestForm" (click)="submitForm()"
+                                [disabled]="isEditMode ? (liRequestForm.pristine && !widgetChangeDetected) :false">{{'Submit'
+                                | translate}}</button>
+                        </ng-container>
+                    </div>
+                </div>
+                <!-- End Footer Section-->
+            </div>
+        </div>
+        <div *ngIf="isEditMode">
+            <event-log></event-log>
+        </div>
+    </form>
+</div>

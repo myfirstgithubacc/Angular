@@ -1,0 +1,287 @@
+<div class="app-content__body">
+    <!-- Common Header Starts Here -->
+    <form *ngIf="isEditMode" [formGroup]="commonHeaderForm">
+        <app-common-header [recordName]="getAssingmentTitle()" [recordId]="getRecordAssignmentCode()"
+            [entityId]="entityID" [recordIdTitle]="'AssignmentID'" [recordStatus]="getHeaderStatus()"
+            [recordStatusTitle]="'Status'| translate" [isStatusEditable]="false"
+            [statusData]="statusData"></app-common-header>
+    </form>
+    <!-- Common Header Ends Here -->
+    <!-- User Tab Strip Start -->
+    <div class="contractor-tabs-main" #mainWindow>
+        <kendo-tabstrip (tabSelect)="onClickRevisionTab($event)">
+            <kendo-tabstrip-tab [selected]="true" [title]="getLocalizationValue('AssignmentDetails')"
+                class="tabstrip-items">
+                <ng-template kendoTabContent>
+                    <!-- EditAssingmentForm Form Starts Here -->
+                    <form [formGroup]="EditAssingmentForm">
+                        <div class="content">
+                            <app-position-details [inputProperties]="{ editAssingmentForm:EditAssingmentForm,
+                                assignmentDetails:assignmentDetails,
+                                orgLevel1List:orgLevel1List,
+                                orgLevel2List:orgLevel2List,
+                                orgLevel3List:orgLevel3List,
+                                orgLevel4List:orgLevel4List,
+                                workLocationList:workLocationList,
+                                locationAdress:locationAdress,
+                                hireCodeList:hireCodeList,
+                                laborCategoryList:laborCategoryList,
+                                jobCategoryList:jobCategoryList,
+                                securityClearanceList:securityClearanceList,
+                                shiftList:shiftList,
+                                daysInfo:daysInfo,
+                                timeRange:timeRange,
+                                requestingManagerList:requestingManagerList,
+                                modifyPO: modifyPO,
+                                terminationAssignment: terminationAssignment,
+                                choosestaffing: choosestaffing,
+                                choosestaffingClient: choosestaffingClient,
+                                dynamicLabelName:dynamicLabelName,
+                                terminationReasonList:terminationReasonList,
+                                terminationVisibleField:terminationVisibleField,
+                                endDateChanged: endDateChanged,
+                                isControlRevision: isControlRevision,
+                                estimatedCostChange: estimatedCostChange,
+                                assignmentRevisionFields:assignmentRevisionFields,
+                                currencyCode:currencyCode,
+                                levelDNR:levelDNR,
+                                IsRevisionPending:IsRevisionPending,
+                                revisionFields: this.revisionFields,
+                                isAssignmentTerminated: isAssignmentTerminated,
+                                showBackfill: showBackfill
+                                }" (onShiftChangeDropdown)="onShiftChange($event)" (onWeekChange)="getWeekData($event)"
+                                (getStatuss)="getStatus($event)" (openRightSidePanell)="openRightSidePanel($event)"
+                                (startDateChange)="startDateChange($event)"
+                                (backfillStartDateChange)="backfillStartDateChange($event)"
+                                (endDateChange)="endDateChange($event)"
+                                (backFillEndDateChange)="backFillEndDateChange($event)"
+                                (revisionFieldUpdate)="revisionFieldUpdate($event)" (onChangePO)="onChangePO($event)"
+                                (onChangeterminationAssignment)="onChangeTerminationAssignment($event)"
+                                (onChangeTerminationRadio)="onChangeTerminationRadio($event)"
+                                (onChangeDnrSwitch)="onChangeDnrSwitch($event)"
+                                (onChangeBackfillSwitch)="onChangeBackfillSwitch($event)"
+                                (changeNotifyStaffing)="changeNotifyStaffing($event)"
+                                (requestingManagerChange)="requestingManagerChange($event)"></app-position-details>
+                            <!-- PO Details Card Section -->
+                            <app-po-details [inputProperties]="{
+                                editAssingmentForm:EditAssingmentForm,
+                                assignmentDetails:assignmentDetails,
+                                poOwnerList:poOwnerList,
+                                poRadioGroup:poRadioGroup,
+                                poGrid:poGrid,
+                                currencyCode:currencyCode,
+                                isRevisionMode: isRevisionMode,
+                                isControlRevision: isControlRevision,
+                                IsRevisionPending: IsRevisionPending,
+                                revisionFields: revisionFields,
+                                poEffectiveFromDateList: poEffectiveFromDateList
+                            }" (changePoRadioAddFunds)="changePoRadioAddFunds($event)"
+                                (changePoFundAmount)="changePoFundAmount($event)"
+                                (revisionFieldUpdate)="revisionFieldUpdate($event)"></app-po-details>
+                            <!-- PO Details Card Section end -->
+
+
+                            <!-- Rate Details Starts here -->
+                            <app-rate-details [inputProperties]="{
+                            editAssingmentForm:EditAssingmentForm,
+                            assignmentDetails:assignmentDetails,
+                            otHoursBilledAtRadioGroup:otHoursBilledAtRadioGroup,
+                            benefitAdderGrid:benefitAdderGrid,
+                            countryId:countryId,
+                            currencyCode:currencyCode,
+                            unitType: unitType,
+                            assignmentRevisionFields:assignmentRevisionFields,
+                            isRevisionMode: isRevisionMode,
+                            modifyPORadioGroup: modifyPORadioGroup,
+                            isControlRevision:isControlRevision,
+                            estimatedCostChange: estimatedCostChange,
+                            IsRevisionPending: IsRevisionPending  ,
+                            showRevisionRateDate: showRevisionRateDate   ,
+                            revisionFields: this.revisionFields
+                          }" (revisionFieldUpdate)="revisionFieldUpdate($event)"
+                                (poAmountRevisedRate)="poAmountRevisedRate($event)"
+                                (revisedRateDate)="revisedRateDate($event)"
+                                (changePoRevisedButton)="changePoRevisedButton($event)"></app-rate-details>
+                            <!-- Rate Details Section Ends here -->
+
+                            <!-- Time & Expense Card Section Starts here -->
+                            <app-time-expense-configuration [inputProperties]=" {
+                                editAssingmentForm:EditAssingmentForm,
+                                assignmentDetails:assignmentDetails,
+                                hourDistributionList:hourDistributionList,
+                                restMealBreakList:restMealBreakList,
+                                isEditMode:isEditMode,
+                                hourDistributionEffectiveDateList:hourDistributionEffectiveDateList,
+                                restBreakEffectiveDateList:restBreakEffectiveDateList,
+                                IsRevisionPending: IsRevisionPending,
+                                isControlRevision: isControlRevision,
+                                revisionFields: revisionFields
+                              }"
+                                (hourDistributionRuleChanged)="hourDistributionRuleChanged($event)"
+                                (hourDistributionEffectiveDateChanged)="addValidationHourDistributionEffectiveDate($event, 'HourDistributionEffectiveDate')"
+                                (restMealBreakEffectiveDateChanged)="addValidationRestMealEffectiveDate($event, 'RestMealEffectiveDate')"></app-time-expense-configuration>
+                            <!-- Time & Expense Card Section Ends here -->
+                            <app-cost-accounting-code *ngIf="costCenterConfiguration != undefined"
+                                [EditUserForm]="EditAssingmentForm" [costCenterConfig]="costCenterConfiguration"
+                                [listForDropdown]="costCenterGrid" [assignmentDetails]="assignmentDetails"
+                                [gridData]="assignmentDetails?.AssignmentCostAccountingCodes!"
+                                (updateCostAccountingCodeData)="updateCostAccountingCodeManually($event)"></app-cost-accounting-code>
+                            <ng-container *ngIf="assignmentDetails.SectorId! > 0 && isFieldVisible('backgroundcheck')">
+                                <app-onboarding-requirements #onboarding [entityId]="entityID"
+                                    [sectorId]="assignmentDetails.SectorId!" [locationId]="getLocationId()"
+                                    [recordId]="getRecordId()" [isButtonVisible]="true" [actionTypeId]="actionTypeId"
+                                    [isDrugScreen]="isDrugScreen" [isBackgroundCheck]="isBackgroundCheck"
+                                    [isPendingResultSection]="isPendingResultSection"
+                                    (onDataPicked)="getOnboardingData($event)">
+                                </app-onboarding-requirements>
+
+                            </ng-container>
+
+                            <!-- UDF Details Starts Here -->
+
+                            <ng-container>
+                                <app-udf-implementation [entityId]="52" [recordId]="assignmentDetails?.Id"
+                                    [sectorId]="assignmentDetails.SectorId" [recordUKey]="assignmentDetails?.UKey"
+                                    [parentsInfos]="udfCommonMethods.getParentsInfo()" [actionTypeId]="2"
+                                    (onDataPicked)="udfDataGet($event)">
+                                </app-udf-implementation>
+                            </ng-container>
+                            <!-- UDF Details Ends Here -->
+
+
+                            <!-- Document Card Section Starts Here -->
+                            <div class="card" [hidden]="!hasDMSLength">
+                                <div class="card__header">
+                                    <h4 class="card__heading">{{'Document' | translate}}</h4>
+                                </div>
+                                <div class="card__body">
+                                    <app-dms-implementation #dms [workFlowId]="entityID" [userGroupId]="userGroupId"
+                                        [sectorId]="assignmentDetails?.SectorId!" [uploadStageId]="uploadStageId"
+                                        [actionTypeId]="actionTypeId" [recordId]="assignmentDetails?.Id!"
+                                        [showTitle]="false" [processingId]="processingId" [isTransactionScreen]="true"
+                                        (gridChange)="gridChangeDocument()" (hasDMSLength)="hasDMSLengthFn($event)">
+                                    </app-dms-implementation>
+                                </div>
+                            </div>
+                            <ng-container *ngIf="hasRevisionField() && showApproverWidget">
+                                <app-approval-widget-v2 [entityId]="67" [isEdit]="false"
+                                    [isRecordId]="assignmentDetails?.Id!" [isheading]="true"
+                                    [heading]="'ApproverDetails'" [sector]="assignmentDetails?.SectorId!"
+                                    [orgLevel1Id]="assignmentDetails?.OrgLevel1Id!"
+                                    [approvalInfo]="approvalConfigWidgetObj"
+                                    (onApproverSubmitReq)="onApproverSubmit($event)"></app-approval-widget-v2>
+                            </ng-container>
+                            <!-- Comments Card Section -->
+                            <div class="card">
+                                <!-- Card Header Section -->
+                                <div class="card__header">
+                                    <h4 class="card__heading">{{'Comments' | translate}}</h4>
+                                    <div class="card__header-icon"></div>
+                                </div>
+                                <!-- End Card Header Section -->
+
+
+                                <!-- Card Body Section -->
+                                <div class="card__body">
+                                    <div class="row">
+                                        <!-- input box start -->
+                                        <div class="col-sm-12 col-md-12">
+                                            <div class="form-group">
+                                                <app-kendo-textarea [controlName]="'comment'" [label]="'Comments'"
+                                                    [maxCharacters]="2000" [isEditMode]="isReadOnly('comment')">
+                                                </app-kendo-textarea>
+                                            </div>
+                                        </div>
+                                        <!-- input box start -->
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Comments Card Section end -->
+
+                            <!-- Footer Section-->
+                            <div class="page-footer">
+                                <div class="btn-box btn-box--center">
+                                    <button type="button" kendoButton fillMode="outline" themeColor="primary"
+                                        (click)="navigate()">{{'Cancel' | translate}}</button>
+                                    <button type="button" kendoButton (click)="submitForm()"
+                                        [disabled]="EditAssingmentForm.dirty || isControlRevision.shiftWorkingDays? false : true"
+                                        themeColor="primary" appFocusOnError
+                                        [listformName]="[EditAssingmentForm]">{{'Save' | translate
+                                        }}</button>
+                                </div>
+                            </div>
+                            <!-- End Footer Section-->
+                            <div *ngIf="isFieldVisible('auditLog')">
+                                <event-log [unitType]="unitType"></event-log>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- EditAssingmentForm Form Ends Here -->
+                </ng-template>
+            </kendo-tabstrip-tab>
+            <ng-container *ngIf=" isRevisionVisible && (assignmentDetails?.LoggedInUserRoleGroupID == 2 || assignmentDetails?.LoggedInUserRoleGroupID == 4 )">
+                <kendo-tabstrip-tab [selected]="false" [title]="getLocalizationValue('Revisions')"
+                    class="tabstrip-items">
+                    <ng-template kendoTabContent>
+                        <div class="content">
+                            <app-revision-list *ngIf="getRevisionTab().index==1"
+                                [assignmentID]="assignmentDetails.Id!"></app-revision-list>
+                            <app-revision-view *ngIf="getRevisionTab().index==2" [Ukey]="getRevisionTab().revisionId"
+                                [assingmentId]="assignmentDetails.Id!"></app-revision-view>
+                            <app-revision-review *ngIf="getRevisionTab().index==3" [Ukey]="getRevisionTab().revisionId"
+                                [assingmentId]="assignmentDetails.Id!"
+                                (revisionProcess)="revisionProcess($event)"></app-revision-review>
+                            <app-revision-withdraw *ngIf="getRevisionTab().index==4"
+                                [Ukey]="getRevisionTab().revisionId" [assingmentId]="assignmentDetails.Id!"
+                                (revisionProcess)="revisionProcess($event)"></app-revision-withdraw>
+                            <app-revision-process *ngIf="getRevisionTab().index==5" [Ukey]="getRevisionTab().revisionId"
+                                [assingmentId]="assignmentDetails.Id!"
+                                (revisionProcess)="revisionProcess($event)"></app-revision-process>
+                        </div>
+                    </ng-template>
+                </kendo-tabstrip-tab>
+            </ng-container>
+
+
+            <!-- <kendo-tabstrip-tab [selected]="false" [title]="getLocalizationValue('TimeandExpenseSheet')"
+                class="tabstrip-items">
+                <ng-template kendoTabContent>
+                    <div class="content"> -->
+            <!-- <app-time-expense-list></app-time-expense-list> -->
+            <!-- </div>
+                </ng-template>
+            </kendo-tabstrip-tab> -->
+
+        </kendo-tabstrip>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-end quick-view quick-view__assignmentDetails" tabindex="-1"
+    (hidden.bs.offcanvas)="offcanvasHidden()" id="assignmentDetails" aria-labelledby="assignmentDetails">
+    <div class="offcanvas-header">
+        <h5>{{getRightPanelConfiguration().type=="LI"? 'Request Details': 'Candidate/Submittal Details'}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"
+            (click)="closeOpenPanel()"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div *ngIf="getRightPanelConfiguration().type=='LI'">
+
+            <app-li-request-quick-view [LIRequestData]="LIRequestData"
+                [dynamicLabelName]="dynamicLabelName"></app-li-request-quick-view>
+            <!-- <app-view-li [isVisible]="false" [ukey]="assignmentDetails?.RequestUKey"></app-view-li> -->
+        </div>
+        <div *ngIf="getRightPanelConfiguration().type=='Submittal'">
+            <h5>{{'Submittal' | translate}}</h5>
+        </div>
+        <!-- Footer Section-->
+        <div class="page-footer">
+            <div class="btn-box btn-box--center" *ngIf="isFieldVisible('MoreDetails')">
+                <button type="button" kendoButton themeColor="primary" (click)="moreDetails()">{{'MoreDetails' |
+                    translate}}</button>
+            </div>
+        </div>
+        <!-- End Footer Section-->
+    </div>
+</div>

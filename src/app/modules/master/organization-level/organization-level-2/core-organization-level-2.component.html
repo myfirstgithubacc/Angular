@@ -1,0 +1,15 @@
+<form [formGroup]="AddEditEventReasonForm" *ngIf="isShowHeader">
+    <app-common-header 
+    [entityId]="entityId" 
+    [recordStatus]="getOrgLevelStatus()"
+    [statusData]="statusData"
+    [buttonSet]="buttonSet" 
+    [isStatusEditable]="false">
+  </app-common-header>
+  </form>
+
+<router-outlet></router-outlet>
+
+<div *ngIf="isShowHeader">
+    <event-log></event-log>
+</div>

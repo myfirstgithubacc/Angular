@@ -1,0 +1,223 @@
+<!-- Main Body Section-->
+
+<div class="app-content__body">
+    
+    <!-- Contractor  Tab Strip Start -->
+    <div class="contractor-tabs-main">
+        <kendo-tabstrip>
+            <kendo-tabstrip-tab [title]="'ContractorInformation' | translate"
+                [selected]="isContractorInformationTabSelected" class="tabstrip-items">
+                <ng-template kendoTabContent>
+                    <div class="content">
+                        <div class="card">
+                            <!-- Card Header Section-->
+                            <div class="card__header">
+                                <h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+                            </div>
+                            <!-- End Card Header Section-->
+
+                            <!-- Card Body Section-->
+                            <div class="card__body">
+                                <div class="row">
+                                    <div class="view__screen">
+                                        <ul class="list__data">
+                                            <li class="list__data--item"> <strong
+                                                    class="kendo-label">{{'ContractorName'|translate}}</strong> <span
+                                                    class="data-answere">{{contractorData.FullName}}</span></li>
+                                            <li class="list__data--item"> <strong
+                                                    class="kendo-label">{{'ContactPhone'|translate}}</strong> <span
+                                                    class="data-answere">
+                                                    <form [formGroup]="ShowUserData">
+                                                        <app-kendo-phone [isEditMode]="false"
+                                                            [countryId]="contractorData.CountryId"
+                                                            [phoneControlName]="'phoneControl'"
+                                                            [phoneExtControlName]="'phoneExt'"
+                                                            [isExtension]="phExt"></app-kendo-phone>
+                                                    </form>
+                                                </span></li>
+                                            <li class="list__data--item"> <strong
+                                                    class="kendo-label">{{'RequireLoginForTimeAndExpense'|translate}}</strong> <span
+                                                    class="data-answere">{{contractorData.RequireLoginforTE ? 'Yes'
+                                                    : 'No'}}</span></li>
+
+                                            <li class="list__data--item"> <strong class="kendo-label">{{'ContractorUId'|
+                                                    translate}}</strong> <span
+                                                    class="data-answere">{{contractorData.SSN}}</span></li>
+                                            <li class="list__data--item"> <strong
+                                                    class="kendo-label">{{'EmailAddress'|translate}}</strong>
+                                                <span class="data-answere">{{contractorData.Email}}</span></li>
+                                            <li class="list__data--item"> <strong
+                                                    class="kendo-label">{{'UserLoginId'|translate}}</strong> <span
+                                                    class="data-answere">{{contractorData.UserLogInId}}</span></li>
+                                            <li class="list__data--item"> <strong
+                                                    class="kendo-label">{{'WeekedningDateofMostRecentTimeRec'|translate}}</strong>
+                                                <span class="data-answere">{{contractorData.RecentWeekEnding}}</span></li>
+                                            <li class="list__data--item">  <span class="data-answere"><a href="javascript:;" data-bs-toggle="offcanvas" (click)="openPOCard()"
+                                                 data-bs-target="#hourBreakdownSidebar" >{{'ContractorHoursBreakdown' | translate}}</a></span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card" *ngIf="contractorData.TenureDetails.length>0">
+                            <!-- Card Header Section-->
+                            <div class="card__header">
+                                <h4 class="card__heading">{{'TenureInformation'|translate}}</h4>
+                                <div class="card__header-icon">
+
+                                </div>
+                            </div>
+                            <!-- End Card Header Section-->
+
+                            <!-- Card Body Section-->
+                            <div class="card__body">
+                                <div class="row">
+
+                                    <!-- Grid Box Start -->
+                                    <div class="col-sm-12 col-md-12 list-view form-group grid-border">
+                                        <app-list-view #tenureLimit [columnData]="locationOfficerColumn"
+                                            [columnConfigure]="locationOfficerColumnConfiguration"
+                                            [populatedData]="locationOfficerPrefilledData">
+                                        </app-list-view>
+                                    </div>
+                                    <!-- Grid Box End -->
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <app-udf-implementation [entityId]="entityID" [sectorId]="sectorIdUDF" [recordUKey]="recordUKey"
+                            [parentsInfos]="udfCommonMethods.getParentsInfo()" [actionTypeId]="actionTypeId">
+                        </app-udf-implementation>
+
+                        <!-- Card Section-->
+                        <div class="card">
+                            <!-- Card Header Section-->
+                            <div class="card__header">
+                                <h4 class="card__heading">{{'Comments'|translate}}</h4>
+                            </div>
+                            <!-- End Card Header Section-->
+                            <!-- Card Body Section-->
+                            <div class="card__body">
+                                <div class="row">
+                                    <!-- input box start -->
+                                    <div class="col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <app-kendo-label class="floating-layout__view-layout--break"
+                                                [label]="'Comment'" [value]="contractorData.Comments">
+                                            </app-kendo-label>
+                                        </div>
+                                    </div>
+                                    <!-- input box end -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Card Section End-->
+                    </div>
+                    <div class="page-footer">
+                        <div class="btn-box btn-box--center">
+                            <app-kendo-button [buttonName]="'Back'" (Click)="navigate()"
+                            ></app-kendo-button>
+
+                        </div>
+                    </div>
+
+                    <ng-container>
+                        <event-log></event-log>
+                    </ng-container>
+                </ng-template>
+            </kendo-tabstrip-tab>
+            <!-- Assignment Tab Strip Start -->
+            <kendo-tabstrip-tab [title]="'AssignmentDetail' | translate"
+                [selected]="!isContractorInformationTabSelected" class="tabstrip-items">
+                <ng-template kendoTabContent>
+                    <div class="content">
+                        <app-contractor-assignment-list
+                            [navigationUrl]="'/xrm/contractor/contractor-details/view/'+ukey"
+                            [isAssignDetailsTabSelected]="true"
+                            [contractorId]="contractorData.Id"></app-contractor-assignment-list>
+                    </div>
+                    <!-- Main Body Section-->
+                </ng-template>
+            </kendo-tabstrip-tab>
+            <!-- Assignment Tab Strip End -->
+
+            <!-- Event Tab Strip Start -->
+            <kendo-tabstrip-tab [title]="'Events' | translate" class="tabstrip-items">
+                <ng-template kendoTabContent>
+                    <div class="content">
+                        <app-contractor-event-list [contractorId]="contractorData.Id" [contractorUkey]="ukey"
+                            [isTab]="true"></app-contractor-event-list>
+
+                    </div>
+                </ng-template>
+            </kendo-tabstrip-tab>
+            <!-- Event Tab Strip End -->
+        </kendo-tabstrip>
+    </div>
+    <!-- Contractor Tab Strip End -->
+
+
+    <!--  Page Footer Section-->
+
+    <!-- End Footer Section-->
+
+     <!-- Contractor Hours Breakdown sidebar -->
+<div class="offcanvas offcanvas-end floating-layout floating-layout__quickview-layout" tabindex="-1" id="hourBreakdownSidebar" aria-labelledby="hourBreakdownSidebar">
+    <div class="offcanvas-header">
+        <h5>{{'ContractorHoursBreakdown' | translate}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+        </button>
+    </div>
+   
+    <div class="offcanvas-body">
+        <div class="card mt-4">
+            <div class="card__body pt-0">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <app-kendo-label [label]="'OverallTotalHours'"
+                            [tooltipTitle]="'OverallTotalHoursTooltip'"
+                            [tooltipVisible]="true" [value]="poBreakdownData?.OverallTotalHours" [isNumber]="true"></app-kendo-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
+                          <app-kendo-label [label]="'YearTillDateHours'"
+                          [tooltipTitle]="'YearTillDateHoursTooltip'"
+                          [tooltipVisible]="true" [value]="poBreakdownData?.YearTillTotalHours" [isNumber]="true"></app-kendo-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+   
+        <div class="card">
+          <div class="card__header">
+              <h4 class="card__heading card__heading--primary">
+                <app-kendo-label [label]="'HoursBreakdownbyPO'"
+                [tooltipTitle]="'HoursBreakdownbyPOTooltip'"
+                [tooltipVisible]="true"></app-kendo-label>
+               </h4>
+          </div>
+   
+          <div class="card__body pt-0">
+              <div class="view__screen view__screen--sidebar">
+                  <ul class="list__data">
+                      <li class="list__data--item"> <span class="data-answere"><strong>{{'PO' | translate}}</strong></span>
+                        <span class="data-answere"><strong>{{'Hours' | translate}}</strong></span>
+                      </li>
+                      <ng-container *ngFor="let item of poBreakdownData?.HoursBreakdownByPO">
+                        <li class="list__data--item"> <span class="data-answere">{{item?.PO}}</span>
+                            <span class="data-answere">{{item?.TotalHours}}</span>
+                        </li>
+                        </ng-container>
+                  </ul>
+              </div>
+          </div>
+      </div>
+   
+      </div>
+  </div>
+  <!-- End Contractor Hours Breakdown sidebar -->
+</div>

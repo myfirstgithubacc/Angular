@@ -1,0 +1,29 @@
+
+<div class="master-search">
+    <div class="row">
+      <div class="col-md-12 master-search__wapper">
+        <div class="master-search__search-box">
+          <div class="custom-search">
+                <div class="custom-search__input-box">
+                    <app-search [placeholder]="'Search for...'" [buttonNameSearch]="''" [EntityId]="entityId" [isServerSidePagingEnable]="isServerSidePagingEnable"
+                        (onSearch)="OnSearch($event)" [columnOptions]="columnOptions">
+                    </app-search>
+                </div>
+                 <app-advance-search [EntityId]="entityId" [apiAddress]="advApiAddress" [isServerSidePagingEnable]="isServerSidePagingEnable" 
+                (selectedFilter)="onFilter($event)" [isApiGateway]="true"></app-advance-search>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div> 
+      
+      <!-- Grid Section -->
+      <div class="row">
+        <grid-view [isServerSidePagingEnable]="isServerSidePagingEnable" [apiAddress]="apiAddress" [advFilterData]="appliedAdvFilters" 
+        [isApiGateway]="true" [searchText]="searchText" [entityId]="entityId" [pageSize]="pageSize" [actionItemCategoryField]="'Disabled'"
+        [isSortingAllowed]="true" [isFilteringAllowed]="true" [columnOptions]="columnOptions" [actionSet]="actionSet" [tabOptions]="tabOptions"
+        [kendoGridSelectedBy]="'uKey'" [isActionColumnVisible]="true"
+        [fileName]="'InterviewRequest'" [multiSelect]="false"></grid-view>
+      </div>
+      <!-- Grid Section -->
+     

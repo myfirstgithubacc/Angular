@@ -1,0 +1,264 @@
+<div class="app-content__body">
+    <!-- Card Section-->
+    <div class="row">
+        <div class="col-md-3 mobile-none">
+            <div class="wizard">
+                <kendo-stepper [steps]="steps" stepType="full" [(currentStep)]="currentStep" [linear]="false"
+                    orientation="vertical" (activate)=stepperEvent($event)>
+                </kendo-stepper>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <form [formGroup]="EditSectorForm">
+                <!--Stepper-section-start-here-->
+                <!-- Create From Existing Sector Section end-->
+                <div class="mb-3" *ngIf="currentStep === 0 || resetStep" [attr.id]='steps'>
+                    <app-basic-details [basicDetailTouched]="BasicDetailsTouched" [isCopied]="IsCopied"
+                        (onCopyChange)="handleCopyChange($event)" [isDraft]="isDraft" [copySectorForm]="CopySectorForm"
+                        [childFormGroup]="this.EditSectorForm" [formStatus]="isEditMode"
+                        (setAllData)="setAllData($event)">
+                    </app-basic-details>
+                </div>
+                <!-- Create From Existing Sector Section end-->
+
+                <!--Organization Structure Section start-->
+                <div class="card" *ngIf="currentStep === 1 || resetStep">
+                    <app-organization-structure [ShowAll]="showAllSectionsSwitch" [isSubmitted]="isSubmitted"
+                        [reload]="isCopy" [isDraft]="isDraft" [childFormGroup]="this.EditSectorForm"
+                        [formStatus]="isEditMode">
+                    </app-organization-structure>
+                </div>
+                <!--Organization Structure Section end-->
+
+                <!--Shift Configuration Section start-->
+                <div *ngIf="currentStep === 2 || resetStep">
+                    <app-shift-configurations [ShowAll]="showAllSectionsSwitch" [childFormGroup]="this.EditSectorForm"
+                        [formStatus]="isEditMode" [isDraft]="isDraft">
+                    </app-shift-configurations>
+                </div>
+                <!--Shift Configuration Section end-->
+
+                <!-- Pricing Model Configuration Section start-->
+                <div *ngIf="currentStep === 3 || resetStep">
+                    <app-pricing-model-configurations [ShowAll]="showAllSectionsSwitch" [reload]="isCopy"
+                        [isDraft]="isDraft" [childFormGroup]="this.EditSectorForm" [formStatus]="isEditMode">
+                    </app-pricing-model-configurations>
+                </div>
+                <!-- Pricing Model Configuration Section end-->
+
+                <!-- Rates Configuration Section start-->
+                <div *ngIf="currentStep === 4 || resetStep">
+                    <app-rates-and-fees-configurations [ShowAll]="showAllSectionsSwitch" [isDraft]="isDraft"
+                        [childFormGroup]="this.EditSectorForm" [formStatus]="isEditMode">
+                    </app-rates-and-fees-configurations>
+                </div>
+                <!--Rates Configuration Section end-->
+
+                <!--T&E Configurations Section start-->
+                <div *ngIf="currentStep === 5 || resetStep">
+                    <app-time-and-expense-configurations [ShowAll]="showAllSectionsSwitch" [reload]="isCopy"
+                        [isDraft]="isDraft" [childFormGroup]="this.EditSectorForm" [formStatus]="isEditMode">
+                    </app-time-and-expense-configurations>
+                </div>
+                <!--T&E Configurations Section end-->
+
+                <!--Assignment Extension & Other Configurations Section start-->
+                <div *ngIf="currentStep === 6 || resetStep">
+                    <app-assignment-extension-and-other-configurations [ShowAll]="showAllSectionsSwitch"
+                        [isDraft]="isDraft" [childFormGroup]="this.EditSectorForm" [formStatus]="isEditMode">
+                    </app-assignment-extension-and-other-configurations>
+                </div>
+                <!--Assignment Extension & Other Configurations Section end-->
+
+                <!--Tenure Configuration Section start-->
+                <div *ngIf="currentStep === 7 || resetStep">
+                    <app-tenure-configurations [ShowAll]="showAllSectionsSwitch" [reload]="isCopy" [isDraft]="isDraft"
+                        [childFormGroup]="this.EditSectorForm" [formStatus]="isEditMode">
+                    </app-tenure-configurations>
+                </div>
+                <!--Tenure Configuration Section end-->
+
+                <!--Requisition Configuration Section start-->
+                <div *ngIf="currentStep === 8 || resetStep">
+                    <app-requisition-configurations [ShowAll]="showAllSectionsSwitch" [isSubmitted]="isSubmitted"
+                        [reload]="isCopy" [childFormGroup]="this.EditSectorForm" [formStatus]="isEditMode">
+                    </app-requisition-configurations>
+                </div>
+                <!--Requisition Configuration Section end-->
+
+                <!--Submittal Configuration Section start-->
+                <div *ngIf="currentStep === 9 || resetStep">
+                    <app-submittal-configurations [ShowAll]="showAllSectionsSwitch" [isSubmitted]="isSubmitted"
+                        [reload]="isCopy" [isDraft]="isDraft" [childFormGroup]="this.EditSectorForm"
+                        [formStatus]="isEditMode"> </app-submittal-configurations>
+                </div>
+                <!--Submittal Configuration Section end-->
+
+                <!--Benefit Adder Configuration Section start-->
+                <div *ngIf="currentStep === 10 || resetStep">
+                    <app-benefit-add-configurations [ShowAll]="showAllSectionsSwitch" [isSubmitted]="isSubmitted"
+                        [reload]="isCopy" [isDraft]="isDraft" [childFormGroup]="this.EditSectorForm"
+                        [formStatus]="isEditMode">
+                    </app-benefit-add-configurations>
+                </div>
+                <!--Benefit Adder Configuration Section end-->
+
+                <!--Configure MSP Process Activity Section start-->
+                <div *ngIf="currentStep === 11 || resetStep">
+                    <app-configure-msp-process-activity [ShowAll]="showAllSectionsSwitch" [reload]="isCopy"
+                        [isDraft]="isDraft" [childFormGroup]="this.EditSectorForm" [formStatus]="isEditMode">
+                    </app-configure-msp-process-activity>
+                </div>
+                <!--Configure MSP Process Activity Section end-->
+
+                <!--Performance Survey Configurations Section start-->
+                <div *ngIf="currentStep === 12 || resetStep">
+                    <app-performance-survey-configurations [ShowAll]="showAllSectionsSwitch" [isSubmitted]="isSubmitted"
+                        [reload]="isCopy" [isDraft]="isDraft" [childFormGroup]="this.EditSectorForm"
+                        [formStatus]="isEditMode">
+                    </app-performance-survey-configurations>
+                </div>
+                <!--Performance Survey Configurations Section end-->
+
+                <!--RFx Configuration Section start-->
+                <div *ngIf="currentStep === 13 || resetStep">
+                    <app-rfx-configurations [ShowAll]="showAllSectionsSwitch" [isSubmitted]="isSubmitted"
+                        [reload]="isCopy" [childFormGroup]="this.EditSectorForm" [isDraft]="isDraft"
+                        [formStatus]="isEditMode"> </app-rfx-configurations>
+                </div>
+                <!--RFx Configuration Section end-->
+
+                <!--Charge Number Configuration Section start-->
+                <div *ngIf="currentStep === 14 || resetStep">
+                    <app-charge-number-configurations [ShowAll]="showAllSectionsSwitch" [isSubmitted]="isSubmitted"
+                        [reload]="isCopy" [isDraft]="isDraft" [childFormGroup]="this.EditSectorForm"
+                        [formStatus]="isEditMode">
+                    </app-charge-number-configurations>
+                </div>
+                <!--Charge Number Configuration Section end-->
+
+                <!--Background Checks Section start-->
+                <div #BackGroundCheckslist *ngIf="currentStep === 15 || resetStep">
+                    <app-background-checks [ShowAll]="showAllSectionsSwitch" [isSubmitted]="isSubmitted"
+                        [reload]="isCopy" [childFormGroup]="this.EditSectorForm" [formStatus]="isEditMode">
+                    </app-background-checks>
+                </div>
+                <!--Background Checks Section end-->
+
+                <!--XRM Time Clock Section start-->
+                <div *ngIf="currentStep === 16 || resetStep">
+                    <app-xrm-time-clock [ShowAll]="showAllSectionsSwitch" [reload]="isCopy" [isDraft]="isDraft"
+                        [childFormGroup]="this.EditSectorForm" [formStatus]="isEditMode"> </app-xrm-time-clock>
+                </div>
+                <!--XRM Time Clock Section end-->
+
+                <!--Email Approval Configurations Section start-->
+                <div *ngIf="currentStep === 17 || resetStep">
+                    <app-email-approval-configurations [ShowAll]="showAllSectionsSwitch"
+                        [childFormGroup]="this.EditSectorForm" [formStatus]="isEditMode">
+                    </app-email-approval-configurations>
+                </div>
+                <!--Email Approval Configurations Section end-->
+
+                
+                <!-- User Defined Fields Section start-->
+                <div *ngIf="currentStep === 18 || resetStep">
+                    <app-user-defined-fields [ShowAll]="showAllSectionsSwitch" [childFormGroup]="this.EditSectorForm"
+                        [isSubmitted]="isSubmitted" [formStatus]="isEditMode">
+                    </app-user-defined-fields>
+                </div>
+                <!-- User Defined Fields Section end-->
+
+
+                <div class="page-footer stepper-button" *ngIf="!resetStep">
+                    <div class="stepper-button__prev">
+                        <button kendoButton href="javascript:;" fillMode="outline" themeColor="primary"
+                            *ngIf="currentStep !== 0" (click)="cardMovement(steps[currentStep].name ?? '', -1)"
+                            appFocusOnError [formName]="directiveForms">
+                            <i class="fa-solid fa-chevron-left"></i> {{'Previous' | translate}}
+                        </button>
+                    </div>
+                    <div class="stepper-button__next">
+                        <button kendoButton href="javascript:;" fillMode="outline" themeColor="primary"
+                            routerLink="/xrm/master/sector/list">{{'Cancel' | translate}}
+                        </button>
+
+                        <!-- section by section -->
+                        <button *ngIf="isEditMode && !isDraft && currentStep !== (steps.length - 1)"
+                            (click)="Update(steps[currentStep].name ?? '', true)" kendoButton fillMode="outline"
+                            [disabled]="EditSectorForm.get(steps[currentStep].name ?? '')?.pristine?true:false"
+                            themeColor="primary" appFocusOnError [formName]="directiveForms"
+                            [enabled]="disableFocusOnErrorScroll">
+                            {{'Save' | translate}}
+                        </button>
+
+                        <button *ngIf="isEditMode && !isDraft && currentStep == (steps.length - 1)"
+                            (click)="Update(steps[currentStep].name ?? '', true)" kendoButton fillMode="solid"
+                            [disabled]="EditSectorForm.get(steps[currentStep].name ?? '')?.pristine?true:false"
+                            themeColor="primary" appFocusOnError [formName]="directiveForms"
+                            [enabled]="disableFocusOnErrorScroll">
+                            {{'Save' | translate}}
+                        </button>
+
+                        <button kendoButton href="javascript:;" fillMode="outline" themeColor="primary" appFocusOnError
+                            [formName]="directiveForms" [enabled]="disableFocusOnErrorScroll"
+                            *ngIf="(currentStep !== 19) && (!isEditMode || isDraft )"
+                            (click)="SaveAsDraft(steps[currentStep].name ?? '')"
+                            [disabled]="isDraft ? (EditSectorForm.get(steps[currentStep].name ?? '')?.pristine?true:false) : false">
+                            {{ (isDraft ? 'SaveAndContinue': 'SaveContinueLater') | translate}}
+                        </button>
+
+
+                        <button kendoButton href="javascript:;" themeColor="primary" *ngIf="currentStep !== (steps.length-1)"
+                            appFocusOnError [enabled]="disableFocusOnErrorScroll" [formName]="directiveForms"
+                            (click)="cardMovement(steps[currentStep].name ?? '', 1)">{{'Next' | translate}} <i
+                                class="fa-solid fa-chevron-right"></i>
+                        </button>
+
+                        <!-- Email Config -->
+                        <button kendoButton href="javascript:;" themeColor="primary" appFocusOnError
+                            [enabled]="disableFocusOnErrorScroll" [formName]="EditSectorForm"
+                            *ngIf="currentStep === (steps.length - 1) && ( !isEditMode || isDraft)"
+                            [disabled]="!isDraft ? (EditSectorForm.pristine?true:false) : false"
+                            (click)="save('add')">{{'Save' | translate}}
+                        </button>
+                    </div>
+                </div>
+
+                <div class="page-footer stepper-button" *ngIf="resetStep">
+                    <div class="stepper-button__prev">
+                        <button kendoButton href="javascript:;" (click)="backToList()" fillMode="outline"
+                            themeColor="primary">
+                            {{'Cancel' | translate}}
+                        </button>
+                    </div>
+
+                    <div class="stepper-button__next">
+                        <button kendoButton href="javascript:;" fillMode="outline" themeColor="primary"
+                            *ngIf="!isEditMode" (click)="SaveAsDraft(steps[currentStep].name ?? '')" appFocusOnError
+                            [formName]="EditSectorForm" [enabled]="disableFocusOnErrorScroll">
+                            {{ (isDraft ? 'SaveAndContinue': 'SaveContinueLater') | translate}}
+                        </button>
+                        <button kendoButton href="javascript:;" fillMode="outline" themeColor="primary" *ngIf="isDraft"
+                            (click)="save('SaveAndContinuedraft')" appFocusOnError [formName]="EditSectorForm"
+                            [enabled]="disableFocusOnErrorScroll"
+                            [disabled]="isDraft ? (EditSectorForm.pristine ? true : false) : false">
+                            {{ 'SaveContinueLater' | translate}}
+                        </button>
+
+                        <!-- all tabs show -->
+                        <button kendoButton href="javascript:;"
+                            [disabled]="!isDraft ? (EditSectorForm.pristine ? true : false) : false"
+                            themeColor="primary" (click)="save(btnType, true)" appFocusOnError
+                            [enabled]="disableFocusOnErrorScroll" [formName]="EditSectorForm">{{'Save' | translate}}
+                        </button>
+
+                    </div>
+
+                </div>
+                <!--Stepper-section-end-here-->
+            </form>
+
+        </div>
+    </div>
+</div>

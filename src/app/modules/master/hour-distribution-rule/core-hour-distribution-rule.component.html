@@ -1,0 +1,13 @@
+<ng-container>
+	<ng-container *ngIf="showHeader">
+			<form [formGroup]="statusForm">
+					<app-common-header [statusData]="statusCardData" [controlName]="'status'" [recordId]="recordId"
+					[isStatusEditable]="false" [buttonSet]="buttonSet" [recordStatus]="recordStatus" [entityId]="entityId">
+			</app-common-header>
+			</form>
+	</ng-container>
+	<router-outlet></router-outlet>
+	<ng-container *ngIf="showHeader">
+			<event-log></event-log>
+	</ng-container>
+</ng-container>

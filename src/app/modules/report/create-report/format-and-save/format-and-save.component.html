@@ -1,0 +1,256 @@
+<div class="app-content__body app-content__body--li-create  custom_report--page">
+    <form [formGroup]="commonHeader">
+        <ng-container *ngIf="(reportDetails.IsCopyOfPredefined || reportDetails.CopyMode || reportDetails.UKey != '' || reportDetails.ReportId > 0) && reportDetails.ReportName != '' && reportDetails.ReportName != null">
+            <app-common-header [recordName]="'Report'" [recordId]="'ABC'"
+        [entityId]="entityId" [recordIdTitle]="'AssignmentID'" [recordStatus]="'Active'"
+        [recordStatusTitle]="'Status'| translate" [isStatusEditable]="false"
+        [statusData]="statusData"></app-common-header>
+        </ng-container>
+
+        </form>
+    <form [formGroup]="AddEditReportForm">
+        <div class="card">
+            <div class="card__header">
+                <h4 class="card__heading">{{'BasicDetails' | translate}}</h4>
+            </div>
+            <div class="card__body">
+                <div class="card__body--inner-wrapper">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <app-textbox [label]="'ReportName' | translate" [controlName]="'ReportName'"
+                                    [isRequired]="true" [maxCharacters]="50"></app-textbox>
+                                <p *ngIf="isEditMode" class="label-answere"></p>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <app-kendo-textarea [label]="'Description'" [maxCharacters]="500"
+                                    [controlName]="'ReportDescription'"></app-kendo-textarea>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <div class="row">
+                                    <kendo-label text="Output">
+                                        <div class="visualization_select">
+                                            <ul>
+                                                <li>
+                                                    <a href="javascript:;"
+                                                        (click)="toggleActive(reportDetails.Json.IsAggregateReport ? 296 : 295)"
+                                                        [class.active]="isActive(reportDetails.Json.IsAggregateReport ? 296 : 295)">
+                                                        <xrm-icon name="summary" [size]="18" color="dark-blue-color"
+                                                            class="sw-bolder"></xrm-icon>
+                                                        <p>{{reportDetails.Json.IsAggregateReport ? 'Summary List' :
+                                                            'VisualList' | translate}}</p>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;" (click)="toggleActive(298)"
+                                                        [class.active]="isActive(298)">
+                                                        <xrm-icon name="export-excel" [size]="18"
+                                                            color="dark-blue-color" class="sw-bolder"></xrm-icon>
+                                                        <p>{{'Excel' | translate}}</p>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;" (click)="toggleActive(299)"
+                                                        [class.active]="isActive(299)">
+                                                        <xrm-icon name="export-csv" [size]="18" color="dark-blue-color"
+                                                            class="sw-bolder"></xrm-icon>
+                                                        <p>{{'CSV' | translate}}</p>
+                                                    </a>
+                                                </li>
+                                                <li [class.disabled]="true">
+                                                    <a href="javascript:;" (click)="toggleActive(297)"
+                                                        [class.active]="isActive(297)">
+                                                        <xrm-icon name="export-pdf" [size]="18" color="dark-blue-color"
+                                                            class="sw-bolder"></xrm-icon>
+                                                        <p>{{'PDF' | translate}}</p>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </kendo-label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <app-kendo-dropdown [userValues]="userPayload" [searchText]="userName"
+                                    [label]="'Owner'| translate" [apiAddress]="'user-detail/get-user-ddl-paged'"
+                                    [xrmEntityId]="entityId" [pageSize]="magicNumber.ten" [isApiGateway]="true"
+                                    [isAdvanceSearch]="true" [controlName]="'owner'" [placeholder]="'SearchFor'"
+                                    [isRequired]="true" [isLoadOnDemand]="true">
+                                </app-kendo-dropdown>
+                            </div>
+                        </div>
+                        <ng-container *ngIf="isCustomReport">
+                            <div class="col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <kendo-label text="Report Run Access Control" class="checkbox-input-main">
+                                        <div class="checked-input">
+                                            <input kendoCheckBox type="checkbox" #checkbox1 checked [disabled]="true" />
+                                            <label class="k-checkbox-label" [for]="checkbox1">{{'CreatorOwnerOnly' |
+                                                translate}}</label>
+                                        </div>
+                                        <div class="checked-input">
+                                            <input kendoCheckBox type="checkbox" #checkbox2 (change)="toggleDiv($event)"
+                                                [formControlName]="'othersAccess'" />
+                                            <label class="k-checkbox-label" [for]="checkbox2">{{'Accessible to others'}}</label>
+                                        </div>
+                                    </kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12" *ngIf="AddEditReportForm.get('othersAccess')?.value">
+                                <div class="form-group">
+                                    <div class="d-flex">
+                                        <div class="w-100">
+                                            <app-kendo-dropdown [list]="folderListData" [label]="'SaveUnderLibraryFolder'"
+                                                [controlName]="'folderId'" [placeholder]="'DdlSelect' | translate"
+                                                [isRequired]="true">
+                                            </app-kendo-dropdown>
+                                        </div>
+                                        <div class="ms-2" *ngIf="createPermission">
+                                            <button type="button" kendoButton fillMode="outline" themeColor="primary"
+                                                class="copy__btn" (click)="folderAdd()">
+                                                <xrm-icon name="plus" [size]="15" color="dark-blue-color"
+                                                    class="sw-bolder"></xrm-icon>
+                                                {{'AddNewFolder' | translate}}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12" *ngIf="AddEditReportForm.get('othersAccess')?.value">
+                                <div class="form-group">
+                                    <kendo-label text="Edit Access" class="checkbox-input-main">
+                                        <div class="checked-input">
+                                            <input kendoCheckBox type="checkbox" #checkbox3 checked [disabled]="true" />
+                                            <label class="k-checkbox-label" [for]="checkbox3">{{'CreatorOwnerOnly' |
+                                                translate}}</label>
+                                        </div>
+                                        <div class="checked-input">
+                                            <input kendoCheckBox type="checkbox" #checkbox4
+                                                [formControlName]="'editAccessibleToOthers'" />
+                                            <label class="k-checkbox-label"
+                                                [for]="checkbox4">{{'OthersAsWellHavingAccessToTheFolder' |
+                                                translate}}</label>
+                                        </div>
+                                    </kendo-label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12" *ngIf="outputTypeId != 295 && outputTypeId != 296">
+                                <div class="form-group">
+                                    <app-kendo-switch [label]="'SendViaEmail' | translate" [controlName]="'sendViaEmail'"
+                                        [onLabel]="'Yes'" [offLabel]="'No'"
+                                        (onChangeSwitch)="resetControl($event)"></app-kendo-switch>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12" *ngIf="AddEditReportForm?.get('sendViaEmail')?.value">
+                                <div class="form-group">
+                                    <app-textbox [label]="'Recipients (Optional as report will automatically be sent to the Owner)'" [controlName]="'emailRecipients'"
+                                        [placeholder]="'Enter multiple emails, separated by a comma'" [isRequired]="false"
+                                        [maxCharacters]="1000"></app-textbox>
+                                        
+                                </div>
+                                    <div class="form-group">
+                                        <app-textbox [label]="'Email Subject Line'" [controlName]="'emailSubject'" [maxCharacters]="100"
+                                            [isRequired]="true"></app-textbox>
+                                    </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12" *ngIf="outputTypeId != 295 && outputTypeId != 296">
+                                <div class="form-group">
+                                    <app-kendo-switch [label]="'ScheduleReport'" [controlName]="'scheduledReport'"
+                                        [onLabel]="'Yes'" [offLabel]="'No'"
+                                        (onChangeSwitch)="checkValidation($event)"></app-kendo-switch>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <div class="col-sm-12 col-md-12" *ngIf="isScheduledReport && outputTypeId != 295">
+                            <div class="form-group">
+                                <app-textbox [label]="'Recipients (Optional as report will automatically be sent to the Owner)'" [controlName]="'schedule.emailTo'"
+                                    [placeholder]="'Enter multiple emails, separated by a comma'" [isRequired]="false"
+                                    [maxCharacters]="1000"></app-textbox>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12" *ngIf="isScheduledReport && outputTypeId != 295">
+                            <div class="form-group">
+                                <app-textbox [label]="'Schedule Email Subject Line'" [controlName]="'subject'" [maxCharacters]="100"
+                                    [isRequired]="true"></app-textbox>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="row scheduling-item-list" *ngIf="isScheduledReport && outputTypeId != 295">
+                            <div class="col-sm-4 form-group">
+                                <app-kendo-dropdown [list]="SchedulingList" [label]="'Scheduling'"
+                                    [controlName]="'schedule.selectedOption'" [placeholder]="'Please select...'"
+                                    (onChange)="changeofScheduling($event)" [isRequired]="true"></app-kendo-dropdown>
+                            </div>
+                            <div class="col-sm-4 form-group" *ngIf="selectedOption === scheduled.WeeklyValue">
+                                <app-kendo-multiselect-dropdown [placeholder]="'Please select...'" [controlName]="'schedule.selectedDays'"
+                                    [label]="'Day(s)'" [list]="DaysList" [isRequired]="true">
+                                </app-kendo-multiselect-dropdown>
+                            </div>
+                            <div class="col-sm-4 form-group" *ngIf="selectedOption === scheduled.Once">
+                                <app-kendo-datepicker [label]="'DateEST'" [controlName]="'schedule.selectedDates'"
+                                    [isRequired]="true" [disabledDates]="disabledDates">
+                                </app-kendo-datepicker>
+                            </div>
+                            <div class="col-sm-4 form-group" *ngIf="selectedOption===scheduled.YearlyValue">
+                                <app-kendo-multiselect-dropdown [controlName]="'schedule.selectedMonths'"
+                                    [label]="'Month_s'" [list]="MonthList" [isRequired]="true" [placeholder]="'Please select...'">
+                                </app-kendo-multiselect-dropdown>
+                            </div>
+                            <div class="col-sm-4 form-group"
+                                *ngIf="selectedOption===scheduled.YearlyValue || selectedOption===scheduled.MonthlyValue ">
+                                <app-kendo-multiselect-dropdown [list]="DatesList" [label]="'DayOfMonth'"
+                                    [controlName]="'schedule.selectedDates'" [placeholder]="'Please select...'"
+                                    [isRequired]="true"></app-kendo-multiselect-dropdown>
+                            </div>
+                            <div class="col-sm-4 form-group"
+                                *ngIf="selectedOption===scheduled.DailyValue || selectedOption===scheduled.WeeklyValue || selectedOption===scheduled.MonthlyValue || selectedOption===scheduled.Once || selectedOption===scheduled.YearlyValue">
+                                <app-kendo-timepicker [controlName]="'schedule.selectedHour'" [label]="'TimeEST'"
+                                    [isRequired]="true"></app-kendo-timepicker>
+                            </div>
+                            <div class="col-sm-4 form-group"
+                                *ngIf="selectedOption===scheduled.WeeklyValue || selectedOption===scheduled.MonthlyValue || selectedOption===scheduled.YearlyValue || selectedOption===scheduled.DailyValue">
+                                <app-kendo-datepicker [label]="'StartDateEST'" [controlName]="'schedule.scheduleStart'"
+                                    [isRequired]="true" [disabledDates]="disabledDates" (onChange)="onChangeStartDate()">
+                                </app-kendo-datepicker>
+                            </div>
+                            <div class="col-sm-4 form-group"
+                                *ngIf="selectedOption===scheduled.WeeklyValue || selectedOption===scheduled.MonthlyValue || selectedOption===scheduled.YearlyValue || selectedOption===scheduled.DailyValue">
+                                <app-kendo-datepicker [label]="'EndDateEST'" [controlName]="'schedule.scheduleEnd'"
+                                    [isRequired]="true" [disabledDates]="disabledDates" (onChange)="onChangeEndDate()">
+                                </app-kendo-datepicker>
+                            </div>
+                        </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="page-footer stepper-button">
+            <div class="stepper-button__prev">
+                <button type="button" kendoButton fillMode="outline" themeColor="primary" (click)="back()">
+                    <i class="fa-solid fa-chevron-left"></i> {{
+                    'Previous'| translate }}
+                </button>
+            </div>
+            <div class="stepper-button__next">
+                <button type="button" kendoButton themeColor="primary" fillMode="outline" *ngIf="currentStep == 2"
+                    (click)="cancel()">{{'Cancel' | translate}}</button>
+                <button type="button" kendoButton themeColor="primary" fillMode="outline" (click)="saveReport()"
+                    appFocusOnError [formName]="AddEditReportForm">{{'Save' | translate}}</button>
+                <button type="button"
+                    *ngIf="reportDetails.UKey == ''  && (outputTypeId == 295 || outputTypeId == 296)"
+                    kendoButton href="javascript:;" themeColor="primary" fillMode="outline" (click)="runReport()">Run
+                </button>
+                <button type="button" kendoButton themeColor="primary" (click)="savenRunReport()" appFocusOnError
+                    [formName]="AddEditReportForm">{{'SaveAndRun' | translate}}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+<app-manage-folder [(handleDialogBox)]="openDialog" [isEditMode]="false"
+    (getFolderList)="getFolderListAgain($event)"></app-manage-folder>

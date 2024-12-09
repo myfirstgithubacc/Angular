@@ -1,0 +1,38 @@
+<div class="master-search">
+<div class="row">
+<div class="col-md-12 master-search__wapper">
+        <div class="master-search__search-box">
+          <div class="custom-search">
+            <div class="custom-search__input-box">
+              <app-search [placeholder]="'SearchFor'" 
+                          [EntityId]="entityId" 
+                          [columnOptions]="columnOptions"
+                          (onSearch)="OnSearch($event)"  
+                          [isServerSidePagingEnable]="isServerSidePagingEnable">
+              </app-search>
+            </div>
+            <app-advance-search [EntityId]="entityId"
+            [apiAddress]="advApiAddress" (selectedFilter)="OnFilter($event)"
+            [isServerSidePagingEnable]="isServerSidePagingEnable"  [isApiGateway]="true" ></app-advance-search>
+          </div>
+        </div>
+  
+        <div class="master-search__button-box master-search__button-box--right">
+          <app-kendo-button [buttonName]="'NewBusinessClassification'" [xrmEntityId]="entityId" 
+          (Click)="navigate()" [buttonIcon]="'plus'"></app-kendo-button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <grid-view 
+      [pageSize]="pageSize" 
+      [entityId]="entityId" [searchText]="searchText"
+      [advFilterData]="advFilterData" [columnOptions]="columnOptions" 
+      [actionSet]="actionSet" [tabOptions]="tabOptions"  
+      [kendoGridSelectedBy]="'UKey'" [multiSelect]="false"
+      [fileName]="generateFileName()" [isServerSidePagingEnable]="isServerSidePagingEnable" 
+      [apiAddress]="apiAddress" [isApiGateway]="true"></grid-view>
+  </div>
+

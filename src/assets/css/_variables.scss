@@ -1,0 +1,137 @@
+:root {
+
+    /* Define Variables */
+    --font-roboto-sans: 'Roboto';
+    --base-font-size: 12px;
+    --button-size: 12px;
+
+    /* Define Color Variables */
+    --light-blue-color: #7bb4dc;
+    --navy-blue-color: #3d4fb5;
+    --color-white: #ffffff;
+    --color-black: #000000;
+    --secoundry-card: #fff6f6;
+    --color-primary: #4158D0;
+    --color-primary-light: rgba(115, 103, 240, .12);
+    --color-default: #383c40;
+    --color-light-primary-border: #DBDBFF;
+    --color-header-dropdown: #383c40;
+    --table-header-color: #eaedfd;
+    --body-color: #ebeef1;
+    --sidebar-bg-color: linear-gradient(to right, #4a32d4 0%, #1d5cc7 100%);
+    --color-primary-hover: #181A8C;
+    --color-secondary: #424242;
+    --color-secondary-bg: #f5f5f5;
+    --color-secondary-bg-hover: #f3f3f3;
+    --color-active: #219653;
+    --color-inactive: #EB5757;
+    --color-deactivate: #EB5757;
+    --light-green-color: var(--color-active);
+	--light-color-orange: #ffc107;
+	--light-color-red: #ff5959;
+	--light-color-green: #08c18d;
+    --dark-blue-color: #3d4fb5;
+    --red-color: #d70b31;
+    --red-color-hover: #a80020;
+    --green-color: #039855;
+    --green-color-hover: #00c57d;
+    --orange-color: #ff8523;
+    --golden-color: #c4a446;
+
+    /* Color Border Variables */
+    --light-border-color: #b5bfc9;
+    --color-primary-border: #ced4da;
+    --color-secondary-border: #a8afb7;    
+
+    /* Define universal Variables */
+    --border-color: #D9D9D9;
+
+    /* Define Popup Dialog Variables */
+    --dialog-heading-font-size: 18px;
+    --dailog-icon-size: 38px;
+    --dialog-base-font-size: 13px;
+
+    /* Define Dropdown Variables */
+    --dropdown-header-font-size: 13px;
+    --dropdown-footer-font-size: var(--base-font-size);
+
+    /* Define Card Variables */
+    --card-bg: var(--color-white);
+    --card-shadow: 0 4px 25px 0 rgba(168, 180, 208, 0.17);
+    --dropdown-shadow: rgb(4 4 7 / 10%);
+    --card-heading-color: #1D2939;
+    --page-subheading-color: #1D2939;
+    --social-media-icon-color: #98A2B3;
+    --card-heading-font-size: 15px;
+    --card-subheading-font-size: 15px;
+
+    /*Define Grid Variables*/
+    --grid-pdf-color: #ad0b00;
+    --grid-excel-color: #026e39;
+
+    /*Define breadcrumb Variables*/
+    --k-breadcrumb-color: var(--color-primary);
+
+    /* Header Variables*/
+    --header-bg-color: #f3f3fe;
+
+    /* kendo input */
+    --k-input-border-color: #D0D5DD;
+    --k-input-bg-color: var(--color-white);
+    --k-input-font-color: #666;
+
+    /* Define Button Solid Primary Variables */
+    --k-button-solid-primary-border: var(--color-primary);
+    --k-button-solid-primary-bg: var(--color-primary);
+    --k-button-solid-primary-color: var(--color-white);
+
+    /* Definr Grid Variable */
+    --k-grid-selected-bg: var(--color-primary-light);
+    --k-grid-short-icon-color: var(--color-primary);
+    --k-grid-short-bg-color: var(--color-primary-light);
+    --k-grid-short-text-color: var(--color-primary);
+
+    /* Define Input chekbox */
+    --k-check-border-color: var(--color-primary-light);
+    --k-check-active-bg-color: var(--color-primary);
+    --k-check-active-shadow: 0 0 0 2px var(--color-primary-light);
+    --k-checkbox-indeterminate-color: var(--color-primary);
+
+
+}
+
+/* Reset */
+body {
+    font-family: var(--font-roboto-sans);
+    background: var(--body-color);
+    font-size: var(--base-font-size);
+    color: var(--color-default);
+    height: 100%;
+}
+@-moz-document url-prefix() {
+body {
+    overflow-x: hidden;
+}
+}
+.app {
+    padding: 0 15px;
+}
+h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+    padding: 0;
+}
+h1 {
+    font-size: var(--primary-page-heading) ;
+}
+h3 {
+    font-size: var(--secondary-page-heading) ;
+}
+h6 {
+    font-size: var(--default-page-heading);
+}
+pre {
+	font-family: var(--font-roboto-sans);
+}
+a {
+    text-decoration: none;
+}

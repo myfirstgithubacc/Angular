@@ -1,0 +1,86 @@
+<!-- Main Body Section-->
+<div class="app-content__body">
+    <form [formGroup]="setChargeApproverForm">
+        <div class="card">
+            <!-- Card Header Section-->
+            <!-- <div class="card__header">
+                <h4 class="card__heading">{{'BasicDetails' | translate }}</h4>
+                <div class="card__header-icon">
+                </div>
+            </div> -->
+            <!-- End Card Header Section-->
+
+            <!-- Card Body Section-->
+            <div class="card__body">
+                <div class="row">
+                    <!-- Dropdown box start -->
+                    <div class="col-sm-6 col-md-6">
+                        <kendo-label class="k-label" >Sector</kendo-label><xrm-icon name="star" class="required ng-star-inserted"></xrm-icon>
+                        <kendo-combobox class="k-input-md k-rounded-md k-input-solid k-combobox k-input ng-star-inserted" placeholder="-Select-" [data]="sectorDropDownList" ></kendo-combobox>
+                    </div>
+                    <!-- Dropdown box end -->
+            
+                    <!-- Dropdown box start -->
+                    <div class="col-sm-6 col-md-6">
+                        <kendo-label class="k-label" >Charge #</kendo-label><xrm-icon name="star" class="required ng-star-inserted"></xrm-icon>
+                        <kendo-combobox class="k-input-md k-rounded-md k-input-solid k-combobox k-input ng-star-inserted" placeholder="-Select-" [data]="charge" ></kendo-combobox>
+                    </div>
+                </div>
+                    <!-- Dropdown box end -->
+
+                   <!-- Dropdown box start -->
+                <div class="row">
+                   <div class="col-sm-6 col-md-6">
+                    <kendo-label class="k-label" >Shift</kendo-label><xrm-icon name="star" class="required ng-star-inserted"></xrm-icon>
+                    <kendo-combobox class="k-input-md k-rounded-md k-input-solid k-combobox k-input ng-star-inserted" placeholder="-Select-" [data]="shift" ></kendo-combobox>
+                </div>
+                
+                <!-- Dropdown box end -->
+
+                 <!-- Dropdown box start -->
+                 <div class="col-sm-6 col-md-6">
+                    <kendo-label class="k-label" >Primary Approver</kendo-label><xrm-icon name="star" class="required ng-star-inserted"></xrm-icon>
+                    <kendo-combobox class="k-input-md k-rounded-md k-input-solid k-combobox k-input ng-star-inserted" placeholder="-Select-" [data]="primaryApprover" ></kendo-combobox>
+                </div>
+            </div>
+                <!-- Dropdown box end -->
+                <div class="row">
+                  <!-- Dropdown box start -->
+                  <div class="col-sm-6 col-md-6">
+                    <kendo-label class="k-label" >Alternate Approver</kendo-label><xrm-icon name="star" class="required ng-star-inserted"></xrm-icon>
+                    <kendo-combobox class="k-input-md k-rounded-md k-input-solid k-combobox k-input ng-star-inserted" placeholder="-Select-" [data]="alternateApprover" ></kendo-combobox>
+                </div>
+                <!-- Dropdown box end -->
+            </div>
+            </div>
+            <!-- End Card Body Section-->
+        </div>
+        <!--  Page Footer Section-->
+        <div class="page-footer">
+            <div class="btn-box btn-box--center">
+              <button
+                type="button"
+                kendoButton
+                x
+                themeColor="primary"
+                translate
+              >
+                {{"Submit" }}
+              </button>
+              <button
+                type="button"
+                kendoButton
+                fillMode="outline"
+                themeColor="primary"
+                routerLink="/xrm/master/charge-approver/add"
+              >
+                 {{ "Cancel"  }} 
+              </button>
+            </div>
+          </div>
+        <!-- End Footer Section-->
+        <div *ngIf="true">
+            <event-log></event-log>
+        </div>
+    </form>
+</div>
