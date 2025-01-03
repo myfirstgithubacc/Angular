@@ -9,7 +9,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     strategy:
       matrix:
@@ -26,24 +26,22 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
 
+    # Run the PowerShell script to map the network drive and copy the artifact
     - name: Copy artifact to 172.16.0.22 using PowerShell
       run: |
-        # PowerShell script to map the network drive and copy the artifact
-        powershell -Command "
-          $username = 'XRMRevampAdmin'
-          $password = 'PtYUb#27dIY'
-          $networkPath = '\\\\172.16.0.22\\DevOps\\Build\\ui'
-          
-          # Create a PSCredential object for authentication
-          $securePassword = ConvertTo-SecureString $password -AsPlainText -Force
-          $credential = New-Object System.Management.Automation.PSCredential ($username, $securePassword)
-          
-          # Map network drive (Z:) to the shared folder on the server
-          New-PSDrive -Name Z -PSProvider FileSystem -Root $networkPath -Persist -Credential $credential
-          
-          # Copy the build artifact (replace ./build/* with your actual build path)
-          Copy-Item -Path './build/*' -Destination 'Z:\' -Recurse -Force
-          
-          # Optionally remove the mapped drive after copying
-          Remove-PSDrive -Name Z
-        "
+        $username = 'XRMRevampAdmin'
+        $password = 'PtYUb#27dIY'
+        $networkPath = '\\\\172.16.0.22\\DevOps\\Build\\ui'
+        
+        # Create a PSCredential object for authentication
+        $securePassword = ConvertTo-SecureString $password -AsPlainText -Force
+        $credential = New-Object System.Management.Automation.PSCredential ($username, $securePassword)
+        
+        # Map network drive (Z:) to the shared folder on the server
+        New-PSDrive -Name Z -PSProvider FileSystem -Root $networkPath -Persist -Credential $credential
+        
+        # Copy the build artifact (replace ./build/* with your actual build path)
+        Copy-Item -Path './build/*' -Destination 'Z:\' -Recurse -Force
+        
+        # Optionally remove the mapped drive after copying
+        Remove-PSDrive -Name Z
