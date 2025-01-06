@@ -11,7 +11,7 @@ jobs:
       - name: Download Build Artifact
         uses: actions/download-artifact@v4
         with:
-          name: dist  # Ensure this matches the artifact name from the build workflow
+          name: drop  # Ensure this matches the artifact name from the build workflow
 
       - name: Copy Artifact to 172.16.0.22 Using PowerShell
         shell: pwsh  # Ensure PowerShell Core is used
