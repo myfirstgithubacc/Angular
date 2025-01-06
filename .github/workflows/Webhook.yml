@@ -3,10 +3,10 @@ name: Sync TFS Repo with GitHub
 on:
   push:
     branches:
-      - master  # Trigger the action on a push to the master branch
+     # - master  # Trigger the action on a push to the master branch
   pull_request:
     branches:
-      - master  # Trigger on pull request to master
+     # - master  # Trigger on pull request to master
 
 jobs:
   sync-tfs-repo:
