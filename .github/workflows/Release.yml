@@ -1,0 +1,43 @@
+name: Release Artifact to Server
+
+on:
+  workflow_dispatch:  # Trigger manually for a release
+
+jobs:
+  release:
+    runs-on: self-hosted  # Use your self-hosted Windows runner
+
+    steps:
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifact  # Ensure this matches the artifact name from the build workflow
+
+      - name: Copy Artifact to 172.16.0.22 Using PowerShell
+        shell: pwsh  # Ensure PowerShell Core is used
+        run: |
+          $username = 'XRMRevampAdmin'
+          $password = 'PtYUb#27dIY'
+          $networkPath = 'D:\DevOps\Build\ui'
+
+          # Check if the network path exists
+          if (-not (Test-Path $networkPath)) {
+            Write-Host "Network path is not accessible. Exiting."
+            exit 1
+          }
+
+          # Create a PSCredential object for authentication
+          $securePassword = ConvertTo-SecureString $password -AsPlainText -Force
+          $credential = New-Object System.Management.Automation.PSCredential ($username, $securePassword)
+
+          # Map network drive
+          Write-Host "Mapping network drive..."
+          New-PSDrive -Name Z -PSProvider FileSystem -Root $networkPath -Persist -Credential $credential
+
+          # Copy artifacts
+          Write-Host "Copying files to the server..."
+          Copy-Item -Path './*' -Destination 'Z:\' -Recurse -Force
+
+          # Remove the mapped drive
+          Write-Host "Removing mapped drive..."
+          Remove-PSDrive -Name Z
