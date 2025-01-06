@@ -9,7 +9,7 @@ jobs:
 
     steps:
       - name: Download Build Artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-artifact  # Ensure this matches the artifact name from the build workflow
 
