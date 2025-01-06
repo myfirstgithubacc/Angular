@@ -1,0 +1,37 @@
+name: Sync TFS Repo with GitHub
+
+on:
+  push:
+    branches:
+      - master  # Trigger the action on a push to the master branch
+  pull_request:
+    branches:
+      - master  # Trigger on pull request to master
+
+jobs:
+  sync-tfs-repo:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout GitHub repository
+        uses: actions/checkout@v3
+        
+      - name: Configure Git
+        run: |
+          git config --global user.name "Sanjay Kumar"
+          git config --global user.email "sanjayk@acrop.com"
+
+      - name: Clone TFS Git repository
+        env:
+          TFS_PAT: ${{ secrets.TFS_PAT }}
+        run: |
+          git clone https://username:${{ secrets.TFS_PAT }}@172.16.0.28:8080/tfs/XRM_NextGen/XRMv2/_git/XRM_UI_v2 tfs-repo
+          cd tfs-repo
+          
+      - name: Sync with GitHub repository
+        run: |
+          cd tfs-repo
+          git remote set-url origin https://github.com/${{ github.repository }}.git
+          git fetch origin Dev-Test
+          git checkout master
+          git pull origin master
+          git push origin master
