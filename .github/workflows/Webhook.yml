@@ -10,7 +10,7 @@ on:
 
 jobs:
   sync-tfs-repo:
-    runs-on: windows-latest
+    runs-on: self-hosted  # Use your self-hosted runner
     steps:
       - name: Checkout GitHub repository
         uses: actions/checkout@v3
