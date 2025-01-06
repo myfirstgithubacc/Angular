@@ -2,9 +2,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "Dev-Test" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "Dev-Test" ]
+    branches: [ "master" ]
 
 jobs:
   build:
@@ -26,7 +26,7 @@ jobs:
       run: |
         $username = 'XRMRevampAdmin'
         $password = 'PtYUb#27dIY'
-        $networkPath = '\\172.16.0.22\DevOps\Build\ui'
+        $networkPath = 'D:\DevOps\Build\ui'
         
         # Check if the network path exists
         if (-not (Test-Path $networkPath)) {
