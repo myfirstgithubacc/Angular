@@ -1,4 +1,4 @@
-name: Build Angular
+name: Node.js CI
 
 on:
   push:
@@ -8,40 +8,44 @@ on:
 
 jobs:
   build:
-
-    runs-on: windows-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    runs-on: self-hosted  # Use your self-hosted Windows runner
 
     steps:
     - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: '18.x'
         cache: 'npm'
+
     - run: npm ci
     - run: npm run build --if-present
 
-    # Run the PowerShell script to map the network drive and copy the artifact
     - name: Copy artifact to 172.16.0.22 using PowerShell
+      shell: pwsh  # Ensure PowerShell Core is used
       run: |
         $username = 'XRMRevampAdmin'
         $password = 'PtYUb#27dIY'
-        $networkPath = '\\\\172.16.0.22\\DevOps\\Build\\ui'
+        $networkPath = '\\172.16.0.22\DevOps\Build\ui'
         
+        # Check if the network path exists
+        if (-not (Test-Path $networkPath)) {
+          Write-Host "Network path is not accessible. Exiting."
+          exit 1
+        }
+
         # Create a PSCredential object for authentication
         $securePassword = ConvertTo-SecureString $password -AsPlainText -Force
         $credential = New-Object System.Management.Automation.PSCredential ($username, $securePassword)
         
-        # Map network drive (Z:) to the shared folder on the server
+        # Map network drive
+        Write-Host "Mapping network drive..."
         New-PSDrive -Name Z -PSProvider FileSystem -Root $networkPath -Persist -Credential $credential
         
-        # Copy the build artifact (replace ./build/* with your actual build path)
+        # Copy artifacts
+        Write-Host "Copying files to the server..."
         Copy-Item -Path './build/*' -Destination 'Z:\' -Recurse -Force
         
-        # Optionally remove the mapped drive after copying
+        # Remove the mapped drive
+        Write-Host "Removing mapped drive..."
         Remove-PSDrive -Name Z
