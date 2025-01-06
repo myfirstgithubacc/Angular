@@ -22,7 +22,7 @@ jobs:
       - run: npm run build:devtest
       
       - name: Upload Build Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: drop
           path: ./dist/dev/*  # Path to the build artifact
